@@ -1224,6 +1224,36 @@ class Game extends Client {
                 this.out.p3(4991788);
             }
 
+            if (this.localPlayer) {
+                const yaw: number = Math.floor(((this.orbitCameraYaw + this.minimapAnticheatAngle + 256) & 0x7ff) / 512);
+                let x: number = 0,
+                    z: number = 0;
+                const steps: number = 10;
+
+                if (this.actionKey['w'.charCodeAt(0)] == 1) {
+                    x += yaw == 3 ? steps : yaw == 1 ? -steps : 0;
+                    z += yaw == 0 ? steps : yaw == 2 ? -steps : 0;
+                }
+
+                if (this.actionKey['a'.charCodeAt(0)] == 1) {
+                    x += yaw == 2 ? steps : yaw == 0 ? -steps : 0;
+                    z += yaw == 3 ? steps : yaw == 1 ? -steps : 0;
+                }
+
+                if (this.actionKey['s'.charCodeAt(0)] == 1) {
+                    x += yaw == 1 ? steps : yaw == 3 ? -steps : 0;
+                    z += yaw == 2 ? steps : yaw == 0 ? -steps : 0;
+                }
+
+                if (this.actionKey['d'.charCodeAt(0)] == 1) {
+                    x += yaw == 0 ? steps : yaw == 2 ? -steps : 0;
+                    z += yaw == 1 ? steps : yaw == 3 ? -steps : 0;
+                }
+                if (x != 0 || z != 0) {
+                    this.tryMove(this.localPlayer.pathTileX[0], this.localPlayer.pathTileZ[0], this.localPlayer.pathTileX[0] + x, this.localPlayer.pathTileZ[0] + z, 0, 0, 0, 0, 0, 0, true);
+                }
+            }
+
             if (World3D.clickTileX !== -1) {
                 if (this.localPlayer) {
                     const x: number = World3D.clickTileX;
