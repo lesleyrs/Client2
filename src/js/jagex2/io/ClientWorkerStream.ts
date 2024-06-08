@@ -154,8 +154,6 @@ class WorkerReader {
 
     constructor(worker: Worker, limit: number) {
         this.limit = limit;
-        // TODO:
-        // worker.binaryType = 'arraybuffer';
         worker.onmessage = this.onmessage;
     }
 
