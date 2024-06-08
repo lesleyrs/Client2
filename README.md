@@ -10,6 +10,15 @@
 **Jagex has never had any source code leaks.**
 </div>
 
+## Web Worker server
+
+Set `world=999` in the client URL to start a server on login. Locally this takes only a few seconds but on github pages it will take around 3-4 minutes. Saves will load from `data/players` and a save dialog will open on logout, but you should save them to `src/public/data/players` instead.
+
+To update server code run the following in the server:
+1. `npm run build`, then copy `data` dir from server to `src/public` in client
+2. `npm run bundle`, this copies worker.js and LoginThread.js to `../Client2/src/public`
+3. To host on github see [.gitignore](.gitignore)
+
 ## Site Index
 
 ### Client

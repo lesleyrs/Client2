@@ -43,6 +43,7 @@ import VarpType from './jagex2/config/VarpType';
 import AnimBase from './jagex2/graphics/AnimBase';
 import AnimFrame from './jagex2/graphics/AnimFrame';
 import Tile from './jagex2/dash3d/type/Tile';
+import ClientWorkerStream from './jagex2/io/ClientWorkerStream';
 
 // noinspection JSSuspiciousNameCombination
 export abstract class Client extends GameShell {
@@ -105,7 +106,7 @@ export abstract class Client extends GameShell {
     protected db: Database | null = null;
     protected loopCycle: number = 0;
     protected archiveChecksums: number[] = [];
-    protected stream: ClientStream | null = null;
+    protected stream: ClientStream | ClientWorkerStream | null = null;
     protected in: Packet = Packet.alloc(1);
     protected out: Packet = Packet.alloc(1);
     protected loginout: Packet = Packet.alloc(1);
@@ -710,8 +711,10 @@ export abstract class Client extends GameShell {
     protected loadArchive = async (filename: string, displayName: string, crc: number, progress: number): Promise<Jagfile> => {
         let retry: number = 5;
         let data: Int8Array | undefined = await this.db?.cacheload(filename);
-        if (data && Packet.crc32(data) !== crc) {
-            data = undefined;
+        if (GameShell.getParameter('world') !== '999') {
+            if (data && Packet.crc32(data) !== crc) {
+                data = undefined;
+            }
         }
 
         if (data) {
@@ -741,13 +744,19 @@ export abstract class Client extends GameShell {
 
     protected setMidi = async (name: string, crc: number, length: number): Promise<void> => {
         let data: Int8Array | undefined = await this.db?.cacheload(name + '.mid');
-        if (data && crc !== 12345678 && Packet.crc32(data) !== crc) {
-            data = undefined;
+        if (GameShell.getParameter('world') !== '999') {
+            if (data && crc !== 12345678 && Packet.crc32(data) !== crc) {
+                data = undefined;
+            }
         }
 
         if (!data) {
             try {
-                data = await downloadUrl(`${Client.httpAddress}/${name}_${crc}.mid`);
+                if (GameShell.getParameter('world') !== '999') {
+                    data = await downloadUrl(`${Client.httpAddress}/${name}_${crc}.mid`);
+                } else {
+                    data = await downloadUrl(`data/pack/client/songs/${name}.mid`);
+                }
                 if (length !== data.length) {
                     data = data.slice(0, length);
                 }
