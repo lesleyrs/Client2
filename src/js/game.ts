@@ -64,6 +64,7 @@ import FloType from './jagex2/config/FloType';
 import {setupConfiguration} from './configuration';
 import Tile from './jagex2/dash3d/type/Tile';
 import DirectionFlag from './jagex2/dash3d/DirectionFlag';
+import ClientWorkerStream from './jagex2/io/ClientWorkerStream';
 
 // noinspection JSSuspiciousNameCombination
 class Game extends Client {
@@ -81,9 +82,25 @@ class Game extends Client {
             await Bzip.load(await (await fetch('bz2.wasm')).arrayBuffer());
             this.db = new Database(await Database.openDatabase());
 
-            const checksums: Packet = new Packet(new Uint8Array(await downloadUrl(`${Client.httpAddress}/crc`)));
-            for (let i: number = 0; i < 9; i++) {
-                this.archiveChecksums[i] = checksums.g4;
+            // const checksums: Packet = new Packet(new Uint8Array(await downloadUrl(`${Client.httpAddress}/crc`)));
+            // for (let i: number = 0; i < 9; i++) {
+            //     this.archiveChecksums[i] = checksums.g4;
+            // }
+
+            const path: string = '225/archives/';
+            const urls: string[] = ['config', 'crc', 'interface', 'media', 'models', 'sounds', 'textures', 'title', 'wordenc'];
+
+            try {
+                const responses: Response[] = await Promise.all(urls.map((url: string): Promise<Response> => fetch(`${path}${url}`, {cache: 'no-cache'})));
+                if (responses.some((response: Response): boolean => response.ok === false)) {
+                    throw new Error('One or more fetch requests failed');
+                }
+                const data: ArrayBuffer[] = await Promise.all(responses.map((response: Response): Promise<ArrayBuffer> => response.arrayBuffer()));
+                for (let i: number = 0; i < data.length; i++) {
+                    await this.db?.cachesave(urls[i], new Int8Array(data[i]));
+                }
+            } catch (e) {
+                console.error(e);
             }
 
             if (!Client.lowMemory) {
@@ -836,7 +853,8 @@ class Game extends Client {
                 this.loginMessage1 = 'Connecting to server...';
                 await this.drawTitleScreen();
             }
-            this.stream = new ClientStream(await ClientStream.openSocket({host: Client.serverAddress, port: 43594 + Client.portOffset}));
+            // this.stream = new ClientStream(await ClientStream.openSocket({host: Client.serverAddress, port: 43594 + Client.portOffset}));
+            this.stream = new ClientWorkerStream();
             await this.stream?.readBytes(this.in.data, 0, 8);
             this.in.pos = 0;
             this.serverSeed = this.in.g8;
@@ -5034,9 +5052,9 @@ class Game extends Client {
                     let data: Int8Array | undefined;
                     if (landCrc !== 0) {
                         data = await this.db?.cacheload(`m${mapsquareX}_${mapsquareZ}`);
-                        if (data && Packet.crc32(data) !== landCrc) {
-                            data = undefined;
-                        }
+                        // if (data && Packet.crc32(data) !== landCrc) {
+                        //     data = undefined;
+                        // }
                         if (!data) {
                             this.sceneState = 0;
                             this.out.p1(0); // map request
@@ -5049,9 +5067,9 @@ class Game extends Client {
                     }
                     if (locCrc !== 0) {
                         data = await this.db?.cacheload(`l${mapsquareX}_${mapsquareZ}`);
-                        if (data && Packet.crc32(data) !== locCrc) {
-                            data = undefined;
-                        }
+                        // if (data && Packet.crc32(data) !== locCrc) {
+                        //     data = undefined;
+                        // }
                         if (!data) {
                             this.sceneState = 0;
                             this.out.p1(1); // loc request
