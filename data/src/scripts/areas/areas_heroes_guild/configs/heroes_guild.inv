@@ -1,8 +1,0 @@
-[happy_heroes_hemporium]
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=dragon_battleaxe,1,500
-stock2=dragon_mace,1,500
