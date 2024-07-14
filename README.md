@@ -17,7 +17,7 @@ Set `world=999` in the client URL to start a server on login. Locally this takes
 To update server code run the following in the server:
 1. `npm run build`, then copy `data` dir from server to `src/public` in client
 2. `npm run bundle`, this copies worker.js and LoginThread.js to `../Client2/src/public`
-3. To host on github see [.gitignore](.gitignore)
+3. To host on github see [.gitignore](.gitignore#L15)
 
 ## Site Index
 
