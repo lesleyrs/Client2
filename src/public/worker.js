@@ -54119,6 +54119,7 @@ async function preloadClientAsync() {
     ];
     for (let i = 0; i < allMaps.length; i++) {
         const name = allMaps[i];
+        console.log(name);
         const map = new Uint8Array(await (await fetch(`data/pack/client/maps/${name}`)).arrayBuffer());
         const crc = Packet.getcrc(map, 0, map.length);
         PRELOADED.set(name, map);
@@ -54310,6 +54311,7 @@ async function preloadClientAsync() {
     ];
     for (let i = 0; i < allSongs.length; i++) {
         const name = allSongs[i];
+        console.log(name);
         const song = new Uint8Array(await (await fetch(`data/pack/client/songs/${name}`)).arrayBuffer());
         const crc = Packet.getcrc(song, 0, song.length);
         PRELOADED.set(name, song);
@@ -54367,6 +54369,7 @@ async function preloadClientAsync() {
     ];
     for (let i = 0; i < allJingles.length; i++) {
         const name = allJingles[i];
+        console.log(name);
         const jingle = new Uint8Array(await (await fetch(`data/pack/client/jingles/${name}`)).arrayBuffer()).subarray(4);
         const crc = Packet.getcrc(jingle, 0, jingle.length);
         PRELOADED.set(name, jingle);
@@ -64182,6 +64185,7 @@ class GameMap {
             'm53_53'
         ];
         for (let index = 0; index < maps.length; index++) {
+            console.log('init ', maps[index]);
             const [mx, mz] = maps[index].substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
