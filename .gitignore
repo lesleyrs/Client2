@@ -12,7 +12,7 @@ bz2.wasm
 /src/public/data/players
 /src/public/data/src
 
-# uncomment and provide files below to host webworker on github
+# comment lines and provide files below to host webworker on github
 
 # /src/public/data/*
 # /src/public/LoginThread.js
