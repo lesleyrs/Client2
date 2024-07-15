@@ -45938,20 +45938,20 @@ class Component {
     static PAUSE_BUTTON = 6;
     static componentNames = new Map();
     static components = [];
-    static async loadAsync(dir) {
-        if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
-            console.log('Warning: No interface.dat found.');
-            return;
-        }
-        const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
-        this.parse(dat);
-    }
     static load(dir) {
         if (!fs8.existsSync(`${dir}/server/interface.dat`)) {
             console.log('Warning: No interface.dat found.');
             return;
         }
         const dat = Packet.load(`${dir}/server/interface.dat`);
+        this.parse(dat);
+    }
+    static async loadAsync(dir) {
+        if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
+            console.log('Warning: No interface.dat found.');
+            return;
+        }
+        const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
         this.parse(dat);
     }
     static parse(dat) {
@@ -46988,34 +46988,34 @@ function tryParseArray(value, defaultValue) {
 
 // src/lostcity/util/Environment.ts
 var Environment_default = {
-    WEB_PORT: tryParseInt('', 8888),
-    WEB_CORS: tryParseBoolean('', true),
-    NODE_ID: tryParseInt('', 10),
-    NODE_PORT: tryParseInt('', 43594),
-    NODE_MEMBERS: tryParseBoolean('', true),
-    NODE_XPRATE: tryParseInt('', 1),
-    NODE_PRODUCTION: tryParseBoolean('', false),
-    NODE_KILLTIMER: tryParseInt('', 50),
-    NODE_ALLOW_CHEATS: tryParseBoolean('', true),
-    NODE_DEBUG: tryParseBoolean('', true),
-    NODE_DEBUG_PROFILE: tryParseBoolean('', false),
-    NODE_STAFF: tryParseArray(''?.split(','), ['pazaz']),
-    NODE_CLIENT_ROUTEFINDER: tryParseBoolean('', true),
-    NODE_SOCKET_TIMEOUT: tryParseBoolean('', true),
-    LOGIN_HOST: tryParseString('', 'localhost'),
-    LOGIN_PORT: tryParseInt('', 43500),
-    LOGIN_KEY: tryParseString('', ''),
-    DB_HOST: tryParseString('', 'localhost'),
-    DB_USER: tryParseString('', 'root'),
-    DB_PASS: tryParseString('', 'password'),
-    DB_NAME: tryParseString('', 'lostcity'),
-    BUILD_JAVA_PATH: tryParseString('', 'java'),
-    BUILD_STARTUP: tryParseBoolean('', true),
-    BUILD_STARTUP_UPDATE: tryParseBoolean('', true),
-    BUILD_VERIFY: tryParseBoolean('', true),
-    BUILD_VERIFY_FOLDER: tryParseBoolean('', true),
-    BUILD_VERIFY_PACK: tryParseBoolean('', true),
-    BUILD_SRC_DIR: tryParseString('', 'data/src')
+    WEB_PORT: tryParseInt(undefined, 8888),
+    WEB_CORS: tryParseBoolean(undefined, true),
+    NODE_ID: tryParseInt(undefined, 10),
+    NODE_PORT: tryParseInt(undefined, 43594),
+    NODE_MEMBERS: tryParseBoolean(undefined, true),
+    NODE_XPRATE: tryParseInt(undefined, 1),
+    NODE_PRODUCTION: tryParseBoolean(undefined, false),
+    NODE_KILLTIMER: tryParseInt(undefined, 50),
+    NODE_ALLOW_CHEATS: tryParseBoolean(undefined, true),
+    NODE_DEBUG: tryParseBoolean(undefined, true),
+    NODE_DEBUG_PROFILE: tryParseBoolean(undefined, false),
+    NODE_STAFF: tryParseArray(undefined?.split(','), ['pazaz']),
+    NODE_CLIENT_ROUTEFINDER: tryParseBoolean(undefined, true),
+    NODE_SOCKET_TIMEOUT: tryParseBoolean(undefined, true),
+    LOGIN_HOST: tryParseString(undefined, 'localhost'),
+    LOGIN_PORT: tryParseInt(undefined, 43500),
+    LOGIN_KEY: tryParseString(undefined, ''),
+    DB_HOST: tryParseString(undefined, 'localhost'),
+    DB_USER: tryParseString(undefined, 'root'),
+    DB_PASS: tryParseString(undefined, 'password'),
+    DB_NAME: tryParseString(undefined, 'lostcity'),
+    BUILD_JAVA_PATH: tryParseString(undefined, 'java'),
+    BUILD_STARTUP: tryParseBoolean(undefined, true),
+    BUILD_STARTUP_UPDATE: tryParseBoolean(undefined, true),
+    BUILD_VERIFY: tryParseBoolean(undefined, true),
+    BUILD_VERIFY_FOLDER: tryParseBoolean(undefined, true),
+    BUILD_VERIFY_PACK: tryParseBoolean(undefined, true),
+    BUILD_SRC_DIR: tryParseString(undefined, 'data/src')
 };
 
 // src/lostcity/cache/config/ObjType.ts
@@ -48732,7 +48732,7 @@ class SpotanimType extends ConfigType {
 }
 
 // src/lostcity/engine/GameMap.ts
-var {default: fs25} = () => ({});
+var {default: fs26} = () => ({});
 
 // src/lostcity/engine/script/ScriptPointer.ts
 function checkedHandler(pointer, handler) {
@@ -51980,7 +51980,7 @@ var NpcOps = {
         World_default.removeNpc(state.activeNpc, check(state.activeNpc.type, NpcTypeValid).respawnrate);
     }),
     [ScriptOpcode_default.NPC_DELAY]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.delay = state.popInt() + 1;
+        state.activeNpc.delay = World_default.currentTick + check(state.popInt(), NumberNotNull) + 1;
         state.execution = ScriptState.NPC_SUSPENDED;
     }),
     [ScriptOpcode_default.NPC_FACESQUARE]: checkedHandler(ActiveNpc, state => {
@@ -52662,7 +52662,7 @@ class EntityQueueState extends Linkable {
 }
 
 // src/lostcity/entity/NetworkPlayer.ts
-var {default: fs24} = () => ({});
+var {default: fs25} = () => ({});
 
 // src/lostcity/network/225/outgoing/prot/ServerProt.ts
 class ServerProt {
@@ -52795,7 +52795,6 @@ class PathingEntity extends Entity {
     targetZ = -1;
     apRange = 10;
     apRangeCalled = false;
-    alreadyFacedCoord = false;
     alreadyFacedEntity = false;
     mask = 0;
     exactStartX = -1;
@@ -53106,7 +53105,6 @@ class PathingEntity extends Entity {
         this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
-        this.alreadyFacedCoord = true;
         this.alreadyFacedEntity = true;
     }
     getCollisionStrategy() {
@@ -53162,11 +53160,9 @@ class PathingEntity extends Entity {
         } else if (this.target) {
             this.orientation = Position.face(this.x, this.z, this.target.x, this.target.z);
         }
-        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
+        this.faceX = -1;
+        this.faceZ = -1;
+        if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
             this.mask |= this.entitymask;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;
@@ -53255,6 +53251,17 @@ class Stack {
         }
         this.cursor = node?.nextHashable || null;
         return node;
+    }
+    clear() {
+        while (true) {
+            const node = this.sentinel.next;
+            if (node == this.sentinel) {
+                return;
+            }
+            if (node) {
+                node.unlink();
+            }
+        }
     }
 }
 
@@ -54827,9 +54834,12 @@ class PlayerInfo extends OutgoingMessage {
     jump2;
     walkDir;
     runDir;
+    deltaX;
+    deltaZ;
+    changedLevel;
     priority = ServerProtPriority.HIGH;
     accumulator = 0;
-    constructor(buildArea, level, x, z2, originX, originZ, uid, mask, tele, jump2, walkDir, runDir) {
+    constructor(buildArea, level, x, z2, originX, originZ, uid, mask, tele, jump2, walkDir, runDir, deltaX, deltaZ, changedLevel) {
         super();
         this.buildArea = buildArea;
         this.level = level;
@@ -54843,20 +54853,30 @@ class PlayerInfo extends OutgoingMessage {
         this.jump = jump2;
         this.walkDir = walkDir;
         this.runDir = runDir;
+        this.deltaX = deltaX;
+        this.deltaZ = deltaZ;
+        this.changedLevel = changedLevel;
     }
 }
 
 // src/lostcity/network/225/outgoing/codec/PlayerInfoEncoder.ts
 class PlayerInfoEncoder extends MessageEncoder {
     static BITS_NEW = 11 + 5 + 5 + 1 + 1;
-    static BITS_RUN = 1 + 2 + 3 + 3 + 1 + 1;
-    static BITS_WALK = 1 + 2 + 3 + 1 + 1;
+    static BITS_IDLE = 1;
+    static BITS_RUN = 1 + 2 + 3 + 3 + 1;
+    static BITS_WALK = 1 + 2 + 3 + 1;
     static BITS_EXTENDED = 1 + 2;
     static BYTES_LIMIT = 4997;
     prot = ServerProt.PLAYER_INFO;
     encode(buf, message) {
         const buildArea = message.buildArea;
-        buildArea.resize();
+        if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
+            buildArea.players.clear();
+            buildArea.lastResize = 0;
+            buildArea.viewDistance = BuildArea2.PREFERRED_VIEW_DISTANCE;
+        } else {
+            buildArea.resize();
+        }
         this.writeLocalPlayer(buf, message);
         this.writePlayers(buf, message);
         this.writeNewPlayers(buf, message);
@@ -54876,13 +54896,17 @@ class PlayerInfoEncoder extends MessageEncoder {
     test(_4) {
         return PlayerInfoEncoder.BYTES_LIMIT;
     }
+    willFit(message, buf, bitsToAdd, bytesToAdd) {
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= PlayerInfoEncoder.BYTES_LIMIT;
+    }
     writeLocalPlayer(buf, message) {
-        const {buildArea, uid, level, x, z: z2, mask, tele, jump: jump2, walkDir, runDir} = message;
+        const {buildArea, uid, level, x, z: z2, tele, jump: jump2, walkDir, runDir} = message;
         const player = World_default.getPlayerByUid(uid);
         if (!player) {
             return;
         }
-        const extendedInfo = mask > 0;
+        const extendedInfoSize = this.calculateExtendedInfo(player, message, true, false);
+        const extendedInfo = extendedInfoSize > 0;
         buf.bits();
         buf.pBit(1, tele || runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
         if (tele) {
@@ -54906,7 +54930,7 @@ class PlayerInfoEncoder extends MessageEncoder {
         }
         if (extendedInfo) {
             buildArea.extendedInfo.add({id: uid, added: false});
-            message.accumulator += this.calculateExtendedInfo(player, message, true, true);
+            message.accumulator += extendedInfoSize;
         }
     }
     writePlayers(buf, message) {
@@ -54920,9 +54944,10 @@ class PlayerInfoEncoder extends MessageEncoder {
                 buildArea.players.delete(uid);
                 continue;
             }
-            let extendedInfo = other.mask > 0;
+            const extendedInfoSize = this.calculateExtendedInfo(other, message, false, false);
+            let extendedInfo = extendedInfoSize > 0;
             const {walkDir, runDir} = other;
-            let bits = 0;
+            let bits = PlayerInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
                 bits = PlayerInfoEncoder.BITS_RUN;
             } else if (walkDir !== -1) {
@@ -54930,8 +54955,7 @@ class PlayerInfoEncoder extends MessageEncoder {
             } else if (extendedInfo) {
                 bits = PlayerInfoEncoder.BITS_EXTENDED;
             }
-            const updateSize = extendedInfo ? this.calculateExtendedInfo(other, message, false, false) : 0;
-            if (((buf.bitPos + bits) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            if (!this.willFit(message, buf, bits, extendedInfoSize)) {
                 extendedInfo = false;
             }
             buf.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
@@ -54949,15 +54973,16 @@ class PlayerInfoEncoder extends MessageEncoder {
             }
             if (extendedInfo) {
                 buildArea.extendedInfo.add({id: uid, added: false});
+                message.accumulator += extendedInfoSize;
             }
         }
     }
     writeNewPlayers(buf, message) {
         const buildArea = message.buildArea;
         for (const other of buildArea.getNearbyPlayers(message.uid, message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfo = !buildArea.hasAppearance(other.pid, other.lastAppearance);
-            const updateSize = extendedInfo ? this.calculateExtendedInfo(other, message, false, true) : 0;
-            if (((buf.bitPos + PlayerInfoEncoder.BITS_NEW + 11) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            const extendedInfoSize = this.calculateExtendedInfo(other, message, false, true);
+            const extendedInfo = extendedInfoSize > 0;
+            if (!this.willFit(message, buf, PlayerInfoEncoder.BITS_NEW + 11, extendedInfoSize)) {
                 break;
             }
             buf.pBit(11, other.pid);
@@ -54967,6 +54992,7 @@ class PlayerInfoEncoder extends MessageEncoder {
             buf.pBit(1, extendedInfo ? 1 : 0);
             if (extendedInfo) {
                 buildArea.extendedInfo.add({id: other.uid, added: true});
+                message.accumulator += extendedInfoSize;
             }
             buildArea.players.add(other.uid);
         }
@@ -54978,22 +55004,23 @@ class PlayerInfoEncoder extends MessageEncoder {
     writeExtendedInfo(player, message, buf, self2 = false, newlyObserved = false) {
         let mask = player.mask;
         if (newlyObserved) {
+            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+                mask |= Player2.FACE_COORD;
+            }
+            if (player.faceEntity !== -1) {
+                mask |= Player2.FACE_ENTITY;
+            }
+        }
+        if (self2 && (mask & Player2.CHAT) != 0) {
+            mask &= ~Player2.CHAT;
+        }
+        if (message.buildArea.hasAppearance(player.uid, player.lastAppearance) || !player.appearance) {
+            mask &= ~Player2.APPEARANCE;
+        } else {
             mask |= Player2.APPEARANCE;
-        }
-        if (newlyObserved && (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1)) {
-            mask |= Player2.FACE_COORD;
-        }
-        if (newlyObserved && player.faceEntity !== -1) {
-            mask |= Player2.FACE_ENTITY;
         }
         if (mask > 255) {
             mask |= Player2.BIG_UPDATE;
-        }
-        if (self2 && mask & Player2.CHAT) {
-            mask &= ~Player2.CHAT;
-        }
-        if (message.buildArea.hasAppearance(player.pid, player.lastAppearance)) {
-            mask &= ~Player2.APPEARANCE;
         }
         buf.p1(mask & 255);
         if (mask & Player2.BIG_UPDATE) {
@@ -55002,7 +55029,7 @@ class PlayerInfoEncoder extends MessageEncoder {
         if (mask & Player2.APPEARANCE) {
             buf.p1(player.appearance.length);
             buf.pdata(player.appearance, 0, player.appearance.length);
-            message.buildArea.saveAppearance(player.pid, player.lastAppearance);
+            message.buildArea.saveAppearance(player.uid, player.lastAppearance);
         }
         if (mask & Player2.ANIM) {
             buf.p2(player.animId);
@@ -55024,13 +55051,7 @@ class PlayerInfoEncoder extends MessageEncoder {
             buf.p1(player.baseLevels[PlayerStat_default.HITPOINTS]);
         }
         if (mask & Player2.FACE_COORD) {
-            if (player.faceX !== -1) {
-                player.alreadyFacedCoord = true;
-            }
-            if (newlyObserved && player.faceX !== -1) {
-                buf.p2(player.faceX);
-                buf.p2(player.faceZ);
-            } else if (newlyObserved && player.orientation !== -1) {
+            if (newlyObserved && player.orientation !== -1) {
                 const faceX = Position.moveX(player.x, player.orientation);
                 const faceZ = Position.moveZ(player.z, player.orientation);
                 buf.p2(faceX * 2 + 1);
@@ -55066,30 +55087,33 @@ class PlayerInfoEncoder extends MessageEncoder {
         let length = 0;
         let mask = player.mask;
         if (newlyObserved) {
+            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+                mask |= Player2.FACE_COORD;
+            }
+            if (player.faceEntity !== -1) {
+                mask |= Player2.FACE_ENTITY;
+            }
+        }
+        if (self2 && (mask & Player2.CHAT) != 0) {
+            mask &= ~Player2.CHAT;
+        }
+        if (message.buildArea.hasAppearance(player.uid, player.lastAppearance) || !player.appearance) {
+            mask &= ~Player2.APPEARANCE;
+        } else {
             mask |= Player2.APPEARANCE;
-        }
-        if (newlyObserved && (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1)) {
-            mask |= Player2.FACE_COORD;
-        }
-        if (newlyObserved && player.faceEntity !== -1) {
-            mask |= Player2.FACE_ENTITY;
         }
         if (mask > 255) {
             mask |= Player2.BIG_UPDATE;
         }
-        if (self2 && mask & Player2.CHAT) {
-            mask &= ~Player2.CHAT;
-        }
-        if (message.buildArea.hasAppearance(player.pid, player.lastAppearance)) {
-            mask &= ~Player2.APPEARANCE;
+        if (mask === 0) {
+            return 0;
         }
         length += 1;
         if (mask & Player2.BIG_UPDATE) {
             length += 1;
         }
         if (mask & Player2.APPEARANCE) {
-            length += 1;
-            length += player.appearance?.length ?? 0;
+            length += 1 + player.appearance.length;
         }
         if (mask & Player2.ANIM) {
             length += 3;
@@ -55098,7 +55122,7 @@ class PlayerInfoEncoder extends MessageEncoder {
             length += 2;
         }
         if (mask & Player2.SAY) {
-            length += (player.chat?.length ?? 0) + 1;
+            length += 1 + player.chat.length;
         }
         if (mask & Player2.DAMAGE) {
             length += 4;
@@ -55107,8 +55131,7 @@ class PlayerInfoEncoder extends MessageEncoder {
             length += 4;
         }
         if (mask & Player2.CHAT) {
-            length += 4;
-            length += player.message?.length ?? 0;
+            length += 4 + player.message.length;
         }
         if (mask & Player2.SPOTANIM) {
             length += 6;
@@ -56525,9 +56548,12 @@ class NpcInfo extends OutgoingMessage {
     z2;
     originX;
     originZ;
+    deltaX;
+    deltaZ;
+    changedLevel;
     priority = ServerProtPriority.HIGH;
     accumulator = 0;
-    constructor(buildArea, level, x, z2, originX, originZ) {
+    constructor(buildArea, level, x, z2, originX, originZ, deltaX, deltaZ, changedLevel) {
         super();
         this.buildArea = buildArea;
         this.level = level;
@@ -56535,12 +56561,16 @@ class NpcInfo extends OutgoingMessage {
         this.z = z2;
         this.originX = originX;
         this.originZ = originZ;
+        this.deltaX = deltaX;
+        this.deltaZ = deltaZ;
+        this.changedLevel = changedLevel;
     }
 }
 
 // src/lostcity/network/225/outgoing/codec/NpcInfoEncoder.ts
 class NpcInfoEncoder extends MessageEncoder {
     static BITS_NEW = 13 + 11 + 5 + 5 + 1;
+    static BITS_IDLE = 1;
     static BITS_RUN = 1 + 2 + 3 + 3 + 1;
     static BITS_WALK = 1 + 2 + 3 + 1;
     static BITS_EXTENDED = 1 + 2;
@@ -56548,6 +56578,9 @@ class NpcInfoEncoder extends MessageEncoder {
     prot = ServerProt.NPC_INFO;
     encode(buf, message) {
         const buildArea = message.buildArea;
+        if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
+            buildArea.npcs.clear();
+        }
         this.writeNpcs(buf, message);
         this.writeNewNpcs(buf, message);
         const extended = buildArea.extendedInfo;
@@ -56566,6 +56599,9 @@ class NpcInfoEncoder extends MessageEncoder {
     test(_4) {
         return NpcInfoEncoder.BYTES_LIMIT;
     }
+    willFit(message, buf, bitsToAdd, bytesToAdd) {
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= NpcInfoEncoder.BYTES_LIMIT;
+    }
     writeNpcs(buf, message) {
         const buildArea = message.buildArea;
         buf.bits();
@@ -56578,9 +56614,10 @@ class NpcInfoEncoder extends MessageEncoder {
                 buildArea.npcs.delete(nid);
                 continue;
             }
-            let extendedInfo = npc.mask > 0;
+            const extendedInfoSize = this.calculateExtendedInfo(npc, false);
+            let extendedInfo = extendedInfoSize > 0;
             const {walkDir, runDir} = npc;
-            let bits = 0;
+            let bits = NpcInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
                 bits = NpcInfoEncoder.BITS_RUN;
             } else if (walkDir !== -1) {
@@ -56588,8 +56625,7 @@ class NpcInfoEncoder extends MessageEncoder {
             } else if (extendedInfo) {
                 bits = NpcInfoEncoder.BITS_EXTENDED;
             }
-            const updateSize = extendedInfo ? this.calculateExtendedInfo(npc, false) : 0;
-            if (((buf.bitPos + bits) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            if (!this.willFit(message, buf, bits, extendedInfoSize)) {
                 extendedInfo = false;
             }
             buf.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
@@ -56607,15 +56643,16 @@ class NpcInfoEncoder extends MessageEncoder {
             }
             if (extendedInfo) {
                 buildArea.extendedInfo.add({id: nid, added: false});
+                message.accumulator += extendedInfoSize;
             }
         }
     }
     writeNewNpcs(buf, message) {
         const buildArea = message.buildArea;
         for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfo = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
-            const updateSize = extendedInfo ? this.calculateExtendedInfo(npc, true) : 0;
-            if (((buf.bitPos + NpcInfoEncoder.BITS_NEW + 13) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            const extendedInfoSize = this.calculateExtendedInfo(npc, true);
+            const extendedInfo = extendedInfoSize > 0;
+            if (!this.willFit(message, buf, NpcInfoEncoder.BITS_NEW + 13, extendedInfoSize)) {
                 break;
             }
             buf.pBit(13, npc.nid);
@@ -56625,6 +56662,7 @@ class NpcInfoEncoder extends MessageEncoder {
             buf.pBit(1, extendedInfo ? 1 : 0);
             if (extendedInfo) {
                 buildArea.extendedInfo.add({id: npc.nid, added: true});
+                message.accumulator += extendedInfoSize;
             }
             buildArea.npcs.add(npc.nid);
         }
@@ -56635,11 +56673,13 @@ class NpcInfoEncoder extends MessageEncoder {
     }
     writeExtendedInfo(npc, buf, newlyObserved) {
         let mask = npc.mask;
-        if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
-            mask |= Npc2.FACE_COORD;
-        }
-        if (newlyObserved && npc.faceEntity !== -1) {
-            mask |= Npc2.FACE_ENTITY;
+        if (newlyObserved) {
+            if (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1) {
+                mask |= Npc2.FACE_COORD;
+            }
+            if (npc.faceEntity !== -1) {
+                mask |= Npc2.FACE_ENTITY;
+            }
         }
         buf.p1(mask);
         if (mask & Npc2.ANIM) {
@@ -56670,13 +56710,7 @@ class NpcInfoEncoder extends MessageEncoder {
             buf.p2(npc.graphicDelay);
         }
         if (mask & Npc2.FACE_COORD) {
-            if (npc.faceX !== -1) {
-                npc.alreadyFacedCoord = true;
-            }
-            if (newlyObserved && npc.faceX != -1) {
-                buf.p2(npc.faceX);
-                buf.p2(npc.faceZ);
-            } else if (newlyObserved && npc.orientation != -1) {
+            if (newlyObserved && npc.orientation != -1) {
                 const faceX = Position.moveX(npc.x, npc.orientation);
                 const faceZ = Position.moveZ(npc.z, npc.orientation);
                 buf.p2(faceX * 2 + 1);
@@ -56690,11 +56724,16 @@ class NpcInfoEncoder extends MessageEncoder {
     calculateExtendedInfo(npc, newlyObserved) {
         let length = 0;
         let mask = npc.mask;
-        if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
-            mask |= Npc2.FACE_COORD;
+        if (newlyObserved) {
+            if (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1) {
+                mask |= Npc2.FACE_COORD;
+            }
+            if (npc.faceEntity !== -1) {
+                mask |= Npc2.FACE_ENTITY;
+            }
         }
-        if (newlyObserved && npc.faceEntity !== -1) {
-            mask |= Npc2.FACE_ENTITY;
+        if (mask === 0) {
+            return 0;
         }
         length += 1;
         if (mask & Npc2.ANIM) {
@@ -56704,7 +56743,7 @@ class NpcInfoEncoder extends MessageEncoder {
             length += 2;
         }
         if (mask & Npc2.SAY) {
-            length += npc.chat ? npc.chat.length + 1 : 1;
+            length += 1 + npc.chat.length;
         }
         if (mask & Npc2.DAMAGE) {
             length += 4;
@@ -57494,7 +57533,7 @@ class ZoneMap2 {
 }
 
 // src/lostcity/entity/BuildArea.ts
-class BuildArea {
+class BuildArea2 {
     static INTERVAL = 10;
     static PREFERRED_PLAYERS = 250;
     static PREFERRED_NPCS = 255;
@@ -57506,7 +57545,7 @@ class BuildArea {
     extendedInfo;
     appearances;
     forceViewDistance = false;
-    viewDistance = BuildArea.PREFERRED_VIEW_DISTANCE;
+    viewDistance = BuildArea2.PREFERRED_VIEW_DISTANCE;
     lastResize = 0;
     constructor() {
         this.npcs = new Set();
@@ -57520,15 +57559,15 @@ class BuildArea {
         if (this.forceViewDistance) {
             return;
         }
-        if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
+        if (this.players.size >= BuildArea2.PREFERRED_PLAYERS) {
             if (this.viewDistance > 1) {
                 this.viewDistance--;
             }
             this.lastResize = 0;
             return;
         }
-        if (++this.lastResize >= BuildArea.INTERVAL) {
-            if (this.viewDistance < BuildArea.PREFERRED_VIEW_DISTANCE) {
+        if (++this.lastResize >= BuildArea2.INTERVAL) {
+            if (this.viewDistance < BuildArea2.PREFERRED_VIEW_DISTANCE) {
                 this.viewDistance++;
             } else {
                 this.lastResize = 0;
@@ -57551,7 +57590,7 @@ class BuildArea {
     *getNearbyPlayers(uid, x, z2, originX, originZ) {
         players: for (const zoneIndex of this.proximitySort(x, z2, this.activeZones)) {
             for (const other of this.getNearby(World_default.getZoneIndex(zoneIndex).getAllPlayersSafe(), x, z2, originX, originZ, this.viewDistance)) {
-                if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
+                if (this.players.size >= BuildArea2.PREFERRED_PLAYERS) {
                     break players;
                 }
                 if (this.players.has(other.uid)) {
@@ -57567,7 +57606,7 @@ class BuildArea {
     *getNearbyNpcs(x, z2, originX, originZ) {
         npcs: for (const zoneIndex of this.proximitySort(x, z2, this.activeZones)) {
             for (const npc of this.getNearby(World_default.getZoneIndex(zoneIndex).getAllNpcsSafe(), x, z2, originX, originZ, 15)) {
-                if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
+                if (this.npcs.size >= BuildArea2.PREFERRED_NPCS) {
                     break npcs;
                 }
                 if (this.npcs.has(npc.nid)) {
@@ -57760,7 +57799,7 @@ class Player2 extends PathingEntity {
     lastLevels = new Uint8Array(21);
     originX = -1;
     originZ = -1;
-    buildArea = new BuildArea();
+    buildArea = new BuildArea2();
     lastMovement = 0;
     basReadyAnim = -1;
     basTurnOnSpot = -1;
@@ -58037,7 +58076,7 @@ class Player2 extends PathingEntity {
         this.refreshModalClose = true;
     }
     delayed() {
-        return this.delay > 0;
+        return this.delay > World_default.currentTick;
     }
     containsModalInterface() {
         return (this.modalState & 1) === 1 || (this.modalState & 2) === 2 || (this.modalState & 16) === 16;
@@ -58210,7 +58249,6 @@ class Player2 extends PathingEntity {
             const moved2 = this.updateMovement(false);
             if (moved2) {
                 this.alreadyFacedEntity = false;
-                this.alreadyFacedCoord = false;
                 this.lastMovement = World_default.currentTick + 1;
             }
             return;
@@ -58272,7 +58310,6 @@ class Player2 extends PathingEntity {
         const moved = this.updateMovement();
         if (moved) {
             this.alreadyFacedEntity = false;
-            this.alreadyFacedCoord = false;
             this.lastMovement = World_default.currentTick + 1;
         }
         if (this.target && (!this.interacted || this.apRangeCalled)) {
@@ -59856,7 +59893,7 @@ class ClientSocket {
     remoteAddress;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId;
+    uniqueId = typeof self !== 'undefined' ? (self.location.host.startsWith('https') ? self.crypto.randomUUID() : '0') : lw();
     encryptor = null;
     decryptor = null;
     in = new Uint8Array(5000);
@@ -59864,8 +59901,7 @@ class ClientSocket {
     inCount = new Uint8Array(256);
     out = new Packet(new Uint8Array(5000));
     player = null;
-    constructor(uniqueId, socket, remoteAddress, type = ClientSocket.TCP, state = -1) {
-        this.uniqueId = uniqueId;
+    constructor(socket, remoteAddress, type = ClientSocket.TCP, state = -1) {
         this.socket = socket;
         this.remoteAddress = remoteAddress;
         this.type = type;
@@ -59974,6 +60010,115 @@ class NullClientSocket extends ClientSocket {
     }
 }
 
+// src/lostcity/entity/PlayerLoading.ts
+var {default: fs24} = () => ({});
+class PlayerLoading {
+    static loadFromFile(name) {
+        const name37 = toBase37(name);
+        const safeName = fromBase37(name37);
+        let save;
+        if (fs24.existsSync(`data/players/${safeName}.sav`)) {
+            save = Packet.load(`data/players/${safeName}.sav`);
+        } else {
+            save = new Packet(new Uint8Array());
+        }
+        return PlayerLoading.load(name, save, null);
+    }
+    static load(name, sav, client) {
+        const name37 = toBase37(name);
+        const safeName = fromBase37(name37);
+        const player = client ? new NetworkPlayer2(safeName, name37, client) : new Player2(safeName, name37);
+        if (!Environment_default.NODE_PRODUCTION) {
+            player.staffModLevel = 3;
+        } else if (Environment_default.NODE_STAFF.find(name2 => name2 === safeName) !== undefined) {
+            player.staffModLevel = 3;
+        }
+        if (sav.data.length < 2) {
+            for (let i = 0; i < 21; i++) {
+                player.stats[i] = 0;
+                player.baseLevels[i] = 1;
+                player.levels[i] = 1;
+            }
+            player.stats[PlayerStat_default.HITPOINTS] = getExpByLevel(10);
+            player.baseLevels[PlayerStat_default.HITPOINTS] = 10;
+            player.levels[PlayerStat_default.HITPOINTS] = 10;
+            return player;
+        }
+        if (sav.g2() !== 8196) {
+            throw new Error('Invalid player save');
+        }
+        const version = sav.g2();
+        if (version > 3) {
+            throw new Error('Unsupported player save format');
+        }
+        sav.pos = sav.data.length - 4;
+        const crc = sav.g4();
+        if (crc != Packet.getcrc(sav.data, 0, sav.data.length - 4)) {
+            throw new Error('Player save corrupted');
+        }
+        sav.pos = 4;
+        player.x = sav.g2();
+        player.z = sav.g2();
+        player.level = sav.g1();
+        for (let i = 0; i < 7; i++) {
+            player.body[i] = sav.g1();
+            if (player.body[i] === 255) {
+                player.body[i] = -1;
+            }
+        }
+        for (let i = 0; i < 5; i++) {
+            player.colors[i] = sav.g1();
+        }
+        player.gender = sav.g1();
+        player.runenergy = sav.g2();
+        if (version >= 2) {
+            player.playtime = sav.g4();
+        } else {
+            player.playtime = sav.g2();
+        }
+        for (let i = 0; i < 21; i++) {
+            player.stats[i] = sav.g4();
+            player.baseLevels[i] = getLevelByExp(player.stats[i]);
+            player.levels[i] = sav.g1();
+        }
+        const varpCount = sav.g2();
+        for (let i = 0; i < varpCount; i++) {
+            player.vars[i] = sav.g4();
+        }
+        const invCount = sav.g1();
+        for (let i = 0; i < invCount; i++) {
+            const type = sav.g2();
+            const inv = player.getInventory(type);
+            if (inv) {
+                for (let j = 0; j < inv.capacity; j++) {
+                    const id = sav.g2();
+                    if (id === 0) {
+                        continue;
+                    }
+                    let count = sav.g1();
+                    if (count === 255) {
+                        count = sav.g4();
+                    }
+                    inv.set(j, {
+                        id: id - 1,
+                        count
+                    });
+                }
+            }
+        }
+        if (version >= 3) {
+            const afkZones = sav.g1();
+            for (let index = 0; index < afkZones; index++) {
+                player.afkZones[index] = sav.g4();
+            }
+            player.lastAfkZone = sav.g2();
+        }
+        player.combatLevel = player.getCombatLevel();
+        player.lastResponse = World_default.currentTick;
+        return player;
+    }
+}
+
 // src/lostcity/network/225/incoming/handler/ClientCheatHandler.ts
 class ClientCheatHandler extends MessageHandler {
     handle(message, player) {
@@ -60007,9 +60152,14 @@ class ClientCheatHandler extends MessageHandler {
                 console.log(`took = ${end - start} ms`);
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
-                for (let i = 0; i < 2000; i++) {
-                    const bot = new NetworkPlayer2(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
-                    bot.onLogin();
+                for (let i = 0; i < 1999; i++) {
+                    const bot = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), new NullClientSocket());
+                    World_default.addPlayer(bot);
+                }
+            } else if (cmd === 'lightbots') {
+                player.messageGame('Adding lightweight bots');
+                for (let i = 0; i < 1999; i++) {
+                    const bot = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), null);
                     World_default.addPlayer(bot);
                 }
             } else if (cmd === 'teleall') {
@@ -60019,7 +60169,7 @@ class ClientCheatHandler extends MessageHandler {
                     do {
                         const x = Math.floor(Math.random() * 64) + 3200;
                         const z2 = Math.floor(Math.random() * 64) + 3200;
-                        player2.teleport(x + Math.floor(Math.random() * 64) - 32, z2 + Math.floor(Math.random() * 64) - 32, 0);
+                        player2.teleJump(x + Math.floor(Math.random() * 64) - 32, z2 + Math.floor(Math.random() * 64) - 32, 0);
                     } while (isFlagged(player2.x, player2.z, player2.level, CollisionFlag.WALK_BLOCKED));
                 }
             } else if (cmd === 'moveall') {
@@ -61447,9 +61597,9 @@ class NetworkPlayer2 extends Player2 {
             return;
         }
         if (args.length > 0) {
-            fs24.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message} ${args.join(' ')}\n`);
+            fs25.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message} ${args.join(' ')}\n`);
         } else {
-            fs24.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message}\n`);
+            fs25.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message}\n`);
         }
     }
     updateMap() {
@@ -61495,10 +61645,28 @@ class NetworkPlayer2 extends Player2 {
         }
     }
     updatePlayers() {
-        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir));
+        this.write(
+            new PlayerInfo(
+                this.buildArea,
+                this.level,
+                this.x,
+                this.z,
+                this.originX,
+                this.originZ,
+                this.uid,
+                this.mask,
+                this.tele,
+                this.jump,
+                this.walkDir,
+                this.runDir,
+                Math.abs(this.lastX - this.x),
+                Math.abs(this.lastZ - this.z),
+                this.lastLevel !== this.level
+            )
+        );
     }
     updateNpcs() {
-        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ));
+        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, Math.abs(this.lastX - this.x), Math.abs(this.lastZ - this.z), this.lastLevel !== this.level));
     }
     updateZones() {
         const loadedZones = this.buildArea.loadedZones;
@@ -61921,7 +62089,7 @@ var PlayerOps = {
         if (state.activePlayer.lastMovement < World_default.currentTick) {
             return;
         }
-        state.activePlayer.delay = 1;
+        state.activePlayer.delay = World_default.currentTick + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
     [ScriptOpcode_default.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, state => {
@@ -61929,7 +62097,7 @@ var PlayerOps = {
         state.execution = ScriptState.COUNTDIALOG;
     }),
     [ScriptOpcode_default.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delay = World_default.currentTick + check(state.popInt(), NumberNotNull) + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
     [ScriptOpcode_default.P_OPHELD]: checkedHandler(ProtectedActivePlayer, state => {
@@ -63153,7 +63321,7 @@ class Npc2 extends PathingEntity {
         return MoveSpeed_default.WALK;
     }
     delayed() {
-        return this.delay > 0;
+        return this.delay > World_default.currentTick;
     }
     setTimer(interval) {
         this.timerInterval = interval;
@@ -63461,7 +63629,6 @@ class Npc2 extends PathingEntity {
         const moved = this.updateMovement();
         if (moved) {
             this.alreadyFacedEntity = false;
-            this.alreadyFacedCoord = false;
         }
         if (this.target && !this.interacted) {
             this.interacted = false;
@@ -63752,7 +63919,7 @@ class GameMap {
     init(zoneMap) {
         console.time('Loading game map');
         const path = 'data/pack/server/maps/';
-        const maps = fs25.readdirSync(path).filter(x => x[0] === 'm');
+        const maps = fs26.readdirSync(path).filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
             const [mx, mz] = maps[index].substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
@@ -64516,115 +64683,6 @@ class Isaac {
     }
 }
 
-// src/lostcity/entity/PlayerLoading.ts
-var {default: fs26} = () => ({});
-class PlayerLoading {
-    static loadFromFile(name) {
-        const name37 = toBase37(name);
-        const safeName = fromBase37(name37);
-        let save;
-        if (fs26.existsSync(`data/players/${safeName}.sav`)) {
-            save = Packet.load(`data/players/${safeName}.sav`);
-        } else {
-            save = new Packet(new Uint8Array());
-        }
-        return PlayerLoading.load(name, save, null);
-    }
-    static load(name, sav, client) {
-        const name37 = toBase37(name);
-        const safeName = fromBase37(name37);
-        const player = client ? new NetworkPlayer2(safeName, name37, client) : new Player2(safeName, name37);
-        if (sav.data.length < 2) {
-            for (let i = 0; i < 21; i++) {
-                player.stats[i] = 0;
-                player.baseLevels[i] = 1;
-                player.levels[i] = 1;
-            }
-            player.stats[PlayerStat_default.HITPOINTS] = getExpByLevel(10);
-            player.baseLevels[PlayerStat_default.HITPOINTS] = 10;
-            player.levels[PlayerStat_default.HITPOINTS] = 10;
-            return player;
-        }
-        if (sav.g2() !== 8196) {
-            throw new Error('Invalid player save');
-        }
-        const version = sav.g2();
-        if (version > 3) {
-            throw new Error('Unsupported player save format');
-        }
-        sav.pos = sav.data.length - 4;
-        const crc = sav.g4();
-        if (crc != Packet.getcrc(sav.data, 0, sav.data.length - 4)) {
-            throw new Error('Player save corrupted');
-        }
-        sav.pos = 4;
-        player.x = sav.g2();
-        player.z = sav.g2();
-        player.level = sav.g1();
-        for (let i = 0; i < 7; i++) {
-            player.body[i] = sav.g1();
-            if (player.body[i] === 255) {
-                player.body[i] = -1;
-            }
-        }
-        for (let i = 0; i < 5; i++) {
-            player.colors[i] = sav.g1();
-        }
-        player.gender = sav.g1();
-        player.runenergy = sav.g2();
-        if (version >= 2) {
-            player.playtime = sav.g4();
-        } else {
-            player.playtime = sav.g2();
-        }
-        for (let i = 0; i < 21; i++) {
-            player.stats[i] = sav.g4();
-            player.baseLevels[i] = getLevelByExp(player.stats[i]);
-            player.levels[i] = sav.g1();
-        }
-        const varpCount = sav.g2();
-        for (let i = 0; i < varpCount; i++) {
-            player.vars[i] = sav.g4();
-        }
-        const invCount = sav.g1();
-        for (let i = 0; i < invCount; i++) {
-            const type = sav.g2();
-            const inv = player.getInventory(type);
-            if (inv) {
-                for (let j = 0; j < inv.capacity; j++) {
-                    const id = sav.g2();
-                    if (id === 0) {
-                        continue;
-                    }
-                    let count = sav.g1();
-                    if (count === 255) {
-                        count = sav.g4();
-                    }
-                    inv.set(j, {
-                        id: id - 1,
-                        count
-                    });
-                }
-            }
-        }
-        if (version >= 3) {
-            const afkZones = sav.g1();
-            for (let index = 0; index < afkZones; index++) {
-                player.afkZones[index] = sav.g4();
-            }
-            player.lastAfkZone = sav.g2();
-        }
-        player.combatLevel = player.getCombatLevel();
-        player.lastResponse = World_default.currentTick;
-        if (!Environment_default.NODE_PRODUCTION) {
-            player.staffModLevel = 3;
-        } else if (Environment_default.NODE_STAFF.find(name2 => name2 === safeName) !== undefined) {
-            player.staffModLevel = 3;
-        }
-        return player;
-    }
-}
-
 // src/lostcity/util/WorkerFactory.ts
 var {Worker: NodeWorker} = () => ({});
 function createWorker(fileName) {
@@ -65262,8 +65320,8 @@ class World35 {
         this.zoneMap = new ZoneMap2();
         this.invs = new Set();
         this.newPlayers = new Set();
-        this.players = new PlayerList(World35.PLAYERS);
-        this.npcs = new NpcList(World35.NPCS);
+        this.players = new PlayerList(World35.PLAYERS - 1);
+        this.npcs = new NpcList(World35.NPCS - 1);
         this.zonesTracking = new Map();
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
@@ -65731,9 +65789,6 @@ class World35 {
             }
             try {
                 if (npc.delayed()) {
-                    npc.delay--;
-                }
-                if (npc.delayed()) {
                     continue;
                 }
                 if (npc.activeScript) {
@@ -65758,9 +65813,6 @@ class World35 {
         for (const player of this.players) {
             try {
                 player.playtime++;
-                if (player.delayed()) {
-                    player.delay--;
-                }
                 if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
                     player.executeScript(player.activeScript, true);
                 }
@@ -65828,23 +65880,24 @@ class World35 {
     async processLogins() {
         const start = Date.now();
         player: for (const player of this.newPlayers) {
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
             for (const other of this.players) {
                 if (player.username !== other.username) {
                     continue;
                 }
-                player.client?.send(LoginResponse.LOGGED_IN);
-                player.client?.close();
+                if (isNetworkPlayer(player) && player.client) {
+                    player.client.send(LoginResponse.LOGGED_IN);
+                    player.client.close();
+                }
                 continue player;
             }
             let pid;
             try {
-                pid = this.getNextPid(player.client);
+                pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
             } catch (e) {
-                player.client?.send(LoginResponse.WORLD_FULL);
-                player.client?.close();
+                if (isNetworkPlayer(player)) {
+                    player.client?.send(LoginResponse.WORLD_FULL);
+                    player.client?.close();
+                }
                 continue;
             }
             this.players.set(pid, player);
@@ -65856,7 +65909,7 @@ class World35 {
             if (this.shutdownTick > -1) {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
-            if (player.client) {
+            if (isNetworkPlayer(player) && player.client) {
                 player.client.state = 1;
                 if (player.staffModLevel >= 2) {
                     player.client.send(LoginResponse.STAFF_MOD_LEVEL);
@@ -65893,6 +65946,8 @@ class World35 {
         this.cycleStats[WorldStat_default.BANDWIDTH_OUT] = 0;
         for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
+                player.highPriorityOut.clear();
+                player.lowPriorityOut.clear();
                 continue;
             }
             try {
@@ -66318,7 +66373,7 @@ var World_default = new World35();
 
 // src/lostcity/server/WorkerServer.ts
 class WorkerServer {
-    socket = new ClientSocket(self.location.host.startsWith('https') ? self.crypto.randomUUID() : '0', null, '127.0.0.1');
+    socket = new ClientSocket(null, '127.0.0.1');
     constructor() {}
     start() {
         const seed = new Packet(new Uint8Array(4 + 4));
