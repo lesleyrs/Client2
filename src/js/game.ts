@@ -82,25 +82,15 @@ class Game extends Client {
             await Bzip.load(await (await fetch('bz2.wasm')).arrayBuffer());
             this.db = new Database(await Database.openDatabase());
 
+            let checksums: Packet;
             if (Game.getParameter('world') !== '999') {
-                const checksums: Packet = new Packet(new Uint8Array(await downloadUrl(`${Client.httpAddress}/crc`)));
-                for (let i: number = 0; i < 9; i++) {
-                    this.archiveChecksums[i] = checksums.g4;
-                }
+                checksums = new Packet(new Uint8Array(await downloadUrl(`${Client.httpAddress}/crc`)));
             } else {
-                const archives: string[] = ['config', 'crc', 'interface', 'media', 'models', 'sounds', 'textures', 'title', 'wordenc'];
-                try {
-                    const responses: Response[] = await Promise.all(archives.map((url: string): Promise<Response> => fetch(`${Client.clientversion}/archives/${url}`, {cache: 'no-cache'})));
-                    if (responses.some((response: Response): boolean => response.ok === false)) {
-                        throw new Error();
-                    }
-                    const data: ArrayBuffer[] = await Promise.all(responses.map((response: Response): Promise<ArrayBuffer> => response.arrayBuffer()));
-                    for (let i: number = 0; i < data.length; i++) {
-                        await this.db?.cachesave(archives[i], new Int8Array(data[i]));
-                    }
-                } catch (e) {
-                    console.error(e);
-                }
+                checksums = new Packet(new Uint8Array(await downloadUrl('data/pack/client/crc')));
+            }
+
+            for (let i: number = 0; i < 9; i++) {
+                this.archiveChecksums[i] = checksums.g4;
             }
 
             if (!Client.lowMemory) {
@@ -5055,10 +5045,8 @@ class Game extends Client {
                     let data: Int8Array | undefined;
                     if (landCrc !== 0) {
                         data = await this.db?.cacheload(`m${mapsquareX}_${mapsquareZ}`);
-                        if (Game.getParameter('world') !== '999') {
-                            if (data && Packet.crc32(data) !== landCrc) {
-                                data = undefined;
-                            }
+                        if (data && Packet.crc32(data) !== landCrc) {
+                            data = undefined;
                         }
                         if (!data) {
                             this.sceneState = 0;
@@ -5072,10 +5060,8 @@ class Game extends Client {
                     }
                     if (locCrc !== 0) {
                         data = await this.db?.cacheload(`l${mapsquareX}_${mapsquareZ}`);
-                        if (Game.getParameter('world') !== '999') {
-                            if (data && Packet.crc32(data) !== locCrc) {
-                                data = undefined;
-                            }
+                        if (data && Packet.crc32(data) !== locCrc) {
+                            data = undefined;
                         }
                         if (!data) {
                             this.sceneState = 0;

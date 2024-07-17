@@ -711,10 +711,8 @@ export abstract class Client extends GameShell {
     protected loadArchive = async (filename: string, displayName: string, crc: number, progress: number): Promise<Jagfile> => {
         let retry: number = 5;
         let data: Int8Array | undefined = await this.db?.cacheload(filename);
-        if (GameShell.getParameter('world') !== '999') {
-            if (data && Packet.crc32(data) !== crc) {
-                data = undefined;
-            }
+        if (data && Packet.crc32(data) !== crc) {
+            data = undefined;
         }
 
         if (data) {
@@ -725,7 +723,11 @@ export abstract class Client extends GameShell {
             await this.showProgress(progress, `Requesting ${displayName}`);
 
             try {
-                data = await downloadUrl(`${Client.httpAddress}/${filename}${crc}`);
+                if (GameShell.getParameter('world') !== '999') {
+                    data = await downloadUrl(`${Client.httpAddress}/${filename}${crc}`);
+                } else {
+                    data = await downloadUrl(`data/pack/client/${filename}`);
+                }
             } catch (e) {
                 data = undefined;
                 for (let i: number = retry; i > 0; i--) {
@@ -744,10 +746,8 @@ export abstract class Client extends GameShell {
 
     protected setMidi = async (name: string, crc: number, length: number): Promise<void> => {
         let data: Int8Array | undefined = await this.db?.cacheload(name + '.mid');
-        if (GameShell.getParameter('world') !== '999') {
-            if (data && crc !== 12345678 && Packet.crc32(data) !== crc) {
-                data = undefined;
-            }
+        if (data && crc !== 12345678 && Packet.crc32(data) !== crc) {
+            data = undefined;
         }
 
         if (!data) {
