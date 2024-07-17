@@ -51008,9 +51008,15 @@ var InvOps = {
             throw new Error(`dummyitem in non-dummyinv: ${objType.debugname} -> ${invType.debugname}`);
         }
         const player = state.activePlayer;
-        const overflow = count - player.invAdd(invType.id, objType.id, count);
+        const overflow = count - player.invAdd(invType.id, objType.id, count, false);
         if (overflow > 0) {
-            World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, objType.id, overflow), player.pid, 200);
+            if (!objType.stackable || overflow === 1) {
+                for (let i = 0; i < overflow; i++) {
+                    World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, objType.id, 1), player.pid, 200);
+                }
+            } else {
+                World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, objType.id, overflow), player.pid, 200);
+            }
         }
     }),
     [ScriptOpcode_default.INV_CHANGESLOT]: checkedHandler(ActivePlayer, state => {
@@ -51086,10 +51092,19 @@ var InvOps = {
         }
         const objType = ObjType.get(obj.id);
         player.playerLog('Dropped item from', invType.debugname, objType.debugname);
-        const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle_default.DESPAWN, obj.id, completed);
-        World_default.addObj(floorObj, player.pid, duration);
-        state.activeObj = floorObj;
-        state.pointerAdd(ActiveObj[state.intOperand]);
+        if (!objType.stackable || completed === 1) {
+            for (let i = 0; i < completed; i++) {
+                const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle_default.DESPAWN, obj.id, 1);
+                World_default.addObj(floorObj, player.pid, duration);
+                state.activeObj = floorObj;
+                state.pointerAdd(ActiveObj[state.intOperand]);
+            }
+        } else {
+            const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle_default.DESPAWN, obj.id, completed);
+            World_default.addObj(floorObj, player.pid, duration);
+            state.activeObj = floorObj;
+            state.pointerAdd(ActiveObj[state.intOperand]);
+        }
     }),
     [ScriptOpcode_default.INV_FREESPACE]: checkedHandler(ActivePlayer, state => {
         const invType = check(state.popInt(), InvTypeValid);
@@ -51135,7 +51150,14 @@ var InvOps = {
         const player = state.activePlayer;
         const {overflow, fromObj} = player.invMoveFromSlot(fromInvType.id, toInvType.id, fromSlot);
         if (overflow > 0) {
-            World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, fromObj, overflow), player.pid, 200);
+            const objType = ObjType.get(fromObj);
+            if (!objType.stackable || overflow === 1) {
+                for (let i = 0; i < overflow; i++) {
+                    World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, fromObj, 1), player.pid, 200);
+                }
+            } else {
+                World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, fromObj, overflow), player.pid, 200);
+            }
         }
     }),
     [ScriptOpcode_default.INV_MOVETOSLOT]: checkedHandler(ActivePlayer, state => {
@@ -51199,9 +51221,15 @@ var InvOps = {
         if (completed == 0) {
             return;
         }
-        const overflow = count - player.invAdd(toInvType.id, objType.id, completed);
+        const overflow = count - player.invAdd(toInvType.id, objType.id, completed, false);
         if (overflow > 0) {
-            World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, objType.id, overflow), player.pid, 200);
+            if (!objType.stackable || overflow === 1) {
+                for (let i = 0; i < overflow; i++) {
+                    World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, objType.id, 1), player.pid, 200);
+                }
+            } else {
+                World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, objType.id, overflow), player.pid, 200);
+            }
         }
     }),
     [ScriptOpcode_default.INV_MOVEITEM_CERT]: checkedHandler(ActivePlayer, state => {
@@ -51225,7 +51253,7 @@ var InvOps = {
         if (objType.certtemplate === -1 && objType.certlink >= 0) {
             finalObj = objType.certlink;
         }
-        const overflow = count - player.invAdd(toInvType.id, finalObj, completed);
+        const overflow = count - player.invAdd(toInvType.id, finalObj, completed, false);
         if (overflow > 0) {
             World_default.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle_default.DESPAWN, finalObj, overflow), player.pid, 200);
         }
@@ -52785,7 +52813,6 @@ class PathingEntity extends Entity {
     lastCrawl = false;
     walktrigger = -1;
     walktriggerArg = 0;
-    orientation = Direction.SOUTH;
     interacted = false;
     repathed = false;
     target = null;
@@ -52806,6 +52833,8 @@ class PathingEntity extends Entity {
     exactMoveDirection = -1;
     faceX = -1;
     faceZ = -1;
+    orientationX = -1;
+    orientationZ = -1;
     faceEntity = -1;
     damageTaken = -1;
     damageType = -1;
@@ -52882,7 +52911,8 @@ class PathingEntity extends Entity {
         const previousZ = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
-        this.orientation = dir;
+        this.orientationX = Position.moveX(this.x, dir) * 2 + 1;
+        this.orientationZ = Position.moveZ(this.z, dir) * 2 + 1;
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
         return dir;
@@ -52974,7 +53004,7 @@ class PathingEntity extends Entity {
             return false;
         }
         if (target instanceof PathingEntity) {
-            return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
+            return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, -1, -2);
         } else if (target instanceof Loc) {
             const forceapproach = LocType.get(target.type).forceapproach;
             return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
@@ -53029,9 +53059,13 @@ class PathingEntity extends Entity {
         }
         this.targetX = this.target.x;
         this.targetZ = this.target.z;
+        const faceX = this.target.x * 2 + this.target.width;
+        const faceZ = this.target.z * 2 + this.target.length;
+        this.orientationX = faceX;
+        this.orientationZ = faceZ;
         if (this.moveStrategy === MoveStrategy_default.SMART) {
             if (this.target instanceof PathingEntity) {
-                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
+                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, 0, -2));
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
                 this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
@@ -53072,6 +53106,10 @@ class PathingEntity extends Entity {
         this.targetZ = target.z;
         this.apRange = 10;
         this.apRangeCalled = false;
+        const faceX = target.x * 2 + target.width;
+        const faceZ = target.z * 2 + target.length;
+        this.orientationX = faceX;
+        this.orientationZ = faceZ;
         if (target instanceof Player2) {
             const pid = target.pid + 32768;
             if (this.faceEntity !== pid) {
@@ -53084,14 +53122,10 @@ class PathingEntity extends Entity {
                 this.faceEntity = nid;
                 this.mask |= this.entitymask;
             }
-        } else {
-            const faceX = target.x * 2 + target.width;
-            const faceZ = target.z * 2 + target.length;
-            if (this.faceX !== faceX || this.faceZ !== faceZ) {
-                this.faceX = faceX;
-                this.faceZ = faceZ;
-                this.mask |= this.coordmask;
-            }
+        } else if (this.faceX !== faceX || this.faceZ !== faceZ) {
+            this.faceX = faceX;
+            this.faceZ = faceZ;
+            this.mask |= this.coordmask;
         }
         if (interaction === Interaction_default.SCRIPT) {
             this.pathToTarget();
@@ -53155,13 +53189,6 @@ class PathingEntity extends Entity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
-        if (this.faceX !== -1) {
-            this.orientation = Position.face(this.x, this.z, this.faceX, this.faceZ);
-        } else if (this.target) {
-            this.orientation = Position.face(this.x, this.z, this.target.x, this.target.z);
-        }
-        this.faceX = -1;
-        this.faceZ = -1;
         if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
             this.mask |= this.entitymask;
             this.faceEntity = -1;
@@ -53267,6 +53294,1490 @@ class Stack {
 
 // src/lostcity/server/PreloadedPacks.ts
 var {default: fs23} = () => ({});
+
+// src/lostcity/server/PreloadedDirs.ts
+var maps = [
+    'm52_58',
+    'l50_57',
+    'l36_150',
+    'l48_50',
+    'm53_50',
+    'm51_147',
+    'l34_73',
+    'm43_73',
+    'l45_76',
+    'l41_149',
+    'l39_150',
+    'l50_153',
+    'l39_155',
+    'l42_144',
+    'm40_150',
+    'l47_58',
+    'l48_152',
+    'l47_62',
+    'm40_149',
+    'l48_62',
+    'm38_153',
+    'l47_150',
+    'm50_149',
+    'm37_152',
+    'm39_74',
+    'l48_156',
+    'm43_145',
+    'l36_73',
+    'l49_48',
+    'l48_52',
+    'l51_55',
+    'l45_57',
+    'l39_72',
+    'l36_154',
+    'l37_49',
+    'l41_47',
+    'm46_149',
+    'm41_75',
+    'l46_56',
+    'l52_60',
+    'l44_48',
+    'm37_150',
+    'l32_72',
+    'm46_53',
+    'l46_46',
+    'm34_70',
+    'm40_74',
+    'l49_58',
+    'm35_76',
+    'm37_54',
+    'l38_52',
+    'm39_45',
+    'm51_56',
+    'm41_151',
+    'l48_51',
+    'l36_74',
+    'm43_56',
+    'm44_53',
+    'l46_49',
+    'm51_61',
+    'l47_48',
+    'l47_50',
+    'l46_55',
+    'l43_55',
+    'l47_53',
+    'l45_60',
+    'm39_147',
+    'm36_154',
+    'm47_150',
+    'l50_152',
+    'l39_74',
+    'm48_48',
+    'm44_146',
+    'm50_59',
+    'l47_153',
+    'l47_54',
+    'm39_149',
+    'l44_46',
+    'l32_75',
+    'l52_49',
+    'm48_47',
+    'm33_71',
+    'l44_53',
+    'l50_62',
+    'l45_150',
+    'l38_155',
+    'm52_54',
+    'l36_153',
+    'm50_46',
+    'l52_51',
+    'm32_74',
+    'm41_146',
+    'm51_48',
+    'l44_55',
+    'l43_49',
+    'm50_53',
+    'l33_76',
+    'l43_51',
+    'l45_155',
+    'm46_152',
+    'm46_75',
+    'l49_62',
+    'm49_53',
+    'l37_72',
+    'm46_48',
+    'm39_48',
+    'm39_46',
+    'l39_151',
+    'l47_60',
+    'm42_73',
+    'l40_48',
+    'l49_153',
+    'm47_50',
+    'l43_52',
+    'm34_73',
+    'm53_49',
+    'm40_51',
+    'l48_53',
+    'l53_50',
+    'l49_154',
+    'l47_55',
+    'm37_51',
+    'm45_154',
+    'm32_75',
+    'm43_75',
+    'm49_62',
+    'l40_153',
+    'l42_55',
+    'l49_61',
+    'l51_50',
+    'm41_74',
+    'm47_53',
+    'l50_58',
+    'l44_49',
+    'l44_75',
+    'l40_54',
+    'm49_48',
+    'm44_148',
+    'm42_50',
+    'm40_53',
+    'm42_53',
+    'm35_75',
+    'l42_72',
+    'l38_54',
+    'm35_20',
+    'm45_145',
+    'm40_52',
+    'l34_72',
+    'l44_54',
+    'l40_45',
+    'l37_51',
+    'l49_59',
+    'l44_45',
+    'l51_54',
+    'l39_76',
+    'l46_48',
+    'l42_54',
+    'm50_153',
+    'l48_54',
+    'l45_152',
+    'm44_149',
+    'l47_149',
+    'm46_56',
+    'l37_152',
+    'm49_149',
+    'm50_60',
+    'm42_152',
+    'm37_75',
+    'l45_52',
+    'l43_50',
+    'l41_75',
+    'm41_54',
+    'm52_47',
+    'm44_145',
+    'l33_73',
+    'l51_154',
+    'm44_151',
+    'm49_47',
+    'l42_152',
+    'l38_55',
+    'm52_53',
+    'm47_49',
+    'm39_72',
+    'l43_54',
+    'm49_153',
+    'l47_56',
+    'm37_74',
+    'm49_52',
+    'm37_148',
+    'l32_70',
+    'm31_75',
+    'm44_155',
+    'l47_61',
+    'm41_72',
+    'l51_59',
+    'l36_146',
+    'l52_56',
+    'm41_51',
+    'm47_56',
+    'l48_59',
+    'l41_46',
+    'm44_49',
+    'l36_72',
+    'm49_51',
+    'l38_146',
+    'm41_56',
+    'm46_50',
+    'l48_154',
+    'l46_161',
+    'm37_49',
+    'l49_47',
+    'l40_148',
+    'm46_150',
+    'l42_52',
+    'l49_49',
+    'm45_75',
+    'm45_52',
+    'l37_149',
+    'm36_150',
+    'l37_150',
+    'm49_56',
+    'm38_149',
+    'l40_150',
+    'm51_53',
+    'l44_149',
+    'm48_156',
+    'l50_55',
+    'm29_75',
+    'm42_51',
+    'l38_154',
+    'l39_48',
+    'm47_153',
+    'm41_46',
+    'm45_60',
+    'l45_154',
+    'm44_75',
+    'l37_74',
+    'm47_55',
+    'm38_47',
+    'l45_59',
+    'm50_152',
+    'm36_54',
+    'm45_151',
+    'l51_48',
+    'm46_153',
+    'l50_52',
+    'l41_153',
+    'm40_45',
+    'm39_152',
+    'l44_152',
+    'l40_152',
+    'l52_154',
+    'l50_150',
+    'm45_74',
+    'l37_54',
+    'm47_57',
+    'm50_48',
+    'l39_148',
+    'm37_154',
+    'm45_58',
+    'm49_156',
+    'l44_144',
+    'l52_54',
+    'm42_54',
+    'm43_54',
+    'l45_58',
+    'l47_59',
+    'm48_57',
+    'm50_61',
+    'l51_52',
+    'm41_47',
+    'm39_47',
+    'l37_148',
+    'l36_76',
+    'm41_52',
+    'm45_47',
+    'l48_48',
+    'm50_49',
+    'm34_75',
+    'm46_46',
+    'm38_148',
+    'l34_70',
+    'l52_48',
+    'l39_153',
+    'm44_48',
+    'm42_74',
+    'l45_62',
+    'l46_154',
+    'l52_57',
+    'l49_50',
+    'm43_74',
+    'l41_53',
+    'm42_145',
+    'l45_55',
+    'l45_146',
+    'l44_50',
+    'l43_154',
+    'm38_155',
+    'm44_144',
+    'l33_72',
+    'l33_74',
+    'm39_76',
+    'l49_52',
+    'm49_50',
+    'l50_47',
+    'm40_54',
+    'm47_54',
+    'l41_151',
+    'l49_156',
+    'm38_150',
+    'l29_75',
+    'm44_50',
+    'm38_151',
+    'm48_154',
+    'm41_153',
+    'm38_45',
+    'l45_49',
+    'm43_53',
+    'l49_46',
+    'm38_154',
+    'l42_146',
+    'm32_71',
+    'm38_52',
+    'l45_74',
+    'm45_61',
+    'm47_161',
+    'l53_52',
+    'l46_152',
+    'm47_58',
+    'l36_149',
+    'm36_52',
+    'l49_148',
+    'm46_47',
+    'm50_55',
+    'm44_45',
+    'l50_50',
+    'm45_48',
+    'm46_58',
+    'l43_53',
+    'l38_147',
+    'l44_72',
+    'm37_53',
+    'l41_146',
+    'm48_61',
+    'l52_46',
+    'm45_56',
+    'l46_53',
+    'l47_52',
+    'l44_73',
+    'm45_57',
+    'm38_73',
+    'm39_49',
+    'l35_76',
+    'l39_147',
+    'm45_150',
+    'l45_54',
+    'm52_153',
+    'l46_61',
+    'm50_56',
+    'l41_72',
+    'l44_52',
+    'm46_55',
+    'l39_154',
+    'l46_50',
+    'l48_153',
+    'l50_48',
+    'm52_57',
+    'm44_152',
+    'm51_154',
+    'l51_47',
+    'l51_60',
+    'l47_57',
+    'm43_153',
+    'm39_53',
+    'l48_55',
+    'l36_54',
+    'm51_60',
+    'l46_51',
+    'm34_74',
+    'l40_52',
+    'l32_74',
+    'm53_52',
+    'm34_72',
+    'l40_53',
+    'm47_152',
+    'm44_52',
+    'm38_51',
+    'l45_50',
+    'm51_47',
+    'l46_58',
+    'l52_62',
+    'm49_154',
+    'l39_45',
+    'm42_75',
+    'm38_55',
+    'm42_72',
+    'l48_49',
+    'm49_61',
+    'l49_53',
+    'm50_54',
+    'l42_50',
+    'm33_70',
+    'm40_46',
+    'm49_155',
+    'm38_146',
+    'm52_46',
+    'm41_48',
+    'm45_59',
+    'l39_47',
+    'm44_47',
+    'm46_51',
+    'm36_72',
+    'm47_148',
+    'l38_47',
+    'm48_155',
+    'm43_51',
+    'm40_73',
+    'l40_50',
+    'l45_75',
+    'l43_56',
+    'l38_149',
+    'm43_46',
+    'l30_75',
+    'l40_75',
+    'm50_47',
+    'l40_72',
+    'm44_51',
+    'l42_73',
+    'm43_154',
+    'l46_75',
+    'l43_46',
+    'm44_74',
+    'm44_55',
+    'l46_57',
+    'm37_149',
+    'm45_46',
+    'l39_149',
+    'l38_73',
+    'm38_152',
+    'l40_55',
+    'm41_149',
+    'l37_50',
+    'm49_46',
+    'm46_62',
+    'm32_72',
+    'm47_62',
+    'm42_56',
+    'm48_153',
+    'm52_55',
+    'l40_46',
+    'l45_56',
+    'm48_59',
+    'm52_49',
+    'l46_59',
+    'l50_59',
+    'm42_146',
+    'm51_58',
+    'l38_53',
+    'm45_51',
+    'l44_150',
+    'm48_50',
+    'l51_62',
+    'm52_56',
+    'm45_54',
+    'm38_46',
+    'l35_20',
+    'm47_160',
+    'm49_49',
+    'l52_53',
+    'l43_153',
+    'l43_73',
+    'l51_46',
+    'l42_51',
+    'm48_58',
+    'm45_153',
+    'l49_60',
+    'm37_50',
+    'l34_76',
+    'l36_147',
+    'l47_148',
+    'm41_154',
+    'm46_57',
+    'm48_149',
+    'm52_51',
+    'l43_45',
+    'm45_49',
+    'm48_51',
+    'l32_73',
+    'l45_61',
+    'm39_154',
+    'm49_59',
+    'l47_161',
+    'l50_51',
+    'l36_52',
+    'm30_75',
+    'l46_149',
+    'm36_153',
+    'l38_150',
+    'l48_60',
+    'm51_49',
+    'm36_74',
+    'l38_46',
+    'l37_48',
+    'm53_51',
+    'm40_147',
+    'm36_149',
+    'l46_54',
+    'm52_61',
+    'm49_57',
+    'm36_147',
+    'm51_55',
+    'm46_161',
+    'm45_76',
+    'm39_75',
+    'l53_49',
+    'l42_153',
+    'm40_75',
+    'l33_70',
+    'm42_55',
+    'l50_54',
+    'l43_74',
+    'm48_52',
+    'm49_148',
+    'l51_56',
+    'm43_52',
+    'l51_58',
+    'l40_49',
+    'm45_45',
+    'l45_53',
+    'l46_52',
+    'l51_51',
+    'm42_153',
+    'm48_152',
+    'm38_54',
+    'l34_71',
+    'l47_160',
+    'm45_148',
+    'm52_59',
+    'm51_52',
+    'm37_146',
+    'l45_145',
+    'm39_50',
+    'l42_151',
+    'l43_72',
+    'l42_49',
+    'm40_49',
+    'l47_152',
+    'm37_48',
+    'm51_62',
+    'm46_60',
+    'l49_51',
+    'l42_75',
+    'm49_58',
+    'm34_76',
+    'l38_51',
+    'm51_54',
+    'l37_146',
+    'm41_55',
+    'm50_52',
+    'm39_55',
+    'l50_46',
+    'l42_74',
+    'l50_53',
+    'l46_45',
+    'l38_153',
+    'l41_73',
+    'm45_73',
+    'm39_51',
+    'm48_62',
+    'l32_71',
+    'l50_60',
+    'm47_60',
+    'm43_47',
+    'l47_51',
+    'm39_153',
+    'm46_59',
+    'm48_53',
+    'm50_57',
+    'm34_71',
+    'l37_73',
+    'm43_45',
+    'l45_48',
+    'm50_154',
+    'l48_61',
+    'l39_49',
+    'm42_151',
+    'm37_153',
+    'l52_152',
+    'm44_54',
+    'l41_154',
+    'l48_47',
+    'm37_151',
+    'm39_54',
+    'l46_153',
+    'm47_48',
+    'l48_148',
+    'l46_62',
+    'm43_144',
+    'l44_74',
+    'm47_61',
+    'l33_75',
+    'm40_47',
+    'l45_46',
+    'l44_151',
+    'm33_73',
+    'l38_72',
+    'm45_146',
+    'l39_53',
+    'm38_49',
+    'l53_51',
+    'm52_154',
+    'l50_149',
+    'm36_53',
+    'm42_49',
+    'm47_51',
+    'm42_144',
+    'l50_49',
+    'l49_55',
+    'l48_57',
+    'm37_72',
+    'm49_55',
+    'l44_155',
+    'l50_56',
+    'l52_47',
+    'm38_53',
+    'l50_61',
+    'l44_154',
+    'm44_153',
+    'm33_74',
+    'l48_58',
+    'l38_74',
+    'm40_151',
+    'm50_50',
+    'l44_47',
+    'l34_74',
+    'l31_75',
+    'm40_48',
+    'm41_152',
+    'l40_73',
+    'm50_58',
+    'l49_57',
+    'm43_48',
+    'm43_55',
+    'm51_57',
+    'm46_49',
+    'l41_74',
+    'm48_49',
+    'm44_154',
+    'l41_51',
+    'm40_55',
+    'm43_49',
+    'm40_148',
+    'm36_76',
+    'm51_51',
+    'l45_47',
+    'l45_153',
+    'l49_56',
+    'l34_75',
+    'm48_60',
+    'l51_147',
+    'l50_154',
+    'l35_75',
+    'l38_152',
+    'm36_73',
+    'm41_73',
+    'm47_52',
+    'm48_54',
+    'l38_148',
+    'm36_146',
+    'm41_50',
+    'l48_149',
+    'm37_52',
+    'l41_48',
+    'm41_53',
+    'm51_59',
+    'm52_62',
+    'm52_152',
+    'l38_49',
+    'm46_45',
+    'l37_53',
+    'l39_73',
+    'm41_45',
+    'l37_55',
+    'l46_60',
+    'l40_147',
+    'm33_76',
+    'm39_52',
+    'l43_144',
+    'l40_76',
+    'm44_46',
+    'l40_149',
+    'm46_154',
+    'l43_146',
+    'l41_55',
+    'm41_49',
+    'l40_51',
+    'l36_75',
+    'm40_76',
+    'm38_74',
+    'l45_151',
+    'l38_151',
+    'l36_148',
+    'l33_71',
+    'l52_55',
+    'm37_55',
+    'm47_75',
+    'l52_52',
+    'm42_52',
+    'm49_54',
+    'm53_53',
+    'l39_50',
+    'm52_52',
+    'l46_150',
+    'm43_72',
+    'm33_75',
+    'l41_52',
+    'l45_148',
+    'l52_50',
+    'l44_153',
+    'l53_53',
+    'l44_148',
+    'l37_75',
+    'l39_52',
+    'l52_58',
+    'm36_75',
+    'm50_51',
+    'l51_57',
+    'm44_72',
+    'l45_45',
+    'm50_150',
+    'l48_155',
+    'm48_148',
+    'l41_54',
+    'm32_73',
+    'm40_72',
+    'l42_145',
+    'm37_147',
+    'l41_50',
+    'm47_59',
+    'm33_72',
+    'm40_50',
+    'm39_155',
+    'l52_61',
+    'l52_59',
+    'l37_154',
+    'l38_50',
+    'm37_73',
+    'l41_152',
+    'm47_47',
+    'm46_52',
+    'm39_151',
+    'l41_45',
+    'm43_146',
+    'l44_145',
+    'l40_47',
+    'l47_75',
+    'l40_151',
+    'l39_152',
+    'l45_73',
+    'm36_148',
+    'l37_151',
+    'm50_62',
+    'l47_47',
+    'm45_152',
+    'm47_149',
+    'l49_54',
+    'l43_75',
+    'l49_149',
+    'm45_55',
+    'l42_53',
+    'l39_51',
+    'l43_48',
+    'm46_54',
+    'l37_52',
+    'l39_55',
+    'l39_46',
+    'm52_50',
+    'm45_53',
+    'm40_152',
+    'm44_73',
+    'l39_75',
+    'm39_148',
+    'l41_49',
+    'l37_147',
+    'm45_155',
+    'm39_73',
+    'm45_62',
+    'm49_60',
+    'm40_154',
+    'l38_45',
+    'l43_145',
+    'm51_50',
+    'l51_61',
+    'l52_153',
+    'l43_47',
+    'l51_53',
+    'm38_72',
+    'm46_61',
+    'l47_49',
+    'l40_74',
+    'm38_147',
+    'l49_155',
+    'l37_153',
+    'l48_56',
+    'm51_46',
+    'l36_53',
+    'm45_50',
+    'm32_70',
+    'l46_47',
+    'm48_55',
+    'l40_154',
+    'm52_60',
+    'l44_146',
+    'm38_50',
+    'm40_153',
+    'l39_54',
+    'l41_56',
+    'l42_56',
+    'm43_50',
+    'l38_48',
+    'm39_150',
+    'l51_49',
+    'm38_48',
+    'm44_150',
+    'l45_51',
+    'l44_51',
+    'm48_56',
+    'm52_48'
+];
+var songs = [
+    'gnomeball.mid',
+    'scape_cave.mid',
+    'lullaby.mid',
+    'regal2.mid',
+    'emperor.mid',
+    'wilderness3.mid',
+    'moody.mid',
+    'in_the_manor.mid',
+    'wilderness4.mid',
+    'fanfare2.mid',
+    'reggae2.mid',
+    'talking_forest.mid',
+    'army_of_darkness.mid',
+    'sea_shanty.mid',
+    'mage_arena.mid',
+    'spooky_jungle.mid',
+    'undercurrent.mid',
+    'ambience_4.mid',
+    'sad_meadow.mid',
+    'arabique.mid',
+    'faerie.mid',
+    'gnome_king.mid',
+    'deep_wildy.mid',
+    'crystal_cave.mid',
+    'attack3.mid',
+    'organ_music_2.mid',
+    'fishing.mid',
+    'game_intro_1.mid',
+    'march2.mid',
+    'rune_essence.mid',
+    'legion.mid',
+    'knightly.mid',
+    'scape_sad1.mid',
+    'jolly-r.mid',
+    'splendour.mid',
+    'attention.mid',
+    'tribal2.mid',
+    'expedition.mid',
+    'intrepid.mid',
+    'ballad_of_enchantment.mid',
+    'shining.mid',
+    'understanding.mid',
+    'gnome_village.mid',
+    'fade_test.mid',
+    'tribal.mid',
+    'beyond.mid',
+    'al_kharid.mid',
+    'nomad.mid',
+    'start.mid',
+    'silence.mid',
+    'high_seas.mid',
+    'doorways.mid',
+    'lasting.mid',
+    'crystal_sword.mid',
+    'the_shadow.mid',
+    'ambience_3.mid',
+    'theme.mid',
+    'wander.mid',
+    'null.mid',
+    'spooky2.mid',
+    'garden.mid',
+    'scape_soft.mid',
+    'miles_away.mid',
+    'soundscape.mid',
+    'gnome_theme.mid',
+    'duel_arena.mid',
+    'cellar_song1.mid',
+    'dunjun.mid',
+    'autumn_voyage.mid',
+    'starlight.mid',
+    'arabian3.mid',
+    'cavern.mid',
+    'cursed.mid',
+    'lightness.mid',
+    'underground.mid',
+    'landlubber.mid',
+    'heart_and_mind.mid',
+    'gaol.mid',
+    'lightwalk.mid',
+    'zealot.mid',
+    'cave_background1.mid',
+    'trinity.mid',
+    'iban.mid',
+    'dream1.mid',
+    'the_tower.mid',
+    'still_night.mid',
+    'wonderous.mid',
+    'forever.mid',
+    'egypt.mid',
+    'voyage.mid',
+    'baroque.mid',
+    'greatness.mid',
+    'troubled.mid',
+    'newbie_melody.mid',
+    'long_way_home.mid',
+    'chompy_hunt.mid',
+    'fanfare3.mid',
+    'horizon.mid',
+    'miracle_dance.mid',
+    'dark2.mid',
+    'the_desert.mid',
+    'vision.mid',
+    'royale.mid',
+    'ice_melody.mid',
+    'spirit.mid',
+    'serenade.mid',
+    'gnome.mid',
+    'overture.mid',
+    'big_chords.mid',
+    'sea_shanty2.mid',
+    'adventure.mid',
+    'camelot.mid',
+    'arrival.mid',
+    'flute_salad.mid',
+    'venture.mid',
+    'attack4.mid',
+    'nightfall.mid',
+    'unknown_land.mid',
+    'book_of_spells.mid',
+    'parade.mid',
+    'monarch_waltz.mid',
+    'voodoo_cult.mid',
+    'inspiration.mid',
+    'jungly1.mid',
+    'reggae.mid',
+    'shine.mid',
+    'quest.mid',
+    'long_ago.mid',
+    'tribal_background.mid',
+    'attack5.mid',
+    'riverside.mid',
+    'scape_main.mid',
+    'mellow.mid',
+    'upcoming.mid',
+    'neverland.mid',
+    'organ_music_1.mid',
+    'alone.mid',
+    'oriental.mid',
+    'wonder.mid',
+    'chain_of_command.mid',
+    'trawler_minor.mid',
+    'escape.mid',
+    'expanse.mid',
+    'wilderness2.mid',
+    'harmony.mid',
+    'emotion.mid',
+    'serene.mid',
+    'yesteryear.mid',
+    'jungle_island.mid',
+    'forbidden.mid',
+    'upass1.mid',
+    'desert_voyage.mid',
+    'jungly2.mid',
+    'grumpy.mid',
+    'magic_dance.mid',
+    'dangerous.mid',
+    'fanfare.mid',
+    'tree_spirits.mid',
+    'tomorrow.mid',
+    'workshop.mid',
+    'attack2.mid',
+    'jungly3.mid',
+    'expecting.mid',
+    'medieval.mid',
+    'magical_journey.mid',
+    'harmony2.mid',
+    'arabian2.mid',
+    'ambient_jungle.mid',
+    'wolf_mountain.mid',
+    'attack1.mid',
+    'trawler.mid',
+    'waterfall.mid',
+    'gnome_village2.mid',
+    'close_quarters.mid',
+    'lonesome.mid',
+    'arabian.mid',
+    'background2.mid',
+    'witching.mid',
+    'attack6.mid',
+    'ambience_2.mid',
+    'scape_wild1.mid',
+    'venture2.mid'
+];
+var jingles = [
+    'dice lose.mid',
+    'advance crafting.mid',
+    'advance woodcutting2.mid',
+    'advance defense.mid',
+    'advance fletching.mid',
+    'advance magic2.mid',
+    'advance cooking2.mid',
+    'sailing journey.mid',
+    'advance attack2.mid',
+    'death2.mid',
+    'advance firemarking.mid',
+    'advance strength2.mid',
+    'advance prayer.mid',
+    'advance ranged.mid',
+    'dice win.mid',
+    'quest complete 2.mid',
+    'advance hitpoints2.mid',
+    'advance ranged2.mid',
+    'advance smithing2.mid',
+    'advance crafting2.mid',
+    'advance strength.mid',
+    'advance hitpoints.mid',
+    'advance herblaw.mid',
+    'death.mid',
+    'duel win2.mid',
+    'advance prayer2.mid',
+    'advance woodcutting.mid',
+    'duel start.mid',
+    'advance thieving2.mid',
+    'advance smithing.mid',
+    'advance fishing.mid',
+    'treasure hunt win.mid',
+    'advance fletching2.mid',
+    'advance fishing2.mid',
+    'advance attack.mid',
+    'quest complete 3.mid',
+    'advance mining.mid',
+    'advance agility.mid',
+    'advance thieving.mid',
+    'advance cooking.mid',
+    'advance mining2.mid',
+    'advance defense2.mid',
+    'advance runecraft2.mid',
+    'quest complete 1.mid',
+    'advance magic.mid',
+    'advance firemarking2.mid',
+    'advance herblaw2.mid',
+    'advance runecraft.mid'
+];
+var serverMaps = [
+    'm52_58',
+    'm53_50',
+    'm51_147',
+    'm43_73',
+    'm40_150',
+    'm40_149',
+    'm38_153',
+    'm50_149',
+    'm37_152',
+    'm39_74',
+    'm43_145',
+    'm46_149',
+    'm41_75',
+    'm37_150',
+    'm46_53',
+    'm34_70',
+    'm40_74',
+    'm35_76',
+    'm37_54',
+    'm39_45',
+    'm51_56',
+    'm41_151',
+    'm43_56',
+    'm44_53',
+    'm51_61',
+    'm39_147',
+    'm36_154',
+    'm47_150',
+    'm48_48',
+    'm44_146',
+    'm50_59',
+    'm39_149',
+    'm48_47',
+    'm33_71',
+    'm52_54',
+    'm50_46',
+    'm32_74',
+    'm41_146',
+    'm51_48',
+    'm50_53',
+    'm46_152',
+    'm46_75',
+    'm49_53',
+    'm46_48',
+    'm39_48',
+    'm39_46',
+    'm42_73',
+    'm47_50',
+    'm34_73',
+    'm53_49',
+    'm40_51',
+    'm37_51',
+    'm45_154',
+    'm32_75',
+    'm43_75',
+    'm49_62',
+    'm41_74',
+    'm47_53',
+    'm49_48',
+    'm44_148',
+    'm42_50',
+    'm40_53',
+    'm42_53',
+    'm35_75',
+    'm35_20',
+    'm45_145',
+    'm40_52',
+    'm50_153',
+    'm44_149',
+    'm46_56',
+    'm49_149',
+    'm50_60',
+    'm42_152',
+    'm37_75',
+    'm41_54',
+    'm52_47',
+    'm44_145',
+    'm44_151',
+    'm49_47',
+    'm52_53',
+    'm47_49',
+    'm39_72',
+    'm49_153',
+    'm37_74',
+    'm49_52',
+    'm37_148',
+    'm31_75',
+    'm44_155',
+    'm41_72',
+    'm41_51',
+    'm47_56',
+    'm44_49',
+    'm49_51',
+    'm41_56',
+    'm46_50',
+    'm37_49',
+    'm46_150',
+    'm45_75',
+    'm45_52',
+    'm36_150',
+    'm49_56',
+    'm38_149',
+    'm51_53',
+    'm48_156',
+    'm29_75',
+    'm42_51',
+    'm47_153',
+    'm41_46',
+    'm45_60',
+    'm44_75',
+    'm47_55',
+    'm38_47',
+    'm50_152',
+    'm36_54',
+    'm45_151',
+    'm46_153',
+    'm40_45',
+    'm39_152',
+    'm45_74',
+    'm47_57',
+    'm50_48',
+    'm37_154',
+    'm45_58',
+    'm49_156',
+    'm42_54',
+    'm43_54',
+    'm48_57',
+    'm50_61',
+    'm41_47',
+    'm39_47',
+    'm41_52',
+    'm45_47',
+    'm50_49',
+    'm34_75',
+    'm46_46',
+    'm38_148',
+    'm44_48',
+    'm42_74',
+    'm43_74',
+    'm42_145',
+    'm38_155',
+    'm44_144',
+    'm39_76',
+    'm49_50',
+    'm40_54',
+    'm47_54',
+    'm38_150',
+    'm44_50',
+    'm38_151',
+    'm48_154',
+    'm41_153',
+    'm38_45',
+    'm43_53',
+    'm38_154',
+    'm32_71',
+    'm38_52',
+    'm45_61',
+    'm47_161',
+    'm47_58',
+    'm36_52',
+    'm46_47',
+    'm50_55',
+    'm44_45',
+    'm45_48',
+    'm46_58',
+    'm37_53',
+    'm48_61',
+    'm45_56',
+    'm45_57',
+    'm38_73',
+    'm39_49',
+    'm45_150',
+    'm52_153',
+    'm50_56',
+    'm46_55',
+    'm52_57',
+    'm44_152',
+    'm51_154',
+    'm43_153',
+    'm39_53',
+    'm51_60',
+    'm34_74',
+    'm53_52',
+    'm34_72',
+    'm47_152',
+    'm44_52',
+    'm38_51',
+    'm51_47',
+    'm49_154',
+    'm42_75',
+    'm38_55',
+    'm42_72',
+    'm49_61',
+    'm50_54',
+    'm33_70',
+    'm40_46',
+    'm49_155',
+    'm38_146',
+    'm52_46',
+    'm41_48',
+    'm45_59',
+    'm44_47',
+    'm46_51',
+    'm36_72',
+    'm47_148',
+    'm48_155',
+    'm43_51',
+    'm40_73',
+    'm43_46',
+    'm50_47',
+    'm44_51',
+    'm43_154',
+    'm44_74',
+    'm44_55',
+    'm37_149',
+    'm45_46',
+    'm38_152',
+    'm41_149',
+    'm49_46',
+    'm46_62',
+    'm32_72',
+    'm47_62',
+    'm42_56',
+    'm48_153',
+    'm52_55',
+    'm48_59',
+    'm52_49',
+    'm42_146',
+    'm51_58',
+    'm45_51',
+    'm48_50',
+    'm52_56',
+    'm45_54',
+    'm38_46',
+    'm47_160',
+    'm49_49',
+    'm48_58',
+    'm45_153',
+    'm37_50',
+    'm41_154',
+    'm46_57',
+    'm48_149',
+    'm52_51',
+    'm45_49',
+    'm48_51',
+    'm39_154',
+    'm49_59',
+    'm30_75',
+    'm36_153',
+    'm51_49',
+    'm36_74',
+    'm53_51',
+    'm40_147',
+    'm36_149',
+    'm52_61',
+    'm49_57',
+    'm36_147',
+    'm51_55',
+    'm46_161',
+    'm45_76',
+    'm39_75',
+    'm40_75',
+    'm42_55',
+    'm48_52',
+    'm49_148',
+    'm43_52',
+    'm45_45',
+    'm42_153',
+    'm48_152',
+    'm38_54',
+    'm45_148',
+    'm52_59',
+    'm51_52',
+    'm37_146',
+    'm39_50',
+    'm40_49',
+    'm37_48',
+    'm51_62',
+    'm46_60',
+    'm49_58',
+    'm34_76',
+    'm51_54',
+    'm41_55',
+    'm50_52',
+    'm39_55',
+    'm45_73',
+    'm39_51',
+    'm48_62',
+    'm47_60',
+    'm43_47',
+    'm39_153',
+    'm46_59',
+    'm48_53',
+    'm50_57',
+    'm34_71',
+    'm43_45',
+    'm50_154',
+    'm42_151',
+    'm37_153',
+    'm44_54',
+    'm37_151',
+    'm39_54',
+    'm47_48',
+    'm43_144',
+    'm47_61',
+    'm40_47',
+    'm33_73',
+    'm45_146',
+    'm38_49',
+    'm52_154',
+    'm36_53',
+    'm42_49',
+    'm47_51',
+    'm42_144',
+    'm37_72',
+    'm49_55',
+    'm38_53',
+    'm44_153',
+    'm33_74',
+    'm40_151',
+    'm50_50',
+    'm40_48',
+    'm41_152',
+    'm50_58',
+    'm43_48',
+    'm43_55',
+    'm51_57',
+    'm46_49',
+    'm48_49',
+    'm44_154',
+    'm40_55',
+    'm43_49',
+    'm40_148',
+    'm36_76',
+    'm51_51',
+    'm48_60',
+    'm36_73',
+    'm41_73',
+    'm47_52',
+    'm48_54',
+    'm36_146',
+    'm41_50',
+    'm37_52',
+    'm41_53',
+    'm51_59',
+    'm52_62',
+    'm52_152',
+    'm46_45',
+    'm41_45',
+    'm33_76',
+    'm39_52',
+    'm44_46',
+    'm46_154',
+    'm41_49',
+    'm40_76',
+    'm38_74',
+    'm37_55',
+    'm47_75',
+    'm42_52',
+    'm49_54',
+    'm53_53',
+    'm52_52',
+    'm43_72',
+    'm33_75',
+    'm36_75',
+    'm50_51',
+    'm44_72',
+    'm50_150',
+    'm48_148',
+    'm32_73',
+    'm40_72',
+    'm37_147',
+    'm47_59',
+    'm33_72',
+    'm40_50',
+    'm39_155',
+    'm37_73',
+    'm47_47',
+    'm46_52',
+    'm39_151',
+    'm43_146',
+    'm36_148',
+    'm50_62',
+    'm45_152',
+    'm47_149',
+    'm45_55',
+    'm46_54',
+    'm52_50',
+    'm45_53',
+    'm40_152',
+    'm44_73',
+    'm39_148',
+    'm45_155',
+    'm39_73',
+    'm45_62',
+    'm49_60',
+    'm40_154',
+    'm51_50',
+    'm38_72',
+    'm46_61',
+    'm38_147',
+    'm51_46',
+    'm45_50',
+    'm32_70',
+    'm48_55',
+    'm52_60',
+    'm38_50',
+    'm40_153',
+    'm43_50',
+    'm39_150',
+    'm38_48',
+    'm44_150',
+    'm48_56',
+    'm52_48'
+];
+
+// src/lostcity/server/PreloadedPacks.ts
 function preloadClient() {
     const allMaps = fs23.readdirSync('data/pack/client/maps');
     for (let i = 0; i < allMaps.length; i++) {
@@ -53294,836 +54805,7 @@ function preloadClient() {
     }
 }
 async function preloadClientAsync() {
-    const allMaps = [
-        'l29_75',
-        'l30_75',
-        'l31_75',
-        'l32_70',
-        'l32_71',
-        'l32_72',
-        'l32_73',
-        'l32_74',
-        'l32_75',
-        'l33_70',
-        'l33_71',
-        'l33_72',
-        'l33_73',
-        'l33_74',
-        'l33_75',
-        'l33_76',
-        'l34_70',
-        'l34_71',
-        'l34_72',
-        'l34_73',
-        'l34_74',
-        'l34_75',
-        'l34_76',
-        'l35_20',
-        'l35_75',
-        'l35_76',
-        'l36_146',
-        'l36_147',
-        'l36_148',
-        'l36_149',
-        'l36_150',
-        'l36_153',
-        'l36_154',
-        'l36_52',
-        'l36_53',
-        'l36_54',
-        'l36_72',
-        'l36_73',
-        'l36_74',
-        'l36_75',
-        'l36_76',
-        'l37_146',
-        'l37_147',
-        'l37_148',
-        'l37_149',
-        'l37_150',
-        'l37_151',
-        'l37_152',
-        'l37_153',
-        'l37_154',
-        'l37_48',
-        'l37_49',
-        'l37_50',
-        'l37_51',
-        'l37_52',
-        'l37_53',
-        'l37_54',
-        'l37_55',
-        'l37_72',
-        'l37_73',
-        'l37_74',
-        'l37_75',
-        'l38_146',
-        'l38_147',
-        'l38_148',
-        'l38_149',
-        'l38_150',
-        'l38_151',
-        'l38_152',
-        'l38_153',
-        'l38_154',
-        'l38_155',
-        'l38_45',
-        'l38_46',
-        'l38_47',
-        'l38_48',
-        'l38_49',
-        'l38_50',
-        'l38_51',
-        'l38_52',
-        'l38_53',
-        'l38_54',
-        'l38_55',
-        'l38_72',
-        'l38_73',
-        'l38_74',
-        'l39_147',
-        'l39_148',
-        'l39_149',
-        'l39_150',
-        'l39_151',
-        'l39_152',
-        'l39_153',
-        'l39_154',
-        'l39_155',
-        'l39_45',
-        'l39_46',
-        'l39_47',
-        'l39_48',
-        'l39_49',
-        'l39_50',
-        'l39_51',
-        'l39_52',
-        'l39_53',
-        'l39_54',
-        'l39_55',
-        'l39_72',
-        'l39_73',
-        'l39_74',
-        'l39_75',
-        'l39_76',
-        'l40_147',
-        'l40_148',
-        'l40_149',
-        'l40_150',
-        'l40_151',
-        'l40_152',
-        'l40_153',
-        'l40_154',
-        'l40_45',
-        'l40_46',
-        'l40_47',
-        'l40_48',
-        'l40_49',
-        'l40_50',
-        'l40_51',
-        'l40_52',
-        'l40_53',
-        'l40_54',
-        'l40_55',
-        'l40_72',
-        'l40_73',
-        'l40_74',
-        'l40_75',
-        'l40_76',
-        'l41_146',
-        'l41_149',
-        'l41_151',
-        'l41_152',
-        'l41_153',
-        'l41_154',
-        'l41_45',
-        'l41_46',
-        'l41_47',
-        'l41_48',
-        'l41_49',
-        'l41_50',
-        'l41_51',
-        'l41_52',
-        'l41_53',
-        'l41_54',
-        'l41_55',
-        'l41_56',
-        'l41_72',
-        'l41_73',
-        'l41_74',
-        'l41_75',
-        'l42_144',
-        'l42_145',
-        'l42_146',
-        'l42_151',
-        'l42_152',
-        'l42_153',
-        'l42_49',
-        'l42_50',
-        'l42_51',
-        'l42_52',
-        'l42_53',
-        'l42_54',
-        'l42_55',
-        'l42_56',
-        'l42_72',
-        'l42_73',
-        'l42_74',
-        'l42_75',
-        'l43_144',
-        'l43_145',
-        'l43_146',
-        'l43_153',
-        'l43_154',
-        'l43_45',
-        'l43_46',
-        'l43_47',
-        'l43_48',
-        'l43_49',
-        'l43_50',
-        'l43_51',
-        'l43_52',
-        'l43_53',
-        'l43_54',
-        'l43_55',
-        'l43_56',
-        'l43_72',
-        'l43_73',
-        'l43_74',
-        'l43_75',
-        'l44_144',
-        'l44_145',
-        'l44_146',
-        'l44_148',
-        'l44_149',
-        'l44_150',
-        'l44_151',
-        'l44_152',
-        'l44_153',
-        'l44_154',
-        'l44_155',
-        'l44_45',
-        'l44_46',
-        'l44_47',
-        'l44_48',
-        'l44_49',
-        'l44_50',
-        'l44_51',
-        'l44_52',
-        'l44_53',
-        'l44_54',
-        'l44_55',
-        'l44_72',
-        'l44_73',
-        'l44_74',
-        'l44_75',
-        'l45_145',
-        'l45_146',
-        'l45_148',
-        'l45_150',
-        'l45_151',
-        'l45_152',
-        'l45_153',
-        'l45_154',
-        'l45_155',
-        'l45_45',
-        'l45_46',
-        'l45_47',
-        'l45_48',
-        'l45_49',
-        'l45_50',
-        'l45_51',
-        'l45_52',
-        'l45_53',
-        'l45_54',
-        'l45_55',
-        'l45_56',
-        'l45_57',
-        'l45_58',
-        'l45_59',
-        'l45_60',
-        'l45_61',
-        'l45_62',
-        'l45_73',
-        'l45_74',
-        'l45_75',
-        'l45_76',
-        'l46_149',
-        'l46_150',
-        'l46_152',
-        'l46_153',
-        'l46_154',
-        'l46_161',
-        'l46_45',
-        'l46_46',
-        'l46_47',
-        'l46_48',
-        'l46_49',
-        'l46_50',
-        'l46_51',
-        'l46_52',
-        'l46_53',
-        'l46_54',
-        'l46_55',
-        'l46_56',
-        'l46_57',
-        'l46_58',
-        'l46_59',
-        'l46_60',
-        'l46_61',
-        'l46_62',
-        'l46_75',
-        'l47_148',
-        'l47_149',
-        'l47_150',
-        'l47_152',
-        'l47_153',
-        'l47_160',
-        'l47_161',
-        'l47_47',
-        'l47_48',
-        'l47_49',
-        'l47_50',
-        'l47_51',
-        'l47_52',
-        'l47_53',
-        'l47_54',
-        'l47_55',
-        'l47_56',
-        'l47_57',
-        'l47_58',
-        'l47_59',
-        'l47_60',
-        'l47_61',
-        'l47_62',
-        'l47_75',
-        'l48_148',
-        'l48_149',
-        'l48_152',
-        'l48_153',
-        'l48_154',
-        'l48_155',
-        'l48_156',
-        'l48_47',
-        'l48_48',
-        'l48_49',
-        'l48_50',
-        'l48_51',
-        'l48_52',
-        'l48_53',
-        'l48_54',
-        'l48_55',
-        'l48_56',
-        'l48_57',
-        'l48_58',
-        'l48_59',
-        'l48_60',
-        'l48_61',
-        'l48_62',
-        'l49_148',
-        'l49_149',
-        'l49_153',
-        'l49_154',
-        'l49_155',
-        'l49_156',
-        'l49_46',
-        'l49_47',
-        'l49_48',
-        'l49_49',
-        'l49_50',
-        'l49_51',
-        'l49_52',
-        'l49_53',
-        'l49_54',
-        'l49_55',
-        'l49_56',
-        'l49_57',
-        'l49_58',
-        'l49_59',
-        'l49_60',
-        'l49_61',
-        'l49_62',
-        'l50_149',
-        'l50_150',
-        'l50_152',
-        'l50_153',
-        'l50_154',
-        'l50_46',
-        'l50_47',
-        'l50_48',
-        'l50_49',
-        'l50_50',
-        'l50_51',
-        'l50_52',
-        'l50_53',
-        'l50_54',
-        'l50_55',
-        'l50_56',
-        'l50_57',
-        'l50_58',
-        'l50_59',
-        'l50_60',
-        'l50_61',
-        'l50_62',
-        'l51_147',
-        'l51_154',
-        'l51_46',
-        'l51_47',
-        'l51_48',
-        'l51_49',
-        'l51_50',
-        'l51_51',
-        'l51_52',
-        'l51_53',
-        'l51_54',
-        'l51_55',
-        'l51_56',
-        'l51_57',
-        'l51_58',
-        'l51_59',
-        'l51_60',
-        'l51_61',
-        'l51_62',
-        'l52_152',
-        'l52_153',
-        'l52_154',
-        'l52_46',
-        'l52_47',
-        'l52_48',
-        'l52_49',
-        'l52_50',
-        'l52_51',
-        'l52_52',
-        'l52_53',
-        'l52_54',
-        'l52_55',
-        'l52_56',
-        'l52_57',
-        'l52_58',
-        'l52_59',
-        'l52_60',
-        'l52_61',
-        'l52_62',
-        'l53_49',
-        'l53_50',
-        'l53_51',
-        'l53_52',
-        'l53_53',
-        'm29_75',
-        'm30_75',
-        'm31_75',
-        'm32_70',
-        'm32_71',
-        'm32_72',
-        'm32_73',
-        'm32_74',
-        'm32_75',
-        'm33_70',
-        'm33_71',
-        'm33_72',
-        'm33_73',
-        'm33_74',
-        'm33_75',
-        'm33_76',
-        'm34_70',
-        'm34_71',
-        'm34_72',
-        'm34_73',
-        'm34_74',
-        'm34_75',
-        'm34_76',
-        'm35_20',
-        'm35_75',
-        'm35_76',
-        'm36_146',
-        'm36_147',
-        'm36_148',
-        'm36_149',
-        'm36_150',
-        'm36_153',
-        'm36_154',
-        'm36_52',
-        'm36_53',
-        'm36_54',
-        'm36_72',
-        'm36_73',
-        'm36_74',
-        'm36_75',
-        'm36_76',
-        'm37_146',
-        'm37_147',
-        'm37_148',
-        'm37_149',
-        'm37_150',
-        'm37_151',
-        'm37_152',
-        'm37_153',
-        'm37_154',
-        'm37_48',
-        'm37_49',
-        'm37_50',
-        'm37_51',
-        'm37_52',
-        'm37_53',
-        'm37_54',
-        'm37_55',
-        'm37_72',
-        'm37_73',
-        'm37_74',
-        'm37_75',
-        'm38_146',
-        'm38_147',
-        'm38_148',
-        'm38_149',
-        'm38_150',
-        'm38_151',
-        'm38_152',
-        'm38_153',
-        'm38_154',
-        'm38_155',
-        'm38_45',
-        'm38_46',
-        'm38_47',
-        'm38_48',
-        'm38_49',
-        'm38_50',
-        'm38_51',
-        'm38_52',
-        'm38_53',
-        'm38_54',
-        'm38_55',
-        'm38_72',
-        'm38_73',
-        'm38_74',
-        'm39_147',
-        'm39_148',
-        'm39_149',
-        'm39_150',
-        'm39_151',
-        'm39_152',
-        'm39_153',
-        'm39_154',
-        'm39_155',
-        'm39_45',
-        'm39_46',
-        'm39_47',
-        'm39_48',
-        'm39_49',
-        'm39_50',
-        'm39_51',
-        'm39_52',
-        'm39_53',
-        'm39_54',
-        'm39_55',
-        'm39_72',
-        'm39_73',
-        'm39_74',
-        'm39_75',
-        'm39_76',
-        'm40_147',
-        'm40_148',
-        'm40_149',
-        'm40_150',
-        'm40_151',
-        'm40_152',
-        'm40_153',
-        'm40_154',
-        'm40_45',
-        'm40_46',
-        'm40_47',
-        'm40_48',
-        'm40_49',
-        'm40_50',
-        'm40_51',
-        'm40_52',
-        'm40_53',
-        'm40_54',
-        'm40_55',
-        'm40_72',
-        'm40_73',
-        'm40_74',
-        'm40_75',
-        'm40_76',
-        'm41_146',
-        'm41_149',
-        'm41_151',
-        'm41_152',
-        'm41_153',
-        'm41_154',
-        'm41_45',
-        'm41_46',
-        'm41_47',
-        'm41_48',
-        'm41_49',
-        'm41_50',
-        'm41_51',
-        'm41_52',
-        'm41_53',
-        'm41_54',
-        'm41_55',
-        'm41_56',
-        'm41_72',
-        'm41_73',
-        'm41_74',
-        'm41_75',
-        'm42_144',
-        'm42_145',
-        'm42_146',
-        'm42_151',
-        'm42_152',
-        'm42_153',
-        'm42_49',
-        'm42_50',
-        'm42_51',
-        'm42_52',
-        'm42_53',
-        'm42_54',
-        'm42_55',
-        'm42_56',
-        'm42_72',
-        'm42_73',
-        'm42_74',
-        'm42_75',
-        'm43_144',
-        'm43_145',
-        'm43_146',
-        'm43_153',
-        'm43_154',
-        'm43_45',
-        'm43_46',
-        'm43_47',
-        'm43_48',
-        'm43_49',
-        'm43_50',
-        'm43_51',
-        'm43_52',
-        'm43_53',
-        'm43_54',
-        'm43_55',
-        'm43_56',
-        'm43_72',
-        'm43_73',
-        'm43_74',
-        'm43_75',
-        'm44_144',
-        'm44_145',
-        'm44_146',
-        'm44_148',
-        'm44_149',
-        'm44_150',
-        'm44_151',
-        'm44_152',
-        'm44_153',
-        'm44_154',
-        'm44_155',
-        'm44_45',
-        'm44_46',
-        'm44_47',
-        'm44_48',
-        'm44_49',
-        'm44_50',
-        'm44_51',
-        'm44_52',
-        'm44_53',
-        'm44_54',
-        'm44_55',
-        'm44_72',
-        'm44_73',
-        'm44_74',
-        'm44_75',
-        'm45_145',
-        'm45_146',
-        'm45_148',
-        'm45_150',
-        'm45_151',
-        'm45_152',
-        'm45_153',
-        'm45_154',
-        'm45_155',
-        'm45_45',
-        'm45_46',
-        'm45_47',
-        'm45_48',
-        'm45_49',
-        'm45_50',
-        'm45_51',
-        'm45_52',
-        'm45_53',
-        'm45_54',
-        'm45_55',
-        'm45_56',
-        'm45_57',
-        'm45_58',
-        'm45_59',
-        'm45_60',
-        'm45_61',
-        'm45_62',
-        'm45_73',
-        'm45_74',
-        'm45_75',
-        'm45_76',
-        'm46_149',
-        'm46_150',
-        'm46_152',
-        'm46_153',
-        'm46_154',
-        'm46_161',
-        'm46_45',
-        'm46_46',
-        'm46_47',
-        'm46_48',
-        'm46_49',
-        'm46_50',
-        'm46_51',
-        'm46_52',
-        'm46_53',
-        'm46_54',
-        'm46_55',
-        'm46_56',
-        'm46_57',
-        'm46_58',
-        'm46_59',
-        'm46_60',
-        'm46_61',
-        'm46_62',
-        'm46_75',
-        'm47_148',
-        'm47_149',
-        'm47_150',
-        'm47_152',
-        'm47_153',
-        'm47_160',
-        'm47_161',
-        'm47_47',
-        'm47_48',
-        'm47_49',
-        'm47_50',
-        'm47_51',
-        'm47_52',
-        'm47_53',
-        'm47_54',
-        'm47_55',
-        'm47_56',
-        'm47_57',
-        'm47_58',
-        'm47_59',
-        'm47_60',
-        'm47_61',
-        'm47_62',
-        'm47_75',
-        'm48_148',
-        'm48_149',
-        'm48_152',
-        'm48_153',
-        'm48_154',
-        'm48_155',
-        'm48_156',
-        'm48_47',
-        'm48_48',
-        'm48_49',
-        'm48_50',
-        'm48_51',
-        'm48_52',
-        'm48_53',
-        'm48_54',
-        'm48_55',
-        'm48_56',
-        'm48_57',
-        'm48_58',
-        'm48_59',
-        'm48_60',
-        'm48_61',
-        'm48_62',
-        'm49_148',
-        'm49_149',
-        'm49_153',
-        'm49_154',
-        'm49_155',
-        'm49_156',
-        'm49_46',
-        'm49_47',
-        'm49_48',
-        'm49_49',
-        'm49_50',
-        'm49_51',
-        'm49_52',
-        'm49_53',
-        'm49_54',
-        'm49_55',
-        'm49_56',
-        'm49_57',
-        'm49_58',
-        'm49_59',
-        'm49_60',
-        'm49_61',
-        'm49_62',
-        'm50_149',
-        'm50_150',
-        'm50_152',
-        'm50_153',
-        'm50_154',
-        'm50_46',
-        'm50_47',
-        'm50_48',
-        'm50_49',
-        'm50_50',
-        'm50_51',
-        'm50_52',
-        'm50_53',
-        'm50_54',
-        'm50_55',
-        'm50_56',
-        'm50_57',
-        'm50_58',
-        'm50_59',
-        'm50_60',
-        'm50_61',
-        'm50_62',
-        'm51_147',
-        'm51_154',
-        'm51_46',
-        'm51_47',
-        'm51_48',
-        'm51_49',
-        'm51_50',
-        'm51_51',
-        'm51_52',
-        'm51_53',
-        'm51_54',
-        'm51_55',
-        'm51_56',
-        'm51_57',
-        'm51_58',
-        'm51_59',
-        'm51_60',
-        'm51_61',
-        'm51_62',
-        'm52_152',
-        'm52_153',
-        'm52_154',
-        'm52_46',
-        'm52_47',
-        'm52_48',
-        'm52_49',
-        'm52_50',
-        'm52_51',
-        'm52_52',
-        'm52_53',
-        'm52_54',
-        'm52_55',
-        'm52_56',
-        'm52_57',
-        'm52_58',
-        'm52_59',
-        'm52_60',
-        'm52_61',
-        'm52_62',
-        'm53_49',
-        'm53_50',
-        'm53_51',
-        'm53_52',
-        'm53_53'
-    ];
+    const allMaps = maps;
     for (let i = 0; i < allMaps.length; i++) {
         const name = allMaps[i];
         console.log(name);
@@ -54132,190 +54814,7 @@ async function preloadClientAsync() {
         PRELOADED.set(name, map);
         PRELOADED_CRC.set(name, crc);
     }
-    const allSongs = [
-        'adventure.mid',
-        'al_kharid.mid',
-        'alone.mid',
-        'ambience_2.mid',
-        'ambience_3.mid',
-        'ambience_4.mid',
-        'ambient_jungle.mid',
-        'arabian.mid',
-        'arabian2.mid',
-        'arabian3.mid',
-        'arabique.mid',
-        'army_of_darkness.mid',
-        'arrival.mid',
-        'attack1.mid',
-        'attack2.mid',
-        'attack3.mid',
-        'attack4.mid',
-        'attack5.mid',
-        'attack6.mid',
-        'attention.mid',
-        'autumn_voyage.mid',
-        'background2.mid',
-        'ballad_of_enchantment.mid',
-        'baroque.mid',
-        'beyond.mid',
-        'big_chords.mid',
-        'book_of_spells.mid',
-        'camelot.mid',
-        'cave_background1.mid',
-        'cavern.mid',
-        'cellar_song1.mid',
-        'chain_of_command.mid',
-        'chompy_hunt.mid',
-        'close_quarters.mid',
-        'crystal_cave.mid',
-        'crystal_sword.mid',
-        'cursed.mid',
-        'dangerous.mid',
-        'dark2.mid',
-        'deep_wildy.mid',
-        'desert_voyage.mid',
-        'doorways.mid',
-        'dream1.mid',
-        'duel_arena.mid',
-        'dunjun.mid',
-        'egypt.mid',
-        'emotion.mid',
-        'emperor.mid',
-        'escape.mid',
-        'expanse.mid',
-        'expecting.mid',
-        'expedition.mid',
-        'fade_test.mid',
-        'faerie.mid',
-        'fanfare.mid',
-        'fanfare2.mid',
-        'fanfare3.mid',
-        'fishing.mid',
-        'flute_salad.mid',
-        'forbidden.mid',
-        'forever.mid',
-        'game_intro_1.mid',
-        'gaol.mid',
-        'garden.mid',
-        'gnome.mid',
-        'gnome_king.mid',
-        'gnome_theme.mid',
-        'gnome_village.mid',
-        'gnome_village2.mid',
-        'gnomeball.mid',
-        'greatness.mid',
-        'grumpy.mid',
-        'harmony.mid',
-        'harmony2.mid',
-        'heart_and_mind.mid',
-        'high_seas.mid',
-        'horizon.mid',
-        'iban.mid',
-        'ice_melody.mid',
-        'in_the_manor.mid',
-        'inspiration.mid',
-        'intrepid.mid',
-        'jolly-r.mid',
-        'jungle_island.mid',
-        'jungly1.mid',
-        'jungly2.mid',
-        'jungly3.mid',
-        'knightly.mid',
-        'landlubber.mid',
-        'lasting.mid',
-        'legion.mid',
-        'lightness.mid',
-        'lightwalk.mid',
-        'lonesome.mid',
-        'long_ago.mid',
-        'long_way_home.mid',
-        'lullaby.mid',
-        'mage_arena.mid',
-        'magic_dance.mid',
-        'magical_journey.mid',
-        'march2.mid',
-        'medieval.mid',
-        'mellow.mid',
-        'miles_away.mid',
-        'miracle_dance.mid',
-        'monarch_waltz.mid',
-        'moody.mid',
-        'neverland.mid',
-        'newbie_melody.mid',
-        'nightfall.mid',
-        'nomad.mid',
-        'null.mid',
-        'organ_music_1.mid',
-        'organ_music_2.mid',
-        'oriental.mid',
-        'overture.mid',
-        'parade.mid',
-        'quest.mid',
-        'regal2.mid',
-        'reggae.mid',
-        'reggae2.mid',
-        'riverside.mid',
-        'royale.mid',
-        'rune_essence.mid',
-        'sad_meadow.mid',
-        'scape_cave.mid',
-        'scape_main.mid',
-        'scape_sad1.mid',
-        'scape_soft.mid',
-        'scape_wild1.mid',
-        'sea_shanty.mid',
-        'sea_shanty2.mid',
-        'serenade.mid',
-        'serene.mid',
-        'shine.mid',
-        'shining.mid',
-        'silence.mid',
-        'soundscape.mid',
-        'spirit.mid',
-        'splendour.mid',
-        'spooky2.mid',
-        'spooky_jungle.mid',
-        'starlight.mid',
-        'start.mid',
-        'still_night.mid',
-        'talking_forest.mid',
-        'the_desert.mid',
-        'the_shadow.mid',
-        'the_tower.mid',
-        'theme.mid',
-        'tomorrow.mid',
-        'trawler.mid',
-        'trawler_minor.mid',
-        'tree_spirits.mid',
-        'tribal.mid',
-        'tribal2.mid',
-        'tribal_background.mid',
-        'trinity.mid',
-        'troubled.mid',
-        'undercurrent.mid',
-        'underground.mid',
-        'understanding.mid',
-        'unknown_land.mid',
-        'upass1.mid',
-        'upcoming.mid',
-        'venture.mid',
-        'venture2.mid',
-        'vision.mid',
-        'voodoo_cult.mid',
-        'voyage.mid',
-        'wander.mid',
-        'waterfall.mid',
-        'wilderness2.mid',
-        'wilderness3.mid',
-        'wilderness4.mid',
-        'witching.mid',
-        'wolf_mountain.mid',
-        'wonder.mid',
-        'wonderous.mid',
-        'workshop.mid',
-        'yesteryear.mid',
-        'zealot.mid'
-    ];
+    const allSongs = songs;
     for (let i = 0; i < allSongs.length; i++) {
         const name = allSongs[i];
         console.log(name);
@@ -54324,56 +54823,7 @@ async function preloadClientAsync() {
         PRELOADED.set(name, song);
         PRELOADED_CRC.set(name, crc);
     }
-    const allJingles = [
-        'advance agility.mid',
-        'advance attack.mid',
-        'advance attack2.mid',
-        'advance cooking.mid',
-        'advance cooking2.mid',
-        'advance crafting.mid',
-        'advance crafting2.mid',
-        'advance defense.mid',
-        'advance defense2.mid',
-        'advance firemarking.mid',
-        'advance firemarking2.mid',
-        'advance fishing.mid',
-        'advance fishing2.mid',
-        'advance fletching.mid',
-        'advance fletching2.mid',
-        'advance herblaw.mid',
-        'advance herblaw2.mid',
-        'advance hitpoints.mid',
-        'advance hitpoints2.mid',
-        'advance magic.mid',
-        'advance magic2.mid',
-        'advance mining.mid',
-        'advance mining2.mid',
-        'advance prayer.mid',
-        'advance prayer2.mid',
-        'advance ranged.mid',
-        'advance ranged2.mid',
-        'advance runecraft.mid',
-        'advance runecraft2.mid',
-        'advance smithing.mid',
-        'advance smithing2.mid',
-        'advance strength.mid',
-        'advance strength2.mid',
-        'advance thieving.mid',
-        'advance thieving2.mid',
-        'advance woodcutting.mid',
-        'advance woodcutting2.mid',
-        'death.mid',
-        'death2.mid',
-        'dice lose.mid',
-        'dice win.mid',
-        'duel start.mid',
-        'duel win2.mid',
-        'quest complete 1.mid',
-        'quest complete 2.mid',
-        'quest complete 3.mid',
-        'sailing journey.mid',
-        'treasure hunt win.mid'
-    ];
+    const allJingles = jingles;
     for (let i = 0; i < allJingles.length; i++) {
         const name = allJingles[i];
         console.log(name);
@@ -54550,6 +55000,18 @@ class MessageGame extends OutgoingMessage {
     constructor(msg) {
         super();
         this.msg = msg;
+    }
+}
+
+// src/lostcity/engine/zone/ZoneEvent.ts
+class ZoneEvent {
+    type;
+    receiverId;
+    message;
+    constructor(type, receiverId, message) {
+        this.type = type;
+        this.receiverId = receiverId;
+        this.message = message;
     }
 }
 
@@ -55004,7 +55466,7 @@ class PlayerInfoEncoder extends MessageEncoder {
     writeExtendedInfo(player, message, buf, self2 = false, newlyObserved = false) {
         let mask = player.mask;
         if (newlyObserved) {
-            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+            if (player.orientationX !== -1 || player.faceX !== -1) {
                 mask |= Player2.FACE_COORD;
             }
             if (player.faceEntity !== -1) {
@@ -55051,11 +55513,9 @@ class PlayerInfoEncoder extends MessageEncoder {
             buf.p1(player.baseLevels[PlayerStat_default.HITPOINTS]);
         }
         if (mask & Player2.FACE_COORD) {
-            if (newlyObserved && player.orientation !== -1) {
-                const faceX = Position.moveX(player.x, player.orientation);
-                const faceZ = Position.moveZ(player.z, player.orientation);
-                buf.p2(faceX * 2 + 1);
-                buf.p2(faceZ * 2 + 1);
+            if (newlyObserved && player.orientationX !== -1) {
+                buf.p2(player.orientationX);
+                buf.p2(player.orientationZ);
             } else {
                 buf.p2(player.faceX);
                 buf.p2(player.faceZ);
@@ -55087,7 +55547,7 @@ class PlayerInfoEncoder extends MessageEncoder {
         let length = 0;
         let mask = player.mask;
         if (newlyObserved) {
-            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+            if (player.orientationX !== -1 || player.faceX !== -1) {
                 mask |= Player2.FACE_COORD;
             }
             if (player.faceEntity !== -1) {
@@ -56674,7 +57134,7 @@ class NpcInfoEncoder extends MessageEncoder {
     writeExtendedInfo(npc, buf, newlyObserved) {
         let mask = npc.mask;
         if (newlyObserved) {
-            if (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1) {
+            if (npc.orientationX !== -1 || npc.faceX !== -1) {
                 mask |= Npc2.FACE_COORD;
             }
             if (npc.faceEntity !== -1) {
@@ -56710,11 +57170,9 @@ class NpcInfoEncoder extends MessageEncoder {
             buf.p2(npc.graphicDelay);
         }
         if (mask & Npc2.FACE_COORD) {
-            if (newlyObserved && npc.orientation != -1) {
-                const faceX = Position.moveX(npc.x, npc.orientation);
-                const faceZ = Position.moveZ(npc.z, npc.orientation);
-                buf.p2(faceX * 2 + 1);
-                buf.p2(faceZ * 2 + 1);
+            if (newlyObserved && npc.orientationX != -1) {
+                buf.p2(npc.orientationX);
+                buf.p2(npc.orientationZ);
             } else {
                 buf.p2(npc.faceX);
                 buf.p2(npc.faceZ);
@@ -56725,7 +57183,7 @@ class NpcInfoEncoder extends MessageEncoder {
         let length = 0;
         let mask = npc.mask;
         if (newlyObserved) {
-            if (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1) {
+            if (npc.orientationX !== -1 || npc.faceX !== -1) {
                 mask |= Npc2.FACE_COORD;
             }
             if (npc.faceEntity !== -1) {
@@ -57079,6 +57537,7 @@ class Zone {
     npcs;
     locs;
     objs;
+    entityEvents;
     events;
     shared = null;
     totalLocs = 0;
@@ -57094,6 +57553,7 @@ class Zone {
         this.npcs = new Set();
         this.locs = new LocList(Zone.LOCS, loc => World_default.removeLoc(loc, 100));
         this.objs = new ObjList(Zone.OBJS, obj => World_default.removeObj(obj, 100));
+        this.entityEvents = new Map();
     }
     enter(entity) {
         if (entity instanceof Player2) {
@@ -57218,6 +57678,7 @@ class Zone {
     }
     reset() {
         this.events.clear();
+        this.entityEvents.clear();
     }
     addStaticLoc(loc) {
         const coord = Position.packZoneCoord(loc.x, loc.z);
@@ -57231,6 +57692,15 @@ class Zone {
         this.totalObjs++;
         this.objs.sortStack(coord, true);
     }
+    appendEvent(entity, event) {
+        this.events.add(event);
+        const exist = this.entityEvents.get(entity);
+        if (typeof exist === 'undefined') {
+            this.entityEvents.set(entity, [event]);
+            return;
+        }
+        this.entityEvents.set(entity, exist.concat(event));
+    }
     addLoc(loc) {
         const coord = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle_default.DESPAWN) {
@@ -57238,11 +57708,7 @@ class Zone {
             this.totalLocs++;
         }
         this.locs.sortStack(coord);
-        this.events.add({
-            type: ZoneEventType_default.ENCLOSED,
-            receiverId: -1,
-            message: new LocAddChange(coord, loc.type, loc.shape, loc.angle)
-        });
+        this.appendEvent(loc, new ZoneEvent(ZoneEventType_default.ENCLOSED, -1, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
     removeLoc(loc) {
         const coord = Position.packZoneCoord(loc.x, loc.z);
@@ -57251,11 +57717,16 @@ class Zone {
             this.totalLocs--;
         }
         this.locs.sortStack(coord);
-        this.events.add({
-            type: ZoneEventType_default.ENCLOSED,
-            receiverId: -1,
-            message: new LocDel(coord, loc.shape, loc.angle)
-        });
+        const events = this.entityEvents.get(loc);
+        if (typeof events !== 'undefined') {
+            for (let index = 0; index < events.length; index++) {
+                this.events.delete(events[index]);
+            }
+            this.entityEvents.delete(loc);
+        }
+        if (loc.lastLifecycleTick !== World_default.currentTick) {
+            this.appendEvent(loc, new ZoneEvent(ZoneEventType_default.ENCLOSED, -1, new LocDel(coord, loc.shape, loc.angle)));
+        }
     }
     getLoc(x, z2, type) {
         for (const loc of this.getLocsSafe(Position.packZoneCoord(x, z2))) {
@@ -57266,18 +57737,10 @@ class Zone {
         return null;
     }
     mergeLoc(loc, player, startCycle, endCycle, south, east, north, west) {
-        this.events.add({
-            type: ZoneEventType_default.ENCLOSED,
-            receiverId: -1,
-            message: new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
-        });
+        this.appendEvent(loc, new ZoneEvent(ZoneEventType_default.ENCLOSED, -1, new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
     }
     animLoc(loc, seq) {
-        this.events.add({
-            type: ZoneEventType_default.ENCLOSED,
-            receiverId: -1,
-            message: new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)
-        });
+        this.appendEvent(loc, new ZoneEvent(ZoneEventType_default.ENCLOSED, -1, new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
     }
     addObj(obj, receiverId) {
         const coord = Position.packZoneCoord(obj.x, obj.z);
@@ -57286,18 +57749,10 @@ class Zone {
             this.totalObjs++;
         }
         this.objs.sortStack(coord);
-        if (obj.lifecycle === EntityLifeCycle_default.RESPAWN || obj.receiverId === -1) {
-            this.events.add({
-                type: ZoneEventType_default.ENCLOSED,
-                receiverId,
-                message: new ObjAdd(coord, obj.type, obj.count)
-            });
+        if (obj.lifecycle === EntityLifeCycle_default.RESPAWN || receiverId === -1) {
+            this.appendEvent(obj, new ZoneEvent(ZoneEventType_default.ENCLOSED, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle_default.DESPAWN) {
-            this.events.add({
-                type: ZoneEventType_default.FOLLOWS,
-                receiverId,
-                message: new ObjAdd(coord, obj.type, obj.count)
-            });
+            this.appendEvent(obj, new ZoneEvent(ZoneEventType_default.FOLLOWS, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         }
     }
     revealObj(obj, receiverId) {
@@ -57305,21 +57760,13 @@ class Zone {
         obj.reveal = -1;
         const coord = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
-        this.events.add({
-            type: ZoneEventType_default.ENCLOSED,
-            receiverId: -1,
-            message: new ObjReveal(coord, obj.type, obj.count, receiverId)
-        });
+        this.appendEvent(obj, new ZoneEvent(ZoneEventType_default.ENCLOSED, receiverId, new ObjReveal(coord, obj.type, obj.count, receiverId)));
     }
     changeObj(obj, receiverId, oldCount, newCount) {
         obj.count = newCount;
         const coord = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
-        this.events.add({
-            type: ZoneEventType_default.FOLLOWS,
-            receiverId,
-            message: new ObjCount(coord, obj.type, oldCount, newCount)
-        });
+        this.appendEvent(obj, new ZoneEvent(ZoneEventType_default.FOLLOWS, receiverId, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
     removeObj(obj) {
         const coord = Position.packZoneCoord(obj.x, obj.z);
@@ -57328,18 +57775,19 @@ class Zone {
             this.totalObjs--;
         }
         this.objs.sortStack(coord);
-        if (obj.lifecycle === EntityLifeCycle_default.RESPAWN || obj.receiverId === -1) {
-            this.events.add({
-                type: ZoneEventType_default.ENCLOSED,
-                receiverId: -1,
-                message: new ObjDel(coord, obj.type)
-            });
-        } else if (obj.lifecycle === EntityLifeCycle_default.DESPAWN) {
-            this.events.add({
-                type: ZoneEventType_default.FOLLOWS,
-                receiverId: -1,
-                message: new ObjDel(coord, obj.type)
-            });
+        const exist = this.entityEvents.get(obj);
+        if (typeof exist !== 'undefined') {
+            for (let index = 0; index < exist.length; index++) {
+                this.events.delete(exist[index]);
+            }
+            this.entityEvents.delete(obj);
+        }
+        if (obj.lastLifecycleTick !== World_default.currentTick) {
+            if (obj.lifecycle === EntityLifeCycle_default.RESPAWN || obj.receiverId === -1) {
+                this.appendEvent(obj, new ZoneEvent(ZoneEventType_default.ENCLOSED, -1, new ObjDel(coord, obj.type)));
+            } else if (obj.lifecycle === EntityLifeCycle_default.DESPAWN) {
+                this.appendEvent(obj, new ZoneEvent(ZoneEventType_default.FOLLOWS, -1, new ObjDel(coord, obj.type)));
+            }
         }
     }
     animMap(x, z2, spotanim, height, delay) {
@@ -57892,6 +58340,10 @@ class Player2 extends PathingEntity {
     }
     resetEntity(respawn) {
         if (respawn) {
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.orientationX = -1;
+            this.orientationZ = -1;
         }
         super.resetPathingEntity();
         this.repathed = false;
@@ -58666,8 +59118,9 @@ class Player2 extends PathingEntity {
         if (!fromObj) {
             throw new Error(`invMoveFromSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
         }
+        this.invDelSlot(fromInv, fromSlot);
         return {
-            overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count),
+            overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count, false),
             fromObj: fromObj.id
         };
     }
@@ -58804,7 +59257,8 @@ class Player2 extends PathingEntity {
     faceSquare(x, z2) {
         this.faceX = x * 2 + 1;
         this.faceZ = z2 * 2 + 1;
-        this.orientation = Position.face(this.x, this.z, x, z2);
+        this.orientationX = this.faceX;
+        this.orientationZ = this.faceZ;
         this.mask |= Player2.FACE_COORD;
     }
     playSong(name) {
@@ -59758,11 +60212,11 @@ class OpPlayerUDecoder extends MessageDecoder {
 
 // src/lostcity/network/incoming/model/RebuildGetMaps.ts
 class RebuildGetMaps extends IncomingMessage {
-    maps;
+    maps2;
     category = ClientProtCategory.USER_EVENT;
-    constructor(maps) {
+    constructor(maps2) {
         super();
-        this.maps = maps;
+        this.maps = maps2;
     }
 }
 
@@ -59770,15 +60224,15 @@ class RebuildGetMaps extends IncomingMessage {
 class RebuildGetMapsDecoder extends MessageDecoder {
     prot = ClientProt.REBUILD_GETMAPS;
     decode(buf) {
-        const maps = [];
+        const maps2 = [];
         const count = buf.length / 3;
         for (let i = 0; i < count; i++) {
             const type = buf.g1();
             const x = buf.g1();
             const z2 = buf.g1();
-            maps.push({type, x, z: z2});
+            maps2.push({type, x, z: z2});
         }
-        return new RebuildGetMaps(maps);
+        return new RebuildGetMaps(maps2);
     }
 }
 
@@ -59893,7 +60347,7 @@ class ClientSocket {
     remoteAddress;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId = typeof self !== 'undefined' ? (self.location.host.startsWith('https') ? self.crypto.randomUUID() : '0') : lw();
+    uniqueId = typeof self !== 'undefined' ? (self.location.protocol === 'https:' ? self.crypto.randomUUID() : '0') : lw();
     encryptor = null;
     decryptor = null;
     in = new Uint8Array(5000);
@@ -62144,7 +62598,7 @@ var PlayerOps = {
     [ScriptOpcode_default.P_WALK]: checkedHandler(ProtectedActivePlayer, state => {
         const pos = check(state.popInt(), CoordValid);
         const player = state.activePlayer;
-        player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
+        player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length));
         player.updateMovement(false);
     }),
     [ScriptOpcode_default.SAY]: checkedHandler(ActivePlayer, state => {
@@ -63069,7 +63523,7 @@ class ScriptRunner2 {
             }
             const time = (performance.now() * 1000 - start) | 0;
             if (Environment_default.NODE_DEBUG_PROFILE && time > 1000) {
-                const message = `Warning [cpu time]: Script: ${state.script.info.scriptName}, time: ${time}us`;
+                const message = `Warning [cpu time]: Script: ${state.script.info.scriptName}, time: ${time}us, opcount: ${state.opcount}`;
                 if (state.self instanceof Player2) {
                     state.self.wrappedMessageGame(message);
                 } else {
@@ -63237,7 +63691,10 @@ class Npc2 extends PathingEntity {
         if (respawn) {
             this.type = this.origType;
             this.uid = (this.type << 16) | this.nid;
-            this.orientation = Direction.SOUTH;
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.orientationX = -1;
+            this.orientationZ = -1;
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
@@ -63271,15 +63728,22 @@ class Npc2 extends PathingEntity {
                     return false;
                 }
             }
-            let attackRange = 0;
-            if (this.targetOp === NpcMode_default.OPPLAYER2) {
-                attackRange = 1;
-            } else if (this.targetOp === NpcMode_default.APPLAYER2) {
-                attackRange = type.attackrange;
-            }
-            if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
-                this.defaultMode();
-                return false;
+            if (this.targetOp >= NpcMode_default.OPPLAYER1 && this.targetOp <= NpcMode_default.OPPLAYER5) {
+                const distanceToX = Math.abs(this.target.x - this.startX);
+                const distanceToZ = Math.abs(this.target.z - this.startZ);
+                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
+                    this.defaultMode();
+                    return false;
+                }
+                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
+                    this.defaultMode();
+                    return false;
+                }
+            } else if (this.targetOp >= NpcMode_default.APPLAYER1 && this.targetOp <= NpcMode_default.APPLAYER5) {
+                if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                    this.defaultMode();
+                    return false;
+                }
             }
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
@@ -63414,16 +63878,12 @@ class Npc2 extends PathingEntity {
         this.clearInteraction();
         this.updateMovement(false);
         this.targetOp = NpcMode_default.NONE;
-        this.faceEntity = -1;
-        this.mask |= Npc2.FACE_ENTITY;
     }
     defaultMode() {
         this.clearInteraction();
         this.updateMovement(false);
         const type = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
-        this.faceEntity = -1;
-        this.mask |= Npc2.FACE_ENTITY;
     }
     wanderMode() {
         const type = NpcType.get(this.type);
@@ -63812,9 +64272,24 @@ class Npc2 extends PathingEntity {
         const type = NpcType.get(this.type);
         const players = [];
         const hunted = new HuntIterator(World_default.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType_default.PLAYER);
+        const opTrigger = hunt.findNewMode >= NpcMode_default.OPPLAYER1 && hunt.findNewMode <= NpcMode_default.OPPLAYER5;
         for (const player of hunted) {
             if (!(player instanceof Player2)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
+            }
+            if (opTrigger) {
+                const distanceToX = Math.abs(player.x - this.startX);
+                const distanceToZ = Math.abs(player.z - this.startZ);
+                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
+                    continue;
+                }
+                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
+                    continue;
+                }
+            } else {
+                if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                    continue;
+                }
             }
             if (hunt.checkAfk && player.zonesAfk()) {
                 continue;
@@ -63892,7 +64367,8 @@ class Npc2 extends PathingEntity {
     faceSquare(x, z2) {
         this.faceX = x * 2 + 1;
         this.faceZ = z2 * 2 + 1;
-        this.orientation = Position.face(this.x, this.z, x, z2);
+        this.orientationX = this.faceX;
+        this.orientationZ = this.faceZ;
         this.mask |= Npc2.FACE_COORD;
     }
     changeType(type) {
@@ -63919,9 +64395,9 @@ class GameMap {
     init(zoneMap) {
         console.time('Loading game map');
         const path = 'data/pack/server/maps/';
-        const maps = fs26.readdirSync(path).filter(x => x[0] === 'm');
-        for (let index = 0; index < maps.length; index++) {
-            const [mx, mz] = maps[index].substring(1).split('_').map(Number);
+        const maps2 = fs26.readdirSync(path).filter(x => x[0] === 'm');
+        for (let index = 0; index < maps2.length; index++) {
+            const [mx, mz] = maps2[index].substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
             this.decodeNpcs(Packet.load(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
@@ -63935,425 +64411,10 @@ class GameMap {
     async initAsync(zoneMap) {
         console.time('Loading game map');
         const path = 'data/pack/server/maps/';
-        const maps = [
-            'm29_75',
-            'm30_75',
-            'm31_75',
-            'm32_70',
-            'm32_71',
-            'm32_72',
-            'm32_73',
-            'm32_74',
-            'm32_75',
-            'm33_70',
-            'm33_71',
-            'm33_72',
-            'm33_73',
-            'm33_74',
-            'm33_75',
-            'm33_76',
-            'm34_70',
-            'm34_71',
-            'm34_72',
-            'm34_73',
-            'm34_74',
-            'm34_75',
-            'm34_76',
-            'm35_20',
-            'm35_75',
-            'm35_76',
-            'm36_146',
-            'm36_147',
-            'm36_148',
-            'm36_149',
-            'm36_150',
-            'm36_153',
-            'm36_154',
-            'm36_52',
-            'm36_53',
-            'm36_54',
-            'm36_72',
-            'm36_73',
-            'm36_74',
-            'm36_75',
-            'm36_76',
-            'm37_146',
-            'm37_147',
-            'm37_148',
-            'm37_149',
-            'm37_150',
-            'm37_151',
-            'm37_152',
-            'm37_153',
-            'm37_154',
-            'm37_48',
-            'm37_49',
-            'm37_50',
-            'm37_51',
-            'm37_52',
-            'm37_53',
-            'm37_54',
-            'm37_55',
-            'm37_72',
-            'm37_73',
-            'm37_74',
-            'm37_75',
-            'm38_146',
-            'm38_147',
-            'm38_148',
-            'm38_149',
-            'm38_150',
-            'm38_151',
-            'm38_152',
-            'm38_153',
-            'm38_154',
-            'm38_155',
-            'm38_45',
-            'm38_46',
-            'm38_47',
-            'm38_48',
-            'm38_49',
-            'm38_50',
-            'm38_51',
-            'm38_52',
-            'm38_53',
-            'm38_54',
-            'm38_55',
-            'm38_72',
-            'm38_73',
-            'm38_74',
-            'm39_147',
-            'm39_148',
-            'm39_149',
-            'm39_150',
-            'm39_151',
-            'm39_152',
-            'm39_153',
-            'm39_154',
-            'm39_155',
-            'm39_45',
-            'm39_46',
-            'm39_47',
-            'm39_48',
-            'm39_49',
-            'm39_50',
-            'm39_51',
-            'm39_52',
-            'm39_53',
-            'm39_54',
-            'm39_55',
-            'm39_72',
-            'm39_73',
-            'm39_74',
-            'm39_75',
-            'm39_76',
-            'm40_147',
-            'm40_148',
-            'm40_149',
-            'm40_150',
-            'm40_151',
-            'm40_152',
-            'm40_153',
-            'm40_154',
-            'm40_45',
-            'm40_46',
-            'm40_47',
-            'm40_48',
-            'm40_49',
-            'm40_50',
-            'm40_51',
-            'm40_52',
-            'm40_53',
-            'm40_54',
-            'm40_55',
-            'm40_72',
-            'm40_73',
-            'm40_74',
-            'm40_75',
-            'm40_76',
-            'm41_146',
-            'm41_149',
-            'm41_151',
-            'm41_152',
-            'm41_153',
-            'm41_154',
-            'm41_45',
-            'm41_46',
-            'm41_47',
-            'm41_48',
-            'm41_49',
-            'm41_50',
-            'm41_51',
-            'm41_52',
-            'm41_53',
-            'm41_54',
-            'm41_55',
-            'm41_56',
-            'm41_72',
-            'm41_73',
-            'm41_74',
-            'm41_75',
-            'm42_144',
-            'm42_145',
-            'm42_146',
-            'm42_151',
-            'm42_152',
-            'm42_153',
-            'm42_49',
-            'm42_50',
-            'm42_51',
-            'm42_52',
-            'm42_53',
-            'm42_54',
-            'm42_55',
-            'm42_56',
-            'm42_72',
-            'm42_73',
-            'm42_74',
-            'm42_75',
-            'm43_144',
-            'm43_145',
-            'm43_146',
-            'm43_153',
-            'm43_154',
-            'm43_45',
-            'm43_46',
-            'm43_47',
-            'm43_48',
-            'm43_49',
-            'm43_50',
-            'm43_51',
-            'm43_52',
-            'm43_53',
-            'm43_54',
-            'm43_55',
-            'm43_56',
-            'm43_72',
-            'm43_73',
-            'm43_74',
-            'm43_75',
-            'm44_144',
-            'm44_145',
-            'm44_146',
-            'm44_148',
-            'm44_149',
-            'm44_150',
-            'm44_151',
-            'm44_152',
-            'm44_153',
-            'm44_154',
-            'm44_155',
-            'm44_45',
-            'm44_46',
-            'm44_47',
-            'm44_48',
-            'm44_49',
-            'm44_50',
-            'm44_51',
-            'm44_52',
-            'm44_53',
-            'm44_54',
-            'm44_55',
-            'm44_72',
-            'm44_73',
-            'm44_74',
-            'm44_75',
-            'm45_145',
-            'm45_146',
-            'm45_148',
-            'm45_150',
-            'm45_151',
-            'm45_152',
-            'm45_153',
-            'm45_154',
-            'm45_155',
-            'm45_45',
-            'm45_46',
-            'm45_47',
-            'm45_48',
-            'm45_49',
-            'm45_50',
-            'm45_51',
-            'm45_52',
-            'm45_53',
-            'm45_54',
-            'm45_55',
-            'm45_56',
-            'm45_57',
-            'm45_58',
-            'm45_59',
-            'm45_60',
-            'm45_61',
-            'm45_62',
-            'm45_73',
-            'm45_74',
-            'm45_75',
-            'm45_76',
-            'm46_149',
-            'm46_150',
-            'm46_152',
-            'm46_153',
-            'm46_154',
-            'm46_161',
-            'm46_45',
-            'm46_46',
-            'm46_47',
-            'm46_48',
-            'm46_49',
-            'm46_50',
-            'm46_51',
-            'm46_52',
-            'm46_53',
-            'm46_54',
-            'm46_55',
-            'm46_56',
-            'm46_57',
-            'm46_58',
-            'm46_59',
-            'm46_60',
-            'm46_61',
-            'm46_62',
-            'm46_75',
-            'm47_148',
-            'm47_149',
-            'm47_150',
-            'm47_152',
-            'm47_153',
-            'm47_160',
-            'm47_161',
-            'm47_47',
-            'm47_48',
-            'm47_49',
-            'm47_50',
-            'm47_51',
-            'm47_52',
-            'm47_53',
-            'm47_54',
-            'm47_55',
-            'm47_56',
-            'm47_57',
-            'm47_58',
-            'm47_59',
-            'm47_60',
-            'm47_61',
-            'm47_62',
-            'm47_75',
-            'm48_148',
-            'm48_149',
-            'm48_152',
-            'm48_153',
-            'm48_154',
-            'm48_155',
-            'm48_156',
-            'm48_47',
-            'm48_48',
-            'm48_49',
-            'm48_50',
-            'm48_51',
-            'm48_52',
-            'm48_53',
-            'm48_54',
-            'm48_55',
-            'm48_56',
-            'm48_57',
-            'm48_58',
-            'm48_59',
-            'm48_60',
-            'm48_61',
-            'm48_62',
-            'm49_148',
-            'm49_149',
-            'm49_153',
-            'm49_154',
-            'm49_155',
-            'm49_156',
-            'm49_46',
-            'm49_47',
-            'm49_48',
-            'm49_49',
-            'm49_50',
-            'm49_51',
-            'm49_52',
-            'm49_53',
-            'm49_54',
-            'm49_55',
-            'm49_56',
-            'm49_57',
-            'm49_58',
-            'm49_59',
-            'm49_60',
-            'm49_61',
-            'm49_62',
-            'm50_149',
-            'm50_150',
-            'm50_152',
-            'm50_153',
-            'm50_154',
-            'm50_46',
-            'm50_47',
-            'm50_48',
-            'm50_49',
-            'm50_50',
-            'm50_51',
-            'm50_52',
-            'm50_53',
-            'm50_54',
-            'm50_55',
-            'm50_56',
-            'm50_57',
-            'm50_58',
-            'm50_59',
-            'm50_60',
-            'm50_61',
-            'm50_62',
-            'm51_147',
-            'm51_154',
-            'm51_46',
-            'm51_47',
-            'm51_48',
-            'm51_49',
-            'm51_50',
-            'm51_51',
-            'm51_52',
-            'm51_53',
-            'm51_54',
-            'm51_55',
-            'm51_56',
-            'm51_57',
-            'm51_58',
-            'm51_59',
-            'm51_60',
-            'm51_61',
-            'm51_62',
-            'm52_152',
-            'm52_153',
-            'm52_154',
-            'm52_46',
-            'm52_47',
-            'm52_48',
-            'm52_49',
-            'm52_50',
-            'm52_51',
-            'm52_52',
-            'm52_53',
-            'm52_54',
-            'm52_55',
-            'm52_56',
-            'm52_57',
-            'm52_58',
-            'm52_59',
-            'm52_60',
-            'm52_61',
-            'm52_62',
-            'm53_49',
-            'm53_50',
-            'm53_51',
-            'm53_52',
-            'm53_53'
-        ];
-        for (let index = 0; index < maps.length; index++) {
-            console.log('init ', maps[index]);
-            const [mx, mz] = maps[index].substring(1).split('_').map(Number);
+        const maps2 = serverMaps;
+        for (let index = 0; index < maps2.length; index++) {
+            console.log('init ', maps2[index]);
+            const [mx, mz] = maps2[index].substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
             this.decodeNpcs(await Packet.loadAsync(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
@@ -64974,12 +65035,39 @@ function makeCrcs() {
     makeCrc('data/pack/client/sounds');
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
+async function makeCrcAsync(path) {
+    if (!(await fetch(path)).ok) {
+        return;
+    }
+    const packet = await Packet.loadAsync(path);
+    const crc = Packet.getcrc(packet.data, 0, packet.data.length);
+    CrcTable.push(crc);
+    CrcBuffer.p4(crc);
+}
+async function makeCrcsAsync() {
+    CrcTable = [];
+    CrcBuffer.pos = 0;
+    CrcBuffer.p4(0);
+    await makeCrcAsync('data/pack/client/title');
+    await makeCrcAsync('data/pack/client/config');
+    await makeCrcAsync('data/pack/client/interface');
+    await makeCrcAsync('data/pack/client/media');
+    await makeCrcAsync('data/pack/client/models');
+    await makeCrcAsync('data/pack/client/textures');
+    await makeCrcAsync('data/pack/client/wordenc');
+    await makeCrcAsync('data/pack/client/sounds');
+    CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
+}
 var CrcBuffer = new Packet(new Uint8Array(4 * 9));
 var CrcTable = [];
 var CrcBuffer32 = 0;
 if (typeof self === 'undefined') {
     if (fs28.existsSync('data/pack/client/')) {
         makeCrcs();
+    }
+} else {
+    if ((await fetch('data/pack/client')).ok) {
+        await makeCrcsAsync();
     }
 }
 
@@ -65025,11 +65113,9 @@ class Login {
             data.pos += 1;
             const crcs = new Uint8Array(9 * 4);
             data.gdata(crcs, 0, crcs.length);
-            if (typeof self === 'undefined') {
-                if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
-                    socket.writeImmediate(LoginResponse.SERVER_UPDATED);
-                    return;
-                }
+            if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
+                socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                return;
             }
             this.loginThread.postMessage({
                 type: 'loginreq',
@@ -65688,6 +65774,13 @@ class World35 {
         this.lastCycleStats[WorldStat_default.BANDWIDTH_OUT] = this.cycleStats[WorldStat_default.BANDWIDTH_OUT];
         if (continueCycle) {
             setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat_default.CYCLE]);
+        }
+        if (Environment_default.NODE_DEBUG_PROFILE) {
+            console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat_default.CYCLE]}ms: ${this.getTotalPlayers()} players`);
+            console.log(
+                `${this.cycleStats[WorldStat_default.WORLD]} ms world | ${this.cycleStats[WorldStat_default.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat_default.NPC]} ms npcs | ${this.cycleStats[WorldStat_default.PLAYER]} ms players | ${this.cycleStats[WorldStat_default.LOGOUT]} ms logout | ${this.cycleStats[WorldStat_default.LOGIN]} ms login | ${this.cycleStats[WorldStat_default.ZONE]} ms zones | ${this.cycleStats[WorldStat_default.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat_default.CLEANUP]} ms cleanup`
+            );
+            console.log('----');
         }
     }
     processWorld() {
