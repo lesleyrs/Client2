@@ -38910,11 +38910,17 @@ var GameMap = class _GameMap {
             const [mx, mz] = maps2[index].substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
-            this.decodeNpcs(await Packet.loadAsync(`${path5}n${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeObjs(await Packet.loadAsync(`${path5}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            const [npcData, objData, landData, locData] = await Promise.all([
+                Packet.loadAsync(`${path5}n${mx}_${mz}`),
+                await Packet.loadAsync(`${path5}o${mx}_${mz}`),
+                await Packet.loadAsync(`${path5}m${mx}_${mz}`),
+                await Packet.loadAsync(`${path5}l${mx}_${mz}`)
+            ]);
+            this.decodeNpcs(npcData, mapsquareX, mapsquareZ);
+            this.decodeObjs(objData, mapsquareX, mapsquareZ, zoneMap);
             const lands = new Int8Array(_GameMap.MAPSQUARE);
-            this.decodeLands(lands, await Packet.loadAsync(`${path5}m${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeLocs(lands, await Packet.loadAsync(`${path5}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
+            this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
         }
         console.timeEnd('Loading game map');
     }
@@ -39367,14 +39373,16 @@ async function makeCrcsAsync() {
     await makeCrcAsync('data/pack/client/wordenc');
     await makeCrcAsync('data/pack/client/sounds');
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
+    console.log('CrcBuffer32');
 }
 if (typeof self === 'undefined') {
     if (fs28.existsSync('data/pack/client/')) {
         makeCrcs();
     }
 } else {
-    console.log('hello');
+    console.log('hello', await fetch('data/pack/client'));
     if ((await fetch('data/pack/client')).ok) {
+        console.log('is this thing working');
         await makeCrcsAsync();
     }
 }
