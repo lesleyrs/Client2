@@ -39420,6 +39420,7 @@ var Login = class {
             data.pos += 1;
             const crcs = new Uint8Array(9 * 4);
             data.gdata(crcs, 0, crcs.length);
+            console.log(crcs, CrcBuffer.data, CrcBuffer32);
             if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
                 return;
