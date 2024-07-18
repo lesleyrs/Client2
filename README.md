@@ -76,7 +76,7 @@ http://localhost/client?world=0&detail=high&method=0 (Java)
 
 ## Web Worker server
 
-By setting world to 999 in the client URL a server will start on login. Locally this takes only a few seconds but on github pages it will take around 3-4 minutes. Saves will load from `data/players` and a save dialog will open on logout, but you should save them to `src/public/data/players` instead.
+By setting world to 999 in the client URL a server will start on login. Saves will load from `data/players` and a save dialog will open on logout, but you should save them to `src/public/data/players` instead.
 
 The following files are required from the server:
 1. `npm run build`, then copy data directory from the server to `src/public` in client
