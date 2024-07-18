@@ -38905,9 +38905,9 @@ var GameMap = class _GameMap {
         const path5 = 'data/pack/server/maps/';
         const {serverMaps: serverMaps2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
         const maps2 = serverMaps2;
-        for (let index = 0; index < maps2.length; index++) {
-            console.log('init ', maps2[index]);
-            const [mx, mz] = maps2[index].substring(1).split('_').map(Number);
+        const allMaps = maps2.map(async map => {
+            console.log('init ', map);
+            const [mx, mz] = map.substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
             const [npcData, objData, landData, locData] = await Promise.all([
@@ -38921,7 +38921,8 @@ var GameMap = class _GameMap {
             const lands = new Int8Array(_GameMap.MAPSQUARE);
             this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
             this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
-        }
+        });
+        await Promise.all(allMaps);
         console.timeEnd('Loading game map');
     }
     /**
@@ -39373,16 +39374,13 @@ async function makeCrcsAsync() {
     await makeCrcAsync('data/pack/client/wordenc');
     await makeCrcAsync('data/pack/client/sounds');
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
-    console.log('CrcBuffer32');
 }
 if (typeof self === 'undefined') {
     if (fs28.existsSync('data/pack/client/')) {
         makeCrcs();
     }
 } else {
-    console.log('hello', await fetch('data/pack/client'));
-    if ((await fetch('data/pack/client')).ok) {
-        console.log('is this thing working');
+    if ((await fetch('data/pack/client/crc')).ok) {
         await makeCrcsAsync();
     }
 }
@@ -39951,7 +39949,6 @@ var World = class _World {
                 this.broadcastMes(`Reloaded ${count} scripts.`);
             }
         }
-        console.log('TESTING 123');
         await preloadClientAsync();
     }
     broadcastMes(message) {
@@ -39971,7 +39968,6 @@ var World = class _World {
         } else {
             await FontType.loadAsync('data/pack');
             await WordEnc.loadAsync('data/pack');
-            console.log('TESTING 1');
             await this.reloadAsync();
             if (!skipMaps) {
                 await this.gameMap.initAsync(this.zoneMap);
