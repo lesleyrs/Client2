@@ -29412,34 +29412,21 @@ function preloadClient() {
     }
 }
 async function preloadClientAsync() {
+    console.time('Preloaded client data');
     const {jingles: jingles2, maps: maps2, songs: songs2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
-    const allMaps = maps2;
-    for (let i = 0; i < allMaps.length; i++) {
-        const name = allMaps[i];
+    const fetchAll = async (type, name) => {
         console.log(name);
-        const map = new Uint8Array(await (await fetch(`data/pack/client/maps/${name}`)).arrayBuffer());
-        const crc = Packet.getcrc(map, 0, map.length);
-        PRELOADED.set(name, map);
+        let data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
+        const crc = Packet.getcrc(data, 0, data.length);
+        if (type === 'jingles') {
+            data = data.subarray(4);
+        }
+        PRELOADED.set(name, data);
         PRELOADED_CRC.set(name, crc);
-    }
-    const allSongs = songs2;
-    for (let i = 0; i < allSongs.length; i++) {
-        const name = allSongs[i];
-        console.log(name);
-        const song = new Uint8Array(await (await fetch(`data/pack/client/songs/${name}`)).arrayBuffer());
-        const crc = Packet.getcrc(song, 0, song.length);
-        PRELOADED.set(name, song);
-        PRELOADED_CRC.set(name, crc);
-    }
-    const allJingles = jingles2;
-    for (let i = 0; i < allJingles.length; i++) {
-        const name = allJingles[i];
-        console.log(name);
-        const jingle = new Uint8Array(await (await fetch(`data/pack/client/jingles/${name}`)).arrayBuffer()).subarray(4);
-        const crc = Packet.getcrc(jingle, 0, jingle.length);
-        PRELOADED.set(name, jingle);
-        PRELOADED_CRC.set(name, crc);
-    }
+    };
+    const allPacks = [...maps2.map(name => fetchAll('maps', name)), ...songs2.map(name => fetchAll('songs', name)), ...jingles2.map(name => fetchAll('jingles', name))];
+    await Promise.all(allPacks);
+    console.timeEnd('Preloaded client data');
 }
 
 // src/lostcity/network/outgoing/OutgoingMessage.ts
@@ -38904,8 +38891,7 @@ var GameMap = class _GameMap {
         console.time('Loading game map');
         const path5 = 'data/pack/server/maps/';
         const {serverMaps: serverMaps2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
-        const maps2 = serverMaps2;
-        const allMaps = maps2.map(async map => {
+        const maps2 = serverMaps2.map(async map => {
             console.log('init ', map);
             const [mx, mz] = map.substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
@@ -38922,7 +38908,7 @@ var GameMap = class _GameMap {
             this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
             this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
         });
-        await Promise.all(allMaps);
+        await Promise.all(maps2);
         console.timeEnd('Loading game map');
     }
     /**
