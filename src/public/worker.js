@@ -39366,7 +39366,6 @@ async function makeCrcsAsync() {
     await makeCrcAsync('data/pack/client/textures');
     await makeCrcAsync('data/pack/client/wordenc');
     await makeCrcAsync('data/pack/client/sounds');
-    console.log('check1');
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 if (typeof self === 'undefined') {
@@ -39374,8 +39373,8 @@ if (typeof self === 'undefined') {
         makeCrcs();
     }
 } else {
+    console.log('hello');
     if ((await fetch('data/pack/client')).ok) {
-        console.log('check2');
         await makeCrcsAsync();
     }
 }
@@ -39422,7 +39421,6 @@ var Login = class {
             data.pos += 1;
             const crcs = new Uint8Array(9 * 4);
             data.gdata(crcs, 0, crcs.length);
-            console.log(crcs, CrcBuffer.data, CrcBuffer32);
             if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
                 return;
@@ -39945,6 +39943,7 @@ var World = class _World {
                 this.broadcastMes(`Reloaded ${count} scripts.`);
             }
         }
+        console.log('TESTING 123');
         await preloadClientAsync();
     }
     broadcastMes(message) {
@@ -39964,6 +39963,7 @@ var World = class _World {
         } else {
             await FontType.loadAsync('data/pack');
             await WordEnc.loadAsync('data/pack');
+            console.log('TESTING 1');
             await this.reloadAsync();
             if (!skipMaps) {
                 await this.gameMap.initAsync(this.zoneMap);
