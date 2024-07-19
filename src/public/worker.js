@@ -18572,15 +18572,15 @@ var Packet = class _Packet extends Hashable {
             return new _Packet(new Uint8Array(type));
         }
     }
-    static load(path5, seekToEnd = false) {
-        const packet = new _Packet(new Uint8Array(fs.readFileSync(path5)));
+    static load(path4, seekToEnd = false) {
+        const packet = new _Packet(new Uint8Array(fs.readFileSync(path4)));
         if (seekToEnd) {
             packet.pos = packet.data.length;
         }
         return packet;
     }
-    static async loadAsync(path5, seekToEnd = false) {
-        const packet = new _Packet(new Uint8Array(await (await fetch(path5)).arrayBuffer()));
+    static async loadAsync(path4, seekToEnd = false) {
+        const packet = new _Packet(new Uint8Array(await (await fetch(path4)).arrayBuffer()));
         if (seekToEnd) {
             packet.pos = packet.data.length;
         }
@@ -19458,11 +19458,11 @@ var loadBZip2WASM = (() => {
             throw toThrow;
         };
         var scriptDirectory = '';
-        function locateFile(path5) {
+        function locateFile(path4) {
             if (Module['locateFile']) {
-                return Module['locateFile'](path5, scriptDirectory);
+                return Module['locateFile'](path4, scriptDirectory);
             }
-            return scriptDirectory + path5;
+            return scriptDirectory + path4;
         }
         var read_, readAsync, readBinary;
         if (ENVIRONMENT_IS_NODE) {
@@ -20796,11 +20796,11 @@ var Jagfile = class _Jagfile {
     unpacked = false;
     fileQueue = [];
     fileWrite = [];
-    static load(path5) {
-        return new _Jagfile(Packet.load(path5));
+    static load(path4) {
+        return new _Jagfile(Packet.load(path4));
     }
-    static async loadAsync(path5) {
-        return new _Jagfile(await Packet.loadAsync(path5));
+    static async loadAsync(path4) {
+        return new _Jagfile(await Packet.loadAsync(path4));
     }
     constructor(src) {
         if (!src) {
@@ -20872,7 +20872,7 @@ var Jagfile = class _Jagfile {
             newHash
         });
     }
-    save(path5, doNotCompressWhole = false) {
+    save(path4, doNotCompressWhole = false) {
         let buf = Packet.alloc(5);
         for (let i = 0; i < this.fileQueue.length; i++) {
             const queued = this.fileQueue[i];
@@ -20942,7 +20942,7 @@ var Jagfile = class _Jagfile {
             jag.p3(buf.pos);
             jag.pdata(buf.data, 0, buf.pos);
         }
-        jag.save(path5);
+        jag.save(path4);
         buf.release();
         jag.release();
     }
@@ -25034,7 +25034,11 @@ var Script = class _Script {
         return this.info.scriptName;
     }
     get fileName() {
-        return path2.basename(this.info.sourceFilePath);
+        if (typeof self === 'undefined') {
+            return path2.basename(this.info.sourceFilePath);
+        } else {
+            return this.info.sourceFilePath;
+        }
     }
     lineNumber(pc) {
         for (let i = 0; i < this.info.pcs.length; i++) {
@@ -25184,8 +25188,6 @@ var ScriptProvider = class _ScriptProvider {
         return _ScriptProvider.scriptLookup.get(trigger);
     }
 };
-
-// src/lostcity/engine/script/ScriptRunner.ts
 
 // src/lostcity/util/Numbers.ts
 var MASK = initMaskArray();
@@ -29412,7 +29414,6 @@ function preloadClient() {
     }
 }
 async function preloadClientAsync() {
-    console.time('Preloaded client data');
     const fetchAll = async (type, name) => {
         let data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
         if (type === 'jingles') {
@@ -29425,7 +29426,6 @@ async function preloadClientAsync() {
     const {jingles: jingles2, maps: maps2, songs: songs2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
     const allPacks = [...maps2.map(name => fetchAll('maps', name)), ...songs2.map(name => fetchAll('songs', name)), ...jingles2.map(name => fetchAll('jingles', name))];
     await Promise.all(allPacks);
-    console.timeEnd('Preloaded client data');
 }
 
 // src/lostcity/network/outgoing/OutgoingMessage.ts
@@ -36235,9 +36235,9 @@ var TutorialClickSideHandler = class extends MessageHandler {
 
 // src/lostcity/network/incoming/model/MoveClick.ts
 var MoveClick = class extends IncomingMessage {
-    constructor(path5, ctrlHeld, opClick) {
+    constructor(path4, ctrlHeld, opClick) {
         super();
-        this.path = path5;
+        this.path = path4;
         this.ctrlHeld = ctrlHeld;
         this.opClick = opClick;
     }
@@ -36256,14 +36256,14 @@ var MoveClickDecoder = class extends MessageDecoder {
         const startZ = buf.g2();
         const offset = this.prot === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
         const waypoints = (buf.available - offset) >> 1;
-        const path5 = [{x: startX, z: startZ}];
+        const path4 = [{x: startX, z: startZ}];
         for (let index = 1; index <= waypoints && index < 25; index++) {
-            path5.push({
+            path4.push({
                 x: startX + buf.g1b(),
                 z: startZ + buf.g1b()
             });
         }
-        return new MoveClick(path5, ctrlHeld, this.prot === ClientProt.MOVE_OPCLICK);
+        return new MoveClick(path4, ctrlHeld, this.prot === ClientProt.MOVE_OPCLICK);
     }
 };
 
@@ -38018,7 +38018,7 @@ var ScriptRunner = class _ScriptRunner {
             }
             if (state.self instanceof Player) {
                 state.self.wrappedMessageGame(`script error: ${err.message}`);
-                state.self.wrappedMessageGame(`file: ${path3.basename(state.script.info.sourceFilePath)}`);
+                state.self.wrappedMessageGame(`file: ${state.script.fileName}`);
                 state.self.wrappedMessageGame('');
                 state.self.wrappedMessageGame('stack backtrace:');
                 state.self.wrappedMessageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
@@ -38039,7 +38039,7 @@ var ScriptRunner = class _ScriptRunner {
                 }
             }
             console.error(`script error: ${err.message}`);
-            console.error(`file: ${path3.basename(state.script.info.sourceFilePath)}`);
+            console.error(`file: ${state.script.fileName}`);
             console.error('');
             console.error('stack backtrace:');
             console.error(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
@@ -38872,33 +38872,33 @@ var GameMap = class _GameMap {
     static MAPSQUARE = _GameMap.X * _GameMap.Y * _GameMap.Z;
     init(zoneMap) {
         console.time('Loading game map');
-        const path5 = 'data/pack/server/maps/';
-        const maps2 = fs26.readdirSync(path5).filter(x => x[0] === 'm');
+        const path4 = 'data/pack/server/maps/';
+        const maps2 = fs26.readdirSync(path4).filter(x => x[0] === 'm');
         for (let index = 0; index < maps2.length; index++) {
             const [mx, mz] = maps2[index].substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
-            this.decodeNpcs(Packet.load(`${path5}n${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeObjs(Packet.load(`${path5}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.decodeNpcs(Packet.load(`${path4}n${mx}_${mz}`), mapsquareX, mapsquareZ);
+            this.decodeObjs(Packet.load(`${path4}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
             const lands = new Int8Array(_GameMap.MAPSQUARE);
-            this.decodeLands(lands, Packet.load(`${path5}m${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeLocs(lands, Packet.load(`${path5}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.decodeLands(lands, Packet.load(`${path4}m${mx}_${mz}`), mapsquareX, mapsquareZ);
+            this.decodeLocs(lands, Packet.load(`${path4}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
         }
         console.timeEnd('Loading game map');
     }
     async initAsync(zoneMap) {
         console.time('Loading game map');
-        const path5 = 'data/pack/server/maps/';
+        const path4 = 'data/pack/server/maps/';
         const {serverMaps: serverMaps2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
         const maps2 = serverMaps2.map(async map => {
             const [mx, mz] = map.substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
             const [npcData, objData, landData, locData] = await Promise.all([
-                await Packet.loadAsync(`${path5}n${mx}_${mz}`),
-                await Packet.loadAsync(`${path5}o${mx}_${mz}`),
-                await Packet.loadAsync(`${path5}m${mx}_${mz}`),
-                await Packet.loadAsync(`${path5}l${mx}_${mz}`)
+                await Packet.loadAsync(`${path4}n${mx}_${mz}`),
+                await Packet.loadAsync(`${path4}o${mx}_${mz}`),
+                await Packet.loadAsync(`${path4}m${mx}_${mz}`),
+                await Packet.loadAsync(`${path4}l${mx}_${mz}`)
             ]);
             this.decodeNpcs(npcData, mapsquareX, mapsquareZ);
             this.decodeObjs(objData, mapsquareX, mapsquareZ, zoneMap);
@@ -38906,7 +38906,6 @@ var GameMap = class _GameMap {
             this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
             this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
         });
-        await Promise.all(maps2);
         console.timeEnd('Loading game map');
     }
     /**
@@ -39313,11 +39312,11 @@ var LoginResponse = class {
 var CrcBuffer = new Packet(new Uint8Array(4 * 9));
 var CrcTable = [];
 var CrcBuffer32 = 0;
-function makeCrc(path5) {
-    if (!fs28.existsSync(path5)) {
+function makeCrc(path4) {
+    if (!fs28.existsSync(path4)) {
         return;
     }
-    const packet = Packet.load(path5);
+    const packet = Packet.load(path4);
     const crc = Packet.getcrc(packet.data, 0, packet.data.length);
     CrcTable.push(crc);
     CrcBuffer.p4(crc);
@@ -39336,11 +39335,11 @@ function makeCrcs() {
     makeCrc('data/pack/client/sounds');
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
-async function makeCrcAsync(path5) {
-    if (!(await fetch(path5)).ok) {
+async function makeCrcAsync(path4) {
+    if (!(await fetch(path4)).ok) {
         return;
     }
-    const packet = await Packet.loadAsync(path5);
+    const packet = await Packet.loadAsync(path4);
     const crc = Packet.getcrc(packet.data, 0, packet.data.length);
     CrcTable.push(crc);
     CrcBuffer.p4(crc);
@@ -39362,10 +39361,6 @@ async function makeCrcsAsync() {
 if (typeof self === 'undefined') {
     if (fs28.existsSync('data/pack/client/')) {
         makeCrcs();
-    }
-} else {
-    if ((await fetch('data/pack/client/crc')).ok) {
-        await makeCrcsAsync();
     }
 }
 
@@ -39406,6 +39401,7 @@ var Login = class {
             const revision = data.g1();
             if (revision !== 225) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                socket.close();
                 return;
             }
             data.pos += 1;
@@ -39413,6 +39409,7 @@ var Login = class {
             data.gdata(crcs, 0, crcs.length);
             if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                socket.close();
                 return;
             }
             this.loginThread.postMessage({
@@ -39836,92 +39833,62 @@ var World = class _World {
         preloadClient();
         this.allLastModified = getLatestModified('data/pack', '.dat');
     }
-    async reloadAsync() {
-        let transmitted = false;
-        if (this.shouldReload('varp', true)) {
-            await VarPlayerType.loadAsync('data/pack');
-            transmitted = true;
-        }
-        if (this.shouldReload('param')) {
-            await ParamType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('idk', true)) {
-            await IdkType.loadAsync('data/pack');
-            transmitted = true;
-        }
-        if (this.shouldReload('frame_del')) {
-            await SeqFrame.loadAsync('data/pack');
-        }
-        if (this.shouldReload('seq', true)) {
-            await SeqType.loadAsync('data/pack');
-            transmitted = true;
-        }
-        if (this.shouldReload('spotanim', true)) {
-            await SpotanimType.loadAsync('data/pack');
-            transmitted = true;
-        }
-        if (this.shouldReload('category')) {
-            await CategoryType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('enum')) {
-            await EnumType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('struct')) {
-            await StructType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('inv')) {
-            await InvType.loadAsync('data/pack');
-            this.invs.clear();
-            for (let i = 0; i < InvType.count; i++) {
-                const inv = InvType.get(i);
-                if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                    this.invs.add(Inventory.fromType(i));
-                }
+    async loadAsync() {
+        console.time('Loading packs');
+        const count = (
+            await Promise.all([
+                NpcType.loadAsync('data/pack'),
+                ObjType.loadAsync('data/pack'),
+                LocType.loadAsync('data/pack'),
+                FontType.loadAsync('data/pack'),
+                WordEnc.loadAsync('data/pack'),
+                VarPlayerType.loadAsync('data/pack'),
+                ParamType.loadAsync('data/pack'),
+                IdkType.loadAsync('data/pack'),
+                SeqFrame.loadAsync('data/pack'),
+                SeqType.loadAsync('data/pack'),
+                SpotanimType.loadAsync('data/pack'),
+                CategoryType.loadAsync('data/pack'),
+                EnumType.loadAsync('data/pack'),
+                StructType.loadAsync('data/pack'),
+                InvType.loadAsync('data/pack'),
+                MesanimType.loadAsync('data/pack'),
+                DbTableType.loadAsync('data/pack'),
+                DbRowType.loadAsync('data/pack'),
+                HuntType.loadAsync('data/pack'),
+                VarNpcType.loadAsync('data/pack'),
+                VarSharedType.loadAsync('data/pack'),
+                Component.loadAsync('data/pack'),
+                makeCrcsAsync(),
+                preloadClientAsync(),
+                ScriptProvider.loadAsync('data/pack')
+            ])
+        ).at(-1);
+        this.invs.clear();
+        for (let i = 0; i < InvType.count; i++) {
+            const inv = InvType.get(i);
+            if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                this.invs.add(Inventory.fromType(i));
             }
         }
-        if (this.shouldReload('mesanim')) {
-            await MesanimType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('dbtable')) {
-            await DbTableType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('dbrow')) {
-            await DbRowType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('hunt')) {
-            await HuntType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('varn')) {
-            await VarNpcType.loadAsync('data/pack');
-        }
-        if (this.shouldReload('vars')) {
-            await VarSharedType.loadAsync('data/pack');
-            if (this.vars.length !== VarSharedType.count) {
-                const old = this.vars;
-                this.vars = new Int32Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.vars[i] = old[i];
-                }
-                const oldString = this.varsString;
-                this.varsString = new Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.varsString[i] = oldString[i];
-                }
+        if (this.vars.length !== VarSharedType.count) {
+            const old = this.vars;
+            this.vars = new Int32Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.vars[i] = old[i];
+            }
+            const oldString = this.varsString;
+            this.varsString = new Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.varsString[i] = oldString[i];
             }
         }
-        if (this.shouldReload('interface')) {
-            await Component.loadAsync('data/pack');
-            transmitted = true;
+        if (count === -1) {
+            this.broadcastMes('There was an issue while reloading scripts.');
+        } else {
+            this.broadcastMes(`Reloaded ${count} scripts.`);
         }
-        if (this.shouldReload('script')) {
-            const count = await ScriptProvider.loadAsync('data/pack');
-            if (count === -1) {
-                this.broadcastMes('There was an issue while reloading scripts.');
-            } else {
-                this.broadcastMes(`Reloaded ${count} scripts.`);
-            }
-        }
-        await preloadClientAsync();
+        console.timeEnd('Loading packs');
     }
     broadcastMes(message) {
         for (const player of this.players) {
@@ -39938,14 +39905,12 @@ var World = class _World {
                 this.gameMap.init(this.zoneMap);
             }
         } else {
-            await Promise.all([await ObjType.loadAsync('data/pack'), await LocType.loadAsync('data/pack'), await NpcType.loadAsync('data/pack')]);
-            console.time('out of');
+            console.time('Loaded in');
+            await this.loadAsync();
             if (!skipMaps) {
-                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync(), await this.gameMap.initAsync(this.zoneMap)]);
-            } else {
-                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync()]);
+                await this.gameMap.initAsync(this.zoneMap);
             }
-            console.timeEnd('out of');
+            console.timeEnd('Loaded in');
         }
         Login_default.loginThread.postMessage({
             type: 'reset'
@@ -40006,7 +39971,7 @@ var World = class _World {
             if (this.devRebuilding) {
                 return;
             }
-            console.log('dev:', path4.basename(targetPath), 'was edited');
+            console.log('dev:', path3.basename(targetPath), 'was edited');
             this.devRebuilding = true;
             this.broadcastMes('Rebuilding, please wait...');
             if (!this.devThread) {
@@ -40810,6 +40775,14 @@ var WorkerServer = class {
         seed.p4(Math.floor(Math.random() * 4294967295));
         seed.p4(Math.floor(Math.random() * 4294967295));
         this.socket.send(seed.data);
+        self.onerror = async e => {
+            console.log(e);
+            self.close();
+        };
+        self.onmessageerror = async e => {
+            console.log(e);
+            self.close();
+        };
         self.onmessage = async e => {
             const packet = new Packet(new Uint8Array(e.data));
             switch (e.data.type) {

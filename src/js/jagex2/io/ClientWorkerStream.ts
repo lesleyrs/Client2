@@ -1,5 +1,6 @@
 import LinkList from '../datastruct/LinkList';
 import Linkable from '../datastruct/Linkable';
+import {sleep} from '../util/JsUtil';
 
 export default class ClientWorkerStream {
     // constructor
@@ -13,6 +14,8 @@ export default class ClientWorkerStream {
 
     constructor() {
         this.worker = new Worker('worker.js', {type: 'module'});
+        this.worker.onerror = this.onerror;
+        this.worker.onmessageerror = this.onmessageerror;
         this.wwin = new WorkerReader(this.worker, 5000);
         this.wwout = new WorkerWriter(this.worker, 5000);
     }
@@ -53,6 +56,22 @@ export default class ClientWorkerStream {
             console.log('connection error!');
         }
     }
+
+    private onerror = (event: Event): void => {
+        if (this.closed) {
+            return;
+        }
+        this.ioerror = true;
+        this.close();
+    };
+
+    private onmessageerror = (event: MessageEvent): void => {
+        if (this.closed) {
+            return;
+        }
+        this.ioerror = true;
+        this.close();
+    };
 }
 
 class WorkerWriter {
@@ -181,7 +200,14 @@ class WorkerReader {
     private async readSlowByte(len: number): Promise<number> {
         this.event = this.queue.removeHead() as WorkerEvent | null;
         while (this.total < len) {
-            await new Promise((resolve): ((value: PromiseLike<((data: WorkerEvent | null) => void) | null>) => void) => (this.callback = resolve));
+            await Promise.race([
+                new Promise((resolve): ((value: PromiseLike<((data: WorkerEvent | null) => void) | null>) => void) => (this.callback = resolve)),
+                sleep(2000).then((): void => {
+                    if (this.closed) {
+                        throw new Error('WebSocketReader timed out or closed while reading.');
+                    }
+                })
+            ]);
         }
         return this.event ? this.event.read : this.readSlowByte(len);
     }
