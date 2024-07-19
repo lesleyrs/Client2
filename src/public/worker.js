@@ -29412,19 +29412,20 @@ function preloadClient() {
     }
 }
 async function preloadClientAsync() {
+    console.time('Preloaded client data');
     const fetchAll = async (type, name) => {
-        console.log(name);
         let data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
-        const crc = Packet.getcrc(data, 0, data.length);
         if (type === 'jingles') {
             data = data.subarray(4);
         }
+        const crc = Packet.getcrc(data, 0, data.length);
         PRELOADED.set(name, data);
         PRELOADED_CRC.set(name, crc);
     };
     const {jingles: jingles2, maps: maps2, songs: songs2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
     const allPacks = [...maps2.map(name => fetchAll('maps', name)), ...songs2.map(name => fetchAll('songs', name)), ...jingles2.map(name => fetchAll('jingles', name))];
     await Promise.all(allPacks);
+    console.timeEnd('Preloaded client data');
 }
 
 // src/lostcity/network/outgoing/OutgoingMessage.ts
@@ -38890,12 +38891,11 @@ var GameMap = class _GameMap {
         const path5 = 'data/pack/server/maps/';
         const {serverMaps: serverMaps2} = await Promise.resolve().then(() => (init_PreloadedDirs(), PreloadedDirs_exports));
         const maps2 = serverMaps2.map(async map => {
-            console.log(map);
             const [mx, mz] = map.substring(1).split('_').map(Number);
             const mapsquareX = mx << 6;
             const mapsquareZ = mz << 6;
             const [npcData, objData, landData, locData] = await Promise.all([
-                Packet.loadAsync(`${path5}n${mx}_${mz}`),
+                await Packet.loadAsync(`${path5}n${mx}_${mz}`),
                 await Packet.loadAsync(`${path5}o${mx}_${mz}`),
                 await Packet.loadAsync(`${path5}m${mx}_${mz}`),
                 await Packet.loadAsync(`${path5}l${mx}_${mz}`)
@@ -39845,18 +39845,6 @@ var World = class _World {
         if (this.shouldReload('param')) {
             await ParamType.loadAsync('data/pack');
         }
-        if (this.shouldReload('obj', true)) {
-            await ObjType.loadAsync('data/pack');
-            transmitted = true;
-        }
-        if (this.shouldReload('loc', true)) {
-            await LocType.loadAsync('data/pack');
-            transmitted = true;
-        }
-        if (this.shouldReload('npc', true)) {
-            await NpcType.loadAsync('data/pack');
-            transmitted = true;
-        }
         if (this.shouldReload('idk', true)) {
             await IdkType.loadAsync('data/pack');
             transmitted = true;
@@ -39950,12 +39938,14 @@ var World = class _World {
                 this.gameMap.init(this.zoneMap);
             }
         } else {
-            await FontType.loadAsync('data/pack');
-            await WordEnc.loadAsync('data/pack');
-            await this.reloadAsync();
+            await Promise.all([await ObjType.loadAsync('data/pack'), await LocType.loadAsync('data/pack'), await NpcType.loadAsync('data/pack')]);
+            console.time('out of');
             if (!skipMaps) {
-                await this.gameMap.initAsync(this.zoneMap);
+                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync(), await this.gameMap.initAsync(this.zoneMap)]);
+            } else {
+                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync()]);
             }
+            console.timeEnd('out of');
         }
         Login_default.loginThread.postMessage({
             type: 'reset'
