@@ -25037,7 +25037,7 @@ var Script = class _Script {
         if (typeof self === 'undefined') {
             return path2.basename(this.info.sourceFilePath);
         } else {
-            return this.info.sourceFilePath.split('/').pop();
+            return this.info.sourceFilePath.split('/').pop()?.split('\\').pop();
         }
     }
     lineNumber(pc) {
@@ -34791,7 +34791,7 @@ var ClientSocket = class _ClientSocket {
     remoteAddress;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId = typeof self === 'undefined' ? randomUUID() : self.location.protocol === 'https:' ? self.crypto.randomUUID() : '0';
+    uniqueId = typeof self === 'undefined' ? randomUUID() : self.isSecureContext ? self.crypto.randomUUID() : '0';
     encryptor = null;
     decryptor = null;
     // we only want to receive 5KB per tick to mitigate bad actors
@@ -37975,7 +37975,6 @@ var ScriptRunner = class _ScriptRunner {
             return ScriptState.ABORTED;
         }
         try {
-            console.log(state.script.info.sourceFilePath);
             if (reset) {
                 state.reset();
             }
