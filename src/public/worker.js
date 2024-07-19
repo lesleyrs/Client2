@@ -40768,7 +40768,7 @@ var World_default = new World();
 
 // src/lostcity/server/WorkerServer.ts
 var WorkerServer = class {
-    socket = new ClientSocket(null, '127.0.0.1');
+    socket = new ClientSocket(null, 'localhost');
     constructor() {}
     start() {
         const seed = new Packet(new Uint8Array(4 + 4));
