@@ -221,7 +221,9 @@ class WebSocketReader {
             await Promise.race([
                 new Promise((resolve): ((value: PromiseLike<((data: WebSocketEvent | null) => void) | null>) => void) => (this.callback = resolve)),
                 sleep(2000).then((): void => {
-                    throw new Error('WebSocketReader timed out or closed while reading.');
+                    if (this.closed) {
+                        throw new Error('WebSocketReader timed out or closed while reading.');
+                    }
                 })
             ]);
         }
