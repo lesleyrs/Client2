@@ -17881,6 +17881,7 @@ if (typeof self === 'undefined' && parentPort) {
                         let save = new Uint8Array();
                         const safeName = toSafeName(username);
                         const url = new URL(`data/players/${safeName}.sav`, self.location.origin);
+                        console.log(safeName, url);
                         if ((await fetch(url)).ok) {
                             save = new Uint8Array(await (await fetch(url)).arrayBuffer());
                         }
