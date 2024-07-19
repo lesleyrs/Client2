@@ -25037,7 +25037,7 @@ var Script = class _Script {
         if (typeof self === 'undefined') {
             return path2.basename(this.info.sourceFilePath);
         } else {
-            return this.info.sourceFilePath;
+            return this.info.sourceFilePath.split('/').pop();
         }
     }
     lineNumber(pc) {
@@ -37975,6 +37975,7 @@ var ScriptRunner = class _ScriptRunner {
             return ScriptState.ABORTED;
         }
         try {
+            console.log(state.script.info.sourceFilePath);
             if (reset) {
                 state.reset();
             }
@@ -40768,7 +40769,7 @@ var World_default = new World();
 
 // src/lostcity/server/WorkerServer.ts
 var WorkerServer = class {
-    socket = new ClientSocket(null, 'localhost');
+    socket = new ClientSocket(null, '127.0.0.1');
     constructor() {}
     start() {
         const seed = new Packet(new Uint8Array(4 + 4));
