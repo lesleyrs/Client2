@@ -18496,11 +18496,12 @@ var CategoryType = class _CategoryType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/category.dat`)).ok) {
+    const file = await fetch(`${dir}/server/category.dat`);
+    if (!file.ok) {
       console.log("Warning: No category.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/category.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -18753,11 +18754,12 @@ var DbTableType = class _DbTableType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/dbtable.dat`)).ok) {
+    const file = await fetch(`${dir}/server/dbtable.dat`);
+    if (!file.ok) {
       console.log("Warning: No dbtable.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/dbtable.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -18864,11 +18866,12 @@ var DbRowType = class _DbRowType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/dbrow.dat`)).ok) {
+    const file = await fetch(`${dir}/server/dbrow.dat`);
+    if (!file.ok) {
       console.log("Warning: No dbrow.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/dbrow.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -18967,11 +18970,12 @@ var EnumType = class _EnumType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/enum.dat`)).ok) {
+    const file = await fetch(`${dir}/server/enum.dat`);
+    if (!file.ok) {
       console.log("Warning: No enum.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/enum.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -21095,11 +21099,12 @@ var HuntType = class _HuntType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/hunt.dat`)).ok) {
+    const file = await fetch(`${dir}/server/hunt.dat`);
+    if (!file.ok) {
       console.log("Warning: No hunt.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/hunt.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -21214,13 +21219,13 @@ var IdkType = class _IdkType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/idk.dat`)).ok) {
+    const file = await fetch(`${dir}/server/idk.dat`);
+    if (!file.ok) {
       console.log("Warning: No idk.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/idk.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _IdkType.configNames = /* @__PURE__ */ new Map();
@@ -21314,11 +21319,12 @@ var Component = class _Component {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
+    const file = await fetch(`${dir}/server/interface.dat`);
+    if (!file.ok) {
       console.log("Warning: No interface.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -21577,11 +21583,12 @@ var InvType = class _InvType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/inv.dat`)).ok) {
+    const file = await fetch(`${dir}/server/inv.dat`);
+    if (!file.ok) {
       console.log("Warning: No inv.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/inv.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -21712,13 +21719,13 @@ var LocType = class _LocType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/loc.dat`)).ok) {
+    const file = await fetch(`${dir}/server/loc.dat`);
+    if (!file.ok) {
       console.log("Warning: No loc.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/loc.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _LocType.configNames = /* @__PURE__ */ new Map();
@@ -21903,11 +21910,12 @@ var MesanimType = class _MesanimType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/mesanim.dat`)).ok) {
+    const file = await fetch(`${dir}/server/mesanim.dat`);
+    if (!file.ok) {
       console.log("Warning: No mesanim.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/mesanim.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -22002,13 +22010,13 @@ var NpcType = class _NpcType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/npc.dat`)).ok) {
+    const file = await fetch(`${dir}/server/npc.dat`);
+    if (!file.ok) {
       console.log("Warning: No npc.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/npc.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _NpcType.configNames = /* @__PURE__ */ new Map();
@@ -22217,10 +22225,12 @@ var ParamType = class _ParamType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/param.dat`)).ok) {
+    const file = await fetch(`${dir}/server/param.dat`);
+    if (!file.ok) {
       console.log("Warning: No param.dat found.");
+      return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/param.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -22429,13 +22439,13 @@ var ObjType = class _ObjType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/obj.dat`)).ok) {
+    const file = await fetch(`${dir}/server/obj.dat`);
+    if (!file.ok) {
       console.log("Warning: No obj.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/obj.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _ObjType.configNames = /* @__PURE__ */ new Map();
@@ -22708,11 +22718,12 @@ var SeqFrame = class _SeqFrame {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/frame_del.dat`)).ok) {
+    const file = await fetch(`${dir}/server/frame_del.dat`);
+    if (!file.ok) {
       console.log("Warning: No frame_del.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/frame_del.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -22741,13 +22752,13 @@ var SeqType = class _SeqType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/seq.dat`)).ok) {
+    const file = await fetch(`${dir}/server/seq.dat`);
+    if (!file.ok) {
       console.log("Warning: No seq.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/seq.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _SeqType.configNames = /* @__PURE__ */ new Map();
@@ -22854,11 +22865,12 @@ var StructType = class _StructType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/struct.dat`)).ok) {
+    const file = await fetch(`${dir}/server/struct.dat`);
+    if (!file.ok) {
       console.log("Warning: No struct.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/struct.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -22916,11 +22928,12 @@ var VarNpcType = class _VarNpcType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/varn.dat`)).ok) {
+    const file = await fetch(`${dir}/server/varn.dat`);
+    if (!file.ok) {
       console.log("Warning: No varn.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/varn.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -22985,13 +22998,13 @@ var VarPlayerType = class _VarPlayerType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/varp.dat`)).ok) {
+    const file = await fetch(`${dir}/server/varp.dat`);
+    if (!file.ok) {
       console.log("Warning: No varp.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/varp.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _VarPlayerType.configNames = /* @__PURE__ */ new Map();
@@ -23067,11 +23080,12 @@ var VarSharedType = class _VarSharedType extends ConfigType {
     this.parse(dat);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/vars.dat`)).ok) {
+    const file = await fetch(`${dir}/server/vars.dat`);
+    if (!file.ok) {
       console.log("Warning: No vars.dat found.");
       return;
     }
-    const dat = await Packet.loadAsync(`${dir}/server/vars.dat`);
+    const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
     this.parse(dat);
   }
   static parse(dat) {
@@ -23818,11 +23832,12 @@ var WordEnc = class _WordEnc {
     this.readAll(wordenc);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/client/wordenc`)).ok) {
-      console.log("Warning: No wordenc found.");
+    const file = await fetch(`${dir}/client/wordenc`);
+    if (!file.ok) {
+      console.log("Warning: No wordenc.dat found.");
       return;
     }
-    const wordenc = await Jagfile.loadAsync(`${dir}/client/wordenc`);
+    const wordenc = new Jagfile(new Packet(new Uint8Array(await file.arrayBuffer())));
     this.readAll(wordenc);
   }
   static readAll(wordenc) {
@@ -24040,13 +24055,13 @@ var SpotanimType = class _SpotanimType extends ConfigType {
     this.parse(server, jag);
   }
   static async loadAsync(dir) {
-    if (!(await fetch(`${dir}/server/spotanim.dat`)).ok) {
+    const file = await fetch(`${dir}/server/spotanim.dat`);
+    if (!file.ok) {
       console.log("Warning: No spotanim.dat found.");
       return;
     }
-    const server = await Packet.loadAsync(`${dir}/server/spotanim.dat`);
-    const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-    this.parse(server, jag);
+    const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+    this.parse(new Packet(new Uint8Array(server)), jag);
   }
   static parse(server, jag) {
     _SpotanimType.configNames = /* @__PURE__ */ new Map();
@@ -24687,8 +24702,7 @@ var ScriptProvider = class _ScriptProvider {
     return this.parse(dat, idx);
   }
   static async loadAsync(dir) {
-    const dat = await Packet.loadAsync(`${dir}/server/script.dat`);
-    const idx = await Packet.loadAsync(`${dir}/server/script.idx`);
+    const [dat, idx] = await Promise.all([Packet.loadAsync(`${dir}/server/script.dat`), Packet.loadAsync(`${dir}/server/script.idx`)]);
     return this.parse(dat, idx);
   }
   static parse(dat, idx) {
@@ -38809,10 +38823,11 @@ function makeCrcs() {
   CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 async function makeCrcAsync(path4) {
-  if (!(await fetch(path4)).ok) {
+  const file = await fetch(path4);
+  if (!file.ok) {
     return;
   }
-  const packet = await Packet.loadAsync(path4);
+  const packet = new Packet(new Uint8Array(await file.arrayBuffer()));
   const crc = Packet.getcrc(packet.data, 0, packet.data.length);
   CrcTable.push(crc);
   CrcBuffer.p4(crc);
@@ -38821,14 +38836,16 @@ async function makeCrcsAsync() {
   CrcTable = [];
   CrcBuffer.pos = 0;
   CrcBuffer.p4(0);
-  await makeCrcAsync("data/pack/client/title");
-  await makeCrcAsync("data/pack/client/config");
-  await makeCrcAsync("data/pack/client/interface");
-  await makeCrcAsync("data/pack/client/media");
-  await makeCrcAsync("data/pack/client/models");
-  await makeCrcAsync("data/pack/client/textures");
-  await makeCrcAsync("data/pack/client/wordenc");
-  await makeCrcAsync("data/pack/client/sounds");
+  await Promise.all([
+    makeCrcAsync("data/pack/client/title"),
+    makeCrcAsync("data/pack/client/config"),
+    makeCrcAsync("data/pack/client/interface"),
+    makeCrcAsync("data/pack/client/media"),
+    makeCrcAsync("data/pack/client/models"),
+    makeCrcAsync("data/pack/client/textures"),
+    makeCrcAsync("data/pack/client/wordenc"),
+    makeCrcAsync("data/pack/client/sounds")
+  ]);
   CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 if (typeof self === "undefined") {
