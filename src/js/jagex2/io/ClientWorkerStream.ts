@@ -1,6 +1,7 @@
 import LinkList from '../datastruct/LinkList';
 import Linkable from '../datastruct/Linkable';
 import {sleep} from '../util/JsUtil';
+import {downloadURL} from '../util/SaveUtil';
 
 export default class ClientWorkerStream {
     // constructor
@@ -156,12 +157,7 @@ class WorkerReader {
     private onmessage = (e: MessageEvent): void => {
         switch (e.data.type) {
             case 'save': {
-                const a: HTMLAnchorElement = document.createElement('a');
-                a.href = e.data.value;
-                a.download = e.data.path.split('/').pop();
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                downloadURL(e.data.value, e.data.path.split('/').pop().split('\\').pop());
                 URL.revokeObjectURL(e.data.value);
                 break;
             }
