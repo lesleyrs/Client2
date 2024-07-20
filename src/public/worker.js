@@ -38836,16 +38836,14 @@ async function makeCrcsAsync() {
   CrcTable = [];
   CrcBuffer.pos = 0;
   CrcBuffer.p4(0);
-  await Promise.all([
-    makeCrcAsync("data/pack/client/title"),
-    makeCrcAsync("data/pack/client/config"),
-    makeCrcAsync("data/pack/client/interface"),
-    makeCrcAsync("data/pack/client/media"),
-    makeCrcAsync("data/pack/client/models"),
-    makeCrcAsync("data/pack/client/textures"),
-    makeCrcAsync("data/pack/client/wordenc"),
-    makeCrcAsync("data/pack/client/sounds")
-  ]);
+  await makeCrcAsync("data/pack/client/title");
+  await makeCrcAsync("data/pack/client/config");
+  await makeCrcAsync("data/pack/client/interface");
+  await makeCrcAsync("data/pack/client/media");
+  await makeCrcAsync("data/pack/client/models");
+  await makeCrcAsync("data/pack/client/textures");
+  await makeCrcAsync("data/pack/client/wordenc");
+  await makeCrcAsync("data/pack/client/sounds");
   CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 if (typeof self === "undefined") {
