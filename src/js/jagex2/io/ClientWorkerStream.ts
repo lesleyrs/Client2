@@ -200,7 +200,7 @@ class WorkerReader {
                 new Promise((resolve): ((value: PromiseLike<((data: WorkerEvent | null) => void) | null>) => void) => (this.callback = resolve)),
                 sleep(2000).then((): void => {
                     if (this.closed) {
-                        throw new Error('WebSocketReader timed out or closed while reading.');
+                        throw new Error('WorkerReader timed out or closed while reading.');
                     }
                 })
             ]);
