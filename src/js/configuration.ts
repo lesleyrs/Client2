@@ -52,7 +52,7 @@ function method(): void {
 
 function localConfiguration(): void {
     Client.serverAddress = 'http://localhost';
-    Client.httpAddress = 'http://localhost';
+    Client.httpAddress = 'http://localhost:8888';
     Client.portOffset = 0;
 }
 

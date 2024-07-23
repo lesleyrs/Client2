@@ -49,7 +49,7 @@ const config = {
             patterns: [
                 {
                     from: path.resolve(__dirname, 'src', 'public'),
-                    globOptions: { ignore: [path.resolve(__dirname, 'src', 'public', 'data', 'src') ] },
+                    globOptions: { ignore: [path.resolve(__dirname, 'src', 'public', 'data', 'src')] },
                 },
                 { from: path.resolve(__dirname, 'src', 'js', 'vendor', 'bz2.wasm') },
             ],
@@ -126,41 +126,6 @@ module.exports = () => {
               terserOptions: {
                   module: true,
                   mangle: true,
-                  // mangle: {
-                  //  properties: {
-                  //   keep_quoted: true, // needed for tinymidipcm.mjs
-                  //   reserved: [
-                  //             'loadTinyMidiPCM', // needed for tinymidipcm.mjs
-                  //             'newBzip2State', // keeps renaming this to $S
-                  //             'portOffset', // idk why but has to
-                  //             'willReadFrequently', // terser removes this option from canvas
-                  //             'members', // terser messes this up
-                  //             '__liftRecord5', // the rest is for vendor
-                  //             '__lowerRecord5',
-                  //             '__liftString',
-                  //             '__liftArray',
-                  //             '__lowerArray',
-                  //             '__liftTypedArray',
-                  //             '__lowerTypedArray',
-                  //             '__liftStaticArray',
-                  //             '__lowerStaticArray',
-                  //             '__retain',
-                  //             '__release',
-                  //             '__notnull',
-                  //             '__setU8',
-                  //             '__setU32',
-                  //             '__getU8',
-                  //             '__getU32',
-                  //             '__pin',
-                  //             '__new',
-                  //             '__unpin'
-                  //         ]
-                  //     }
-                  // },
-                  format: {
-                      quote_style: 3, // original
-                      keep_quoted_props: true // needed for tinymidipcm.mjs
-                  }
               }
           })
         );
