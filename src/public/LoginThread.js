@@ -7669,12 +7669,12 @@ var require_rsa = __commonJS({
                 type: "pkcs8",
                 format: "pem"
               }
-            }, function(err, pub, priv2) {
+            }, function(err, pub, priv) {
               if (err) {
                 return callback(err);
               }
               callback(null, {
-                privateKey: pki.privateKeyFromPem(priv2),
+                privateKey: pki.privateKeyFromPem(priv),
                 publicKey: pki.publicKeyFromPem(pub)
               });
             });
@@ -17628,9 +17628,9 @@ var require_ssh = __commonJS({
       _addBigIntegerToBuffer(privbuffer, privateKey.p);
       _addBigIntegerToBuffer(privbuffer, privateKey.q);
       _addBigIntegerToBuffer(privbuffer, privateKey.qInv);
-      var priv2;
+      var priv;
       if (!passphrase) {
-        priv2 = forge3.util.encode64(privbuffer.bytes(), 64);
+        priv = forge3.util.encode64(privbuffer.bytes(), 64);
       } else {
         var encLen = privbuffer.length() + 16 - 1;
         encLen -= encLen % 16;
@@ -17646,11 +17646,11 @@ var require_ssh = __commonJS({
         cipher.finish();
         var encrypted = cipher.output;
         encrypted.truncate(16);
-        priv2 = forge3.util.encode64(encrypted.bytes(), 64);
+        priv = forge3.util.encode64(encrypted.bytes(), 64);
       }
-      length = Math.floor(priv2.length / 66) + 1;
+      length = Math.floor(priv.length / 66) + 1;
       ppk += "\r\nPrivate-Lines: " + length + "\r\n";
-      ppk += priv2;
+      ppk += priv;
       var mackey = _sha1("putty-private-key-file-mac-key", passphrase);
       var macbuffer = forge3.util.createBuffer();
       _addStringToBuffer(macbuffer, algorithm);
@@ -18677,345 +18677,197 @@ var LoginClient = class {
 };
 
 // src/lostcity/server/LoginThread.ts
-var priv;
 if (typeof self === "undefined") {
   if (!parentPort) throw new Error("This file must be run as a worker thread.");
-  priv = import_node_forge2.default.pki.privateKeyFromPem(fs3.readFileSync("data/config/private.pem", "ascii"));
-} else {
-  priv = import_node_forge2.default.pki.privateKeyFromPem(await (await fetch("data/config/private.pem")).text());
-}
-if (typeof self === "undefined" && parentPort) {
+  const priv = import_node_forge2.default.pki.privateKeyFromPem(fs3.readFileSync("data/config/private.pem", "ascii"));
   parentPort.on("message", async (msg) => {
     try {
       if (!parentPort) throw new Error("This file must be run as a worker thread.");
-      switch (msg.type) {
-        case "reset": {
-          if (!Environment_default.LOGIN_KEY) {
-            return;
-          }
-          const login = new LoginClient();
-          await login.reset();
-          break;
-        }
-        case "heartbeat": {
-          if (!Environment_default.LOGIN_KEY) {
-            return;
-          }
-          const login = new LoginClient();
-          await login.heartbeat(msg.players);
-          break;
-        }
-        case "loginreq": {
-          const { opcode, data, socket } = msg;
-          const stream = new Packet(data);
-          const revision = stream.g1();
-          if (revision !== 225) {
-            parentPort.postMessage({
-              type: "loginreply",
-              status: LoginResponse.SERVER_UPDATED,
-              socket
-            });
-            return;
-          }
-          const info = stream.g1();
-          const crcs = new Uint8Array(9 * 4);
-          stream.gdata(crcs, 0, crcs.length);
-          stream.rsadec(priv);
-          if (stream.g1() !== 10) {
-            parentPort.postMessage({
-              type: "loginreply",
-              status: LoginResponse.LOGIN_REJECTED,
-              socket
-            });
-            return;
-          }
-          const seed = [];
-          for (let i = 0; i < 4; i++) {
-            seed[i] = stream.g4();
-          }
-          const uid = stream.g4();
-          const username = stream.gjstr();
-          const password = stream.gjstr();
-          if (username.length < 1 || username.length > 12) {
-            parentPort.postMessage({
-              type: "loginreply",
-              status: LoginResponse.INVALID_USER_OR_PASS,
-              socket
-            });
-            return;
-          }
-          if (Environment_default.LOGIN_KEY) {
-            if (password.length < 5 || password.length > 20) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.INVALID_USER_OR_PASS,
-                socket
-              });
-              return;
-            }
-            const login = new LoginClient();
-            const request = await login.load(toBase37(toSafeName(username)), password, uid);
-            if (request.reply === 1 && request.data) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.SUCCESSFUL,
-                socket,
-                info,
-                seed,
-                username: toSafeName(username),
-                save: request.data.data
-              });
-            } else if ((request.reply === 2 || request.reply === 3) && opcode === 16) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGGED_IN,
-                socket
-              });
-              return;
-            } else if (request.reply === 3 && opcode === 18) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGGED_IN,
-                socket
-              });
-              return;
-            } else if (request.reply === 4) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.SUCCESSFUL,
-                socket,
-                info,
-                seed,
-                username: toSafeName(username),
-                save: new Uint8Array()
-              });
-            } else if (request.reply === 5) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.INVALID_USER_OR_PASS,
-                socket
-              });
-              return;
-            } else if (request.reply === -1) {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGIN_SERVER_OFFLINE,
-                socket
-              });
-              return;
-            } else {
-              parentPort.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGIN_REJECTED,
-                socket
-              });
-              return;
-            }
-          } else {
-            let save = new Uint8Array();
-            const safeName = toSafeName(username);
-            if (fs3.existsSync(`data/players/${safeName}.sav`)) {
-              save = await fsp2.readFile(`data/players/${safeName}.sav`);
-            }
-            parentPort.postMessage({
-              type: "loginreply",
-              status: LoginResponse.SUCCESSFUL,
-              socket,
-              info,
-              seed,
-              username: safeName,
-              save
-            });
-          }
-          break;
-        }
-        case "logout": {
-          const { username, save } = msg;
-          if (Environment_default.LOGIN_KEY) {
-            const login = new LoginClient();
-            const reply = await login.save(toBase37(username), save);
-            if (reply === 0) {
-              parentPort.postMessage({
-                type: "logoutreply",
-                username
-              });
-            }
-          } else {
-            parentPort.postMessage({
-              type: "logoutreply",
-              username
-            });
-          }
-          break;
-        }
-        default:
-          console.error("Unknown message type: " + msg.type);
-          break;
-      }
+      await handleRequests(parentPort, msg, priv);
     } catch (err) {
       console.error(err);
     }
   });
 } else {
+  const priv = import_node_forge2.default.pki.privateKeyFromPem(await (await fetch("data/config/private.pem")).text());
   self.onmessage = async (msg) => {
     try {
-      switch (msg.data.type) {
-        case "reset": {
-          break;
-        }
-        case "heartbeat": {
-          break;
-        }
-        case "loginreq": {
-          const { opcode, data, socket } = msg.data;
-          const stream = new Packet(data);
-          const revision = stream.g1();
-          if (revision !== 225) {
-            self.postMessage({
-              type: "loginreply",
-              status: LoginResponse.SERVER_UPDATED,
-              socket
-            });
-            return;
-          }
-          const info = stream.g1();
-          const crcs = new Uint8Array(9 * 4);
-          stream.gdata(crcs, 0, crcs.length);
-          stream.rsadec(priv);
-          if (stream.g1() !== 10) {
-            self.postMessage({
-              type: "loginreply",
-              status: LoginResponse.LOGIN_REJECTED,
-              socket
-            });
-            return;
-          }
-          const seed = [];
-          for (let i = 0; i < 4; i++) {
-            seed[i] = stream.g4();
-          }
-          const uid = stream.g4();
-          const username = stream.gjstr();
-          const password = stream.gjstr();
-          if (username.length < 1 || username.length > 12) {
-            self.postMessage({
-              type: "loginreply",
-              status: LoginResponse.INVALID_USER_OR_PASS,
-              socket
-            });
-            return;
-          }
-          if (Environment_default.LOGIN_KEY) {
-            if (password.length < 5 || password.length > 20) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.INVALID_USER_OR_PASS,
-                socket
-              });
-              return;
-            }
-            const login = new LoginClient();
-            const request = await login.load(toBase37(toSafeName(username)), password, uid);
-            if (request.reply === 1 && request.data) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.SUCCESSFUL,
-                socket,
-                info,
-                seed,
-                username: toSafeName(username),
-                save: request.data.data
-              });
-            } else if ((request.reply === 2 || request.reply === 3) && opcode === 16) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGGED_IN,
-                socket
-              });
-              return;
-            } else if (request.reply === 3 && opcode === 18) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGGED_IN,
-                socket
-              });
-              return;
-            } else if (request.reply === 4) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.SUCCESSFUL,
-                socket,
-                info,
-                seed,
-                username: toSafeName(username),
-                save: new Uint8Array()
-              });
-            } else if (request.reply === 5) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.INVALID_USER_OR_PASS,
-                socket
-              });
-              return;
-            } else if (request.reply === -1) {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGIN_SERVER_OFFLINE,
-                socket
-              });
-              return;
-            } else {
-              self.postMessage({
-                type: "loginreply",
-                status: LoginResponse.LOGIN_REJECTED,
-                socket
-              });
-              return;
-            }
-          } else {
-            let save = new Uint8Array();
-            const safeName = toSafeName(username);
-            const saveFile = await fetch(`data/players/${safeName}.sav`);
-            if (saveFile.ok) {
-              save = new Uint8Array(await saveFile.arrayBuffer());
-            }
-            self.postMessage({
-              type: "loginreply",
-              status: LoginResponse.SUCCESSFUL,
-              socket,
-              info,
-              seed,
-              username: safeName,
-              save
-            });
-          }
-          break;
-        }
-        case "logout": {
-          const { username, save } = msg.data;
-          if (Environment_default.LOGIN_KEY) {
-            const login = new LoginClient();
-            const reply = await login.save(toBase37(username), save);
-            if (reply === 0) {
-              self.postMessage({
-                type: "logoutreply",
-                username
-              });
-            }
-          } else {
-            self.postMessage({
-              type: "logoutreply",
-              username
-            });
-          }
-          break;
-        }
-        default:
-          console.error("Unknown message type: " + msg.data.type);
-          break;
-      }
+      await handleRequests(self, msg.data, priv);
     } catch (err) {
       console.error(err);
     }
   };
+}
+async function handleRequests(parentPort2, msg, priv) {
+  switch (msg.type) {
+    case "reset": {
+      if (!Environment_default.LOGIN_KEY) {
+        return;
+      }
+      const login = new LoginClient();
+      await login.reset();
+      break;
+    }
+    case "heartbeat": {
+      if (!Environment_default.LOGIN_KEY) {
+        return;
+      }
+      const login = new LoginClient();
+      await login.heartbeat(msg.players);
+      break;
+    }
+    case "loginreq": {
+      const { opcode, data, socket } = msg;
+      const stream = new Packet(data);
+      const revision = stream.g1();
+      if (revision !== 225) {
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.SERVER_UPDATED,
+          socket
+        });
+        return;
+      }
+      const info = stream.g1();
+      const crcs = new Uint8Array(9 * 4);
+      stream.gdata(crcs, 0, crcs.length);
+      stream.rsadec(priv);
+      if (stream.g1() !== 10) {
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.LOGIN_REJECTED,
+          socket
+        });
+        return;
+      }
+      const seed = [];
+      for (let i = 0; i < 4; i++) {
+        seed[i] = stream.g4();
+      }
+      const uid = stream.g4();
+      const username = stream.gjstr();
+      const password = stream.gjstr();
+      if (username.length < 1 || username.length > 12) {
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.INVALID_USER_OR_PASS,
+          socket
+        });
+        return;
+      }
+      if (Environment_default.LOGIN_KEY) {
+        if (password.length < 5 || password.length > 20) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.INVALID_USER_OR_PASS,
+            socket
+          });
+          return;
+        }
+        const login = new LoginClient();
+        const request = await login.load(toBase37(toSafeName(username)), password, uid);
+        if (request.reply === 1 && request.data) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.SUCCESSFUL,
+            socket,
+            info,
+            seed,
+            username: toSafeName(username),
+            save: request.data.data
+          });
+        } else if ((request.reply === 2 || request.reply === 3) && opcode === 16) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGGED_IN,
+            socket
+          });
+          return;
+        } else if (request.reply === 3 && opcode === 18) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGGED_IN,
+            socket
+          });
+          return;
+        } else if (request.reply === 4) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.SUCCESSFUL,
+            socket,
+            info,
+            seed,
+            username: toSafeName(username),
+            save: new Uint8Array()
+          });
+        } else if (request.reply === 5) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.INVALID_USER_OR_PASS,
+            socket
+          });
+          return;
+        } else if (request.reply === -1) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGIN_SERVER_OFFLINE,
+            socket
+          });
+          return;
+        } else {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGIN_REJECTED,
+            socket
+          });
+          return;
+        }
+      } else {
+        let save = new Uint8Array();
+        const safeName = toSafeName(username);
+        if (typeof self === "undefined") {
+          if (fs3.existsSync(`data/players/${safeName}.sav`)) {
+            save = await fsp2.readFile(`data/players/${safeName}.sav`);
+          }
+        } else {
+          const saveFile = await fetch(`data/players/${safeName}.sav`);
+          if (saveFile.ok) {
+            save = new Uint8Array(await saveFile.arrayBuffer());
+          }
+        }
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.SUCCESSFUL,
+          socket,
+          info,
+          seed,
+          username: safeName,
+          save
+        });
+      }
+      break;
+    }
+    case "logout": {
+      const { username, save } = msg;
+      if (Environment_default.LOGIN_KEY) {
+        const login = new LoginClient();
+        const reply = await login.save(toBase37(username), save);
+        if (reply === 0) {
+          parentPort2.postMessage({
+            type: "logoutreply",
+            username
+          });
+        }
+      } else {
+        parentPort2.postMessage({
+          type: "logoutreply",
+          username
+        });
+      }
+      break;
+    }
+    default:
+      console.error("Unknown message type: " + msg.type);
+      break;
+  }
 }

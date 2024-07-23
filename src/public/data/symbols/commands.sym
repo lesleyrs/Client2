@@ -44,25 +44,26 @@
 1012	map_locaddunsafe
 1013	map_members
 1014	map_playercount
-1015	movecoord
-1016	playercount
-1017	projanim_map
-1018	projanim_npc	active_npc:active_npc2	none	none
-1019	projanim_pl	active_player:active_player2	none	none
-1020	seqlength
-1021	split_get
-1022	split_getanim
-1023	split_init
-1024	split_linecount
-1025	split_pagecount
-1026	spotanim_map
-1027	stat_random
-1028	struct_param
-1029	world_delay
-1030	npccount
-1031	zonecount
-1032	loccount
-1033	objcount
+1015	map_findsquare
+1016	movecoord
+1017	playercount
+1018	projanim_map
+1019	projanim_npc	active_npc:active_npc2	none	none
+1020	projanim_pl	active_player:active_player2	none	none
+1021	seqlength
+1022	split_get
+1023	split_getanim
+1024	split_init
+1025	split_linecount
+1026	split_pagecount
+1027	spotanim_map
+1028	stat_random
+1029	struct_param
+1030	world_delay
+1031	npccount
+1032	zonecount
+1033	loccount
+1034	objcount
 2000	allowdesign	active_player	none	none
 2001	anim	active_player:active_player2	none	none
 2002	bas_readyanim	active_player	none	none

@@ -2353,7 +2353,7 @@ var require_aes = __commonJS({
       });
     };
     forge2.aes.Algorithm = function(name, mode) {
-      if (!init2) {
+      if (!init) {
         initialize();
       }
       var self2 = this;
@@ -2406,7 +2406,7 @@ var require_aes = __commonJS({
       this._init = true;
     };
     forge2.aes._expandKey = function(key, decrypt) {
-      if (!init2) {
+      if (!init) {
         initialize();
       }
       return _expandKey(key, decrypt);
@@ -2424,7 +2424,7 @@ var require_aes = __commonJS({
       };
       forge2.cipher.registerAlgorithm(name, factory);
     }
-    var init2 = false;
+    var init = false;
     var Nb = 4;
     var sbox;
     var isbox;
@@ -2432,7 +2432,7 @@ var require_aes = __commonJS({
     var mix;
     var imix;
     function initialize() {
-      init2 = true;
+      init = true;
       rcon = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
       var xtime = new Array(256);
       for (var i = 0; i < 128; ++i) {
@@ -11533,13 +11533,13 @@ var require_x509 = __commonJS({
       certificate_unknown: "forge.pki.CertificateUnknown",
       unknown_ca: "forge.pki.UnknownCertificateAuthority"
     };
-    pki.verifyCertificateChain = function(caStore, chain2, options) {
+    pki.verifyCertificateChain = function(caStore, chain, options) {
       if (typeof options === "function") {
         options = { verify: options };
       }
       options = options || {};
-      chain2 = chain2.slice(0);
-      var certs = chain2.slice(0);
+      chain = chain.slice(0);
+      var certs = chain.slice(0);
       var validityCheckDate = options.validityCheckDate;
       if (typeof validityCheckDate === "undefined") {
         validityCheckDate = /* @__PURE__ */ new Date();
@@ -11548,7 +11548,7 @@ var require_x509 = __commonJS({
       var error = null;
       var depth = 0;
       do {
-        var cert = chain2.shift();
+        var cert = chain.shift();
         var parent = null;
         var selfSigned = false;
         if (validityCheckDate) {
@@ -11565,7 +11565,7 @@ var require_x509 = __commonJS({
           }
         }
         if (error === null) {
-          parent = chain2[0] || caStore.getIssuer(cert);
+          parent = chain[0] || caStore.getIssuer(cert);
           if (parent === null) {
             if (cert.isIssuer(cert)) {
               selfSigned = true;
@@ -11620,7 +11620,7 @@ var require_x509 = __commonJS({
             }
           }
         }
-        if (error === null && (!first || chain2.length === 0 && (!parent || selfSigned))) {
+        if (error === null && (!first || chain.length === 0 && (!parent || selfSigned))) {
           var bcExt = cert.getExtension("basicConstraints");
           var keyUsageExt = cert.getExtension("keyUsage");
           if (keyUsageExt !== null) {
@@ -11674,7 +11674,7 @@ var require_x509 = __commonJS({
         }
         first = false;
         ++depth;
-      } while (chain2.length > 0);
+      } while (chain.length > 0);
       return true;
     };
   }
@@ -12301,17 +12301,17 @@ var require_pkcs12 = __commonJS({
         bagAttrs = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, attrs);
       }
       var contents = [];
-      var chain2 = [];
+      var chain = [];
       if (cert !== null) {
         if (forge2.util.isArray(cert)) {
-          chain2 = cert;
+          chain = cert;
         } else {
-          chain2 = [cert];
+          chain = [cert];
         }
       }
       var certSafeBags = [];
-      for (var i = 0; i < chain2.length; ++i) {
-        cert = chain2[i];
+      for (var i = 0; i < chain.length; ++i) {
+        cert = chain[i];
         if (typeof cert === "string") {
           cert = pki.certificateFromPem(cert);
         }
@@ -14217,15 +14217,15 @@ var require_tls = __commonJS({
           return forge2.pki.certificateError.bad_certificate;
       }
     };
-    tls.verifyCertificateChain = function(c, chain2) {
+    tls.verifyCertificateChain = function(c, chain) {
       try {
         var options = {};
         for (var key2 in c.verifyOptions) {
           options[key2] = c.verifyOptions[key2];
         }
-        options.verify = function(vfd, depth, chain3) {
+        options.verify = function(vfd, depth, chain2) {
           var desc = _certErrorToAlertDesc(vfd);
-          var ret = c.verify(c, vfd, depth, chain3);
+          var ret = c.verify(c, vfd, depth, chain2);
           if (ret !== true) {
             if (typeof ret === "object" && !forge2.util.isArray(ret)) {
               var error = new Error("The application rejected the certificate.");
@@ -14248,7 +14248,7 @@ var require_tls = __commonJS({
           }
           return ret;
         };
-        forge2.pki.verifyCertificateChain(c.caStore, chain2, options);
+        forge2.pki.verifyCertificateChain(c.caStore, chain, options);
       } catch (ex) {
         var err = ex;
         if (typeof err !== "object" || forge2.util.isArray(err)) {
@@ -15935,11 +15935,11 @@ var require_ed25519 = __commonJS({
         q[i] ^= t;
       }
     }
-    function gf(init2) {
+    function gf(init) {
       var i, r = new Float64Array(16);
-      if (init2) {
-        for (i = 0; i < init2.length; ++i) {
-          r[i] = init2[i];
+      if (init) {
+        for (i = 0; i < init.length; ++i) {
+          r[i] = init[i];
         }
       }
       return r;
@@ -17792,106 +17792,6 @@ var init_PreloadedDirs = __esm({
 });
 
 // src/lostcity/engine/World.ts
-
-// node_modules/kleur/index.mjs
-var FORCE_COLOR;
-var NODE_DISABLE_COLORS;
-var NO_COLOR;
-var TERM;
-var isTTY = true;
-if (typeof process !== "undefined") {
-  ({ FORCE_COLOR, NODE_DISABLE_COLORS, NO_COLOR, TERM } = process.env || {});
-  isTTY = process.stdout && process.stdout.isTTY;
-}
-var $ = {
-  enabled: !NODE_DISABLE_COLORS && NO_COLOR == null && TERM !== "dumb" && (FORCE_COLOR != null && FORCE_COLOR !== "0" || isTTY),
-  // modifiers
-  reset: init(0, 0),
-  bold: init(1, 22),
-  dim: init(2, 22),
-  italic: init(3, 23),
-  underline: init(4, 24),
-  inverse: init(7, 27),
-  hidden: init(8, 28),
-  strikethrough: init(9, 29),
-  // colors
-  black: init(30, 39),
-  red: init(31, 39),
-  green: init(32, 39),
-  yellow: init(33, 39),
-  blue: init(34, 39),
-  magenta: init(35, 39),
-  cyan: init(36, 39),
-  white: init(37, 39),
-  gray: init(90, 39),
-  grey: init(90, 39),
-  // background colors
-  bgBlack: init(40, 49),
-  bgRed: init(41, 49),
-  bgGreen: init(42, 49),
-  bgYellow: init(43, 49),
-  bgBlue: init(44, 49),
-  bgMagenta: init(45, 49),
-  bgCyan: init(46, 49),
-  bgWhite: init(47, 49)
-};
-function run(arr, str) {
-  let i = 0, tmp, beg = "", end = "";
-  for (; i < arr.length; i++) {
-    tmp = arr[i];
-    beg += tmp.open;
-    end += tmp.close;
-    if (!!~str.indexOf(tmp.close)) {
-      str = str.replace(tmp.rgx, tmp.close + tmp.open);
-    }
-  }
-  return beg + str + end;
-}
-function chain(has, keys) {
-  let ctx = { has, keys };
-  ctx.reset = $.reset.bind(ctx);
-  ctx.bold = $.bold.bind(ctx);
-  ctx.dim = $.dim.bind(ctx);
-  ctx.italic = $.italic.bind(ctx);
-  ctx.underline = $.underline.bind(ctx);
-  ctx.inverse = $.inverse.bind(ctx);
-  ctx.hidden = $.hidden.bind(ctx);
-  ctx.strikethrough = $.strikethrough.bind(ctx);
-  ctx.black = $.black.bind(ctx);
-  ctx.red = $.red.bind(ctx);
-  ctx.green = $.green.bind(ctx);
-  ctx.yellow = $.yellow.bind(ctx);
-  ctx.blue = $.blue.bind(ctx);
-  ctx.magenta = $.magenta.bind(ctx);
-  ctx.cyan = $.cyan.bind(ctx);
-  ctx.white = $.white.bind(ctx);
-  ctx.gray = $.gray.bind(ctx);
-  ctx.grey = $.grey.bind(ctx);
-  ctx.bgBlack = $.bgBlack.bind(ctx);
-  ctx.bgRed = $.bgRed.bind(ctx);
-  ctx.bgGreen = $.bgGreen.bind(ctx);
-  ctx.bgYellow = $.bgYellow.bind(ctx);
-  ctx.bgBlue = $.bgBlue.bind(ctx);
-  ctx.bgMagenta = $.bgMagenta.bind(ctx);
-  ctx.bgCyan = $.bgCyan.bind(ctx);
-  ctx.bgWhite = $.bgWhite.bind(ctx);
-  return ctx;
-}
-function init(open, close) {
-  let blk = {
-    open: `\x1B[${open}m`,
-    close: `\x1B[${close}m`,
-    rgx: new RegExp(`\\x1b\\[${close}m`, "g")
-  };
-  return function(txt) {
-    if (this !== void 0 && this.has !== void 0) {
-      !!~this.has.indexOf(open) || (this.has.push(open), this.keys.push(blk));
-      return txt === void 0 ? this : $.enabled ? run(this.keys, txt + "") : txt + "";
-    }
-    return txt === void 0 ? chain([open], [blk]) : $.enabled ? run([blk], txt + "") : txt + "";
-  };
-}
-var kleur_default = $;
 
 // src/jagex2/jstring/JString.ts
 function toBase37(string) {
@@ -20165,14 +20065,14 @@ var loadBZip2WASM = (() => {
     unexportedSymbols.forEach(unexportedRuntimeSymbol);
     var calledRun;
     dependenciesFulfilled = function runCaller() {
-      if (!calledRun) run2();
+      if (!calledRun) run();
       if (!calledRun) dependenciesFulfilled = runCaller;
     };
     function stackCheckInit() {
       _emscripten_stack_init();
       writeStackCookie();
     }
-    function run2() {
+    function run() {
       if (runDependencies > 0) {
         return;
       }
@@ -20229,7 +20129,7 @@ var loadBZip2WASM = (() => {
         Module["preInit"].pop()();
       }
     }
-    run2();
+    run();
     moduleRtn = readyPromise;
     for (const prop of Object.keys(Module)) {
       if (!(prop in moduleArg)) {
@@ -24219,25 +24119,26 @@ var ScriptOpcode = /* @__PURE__ */ ((ScriptOpcode2) => {
   ScriptOpcode2[ScriptOpcode2["MAP_LOCADDUNSAFE"] = 1012] = "MAP_LOCADDUNSAFE";
   ScriptOpcode2[ScriptOpcode2["MAP_MEMBERS"] = 1013] = "MAP_MEMBERS";
   ScriptOpcode2[ScriptOpcode2["MAP_PLAYERCOUNT"] = 1014] = "MAP_PLAYERCOUNT";
-  ScriptOpcode2[ScriptOpcode2["MOVECOORD"] = 1015] = "MOVECOORD";
-  ScriptOpcode2[ScriptOpcode2["PLAYERCOUNT"] = 1016] = "PLAYERCOUNT";
-  ScriptOpcode2[ScriptOpcode2["PROJANIM_MAP"] = 1017] = "PROJANIM_MAP";
-  ScriptOpcode2[ScriptOpcode2["PROJANIM_NPC"] = 1018] = "PROJANIM_NPC";
-  ScriptOpcode2[ScriptOpcode2["PROJANIM_PL"] = 1019] = "PROJANIM_PL";
-  ScriptOpcode2[ScriptOpcode2["SEQLENGTH"] = 1020] = "SEQLENGTH";
-  ScriptOpcode2[ScriptOpcode2["SPLIT_GET"] = 1021] = "SPLIT_GET";
-  ScriptOpcode2[ScriptOpcode2["SPLIT_GETANIM"] = 1022] = "SPLIT_GETANIM";
-  ScriptOpcode2[ScriptOpcode2["SPLIT_INIT"] = 1023] = "SPLIT_INIT";
-  ScriptOpcode2[ScriptOpcode2["SPLIT_LINECOUNT"] = 1024] = "SPLIT_LINECOUNT";
-  ScriptOpcode2[ScriptOpcode2["SPLIT_PAGECOUNT"] = 1025] = "SPLIT_PAGECOUNT";
-  ScriptOpcode2[ScriptOpcode2["SPOTANIM_MAP"] = 1026] = "SPOTANIM_MAP";
-  ScriptOpcode2[ScriptOpcode2["STAT_RANDOM"] = 1027] = "STAT_RANDOM";
-  ScriptOpcode2[ScriptOpcode2["STRUCT_PARAM"] = 1028] = "STRUCT_PARAM";
-  ScriptOpcode2[ScriptOpcode2["WORLD_DELAY"] = 1029] = "WORLD_DELAY";
-  ScriptOpcode2[ScriptOpcode2["NPCCOUNT"] = 1030] = "NPCCOUNT";
-  ScriptOpcode2[ScriptOpcode2["ZONECOUNT"] = 1031] = "ZONECOUNT";
-  ScriptOpcode2[ScriptOpcode2["LOCCOUNT"] = 1032] = "LOCCOUNT";
-  ScriptOpcode2[ScriptOpcode2["OBJCOUNT"] = 1033] = "OBJCOUNT";
+  ScriptOpcode2[ScriptOpcode2["MAP_FINDSQUARE"] = 1015] = "MAP_FINDSQUARE";
+  ScriptOpcode2[ScriptOpcode2["MOVECOORD"] = 1016] = "MOVECOORD";
+  ScriptOpcode2[ScriptOpcode2["PLAYERCOUNT"] = 1017] = "PLAYERCOUNT";
+  ScriptOpcode2[ScriptOpcode2["PROJANIM_MAP"] = 1018] = "PROJANIM_MAP";
+  ScriptOpcode2[ScriptOpcode2["PROJANIM_NPC"] = 1019] = "PROJANIM_NPC";
+  ScriptOpcode2[ScriptOpcode2["PROJANIM_PL"] = 1020] = "PROJANIM_PL";
+  ScriptOpcode2[ScriptOpcode2["SEQLENGTH"] = 1021] = "SEQLENGTH";
+  ScriptOpcode2[ScriptOpcode2["SPLIT_GET"] = 1022] = "SPLIT_GET";
+  ScriptOpcode2[ScriptOpcode2["SPLIT_GETANIM"] = 1023] = "SPLIT_GETANIM";
+  ScriptOpcode2[ScriptOpcode2["SPLIT_INIT"] = 1024] = "SPLIT_INIT";
+  ScriptOpcode2[ScriptOpcode2["SPLIT_LINECOUNT"] = 1025] = "SPLIT_LINECOUNT";
+  ScriptOpcode2[ScriptOpcode2["SPLIT_PAGECOUNT"] = 1026] = "SPLIT_PAGECOUNT";
+  ScriptOpcode2[ScriptOpcode2["SPOTANIM_MAP"] = 1027] = "SPOTANIM_MAP";
+  ScriptOpcode2[ScriptOpcode2["STAT_RANDOM"] = 1028] = "STAT_RANDOM";
+  ScriptOpcode2[ScriptOpcode2["STRUCT_PARAM"] = 1029] = "STRUCT_PARAM";
+  ScriptOpcode2[ScriptOpcode2["WORLD_DELAY"] = 1030] = "WORLD_DELAY";
+  ScriptOpcode2[ScriptOpcode2["NPCCOUNT"] = 1031] = "NPCCOUNT";
+  ScriptOpcode2[ScriptOpcode2["ZONECOUNT"] = 1032] = "ZONECOUNT";
+  ScriptOpcode2[ScriptOpcode2["LOCCOUNT"] = 1033] = "LOCCOUNT";
+  ScriptOpcode2[ScriptOpcode2["OBJCOUNT"] = 1034] = "OBJCOUNT";
   ScriptOpcode2[ScriptOpcode2["ALLOWDESIGN"] = 2e3] = "ALLOWDESIGN";
   ScriptOpcode2[ScriptOpcode2["ANIM"] = 2001] = "ANIM";
   ScriptOpcode2[ScriptOpcode2["BAS_READYANIM"] = 2002] = "BAS_READYANIM";
@@ -25809,11 +25710,26 @@ var PlayerStat = /* @__PURE__ */ ((PlayerStat2) => {
 })(PlayerStat || {});
 var PlayerStat_default = PlayerStat;
 
+// src/lostcity/entity/MapFindSquareType.ts
+var MapFindSqaureType = /* @__PURE__ */ ((MapFindSqaureType2) => {
+  MapFindSqaureType2[MapFindSqaureType2["LINEOFWALK"] = 0] = "LINEOFWALK";
+  MapFindSqaureType2[MapFindSqaureType2["LINEOFSIGHT"] = 1] = "LINEOFSIGHT";
+  MapFindSqaureType2[MapFindSqaureType2["NONE"] = 2] = "NONE";
+  return MapFindSqaureType2;
+})(MapFindSqaureType || {});
+var MapFindSquareType_default = MapFindSqaureType;
+
 // src/lostcity/engine/script/ScriptValidators.ts
 var ScriptInputNumberNotNullValidator = class {
   validate(input) {
     if (input !== -1) return input;
     throw Error("An input number was null(-1).");
+  }
+};
+var ScriptInputNumberPositiveValidator = class {
+  validate(input) {
+    if (input >= 0) return input;
+    throw Error("An input number was negative.");
   }
 };
 var ScriptInputStringNotNullValidator = class {
@@ -25861,6 +25777,7 @@ var ScriptInputCoordValidator = class extends ScriptInputRangeValidator {
   }
 };
 var NumberNotNull = new ScriptInputNumberNotNullValidator();
+var NumberPositive = new ScriptInputNumberPositiveValidator();
 var StringNotNull = new ScriptInputStringNotNullValidator();
 var LocTypeValid = new ScriptInputConfigTypeValidator(LocType.get, (input) => input >= 0 && input < LocType.count, "Loc");
 var LocAngleValid = new ScriptInputRangeValidator(LocAngle.WEST, LocAngle.SOUTH, "LocAngle");
@@ -25883,6 +25800,7 @@ var InvTypeValid = new ScriptInputConfigTypeValidator(InvType.get, (input) => in
 var CategoryTypeValid = new ScriptInputConfigTypeValidator(CategoryType.get, (input) => input >= 0 && input < CategoryType.count, "Cat");
 var IDKTypeValid = new ScriptInputConfigTypeValidator(IdkType.get, (input) => input >= 0 && input < IdkType.count, "Idk");
 var HuntVisValid = new ScriptInputRangeValidator(HuntVis_default.OFF, HuntVis_default.LINEOFWALK, "HuntVis");
+var FindSquareValid = new ScriptInputRangeValidator(MapFindSquareType_default.LINEOFWALK, MapFindSquareType_default.NONE, "FindSquare");
 var SeqTypeValid = new ScriptInputConfigTypeValidator(SeqType.get, (input) => input >= 0 && input < SeqType.count, "Seq");
 var VarPlayerValid = new ScriptInputConfigTypeValidator(VarPlayerType.get, (input) => input >= 0 && input < VarPlayerType.count, "Varp");
 var VarNpcValid = new ScriptInputConfigTypeValidator(VarNpcType.get, (input) => input >= 0 && input < VarNpcType.count, "Varn");
@@ -32508,7 +32426,7 @@ var Player = class _Player extends PathingEntity {
     this.refreshModalClose = true;
   }
   delayed() {
-    return this.delay > World_default.currentTick;
+    return this.delay > World_default.currentTick || this.activeScript;
   }
   containsModalInterface() {
     return (this.modalState & 1) === 1 || (this.modalState & 2) === 2 || (this.modalState & 16) === 16;
@@ -34900,8 +34818,8 @@ var IfButtonHandler = class extends MessageHandler {
     }
     player.lastCom = comId;
     if (player.resumeButtons.indexOf(player.lastCom) !== -1) {
-      if (player.activeScript) {
-        player.executeScript(player.activeScript, true);
+      if (player.activeScript && (player.activeScript.execution === ScriptState.PAUSEBUTTON || player.activeScript.execution === ScriptState.COUNTDIALOG)) {
+        player.executeScript(player.activeScript, true, true);
       }
     } else {
       const root = Component.get(com.rootLayer);
@@ -35715,7 +35633,7 @@ var ResumePauseButtonHandler = class extends MessageHandler {
     if (!player.activeScript || player.activeScript.execution !== ScriptState.PAUSEBUTTON) {
       return false;
     }
-    player.executeScript(player.activeScript, true);
+    player.executeScript(player.activeScript, true, true);
     return true;
   }
 };
@@ -35728,7 +35646,7 @@ var ResumePCountDialogHandler = class extends MessageHandler {
       return false;
     }
     player.activeScript.lastInt = input;
-    player.executeScript(player.activeScript, true);
+    player.executeScript(player.activeScript, true, true);
     return true;
   }
 };
@@ -37304,6 +37222,71 @@ var ServerOps = {
   },
   [ScriptOpcode_default.OBJCOUNT]: (state) => {
     state.pushInt(World_default.getTotalObjs());
+  },
+  [ScriptOpcode_default.MAP_FINDSQUARE]: (state) => {
+    const [coord, minRadius, maxRadius, type] = state.popInts(4);
+    check(minRadius, NumberPositive);
+    check(maxRadius, NumberPositive);
+    check(type, FindSquareValid);
+    const origin = check(coord, CoordValid);
+    if (maxRadius < 10) {
+      if (type === MapFindSquareType_default.NONE) {
+        for (let i = 0; i < 50; i++) {
+          const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          if (!isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+            state.pushInt(Position.packCoord(origin.level, randomX, randomZ));
+            return;
+          }
+        }
+      } else if (type === MapFindSquareType_default.LINEOFWALK) {
+        for (let i = 0; i < 50; i++) {
+          const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          console.log((Math.floor(Math.random() * (maxRadius - minRadius)) + minRadius) * (Math.random() < 0.5 ? 1 : -1));
+          if (hasLineOfWalk(origin.level, randomX, randomZ, origin.x, origin.z) && !isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+            state.pushInt(Position.packCoord(origin.level, randomX, randomZ));
+            return;
+          }
+        }
+      } else if (type === MapFindSquareType_default.LINEOFSIGHT) {
+        for (let i = 0; i < 50; i++) {
+          const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          if (hasLineOfSight(origin.level, randomX, randomZ, origin.x, origin.z) && !isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+            state.pushInt(Position.packCoord(origin.level, randomX, randomZ));
+            return;
+          }
+        }
+      }
+    } else {
+      if (type === MapFindSquareType_default.NONE) {
+        for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
+          const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          if (!isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !Position.isWithinDistanceSW({ x, z: randomZ }, origin, minRadius)) {
+            state.pushInt(Position.packCoord(origin.level, x, randomZ));
+            return;
+          }
+        }
+      } else if (type === MapFindSquareType_default.LINEOFWALK) {
+        for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
+          const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          if (hasLineOfWalk(origin.level, x, randomZ, origin.x, origin.z) && !isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !Position.isWithinDistanceSW({ x, z: randomZ }, origin, minRadius)) {
+            state.pushInt(Position.packCoord(origin.level, x, randomZ));
+            return;
+          }
+        }
+      } else if (type === MapFindSquareType_default.LINEOFSIGHT) {
+        for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
+          const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+          if (hasLineOfSight(origin.level, x, randomZ, origin.x, origin.z) && !isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !Position.isWithinDistanceSW({ x, z: randomZ }, origin, minRadius)) {
+            state.pushInt(Position.packCoord(origin.level, x, randomZ));
+            return;
+          }
+        }
+      }
+    }
+    state.pushInt(coord);
   }
 };
 var ServerOps_default = ServerOps;
@@ -38052,6 +38035,10 @@ var Npc = class _Npc extends PathingEntity {
     }
     const moved = this.updateMovement();
     if (moved) {
+      if (!type.givechase) {
+        this.defaultMode();
+        return;
+      }
       this.alreadyFacedEntity = false;
     }
     if (this.target && !this.interacted) {
@@ -38865,21 +38852,22 @@ var Login = class {
   loginRequests = /* @__PURE__ */ new Map();
   logoutRequests = /* @__PURE__ */ new Set();
   constructor() {
-    const onMsg = (msg) => {
-      try {
-        this.onMessage(msg);
-      } catch (err) {
-        console.error("Login Thread:", err);
+    try {
+      if (typeof self === "undefined") {
+        if (this.loginThread instanceof NodeWorker2) {
+          this.loginThread.on("message", (msg) => {
+            this.onMessage(msg);
+          });
+        }
+      } else {
+        if (this.loginThread instanceof Worker) {
+          this.loginThread.onmessage = (msg) => {
+            this.onMessage(msg.data);
+          };
+        }
       }
-    };
-    if (typeof self === "undefined") {
-      if (this.loginThread instanceof NodeWorker2) {
-        this.loginThread.on("message", onMsg);
-      }
-    } else {
-      if (this.loginThread instanceof Worker) {
-        this.loginThread.onmessage = onMsg;
-      }
+    } catch (err) {
+      console.error("Login Thread:", err);
     }
   }
   async readIn(socket, data) {
@@ -38931,126 +38919,64 @@ var Login = class {
     save.release();
   }
   onMessage(msg) {
-    if (typeof self === "undefined") {
-      switch (msg.type) {
-        case "loginreply": {
-          const { status, socket } = msg;
-          const client = this.loginRequests.get(socket);
-          if (!client) {
-            return;
-          }
-          this.loginRequests.delete(socket);
-          if (status[0] !== 2) {
-            client.writeImmediate(status);
-            client.close();
-            return;
-          }
-          const { info, seed, username, save } = msg;
-          if (World_default.getTotalPlayers() >= 2e3) {
-            client.writeImmediate(LoginResponse.WORLD_FULL);
-            client.close();
-            return;
-          }
-          if (World_default.shutdownTick > -1 && World_default.currentTick - World_default.shutdownTick > 0) {
-            client.writeImmediate(LoginResponse.SERVER_UPDATING);
-            client.close();
-            return;
-          }
-          if (!Environment_default.LOGIN_KEY) {
-            for (const player2 of World_default.players) {
-              if (player2.username === username) {
-                client.writeImmediate(LoginResponse.LOGGED_IN);
-                client.close();
-                return;
-              }
+    switch (msg.type) {
+      case "loginreply": {
+        const { status, socket } = msg;
+        const client = this.loginRequests.get(socket);
+        if (!client) {
+          return;
+        }
+        this.loginRequests.delete(socket);
+        if (status[0] !== 2) {
+          client.writeImmediate(status);
+          client.close();
+          return;
+        }
+        const { info, seed, username, save } = msg;
+        if (World_default.getTotalPlayers() >= 2e3) {
+          client.writeImmediate(LoginResponse.WORLD_FULL);
+          client.close();
+          return;
+        }
+        if (World_default.shutdownTick > -1 && World_default.currentTick - World_default.shutdownTick > 0) {
+          client.writeImmediate(LoginResponse.SERVER_UPDATING);
+          client.close();
+          return;
+        }
+        if (!Environment_default.LOGIN_KEY) {
+          for (const player2 of World_default.players) {
+            if (player2.username === username) {
+              client.writeImmediate(LoginResponse.LOGGED_IN);
+              client.close();
+              return;
             }
           }
-          client.decryptor = new Isaac(seed);
-          for (let i = 0; i < 4; i++) {
-            seed[i] += 50;
-          }
-          client.encryptor = new Isaac(seed);
-          const player = PlayerLoading.load(username, new Packet(save), client);
-          player.lowMemory = (info & 1) !== 0;
-          player.webClient = client.isWebSocket();
-          World_default.addPlayer(player);
-          break;
         }
-        case "logoutreply": {
-          const { username } = msg;
-          const player = World_default.getPlayerByUsername(username);
-          if (player) {
-            World_default.getZone(player.x, player.z, player.level).leave(player);
-            World_default.players.remove(player.pid);
-            player.pid = -1;
-            player.terminate();
-            this.logoutRequests.delete(player.username37);
-          }
-          break;
+        client.decryptor = new Isaac(seed);
+        for (let i = 0; i < 4; i++) {
+          seed[i] += 50;
         }
-        default:
-          throw new Error("Unknown message type: " + msg.type);
+        client.encryptor = new Isaac(seed);
+        const player = PlayerLoading.load(username, new Packet(save), client);
+        player.lowMemory = (info & 1) !== 0;
+        player.webClient = client.isWebSocket();
+        World_default.addPlayer(player);
+        break;
       }
-    } else {
-      switch (msg.data.type) {
-        case "loginreply": {
-          const { status, socket } = msg.data;
-          const client = this.loginRequests.get(socket);
-          if (!client) {
-            return;
-          }
-          this.loginRequests.delete(socket);
-          if (status[0] !== 2) {
-            client.writeImmediate(status);
-            client.close();
-            return;
-          }
-          const { info, seed, username, save } = msg.data;
-          if (World_default.getTotalPlayers() >= 2e3) {
-            client.writeImmediate(LoginResponse.WORLD_FULL);
-            client.close();
-            return;
-          }
-          if (World_default.shutdownTick > -1 && World_default.currentTick - World_default.shutdownTick > 0) {
-            client.writeImmediate(LoginResponse.SERVER_UPDATING);
-            client.close();
-            return;
-          }
-          if (!Environment_default.LOGIN_KEY) {
-            for (const player2 of World_default.players) {
-              if (player2.username === username) {
-                client.writeImmediate(LoginResponse.LOGGED_IN);
-                client.close();
-                return;
-              }
-            }
-          }
-          client.decryptor = new Isaac(seed);
-          for (let i = 0; i < 4; i++) {
-            seed[i] += 50;
-          }
-          client.encryptor = new Isaac(seed);
-          const player = PlayerLoading.load(username, new Packet(save), client);
-          player.lowMemory = (info & 1) !== 0;
-          player.webClient = true;
-          World_default.addPlayer(player);
-          break;
+      case "logoutreply": {
+        const { username } = msg;
+        const player = World_default.getPlayerByUsername(username);
+        if (player) {
+          World_default.getZone(player.x, player.z, player.level).leave(player);
+          World_default.players.remove(player.pid);
+          player.pid = -1;
+          player.terminate();
+          this.logoutRequests.delete(player.username37);
         }
-        case "logoutreply": {
-          const { username } = msg.data;
-          const player = World_default.getPlayerByUsername(username);
-          if (player) {
-            World_default.getZone(player.x, player.z, player.level).leave(player);
-            World_default.players.remove(player.pid);
-            player.pid = -1;
-            player.terminate();
-            this.logoutRequests.delete(player.username37);
-          }
-          break;
-        }
-        default:
-          throw new Error("Unknown message type: " + msg.data.type);
+        break;
       }
+      default:
+        throw new Error("Unknown message type: " + msg.type);
     }
   }
 };
@@ -39144,8 +39070,8 @@ var PlayerList = class extends EntityList {
   }
   next(priority = false, start = this.lastUsedIndex + 1) {
     if (priority) {
-      const init2 = start === 0 ? 1 : 0;
-      for (let i = init2; i < 100; i++) {
+      const init = start === 0 ? 1 : 0;
+      for (let i = init; i < 100; i++) {
         const index = start + i;
         const id = this.ids[index];
         if (id === -1) {
@@ -39398,28 +39324,30 @@ var World = class _World {
         this.gameMap.init(this.zoneMap);
       }
     } else {
-      console.time("Loaded in");
+      console.time("World ready");
       await this.loadAsync();
       if (!skipMaps) {
         await this.gameMap.initAsync(this.zoneMap);
       }
-      console.timeEnd("Loaded in");
+      console.timeEnd("World ready");
     }
     Login_default.loginThread.postMessage({
       type: "reset"
     });
-    if (typeof self === "undefined" && !Environment_default.NODE_PRODUCTION) {
-      this.startDevWatcher();
-      if (Environment_default.BUILD_STARTUP && (shouldBuildFileAny("data/pack/client", "data/pack/client/lastbuild.pack") || shouldBuildFileAny("data/pack/server", "data/pack/server/lastbuild.pack"))) {
-        this.devThread.postMessage({
-          type: "pack"
-        });
+    if (typeof self === "undefined") {
+      if (!Environment_default.NODE_PRODUCTION) {
+        this.startDevWatcher();
+        if (Environment_default.BUILD_STARTUP && (shouldBuildFileAny("data/pack/client", "data/pack/client/lastbuild.pack") || shouldBuildFileAny("data/pack/server", "data/pack/server/lastbuild.pack"))) {
+          this.devThread.postMessage({
+            type: "pack"
+          });
+        }
       }
-    }
-    if (Environment_default.WEB_PORT === 80) {
-      console.log(kleur_default.green().bold("World ready") + kleur_default.white().bold(": http://localhost"));
-    } else {
-      console.log(kleur_default.green().bold("World ready") + kleur_default.white().bold(": http://localhost:" + Environment_default.WEB_PORT));
+      if (Environment_default.WEB_PORT === 80) {
+        console.log(kleur.green().bold("World ready") + kleur.white().bold(": http://localhost"));
+      } else {
+        console.log(kleur.green().bold("World ready") + kleur.white().bold(": http://localhost:" + Environment_default.WEB_PORT));
+      }
     }
     if (startCycle) {
       await this.cycle();
@@ -39680,8 +39608,8 @@ var World = class _World {
     for (const player of this.players) {
       try {
         player.playtime++;
-        if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
-          player.executeScript(player.activeScript, true);
+        if (player.activeScript && player.delay <= this.currentTick && player.activeScript.execution === ScriptState.SUSPENDED) {
+          player.executeScript(player.activeScript, true, true);
         }
         player.processQueues();
         player.processTimers(0 /* NORMAL */);
