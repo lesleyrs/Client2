@@ -126,8 +126,8 @@
 77920	runecraft_table:name	string
 77936	runecraft_table:multiplier	int
 77952	runecraft_table:altar_coord	coord
-77968	runecraft_table:enter_coord	coord,int
-77984	runecraft_table:exit_coord	coord,int
+77968	runecraft_table:enter_coord	coord,int,int,int
+77984	runecraft_table:exit_coord	coord,int,int,int
 81920	smithing:ifproduct	obj
 81936	smithing:product	namedobj
 81952	smithing:product_amount	int
