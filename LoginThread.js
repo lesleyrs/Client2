@@ -1,1 +1,18873 @@
-var e=Object.create,t=Object.defineProperty,r=Object.getOwnPropertyDescriptor,a=Object.getOwnPropertyNames,n=Object.getPrototypeOf,i=Object.prototype.hasOwnProperty,s=(e=>"undefined"!=typeof require?require:"undefined"!=typeof Proxy?new Proxy(e,{get:(e,t)=>("undefined"!=typeof require?require:e)[t]}):e)((function(e){if("undefined"!=typeof require)return require.apply(this,arguments);throw Error('Dynamic require of "'+e+'" is not supported')})),o=(e,t)=>function(){return t||(0,e[a(e)[0]])((t={exports:{}}).exports,t),t.exports},c=(s,o,c)=>(c=null!=s?e(n(s)):{},((e,n,s,o)=>{if(n&&"object"==typeof n||"function"==typeof n)for(let c of a(n))i.call(e,c)||c===s||t(e,c,{get:()=>n[c],enumerable:!(o=r(n,c))||o.enumerable});return e})(!o&&s&&s.__esModule?c:t(c,"default",{value:s,enumerable:!0}),s)),u=o({"node_modules/node-forge/lib/forge.js"(e,t){t.exports={options:{usePureJavaScript:!1}}}}),l=o({"node_modules/node-forge/lib/baseN.js"(e,t){var r={};t.exports=r;var a={};r.encode=function(e,t,r){if("string"!=typeof t)throw new TypeError('"alphabet" must be a string.');if(void 0!==r&&"number"!=typeof r)throw new TypeError('"maxline" must be a number.');var a="";if(e instanceof Uint8Array){var n=0,i=t.length,s=t.charAt(0),o=[0];for(n=0;n<e.length;++n){for(var c=0,u=e[n];c<o.length;++c)u+=o[c]<<8,o[c]=u%i,u=u/i|0;for(;u>0;)o.push(u%i),u=u/i|0}for(n=0;0===e[n]&&n<e.length-1;++n)a+=s;for(n=o.length-1;n>=0;--n)a+=t[o[n]]}else a=function(e,t){var r=0,a=t.length,n=t.charAt(0),i=[0];for(r=0;r<e.length();++r){for(var s=0,o=e.at(r);s<i.length;++s)o+=i[s]<<8,i[s]=o%a,o=o/a|0;for(;o>0;)i.push(o%a),o=o/a|0}var c="";for(r=0;0===e.at(r)&&r<e.length()-1;++r)c+=n;for(r=i.length-1;r>=0;--r)c+=t[i[r]];return c}(e,t);if(r){var l=new RegExp(".{1,"+r+"}","g");a=a.match(l).join("\r\n")}return a},r.decode=function(e,t){if("string"!=typeof e)throw new TypeError('"input" must be a string.');if("string"!=typeof t)throw new TypeError('"alphabet" must be a string.');var r=a[t];if(!r){r=a[t]=[];for(var n=0;n<t.length;++n)r[t.charCodeAt(n)]=n}e=e.replace(/\s/g,"");var i=t.length,s=t.charAt(0),o=[0];for(n=0;n<e.length;n++){var c=r[e.charCodeAt(n)];if(void 0===c)return;for(var u=0,l=c;u<o.length;++u)l+=o[u]*i,o[u]=255&l,l>>=8;for(;l>0;)o.push(255&l),l>>=8}for(var p=0;e[p]===s&&p<e.length-1;++p)o.push(0);return"undefined"!=typeof Buffer?Buffer.from(o.reverse()):new Uint8Array(o.reverse())}}}),p=o({"node_modules/node-forge/lib/util.js"(e,t){var r=u(),a=l(),n=t.exports=r.util=r.util||{};function i(e){if(8!==e&&16!==e&&24!==e&&32!==e)throw new Error("Only 8, 16, 24, or 32 bits supported: "+e)}function s(e){if(this.data="",this.read=0,"string"==typeof e)this.data=e;else if(n.isArrayBuffer(e)||n.isArrayBufferView(e))if("undefined"!=typeof Buffer&&e instanceof Buffer)this.data=e.toString("binary");else{var t=new Uint8Array(e);try{this.data=String.fromCharCode.apply(null,t)}catch(e){for(var r=0;r<t.length;++r)this.putByte(t[r])}}else(e instanceof s||"object"==typeof e&&"string"==typeof e.data&&"number"==typeof e.read)&&(this.data=e.data,this.read=e.read);this._constructedStringLength=0}!function(){if("undefined"!=typeof process&&process.nextTick&&!process.browser)return n.nextTick=process.nextTick,void("function"==typeof setImmediate?n.setImmediate=setImmediate:n.setImmediate=n.nextTick);if("function"==typeof setImmediate)return n.setImmediate=function(){return setImmediate.apply(void 0,arguments)},void(n.nextTick=function(e){return setImmediate(e)});if(n.setImmediate=function(e){setTimeout(e,0)},"undefined"!=typeof window&&"function"==typeof window.postMessage){let r=function(r){if(r.source===window&&r.data===e){r.stopPropagation();var a=t.slice();t.length=0,a.forEach((function(e){e()}))}};var e="forge.setImmediate",t=[];n.setImmediate=function(r){t.push(r),1===t.length&&window.postMessage(e,"*")},window.addEventListener("message",r,!0)}if("undefined"!=typeof MutationObserver){var r=Date.now(),a=!0,i=document.createElement("div");t=[];new MutationObserver((function(){var e=t.slice();t.length=0,e.forEach((function(e){e()}))})).observe(i,{attributes:!0});var s=n.setImmediate;n.setImmediate=function(e){Date.now()-r>15?(r=Date.now(),s(e)):(t.push(e),1===t.length&&i.setAttribute("a",a=!a))}}n.nextTick=n.setImmediate}(),n.isNodejs="undefined"!=typeof process&&process.versions&&process.versions.node,n.globalScope=n.isNodejs?global:"undefined"==typeof self?window:self,n.isArray=Array.isArray||function(e){return"[object Array]"===Object.prototype.toString.call(e)},n.isArrayBuffer=function(e){return"undefined"!=typeof ArrayBuffer&&e instanceof ArrayBuffer},n.isArrayBufferView=function(e){return e&&n.isArrayBuffer(e.buffer)&&void 0!==e.byteLength},n.ByteBuffer=s,n.ByteStringBuffer=s;n.ByteStringBuffer.prototype._optimizeConstructedString=function(e){this._constructedStringLength+=e,this._constructedStringLength>4096&&(this.data.substr(0,1),this._constructedStringLength=0)},n.ByteStringBuffer.prototype.length=function(){return this.data.length-this.read},n.ByteStringBuffer.prototype.isEmpty=function(){return this.length()<=0},n.ByteStringBuffer.prototype.putByte=function(e){return this.putBytes(String.fromCharCode(e))},n.ByteStringBuffer.prototype.fillWithByte=function(e,t){e=String.fromCharCode(e);for(var r=this.data;t>0;)1&t&&(r+=e),(t>>>=1)>0&&(e+=e);return this.data=r,this._optimizeConstructedString(t),this},n.ByteStringBuffer.prototype.putBytes=function(e){return this.data+=e,this._optimizeConstructedString(e.length),this},n.ByteStringBuffer.prototype.putString=function(e){return this.putBytes(n.encodeUtf8(e))},n.ByteStringBuffer.prototype.putInt16=function(e){return this.putBytes(String.fromCharCode(e>>8&255)+String.fromCharCode(255&e))},n.ByteStringBuffer.prototype.putInt24=function(e){return this.putBytes(String.fromCharCode(e>>16&255)+String.fromCharCode(e>>8&255)+String.fromCharCode(255&e))},n.ByteStringBuffer.prototype.putInt32=function(e){return this.putBytes(String.fromCharCode(e>>24&255)+String.fromCharCode(e>>16&255)+String.fromCharCode(e>>8&255)+String.fromCharCode(255&e))},n.ByteStringBuffer.prototype.putInt16Le=function(e){return this.putBytes(String.fromCharCode(255&e)+String.fromCharCode(e>>8&255))},n.ByteStringBuffer.prototype.putInt24Le=function(e){return this.putBytes(String.fromCharCode(255&e)+String.fromCharCode(e>>8&255)+String.fromCharCode(e>>16&255))},n.ByteStringBuffer.prototype.putInt32Le=function(e){return this.putBytes(String.fromCharCode(255&e)+String.fromCharCode(e>>8&255)+String.fromCharCode(e>>16&255)+String.fromCharCode(e>>24&255))},n.ByteStringBuffer.prototype.putInt=function(e,t){i(t);var r="";do{t-=8,r+=String.fromCharCode(e>>t&255)}while(t>0);return this.putBytes(r)},n.ByteStringBuffer.prototype.putSignedInt=function(e,t){return e<0&&(e+=2<<t-1),this.putInt(e,t)},n.ByteStringBuffer.prototype.putBuffer=function(e){return this.putBytes(e.getBytes())},n.ByteStringBuffer.prototype.getByte=function(){return this.data.charCodeAt(this.read++)},n.ByteStringBuffer.prototype.getInt16=function(){var e=this.data.charCodeAt(this.read)<<8^this.data.charCodeAt(this.read+1);return this.read+=2,e},n.ByteStringBuffer.prototype.getInt24=function(){var e=this.data.charCodeAt(this.read)<<16^this.data.charCodeAt(this.read+1)<<8^this.data.charCodeAt(this.read+2);return this.read+=3,e},n.ByteStringBuffer.prototype.getInt32=function(){var e=this.data.charCodeAt(this.read)<<24^this.data.charCodeAt(this.read+1)<<16^this.data.charCodeAt(this.read+2)<<8^this.data.charCodeAt(this.read+3);return this.read+=4,e},n.ByteStringBuffer.prototype.getInt16Le=function(){var e=this.data.charCodeAt(this.read)^this.data.charCodeAt(this.read+1)<<8;return this.read+=2,e},n.ByteStringBuffer.prototype.getInt24Le=function(){var e=this.data.charCodeAt(this.read)^this.data.charCodeAt(this.read+1)<<8^this.data.charCodeAt(this.read+2)<<16;return this.read+=3,e},n.ByteStringBuffer.prototype.getInt32Le=function(){var e=this.data.charCodeAt(this.read)^this.data.charCodeAt(this.read+1)<<8^this.data.charCodeAt(this.read+2)<<16^this.data.charCodeAt(this.read+3)<<24;return this.read+=4,e},n.ByteStringBuffer.prototype.getInt=function(e){i(e);var t=0;do{t=(t<<8)+this.data.charCodeAt(this.read++),e-=8}while(e>0);return t},n.ByteStringBuffer.prototype.getSignedInt=function(e){var t=this.getInt(e),r=2<<e-2;return t>=r&&(t-=r<<1),t},n.ByteStringBuffer.prototype.getBytes=function(e){var t;return e?(e=Math.min(this.length(),e),t=this.data.slice(this.read,this.read+e),this.read+=e):0===e?t="":(t=0===this.read?this.data:this.data.slice(this.read),this.clear()),t},n.ByteStringBuffer.prototype.bytes=function(e){return void 0===e?this.data.slice(this.read):this.data.slice(this.read,this.read+e)},n.ByteStringBuffer.prototype.at=function(e){return this.data.charCodeAt(this.read+e)},n.ByteStringBuffer.prototype.setAt=function(e,t){return this.data=this.data.substr(0,this.read+e)+String.fromCharCode(t)+this.data.substr(this.read+e+1),this},n.ByteStringBuffer.prototype.last=function(){return this.data.charCodeAt(this.data.length-1)},n.ByteStringBuffer.prototype.copy=function(){var e=n.createBuffer(this.data);return e.read=this.read,e},n.ByteStringBuffer.prototype.compact=function(){return this.read>0&&(this.data=this.data.slice(this.read),this.read=0),this},n.ByteStringBuffer.prototype.clear=function(){return this.data="",this.read=0,this},n.ByteStringBuffer.prototype.truncate=function(e){var t=Math.max(0,this.length()-e);return this.data=this.data.substr(this.read,t),this.read=0,this},n.ByteStringBuffer.prototype.toHex=function(){for(var e="",t=this.read;t<this.data.length;++t){var r=this.data.charCodeAt(t);r<16&&(e+="0"),e+=r.toString(16)}return e},n.ByteStringBuffer.prototype.toString=function(){return n.decodeUtf8(this.bytes())},n.DataBuffer=function(e,t){t=t||{},this.read=t.readOffset||0,this.growSize=t.growSize||1024;var r=n.isArrayBuffer(e),a=n.isArrayBufferView(e);if(r||a)return this.data=r?new DataView(e):new DataView(e.buffer,e.byteOffset,e.byteLength),void(this.write="writeOffset"in t?t.writeOffset:this.data.byteLength);this.data=new DataView(new ArrayBuffer(0)),this.write=0,null!=e&&this.putBytes(e),"writeOffset"in t&&(this.write=t.writeOffset)},n.DataBuffer.prototype.length=function(){return this.write-this.read},n.DataBuffer.prototype.isEmpty=function(){return this.length()<=0},n.DataBuffer.prototype.accommodate=function(e,t){if(this.length()>=e)return this;t=Math.max(t||this.growSize,e);var r=new Uint8Array(this.data.buffer,this.data.byteOffset,this.data.byteLength),a=new Uint8Array(this.length()+t);return a.set(r),this.data=new DataView(a.buffer),this},n.DataBuffer.prototype.putByte=function(e){return this.accommodate(1),this.data.setUint8(this.write++,e),this},n.DataBuffer.prototype.fillWithByte=function(e,t){this.accommodate(t);for(var r=0;r<t;++r)this.data.setUint8(e);return this},n.DataBuffer.prototype.putBytes=function(e,t){if(n.isArrayBufferView(e)){var r=(a=new Uint8Array(e.buffer,e.byteOffset,e.byteLength)).byteLength-a.byteOffset;return this.accommodate(r),new Uint8Array(this.data.buffer,this.write).set(a),this.write+=r,this}if(n.isArrayBuffer(e)){var a=new Uint8Array(e);return this.accommodate(a.byteLength),new Uint8Array(this.data.buffer).set(a,this.write),this.write+=a.byteLength,this}if(e instanceof n.DataBuffer||"object"==typeof e&&"number"==typeof e.read&&"number"==typeof e.write&&n.isArrayBufferView(e.data)){a=new Uint8Array(e.data.byteLength,e.read,e.length());return this.accommodate(a.byteLength),new Uint8Array(e.data.byteLength,this.write).set(a),this.write+=a.byteLength,this}if(e instanceof n.ByteStringBuffer&&(e=e.data,t="binary"),t=t||"binary","string"==typeof e){var i;if("hex"===t)return this.accommodate(Math.ceil(e.length/2)),i=new Uint8Array(this.data.buffer,this.write),this.write+=n.binary.hex.decode(e,i,this.write),this;if("base64"===t)return this.accommodate(3*Math.ceil(e.length/4)),i=new Uint8Array(this.data.buffer,this.write),this.write+=n.binary.base64.decode(e,i,this.write),this;if("utf8"===t&&(e=n.encodeUtf8(e),t="binary"),"binary"===t||"raw"===t)return this.accommodate(e.length),i=new Uint8Array(this.data.buffer,this.write),this.write+=n.binary.raw.decode(i),this;if("utf16"===t)return this.accommodate(2*e.length),i=new Uint16Array(this.data.buffer,this.write),this.write+=n.text.utf16.encode(i),this;throw new Error("Invalid encoding: "+t)}throw Error("Invalid parameter: "+e)},n.DataBuffer.prototype.putBuffer=function(e){return this.putBytes(e),e.clear(),this},n.DataBuffer.prototype.putString=function(e){return this.putBytes(e,"utf16")},n.DataBuffer.prototype.putInt16=function(e){return this.accommodate(2),this.data.setInt16(this.write,e),this.write+=2,this},n.DataBuffer.prototype.putInt24=function(e){return this.accommodate(3),this.data.setInt16(this.write,e>>8&65535),this.data.setInt8(this.write,e>>16&255),this.write+=3,this},n.DataBuffer.prototype.putInt32=function(e){return this.accommodate(4),this.data.setInt32(this.write,e),this.write+=4,this},n.DataBuffer.prototype.putInt16Le=function(e){return this.accommodate(2),this.data.setInt16(this.write,e,!0),this.write+=2,this},n.DataBuffer.prototype.putInt24Le=function(e){return this.accommodate(3),this.data.setInt8(this.write,e>>16&255),this.data.setInt16(this.write,e>>8&65535,!0),this.write+=3,this},n.DataBuffer.prototype.putInt32Le=function(e){return this.accommodate(4),this.data.setInt32(this.write,e,!0),this.write+=4,this},n.DataBuffer.prototype.putInt=function(e,t){i(t),this.accommodate(t/8);do{t-=8,this.data.setInt8(this.write++,e>>t&255)}while(t>0);return this},n.DataBuffer.prototype.putSignedInt=function(e,t){return i(t),this.accommodate(t/8),e<0&&(e+=2<<t-1),this.putInt(e,t)},n.DataBuffer.prototype.getByte=function(){return this.data.getInt8(this.read++)},n.DataBuffer.prototype.getInt16=function(){var e=this.data.getInt16(this.read);return this.read+=2,e},n.DataBuffer.prototype.getInt24=function(){var e=this.data.getInt16(this.read)<<8^this.data.getInt8(this.read+2);return this.read+=3,e},n.DataBuffer.prototype.getInt32=function(){var e=this.data.getInt32(this.read);return this.read+=4,e},n.DataBuffer.prototype.getInt16Le=function(){var e=this.data.getInt16(this.read,!0);return this.read+=2,e},n.DataBuffer.prototype.getInt24Le=function(){var e=this.data.getInt8(this.read)^this.data.getInt16(this.read+1,!0)<<8;return this.read+=3,e},n.DataBuffer.prototype.getInt32Le=function(){var e=this.data.getInt32(this.read,!0);return this.read+=4,e},n.DataBuffer.prototype.getInt=function(e){i(e);var t=0;do{t=(t<<8)+this.data.getInt8(this.read++),e-=8}while(e>0);return t},n.DataBuffer.prototype.getSignedInt=function(e){var t=this.getInt(e),r=2<<e-2;return t>=r&&(t-=r<<1),t},n.DataBuffer.prototype.getBytes=function(e){var t;return e?(e=Math.min(this.length(),e),t=this.data.slice(this.read,this.read+e),this.read+=e):0===e?t="":(t=0===this.read?this.data:this.data.slice(this.read),this.clear()),t},n.DataBuffer.prototype.bytes=function(e){return void 0===e?this.data.slice(this.read):this.data.slice(this.read,this.read+e)},n.DataBuffer.prototype.at=function(e){return this.data.getUint8(this.read+e)},n.DataBuffer.prototype.setAt=function(e,t){return this.data.setUint8(e,t),this},n.DataBuffer.prototype.last=function(){return this.data.getUint8(this.write-1)},n.DataBuffer.prototype.copy=function(){return new n.DataBuffer(this)},n.DataBuffer.prototype.compact=function(){if(this.read>0){var e=new Uint8Array(this.data.buffer,this.read),t=new Uint8Array(e.byteLength);t.set(e),this.data=new DataView(t),this.write-=this.read,this.read=0}return this},n.DataBuffer.prototype.clear=function(){return this.data=new DataView(new ArrayBuffer(0)),this.read=this.write=0,this},n.DataBuffer.prototype.truncate=function(e){return this.write=Math.max(0,this.length()-e),this.read=Math.min(this.read,this.write),this},n.DataBuffer.prototype.toHex=function(){for(var e="",t=this.read;t<this.data.byteLength;++t){var r=this.data.getUint8(t);r<16&&(e+="0"),e+=r.toString(16)}return e},n.DataBuffer.prototype.toString=function(e){var t=new Uint8Array(this.data,this.read,this.length());if("binary"===(e=e||"utf8")||"raw"===e)return n.binary.raw.encode(t);if("hex"===e)return n.binary.hex.encode(t);if("base64"===e)return n.binary.base64.encode(t);if("utf8"===e)return n.text.utf8.decode(t);if("utf16"===e)return n.text.utf16.decode(t);throw new Error("Invalid encoding: "+e)},n.createBuffer=function(e,t){return t=t||"raw",void 0!==e&&"utf8"===t&&(e=n.encodeUtf8(e)),new n.ByteBuffer(e)},n.fillString=function(e,t){for(var r="";t>0;)1&t&&(r+=e),(t>>>=1)>0&&(e+=e);return r},n.xorBytes=function(e,t,r){for(var a="",n="",i="",s=0,o=0;r>0;--r,++s)n=e.charCodeAt(s)^t.charCodeAt(s),o>=10&&(a+=i,i="",o=0),i+=String.fromCharCode(n),++o;return a+=i},n.hexToBytes=function(e){var t="",r=0;for(!0&e.length&&(r=1,t+=String.fromCharCode(parseInt(e[0],16)));r<e.length;r+=2)t+=String.fromCharCode(parseInt(e.substr(r,2),16));return t},n.bytesToHex=function(e){return n.createBuffer(e).toHex()},n.int32ToBytes=function(e){return String.fromCharCode(e>>24&255)+String.fromCharCode(e>>16&255)+String.fromCharCode(e>>8&255)+String.fromCharCode(255&e)};var o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",c=[62,-1,-1,-1,63,52,53,54,55,56,57,58,59,60,61,-1,-1,-1,64,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,-1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51],p="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";n.encode64=function(e,t){for(var r,a,n,i="",s="",c=0;c<e.length;)r=e.charCodeAt(c++),a=e.charCodeAt(c++),n=e.charCodeAt(c++),i+=o.charAt(r>>2),i+=o.charAt((3&r)<<4|a>>4),isNaN(a)?i+="==":(i+=o.charAt((15&a)<<2|n>>6),i+=isNaN(n)?"=":o.charAt(63&n)),t&&i.length>t&&(s+=i.substr(0,t)+"\r\n",i=i.substr(t));return s+=i},n.decode64=function(e){e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");for(var t,r,a,n,i="",s=0;s<e.length;)t=c[e.charCodeAt(s++)-43],r=c[e.charCodeAt(s++)-43],a=c[e.charCodeAt(s++)-43],n=c[e.charCodeAt(s++)-43],i+=String.fromCharCode(t<<2|r>>4),64!==a&&(i+=String.fromCharCode((15&r)<<4|a>>2),64!==n&&(i+=String.fromCharCode((3&a)<<6|n)));return i},n.encodeUtf8=function(e){return unescape(encodeURIComponent(e))},n.decodeUtf8=function(e){return decodeURIComponent(escape(e))},n.binary={raw:{},hex:{},base64:{},base58:{},baseN:{encode:a.encode,decode:a.decode}},n.binary.raw.encode=function(e){return String.fromCharCode.apply(null,e)},n.binary.raw.decode=function(e,t,r){var a=t;a||(a=new Uint8Array(e.length));for(var n=r=r||0,i=0;i<e.length;++i)a[n++]=e.charCodeAt(i);return t?n-r:a},n.binary.hex.encode=n.bytesToHex,n.binary.hex.decode=function(e,t,r){var a=t;a||(a=new Uint8Array(Math.ceil(e.length/2)));var n=0,i=r=r||0;for(1&e.length&&(n=1,a[i++]=parseInt(e[0],16));n<e.length;n+=2)a[i++]=parseInt(e.substr(n,2),16);return t?i-r:a},n.binary.base64.encode=function(e,t){for(var r,a,n,i="",s="",c=0;c<e.byteLength;)r=e[c++],a=e[c++],n=e[c++],i+=o.charAt(r>>2),i+=o.charAt((3&r)<<4|a>>4),isNaN(a)?i+="==":(i+=o.charAt((15&a)<<2|n>>6),i+=isNaN(n)?"=":o.charAt(63&n)),t&&i.length>t&&(s+=i.substr(0,t)+"\r\n",i=i.substr(t));return s+=i},n.binary.base64.decode=function(e,t,r){var a,n,i,s,o=t;o||(o=new Uint8Array(3*Math.ceil(e.length/4))),e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");for(var u=0,l=r=r||0;u<e.length;)a=c[e.charCodeAt(u++)-43],n=c[e.charCodeAt(u++)-43],i=c[e.charCodeAt(u++)-43],s=c[e.charCodeAt(u++)-43],o[l++]=a<<2|n>>4,64!==i&&(o[l++]=(15&n)<<4|i>>2,64!==s&&(o[l++]=(3&i)<<6|s));return t?l-r:o.subarray(0,l)},n.binary.base58.encode=function(e,t){return n.binary.baseN.encode(e,p,t)},n.binary.base58.decode=function(e,t){return n.binary.baseN.decode(e,p,t)},n.text={utf8:{},utf16:{}},n.text.utf8.encode=function(e,t,r){e=n.encodeUtf8(e);var a=t;a||(a=new Uint8Array(e.length));for(var i=r=r||0,s=0;s<e.length;++s)a[i++]=e.charCodeAt(s);return t?i-r:a},n.text.utf8.decode=function(e){return n.decodeUtf8(String.fromCharCode.apply(null,e))},n.text.utf16.encode=function(e,t,r){var a=t;a||(a=new Uint8Array(2*e.length));for(var n=new Uint16Array(a.buffer),i=r=r||0,s=r,o=0;o<e.length;++o)n[s++]=e.charCodeAt(o),i+=2;return t?i-r:a},n.text.utf16.decode=function(e){return String.fromCharCode.apply(null,new Uint16Array(e.buffer))},n.deflate=function(e,t,r){if(t=n.decode64(e.deflate(n.encode64(t)).rval),r){var a=2;32&t.charCodeAt(1)&&(a=6),t=t.substring(a,t.length-4)}return t},n.inflate=function(e,t,r){var a=e.inflate(n.encode64(t)).rval;return null===a?null:n.decode64(a)};var h=function(e,t,r){if(!e)throw new Error("WebStorage not available.");var a;if(null===r?a=e.removeItem(t):(r=n.encode64(JSON.stringify(r)),a=e.setItem(t,r)),void 0!==a&&!0!==a.rval){var i=new Error(a.error.message);throw i.id=a.error.id,i.name=a.error.name,i}},f=function(e,t){if(!e)throw new Error("WebStorage not available.");var r=e.getItem(t);if(e.init)if(null===r.rval){if(r.error){var a=new Error(r.error.message);throw a.id=r.error.id,a.name=r.error.name,a}r=null}else r=r.rval;return null!==r&&(r=JSON.parse(n.decode64(r))),r},d=function(e,t,r,a){var n=f(e,t);null===n&&(n={}),n[r]=a,h(e,t,n)},y=function(e,t,r){var a=f(e,t);return null!==a&&(a=r in a?a[r]:null),a},g=function(e,t,r){var a=f(e,t);if(null!==a&&r in a){delete a[r];var n=!0;for(var i in a){n=!1;break}n&&(a=null),h(e,t,a)}},v=function(e,t){h(e,t,null)},m=function(e,t,r){var a,n=null;void 0===r&&(r=["web","flash"]);var i=!1,s=null;for(var o in r){a=r[o];try{if("flash"===a||"both"===a){if(null===t[0])throw new Error("Flash local storage not available.");n=e.apply(this,t),i="flash"===a}"web"!==a&&"both"!==a||(t[0]=localStorage,n=e.apply(this,t),i=!0)}catch(e){s=e}if(i)break}if(!i)throw s;return n};n.setItem=function(e,t,r,a,n){m(d,arguments,n)},n.getItem=function(e,t,r,a){return m(y,arguments,a)},n.removeItem=function(e,t,r,a){m(g,arguments,a)},n.clearItems=function(e,t,r){m(v,arguments,r)},n.isEmpty=function(e){for(var t in e)if(e.hasOwnProperty(t))return!1;return!0},n.format=function(e){for(var t,r,a=/%./g,n=0,i=[],s=0;t=a.exec(e);){(r=e.substring(s,a.lastIndex-2)).length>0&&i.push(r),s=a.lastIndex;var o=t[0][1];switch(o){case"s":case"o":n<arguments.length?i.push(arguments[1+n++]):i.push("<?>");break;case"%":i.push("%");break;default:i.push("<%"+o+"?>")}}return i.push(e.substring(s)),i.join("")},n.formatNumber=function(e,t,r,a){var n=e,i=isNaN(t=Math.abs(t))?2:t,s=void 0===r?",":r,o=void 0===a?".":a,c=n<0?"-":"",u=parseInt(n=Math.abs(+n||0).toFixed(i),10)+"",l=u.length>3?u.length%3:0;return c+(l?u.substr(0,l)+o:"")+u.substr(l).replace(/(\d{3})(?=\d)/g,"$1"+o)+(i?s+Math.abs(n-u).toFixed(i).slice(2):"")},n.formatSize=function(e){return e=e>=1073741824?n.formatNumber(e/1073741824,2,".","")+" GiB":e>=1048576?n.formatNumber(e/1048576,2,".","")+" MiB":e>=1024?n.formatNumber(e/1024,0)+" KiB":n.formatNumber(e,0)+" bytes"},n.bytesFromIP=function(e){return-1!==e.indexOf(".")?n.bytesFromIPv4(e):-1!==e.indexOf(":")?n.bytesFromIPv6(e):null},n.bytesFromIPv4=function(e){if(4!==(e=e.split(".")).length)return null;for(var t=n.createBuffer(),r=0;r<e.length;++r){var a=parseInt(e[r],10);if(isNaN(a))return null;t.putByte(a)}return t.getBytes()},n.bytesFromIPv6=function(e){for(var t=0,r=2*(8-(e=e.split(":").filter((function(e){return 0===e.length&&++t,!0}))).length+t),a=n.createBuffer(),i=0;i<8;++i)if(e[i]&&0!==e[i].length){var s=n.hexToBytes(e[i]);s.length<2&&a.putByte(0),a.putBytes(s)}else a.fillWithByte(0,r),r=0;return a.getBytes()},n.bytesToIP=function(e){return 4===e.length?n.bytesToIPv4(e):16===e.length?n.bytesToIPv6(e):null},n.bytesToIPv4=function(e){if(4!==e.length)return null;for(var t=[],r=0;r<e.length;++r)t.push(e.charCodeAt(r));return t.join(".")},n.bytesToIPv6=function(e){if(16!==e.length)return null;for(var t=[],r=[],a=0,i=0;i<e.length;i+=2){for(var s=n.bytesToHex(e[i]+e[i+1]);"0"===s[0]&&"0"!==s;)s=s.substr(1);if("0"===s){var o=r[r.length-1],c=t.length;o&&c===o.end+1?(o.end=c,o.end-o.start>r[a].end-r[a].start&&(a=r.length-1)):r.push({start:c,end:c})}t.push(s)}if(r.length>0){var u=r[a];u.end-u.start>0&&(t.splice(u.start,u.end-u.start+1,""),0===u.start&&t.unshift(""),7===u.end&&t.push(""))}return t.join(":")},n.estimateCores=function(e,t){if("function"==typeof e&&(t=e,e={}),e=e||{},"cores"in n&&!e.update)return t(null,n.cores);if("undefined"!=typeof navigator&&"hardwareConcurrency"in navigator&&navigator.hardwareConcurrency>0)return n.cores=navigator.hardwareConcurrency,t(null,n.cores);if("undefined"==typeof Worker)return n.cores=1,t(null,n.cores);if("undefined"==typeof Blob)return n.cores=2,t(null,n.cores);var r=URL.createObjectURL(new Blob(["(",function(){self.addEventListener("message",(function(e){for(var t=Date.now(),r=t+4;Date.now()<r;);self.postMessage({st:t,et:r})}))}.toString(),")()"],{type:"application/javascript"}));!function e(a,i,s){if(0===i){var o=Math.floor(a.reduce((function(e,t){return e+t}),0)/a.length);return n.cores=Math.max(1,o),URL.revokeObjectURL(r),t(null,n.cores)}!function(e,t){for(var a=[],n=[],i=0;i<e;++i){var s=new Worker(r);s.addEventListener("message",(function(r){if(n.push(r.data),n.length===e){for(var i=0;i<e;++i)a[i].terminate();t(null,n)}})),a.push(s)}for(i=0;i<e;++i)a[i].postMessage(i)}(s,(function(t,r){a.push(function(e,t){for(var r=[],a=0;a<e;++a)for(var n=t[a],i=r[a]=[],s=0;s<e;++s)if(a!==s){var o=t[s];(n.st>o.st&&n.st<o.et||o.st>n.st&&o.st<n.et)&&i.push(s)}return r.reduce((function(e,t){return Math.max(e,t.length)}),0)}(s,r)),e(a,i-1,s)}))}([],5,16)}}}),h=o({"node_modules/node-forge/lib/cipher.js"(e,t){var r=u();p(),t.exports=r.cipher=r.cipher||{},r.cipher.algorithms=r.cipher.algorithms||{},r.cipher.createCipher=function(e,t){var a=e;if("string"==typeof a&&(a=r.cipher.getAlgorithm(a))&&(a=a()),!a)throw new Error("Unsupported algorithm: "+e);return new r.cipher.BlockCipher({algorithm:a,key:t,decrypt:!1})},r.cipher.createDecipher=function(e,t){var a=e;if("string"==typeof a&&(a=r.cipher.getAlgorithm(a))&&(a=a()),!a)throw new Error("Unsupported algorithm: "+e);return new r.cipher.BlockCipher({algorithm:a,key:t,decrypt:!0})},r.cipher.registerAlgorithm=function(e,t){e=e.toUpperCase(),r.cipher.algorithms[e]=t},r.cipher.getAlgorithm=function(e){return(e=e.toUpperCase())in r.cipher.algorithms?r.cipher.algorithms[e]:null};var a=r.cipher.BlockCipher=function(e){this.algorithm=e.algorithm,this.mode=this.algorithm.mode,this.blockSize=this.mode.blockSize,this._finish=!1,this._input=null,this.output=null,this._op=e.decrypt?this.mode.decrypt:this.mode.encrypt,this._decrypt=e.decrypt,this.algorithm.initialize(e)};a.prototype.start=function(e){e=e||{};var t={};for(var a in e)t[a]=e[a];t.decrypt=this._decrypt,this._finish=!1,this._input=r.util.createBuffer(),this.output=e.output||r.util.createBuffer(),this.mode.start(t)},a.prototype.update=function(e){for(e&&this._input.putBuffer(e);!this._op.call(this.mode,this._input,this.output,this._finish)&&!this._finish;);this._input.compact()},a.prototype.finish=function(e){!e||"ECB"!==this.mode.name&&"CBC"!==this.mode.name||(this.mode.pad=function(t){return e(this.blockSize,t,!1)},this.mode.unpad=function(t){return e(this.blockSize,t,!0)});var t={};return t.decrypt=this._decrypt,t.overflow=this._input.length()%this.blockSize,!(!this._decrypt&&this.mode.pad&&!this.mode.pad(this._input,t))&&(this._finish=!0,this.update(),!(this._decrypt&&this.mode.unpad&&!this.mode.unpad(this.output,t))&&!(this.mode.afterFinish&&!this.mode.afterFinish(this.output,t)))}}}),f=o({"node_modules/node-forge/lib/cipherModes.js"(e,t){var r=u();p(),r.cipher=r.cipher||{};var a=t.exports=r.cipher.modes=r.cipher.modes||{};function n(e,t){if("string"==typeof e&&(e=r.util.createBuffer(e)),r.util.isArray(e)&&e.length>4){var a=e;e=r.util.createBuffer();for(var n=0;n<a.length;++n)e.putByte(a[n])}if(e.length()<t)throw new Error("Invalid IV length; got "+e.length()+" bytes and expected "+t+" bytes.");if(!r.util.isArray(e)){var i=[],s=t/4;for(n=0;n<s;++n)i.push(e.getInt32());e=i}return e}function i(e){e[e.length-1]=e[e.length-1]+1&4294967295}function s(e){return[e/4294967296|0,4294967295&e]}a.ecb=function(e){e=e||{},this.name="ECB",this.cipher=e.cipher,this.blockSize=e.blockSize||16,this._ints=this.blockSize/4,this._inBlock=new Array(this._ints),this._outBlock=new Array(this._ints)},a.ecb.prototype.start=function(e){},a.ecb.prototype.encrypt=function(e,t,r){if(e.length()<this.blockSize&&!(r&&e.length()>0))return!0;for(var a=0;a<this._ints;++a)this._inBlock[a]=e.getInt32();this.cipher.encrypt(this._inBlock,this._outBlock);for(a=0;a<this._ints;++a)t.putInt32(this._outBlock[a])},a.ecb.prototype.decrypt=function(e,t,r){if(e.length()<this.blockSize&&!(r&&e.length()>0))return!0;for(var a=0;a<this._ints;++a)this._inBlock[a]=e.getInt32();this.cipher.decrypt(this._inBlock,this._outBlock);for(a=0;a<this._ints;++a)t.putInt32(this._outBlock[a])},a.ecb.prototype.pad=function(e,t){var r=e.length()===this.blockSize?this.blockSize:this.blockSize-e.length();return e.fillWithByte(r,r),!0},a.ecb.prototype.unpad=function(e,t){if(t.overflow>0)return!1;var r=e.length(),a=e.at(r-1);return!(a>this.blockSize<<2)&&(e.truncate(a),!0)},a.cbc=function(e){e=e||{},this.name="CBC",this.cipher=e.cipher,this.blockSize=e.blockSize||16,this._ints=this.blockSize/4,this._inBlock=new Array(this._ints),this._outBlock=new Array(this._ints)},a.cbc.prototype.start=function(e){if(null===e.iv){if(!this._prev)throw new Error("Invalid IV parameter.");this._iv=this._prev.slice(0)}else{if(!("iv"in e))throw new Error("Invalid IV parameter.");this._iv=n(e.iv,this.blockSize),this._prev=this._iv.slice(0)}},a.cbc.prototype.encrypt=function(e,t,r){if(e.length()<this.blockSize&&!(r&&e.length()>0))return!0;for(var a=0;a<this._ints;++a)this._inBlock[a]=this._prev[a]^e.getInt32();this.cipher.encrypt(this._inBlock,this._outBlock);for(a=0;a<this._ints;++a)t.putInt32(this._outBlock[a]);this._prev=this._outBlock},a.cbc.prototype.decrypt=function(e,t,r){if(e.length()<this.blockSize&&!(r&&e.length()>0))return!0;for(var a=0;a<this._ints;++a)this._inBlock[a]=e.getInt32();this.cipher.decrypt(this._inBlock,this._outBlock);for(a=0;a<this._ints;++a)t.putInt32(this._prev[a]^this._outBlock[a]);this._prev=this._inBlock.slice(0)},a.cbc.prototype.pad=function(e,t){var r=e.length()===this.blockSize?this.blockSize:this.blockSize-e.length();return e.fillWithByte(r,r),!0},a.cbc.prototype.unpad=function(e,t){if(t.overflow>0)return!1;var r=e.length(),a=e.at(r-1);return!(a>this.blockSize<<2)&&(e.truncate(a),!0)},a.cfb=function(e){e=e||{},this.name="CFB",this.cipher=e.cipher,this.blockSize=e.blockSize||16,this._ints=this.blockSize/4,this._inBlock=null,this._outBlock=new Array(this._ints),this._partialBlock=new Array(this._ints),this._partialOutput=r.util.createBuffer(),this._partialBytes=0},a.cfb.prototype.start=function(e){if(!("iv"in e))throw new Error("Invalid IV parameter.");this._iv=n(e.iv,this.blockSize),this._inBlock=this._iv.slice(0),this._partialBytes=0},a.cfb.prototype.encrypt=function(e,t,r){var a=e.length();if(0===a)return!0;if(this.cipher.encrypt(this._inBlock,this._outBlock),0===this._partialBytes&&a>=this.blockSize)for(var n=0;n<this._ints;++n)this._inBlock[n]=e.getInt32()^this._outBlock[n],t.putInt32(this._inBlock[n]);else{var i=(this.blockSize-a)%this.blockSize;i>0&&(i=this.blockSize-i),this._partialOutput.clear();for(n=0;n<this._ints;++n)this._partialBlock[n]=e.getInt32()^this._outBlock[n],this._partialOutput.putInt32(this._partialBlock[n]);if(i>0)e.read-=this.blockSize;else for(n=0;n<this._ints;++n)this._inBlock[n]=this._partialBlock[n];if(this._partialBytes>0&&this._partialOutput.getBytes(this._partialBytes),i>0&&!r)return t.putBytes(this._partialOutput.getBytes(i-this._partialBytes)),this._partialBytes=i,!0;t.putBytes(this._partialOutput.getBytes(a-this._partialBytes)),this._partialBytes=0}},a.cfb.prototype.decrypt=function(e,t,r){var a=e.length();if(0===a)return!0;if(this.cipher.encrypt(this._inBlock,this._outBlock),0===this._partialBytes&&a>=this.blockSize)for(var n=0;n<this._ints;++n)this._inBlock[n]=e.getInt32(),t.putInt32(this._inBlock[n]^this._outBlock[n]);else{var i=(this.blockSize-a)%this.blockSize;i>0&&(i=this.blockSize-i),this._partialOutput.clear();for(n=0;n<this._ints;++n)this._partialBlock[n]=e.getInt32(),this._partialOutput.putInt32(this._partialBlock[n]^this._outBlock[n]);if(i>0)e.read-=this.blockSize;else for(n=0;n<this._ints;++n)this._inBlock[n]=this._partialBlock[n];if(this._partialBytes>0&&this._partialOutput.getBytes(this._partialBytes),i>0&&!r)return t.putBytes(this._partialOutput.getBytes(i-this._partialBytes)),this._partialBytes=i,!0;t.putBytes(this._partialOutput.getBytes(a-this._partialBytes)),this._partialBytes=0}},a.ofb=function(e){e=e||{},this.name="OFB",this.cipher=e.cipher,this.blockSize=e.blockSize||16,this._ints=this.blockSize/4,this._inBlock=null,this._outBlock=new Array(this._ints),this._partialOutput=r.util.createBuffer(),this._partialBytes=0},a.ofb.prototype.start=function(e){if(!("iv"in e))throw new Error("Invalid IV parameter.");this._iv=n(e.iv,this.blockSize),this._inBlock=this._iv.slice(0),this._partialBytes=0},a.ofb.prototype.encrypt=function(e,t,r){var a=e.length();if(0===e.length())return!0;if(this.cipher.encrypt(this._inBlock,this._outBlock),0===this._partialBytes&&a>=this.blockSize)for(var n=0;n<this._ints;++n)t.putInt32(e.getInt32()^this._outBlock[n]),this._inBlock[n]=this._outBlock[n];else{var i=(this.blockSize-a)%this.blockSize;i>0&&(i=this.blockSize-i),this._partialOutput.clear();for(n=0;n<this._ints;++n)this._partialOutput.putInt32(e.getInt32()^this._outBlock[n]);if(i>0)e.read-=this.blockSize;else for(n=0;n<this._ints;++n)this._inBlock[n]=this._outBlock[n];if(this._partialBytes>0&&this._partialOutput.getBytes(this._partialBytes),i>0&&!r)return t.putBytes(this._partialOutput.getBytes(i-this._partialBytes)),this._partialBytes=i,!0;t.putBytes(this._partialOutput.getBytes(a-this._partialBytes)),this._partialBytes=0}},a.ofb.prototype.decrypt=a.ofb.prototype.encrypt,a.ctr=function(e){e=e||{},this.name="CTR",this.cipher=e.cipher,this.blockSize=e.blockSize||16,this._ints=this.blockSize/4,this._inBlock=null,this._outBlock=new Array(this._ints),this._partialOutput=r.util.createBuffer(),this._partialBytes=0},a.ctr.prototype.start=function(e){if(!("iv"in e))throw new Error("Invalid IV parameter.");this._iv=n(e.iv,this.blockSize),this._inBlock=this._iv.slice(0),this._partialBytes=0},a.ctr.prototype.encrypt=function(e,t,r){var a=e.length();if(0===a)return!0;if(this.cipher.encrypt(this._inBlock,this._outBlock),0===this._partialBytes&&a>=this.blockSize)for(var n=0;n<this._ints;++n)t.putInt32(e.getInt32()^this._outBlock[n]);else{var s=(this.blockSize-a)%this.blockSize;s>0&&(s=this.blockSize-s),this._partialOutput.clear();for(n=0;n<this._ints;++n)this._partialOutput.putInt32(e.getInt32()^this._outBlock[n]);if(s>0&&(e.read-=this.blockSize),this._partialBytes>0&&this._partialOutput.getBytes(this._partialBytes),s>0&&!r)return t.putBytes(this._partialOutput.getBytes(s-this._partialBytes)),this._partialBytes=s,!0;t.putBytes(this._partialOutput.getBytes(a-this._partialBytes)),this._partialBytes=0}i(this._inBlock)},a.ctr.prototype.decrypt=a.ctr.prototype.encrypt,a.gcm=function(e){e=e||{},this.name="GCM",this.cipher=e.cipher,this.blockSize=e.blockSize||16,this._ints=this.blockSize/4,this._inBlock=new Array(this._ints),this._outBlock=new Array(this._ints),this._partialOutput=r.util.createBuffer(),this._partialBytes=0,this._R=3774873600},a.gcm.prototype.start=function(e){if(!("iv"in e))throw new Error("Invalid IV parameter.");var t,a=r.util.createBuffer(e.iv);if(this._cipherLength=0,t="additionalData"in e?r.util.createBuffer(e.additionalData):r.util.createBuffer(),this._tagLength="tagLength"in e?e.tagLength:128,this._tag=null,e.decrypt&&(this._tag=r.util.createBuffer(e.tag).getBytes(),this._tag.length!==this._tagLength/8))throw new Error("Authentication tag does not match tag length.");this._hashBlock=new Array(this._ints),this.tag=null,this._hashSubkey=new Array(this._ints),this.cipher.encrypt([0,0,0,0],this._hashSubkey),this.componentBits=4,this._m=this.generateHashTable(this._hashSubkey,this.componentBits);var n=a.length();if(12===n)this._j0=[a.getInt32(),a.getInt32(),a.getInt32(),1];else{for(this._j0=[0,0,0,0];a.length()>0;)this._j0=this.ghash(this._hashSubkey,this._j0,[a.getInt32(),a.getInt32(),a.getInt32(),a.getInt32()]);this._j0=this.ghash(this._hashSubkey,this._j0,[0,0].concat(s(8*n)))}this._inBlock=this._j0.slice(0),i(this._inBlock),this._partialBytes=0,t=r.util.createBuffer(t),this._aDataLength=s(8*t.length());var o=t.length()%this.blockSize;for(o&&t.fillWithByte(0,this.blockSize-o),this._s=[0,0,0,0];t.length()>0;)this._s=this.ghash(this._hashSubkey,this._s,[t.getInt32(),t.getInt32(),t.getInt32(),t.getInt32()])},a.gcm.prototype.encrypt=function(e,t,r){var a=e.length();if(0===a)return!0;if(this.cipher.encrypt(this._inBlock,this._outBlock),0===this._partialBytes&&a>=this.blockSize){for(var n=0;n<this._ints;++n)t.putInt32(this._outBlock[n]^=e.getInt32());this._cipherLength+=this.blockSize}else{var s=(this.blockSize-a)%this.blockSize;s>0&&(s=this.blockSize-s),this._partialOutput.clear();for(n=0;n<this._ints;++n)this._partialOutput.putInt32(e.getInt32()^this._outBlock[n]);if(s<=0||r){if(r){var o=a%this.blockSize;this._cipherLength+=o,this._partialOutput.truncate(this.blockSize-o)}else this._cipherLength+=this.blockSize;for(n=0;n<this._ints;++n)this._outBlock[n]=this._partialOutput.getInt32();this._partialOutput.read-=this.blockSize}if(this._partialBytes>0&&this._partialOutput.getBytes(this._partialBytes),s>0&&!r)return e.read-=this.blockSize,t.putBytes(this._partialOutput.getBytes(s-this._partialBytes)),this._partialBytes=s,!0;t.putBytes(this._partialOutput.getBytes(a-this._partialBytes)),this._partialBytes=0}this._s=this.ghash(this._hashSubkey,this._s,this._outBlock),i(this._inBlock)},a.gcm.prototype.decrypt=function(e,t,r){var a=e.length();if(a<this.blockSize&&!(r&&a>0))return!0;this.cipher.encrypt(this._inBlock,this._outBlock),i(this._inBlock),this._hashBlock[0]=e.getInt32(),this._hashBlock[1]=e.getInt32(),this._hashBlock[2]=e.getInt32(),this._hashBlock[3]=e.getInt32(),this._s=this.ghash(this._hashSubkey,this._s,this._hashBlock);for(var n=0;n<this._ints;++n)t.putInt32(this._outBlock[n]^this._hashBlock[n]);a<this.blockSize?this._cipherLength+=a%this.blockSize:this._cipherLength+=this.blockSize},a.gcm.prototype.afterFinish=function(e,t){var a=!0;t.decrypt&&t.overflow&&e.truncate(this.blockSize-t.overflow),this.tag=r.util.createBuffer();var n=this._aDataLength.concat(s(8*this._cipherLength));this._s=this.ghash(this._hashSubkey,this._s,n);var i=[];this.cipher.encrypt(this._j0,i);for(var o=0;o<this._ints;++o)this.tag.putInt32(this._s[o]^i[o]);return this.tag.truncate(this.tag.length()%(this._tagLength/8)),t.decrypt&&this.tag.bytes()!==this._tag&&(a=!1),a},a.gcm.prototype.multiply=function(e,t){for(var r=[0,0,0,0],a=t.slice(0),n=0;n<128;++n){e[n/32|0]&1<<31-n%32&&(r[0]^=a[0],r[1]^=a[1],r[2]^=a[2],r[3]^=a[3]),this.pow(a,a)}return r},a.gcm.prototype.pow=function(e,t){for(var r=1&e[3],a=3;a>0;--a)t[a]=e[a]>>>1|(1&e[a-1])<<31;t[0]=e[0]>>>1,r&&(t[0]^=this._R)},a.gcm.prototype.tableMultiply=function(e){for(var t=[0,0,0,0],r=0;r<32;++r){var a=e[r/8|0]>>>4*(7-r%8)&15,n=this._m[r][a];t[0]^=n[0],t[1]^=n[1],t[2]^=n[2],t[3]^=n[3]}return t},a.gcm.prototype.ghash=function(e,t,r){return t[0]^=r[0],t[1]^=r[1],t[2]^=r[2],t[3]^=r[3],this.tableMultiply(t)},a.gcm.prototype.generateHashTable=function(e,t){for(var r=8/t,a=4*r,n=16*r,i=new Array(n),s=0;s<n;++s){var o=[0,0,0,0],c=(a-1-s%a)*t;o[s/a|0]=1<<t-1<<c,i[s]=this.generateSubHashTable(this.multiply(o,e),t)}return i},a.gcm.prototype.generateSubHashTable=function(e,t){var r=1<<t,a=r>>>1,n=new Array(r);n[a]=e.slice(0);for(var i=a>>>1;i>0;)this.pow(n[2*i],n[i]=[]),i>>=1;for(i=2;i<a;){for(var s=1;s<i;++s){var o=n[i],c=n[s];n[i+s]=[o[0]^c[0],o[1]^c[1],o[2]^c[2],o[3]^c[3]]}i*=2}for(n[0]=[0,0,0,0],i=a+1;i<r;++i){var u=n[i^a];n[i]=[e[0]^u[0],e[1]^u[1],e[2]^u[2],e[3]^u[3]]}return n}}}),d=o({"node_modules/node-forge/lib/aes.js"(e,t){var r=u();function a(e,t){r.cipher.registerAlgorithm(e,(function(){return new r.aes.Algorithm(e,t)}))}h(),f(),p(),t.exports=r.aes=r.aes||{},r.aes.startEncrypting=function(e,t,r,a){var n=v({key:e,output:r,decrypt:!1,mode:a});return n.start(t),n},r.aes.createEncryptionCipher=function(e,t){return v({key:e,output:null,decrypt:!1,mode:t})},r.aes.startDecrypting=function(e,t,r,a){var n=v({key:e,output:r,decrypt:!0,mode:a});return n.start(t),n},r.aes.createDecryptionCipher=function(e,t){return v({key:e,output:null,decrypt:!0,mode:t})},r.aes.Algorithm=function(e,t){l||d();var r=this;r.name=e,r.mode=new t({blockSize:16,cipher:{encrypt:function(e,t){return g(r._w,e,t,!1)},decrypt:function(e,t){return g(r._w,e,t,!0)}}}),r._init=!1},r.aes.Algorithm.prototype.initialize=function(e){if(!this._init){var t,a=e.key;if("string"!=typeof a||16!==a.length&&24!==a.length&&32!==a.length){if(r.util.isArray(a)&&(16===a.length||24===a.length||32===a.length)){t=a,a=r.util.createBuffer();for(var n=0;n<t.length;++n)a.putByte(t[n])}}else a=r.util.createBuffer(a);if(!r.util.isArray(a)){t=a,a=[];var i=t.length();if(16===i||24===i||32===i){i>>>=2;for(n=0;n<i;++n)a.push(t.getInt32())}}if(!r.util.isArray(a)||4!==a.length&&6!==a.length&&8!==a.length)throw new Error("Invalid key parameter.");var s=this.mode.name,o=-1!==["CFB","OFB","CTR","GCM"].indexOf(s);this._w=y(a,e.decrypt&&!o),this._init=!0}},r.aes._expandKey=function(e,t){return l||d(),y(e,t)},r.aes._updateBlock=g,a("AES-ECB",r.cipher.modes.ecb),a("AES-CBC",r.cipher.modes.cbc),a("AES-CFB",r.cipher.modes.cfb),a("AES-OFB",r.cipher.modes.ofb),a("AES-CTR",r.cipher.modes.ctr),a("AES-GCM",r.cipher.modes.gcm);var n,i,s,o,c,l=!1;function d(){l=!0,s=[0,1,2,4,8,16,32,64,128,27,54];for(var e=new Array(256),t=0;t<128;++t)e[t]=t<<1,e[t+128]=t+128<<1^283;n=new Array(256),i=new Array(256),o=new Array(4),c=new Array(4);for(t=0;t<4;++t)o[t]=new Array(256),c[t]=new Array(256);var r,a,u,p,h,f,d,y=0,g=0;for(t=0;t<256;++t){p=(p=g^g<<1^g<<2^g<<3^g<<4)>>8^255&p^99,n[y]=p,i[p]=y,f=(h=e[p])<<24^p<<16^p<<8^p^h,d=((r=e[y])^(a=e[r])^(u=e[a]))<<24^(y^u)<<16^(y^a^u)<<8^y^r^u;for(var v=0;v<4;++v)o[v][y]=f,c[v][p]=d,f=f<<24|f>>>8,d=d<<24|d>>>8;0===y?y=g=1:(y=r^e[e[e[r^u]]],g^=e[e[g]])}}function y(e,t){for(var r,a=e.slice(0),i=1,o=a.length,u=4*(o+6+1),l=o;l<u;++l)r=a[l-1],l%o==0?(r=n[r>>>16&255]<<24^n[r>>>8&255]<<16^n[255&r]<<8^n[r>>>24]^s[i]<<24,i++):o>6&&l%o==4&&(r=n[r>>>24]<<24^n[r>>>16&255]<<16^n[r>>>8&255]<<8^n[255&r]),a[l]=a[l-o]^r;if(t){for(var p,h=c[0],f=c[1],d=c[2],y=c[3],g=a.slice(0),v=(l=0,(u=a.length)-4);l<u;l+=4,v-=4)if(0===l||l===u-4)g[l]=a[v],g[l+1]=a[v+3],g[l+2]=a[v+2],g[l+3]=a[v+1];else for(var m=0;m<4;++m)p=a[v+m],g[l+(3&-m)]=h[n[p>>>24]]^f[n[p>>>16&255]]^d[n[p>>>8&255]]^y[n[255&p]];a=g}return a}function g(e,t,r,a){var s,u,l,p,h,f,d,y,g,v,m,C,E=e.length/4-1;a?(s=c[0],u=c[1],l=c[2],p=c[3],h=i):(s=o[0],u=o[1],l=o[2],p=o[3],h=n),f=t[0]^e[0],d=t[a?3:1]^e[1],y=t[2]^e[2],g=t[a?1:3]^e[3];for(var S=3,T=1;T<E;++T)v=s[f>>>24]^u[d>>>16&255]^l[y>>>8&255]^p[255&g]^e[++S],m=s[d>>>24]^u[y>>>16&255]^l[g>>>8&255]^p[255&f]^e[++S],C=s[y>>>24]^u[g>>>16&255]^l[f>>>8&255]^p[255&d]^e[++S],g=s[g>>>24]^u[f>>>16&255]^l[d>>>8&255]^p[255&y]^e[++S],f=v,d=m,y=C;r[0]=h[f>>>24]<<24^h[d>>>16&255]<<16^h[y>>>8&255]<<8^h[255&g]^e[++S],r[a?3:1]=h[d>>>24]<<24^h[y>>>16&255]<<16^h[g>>>8&255]<<8^h[255&f]^e[++S],r[2]=h[y>>>24]<<24^h[g>>>16&255]<<16^h[f>>>8&255]<<8^h[255&d]^e[++S],r[a?1:3]=h[g>>>24]<<24^h[f>>>16&255]<<16^h[d>>>8&255]<<8^h[255&y]^e[++S]}function v(e){var t,a="AES-"+((e=e||{}).mode||"CBC").toUpperCase(),n=(t=e.decrypt?r.cipher.createDecipher(a,e.key):r.cipher.createCipher(a,e.key)).start;return t.start=function(e,a){var i=null;a instanceof r.util.ByteBuffer&&(i=a,a={}),(a=a||{}).output=i,a.iv=e,n.call(t,a)},t}}}),y=o({"node_modules/node-forge/lib/oids.js"(e,t){var r=u();r.pki=r.pki||{};var a=t.exports=r.pki.oids=r.oids=r.oids||{};function n(e,t){a[e]=t,a[t]=e}function i(e,t){a[e]=t}n("1.2.840.113549.1.1.1","rsaEncryption"),n("1.2.840.113549.1.1.4","md5WithRSAEncryption"),n("1.2.840.113549.1.1.5","sha1WithRSAEncryption"),n("1.2.840.113549.1.1.7","RSAES-OAEP"),n("1.2.840.113549.1.1.8","mgf1"),n("1.2.840.113549.1.1.9","pSpecified"),n("1.2.840.113549.1.1.10","RSASSA-PSS"),n("1.2.840.113549.1.1.11","sha256WithRSAEncryption"),n("1.2.840.113549.1.1.12","sha384WithRSAEncryption"),n("1.2.840.113549.1.1.13","sha512WithRSAEncryption"),n("1.3.101.112","EdDSA25519"),n("1.2.840.10040.4.3","dsa-with-sha1"),n("1.3.14.3.2.7","desCBC"),n("1.3.14.3.2.26","sha1"),n("1.3.14.3.2.29","sha1WithRSASignature"),n("2.16.840.1.101.3.4.2.1","sha256"),n("2.16.840.1.101.3.4.2.2","sha384"),n("2.16.840.1.101.3.4.2.3","sha512"),n("2.16.840.1.101.3.4.2.4","sha224"),n("2.16.840.1.101.3.4.2.5","sha512-224"),n("2.16.840.1.101.3.4.2.6","sha512-256"),n("1.2.840.113549.2.2","md2"),n("1.2.840.113549.2.5","md5"),n("1.2.840.113549.1.7.1","data"),n("1.2.840.113549.1.7.2","signedData"),n("1.2.840.113549.1.7.3","envelopedData"),n("1.2.840.113549.1.7.4","signedAndEnvelopedData"),n("1.2.840.113549.1.7.5","digestedData"),n("1.2.840.113549.1.7.6","encryptedData"),n("1.2.840.113549.1.9.1","emailAddress"),n("1.2.840.113549.1.9.2","unstructuredName"),n("1.2.840.113549.1.9.3","contentType"),n("1.2.840.113549.1.9.4","messageDigest"),n("1.2.840.113549.1.9.5","signingTime"),n("1.2.840.113549.1.9.6","counterSignature"),n("1.2.840.113549.1.9.7","challengePassword"),n("1.2.840.113549.1.9.8","unstructuredAddress"),n("1.2.840.113549.1.9.14","extensionRequest"),n("1.2.840.113549.1.9.20","friendlyName"),n("1.2.840.113549.1.9.21","localKeyId"),n("1.2.840.113549.1.9.22.1","x509Certificate"),n("1.2.840.113549.1.12.10.1.1","keyBag"),n("1.2.840.113549.1.12.10.1.2","pkcs8ShroudedKeyBag"),n("1.2.840.113549.1.12.10.1.3","certBag"),n("1.2.840.113549.1.12.10.1.4","crlBag"),n("1.2.840.113549.1.12.10.1.5","secretBag"),n("1.2.840.113549.1.12.10.1.6","safeContentsBag"),n("1.2.840.113549.1.5.13","pkcs5PBES2"),n("1.2.840.113549.1.5.12","pkcs5PBKDF2"),n("1.2.840.113549.1.12.1.1","pbeWithSHAAnd128BitRC4"),n("1.2.840.113549.1.12.1.2","pbeWithSHAAnd40BitRC4"),n("1.2.840.113549.1.12.1.3","pbeWithSHAAnd3-KeyTripleDES-CBC"),n("1.2.840.113549.1.12.1.4","pbeWithSHAAnd2-KeyTripleDES-CBC"),n("1.2.840.113549.1.12.1.5","pbeWithSHAAnd128BitRC2-CBC"),n("1.2.840.113549.1.12.1.6","pbewithSHAAnd40BitRC2-CBC"),n("1.2.840.113549.2.7","hmacWithSHA1"),n("1.2.840.113549.2.8","hmacWithSHA224"),n("1.2.840.113549.2.9","hmacWithSHA256"),n("1.2.840.113549.2.10","hmacWithSHA384"),n("1.2.840.113549.2.11","hmacWithSHA512"),n("1.2.840.113549.3.7","des-EDE3-CBC"),n("2.16.840.1.101.3.4.1.2","aes128-CBC"),n("2.16.840.1.101.3.4.1.22","aes192-CBC"),n("2.16.840.1.101.3.4.1.42","aes256-CBC"),n("2.5.4.3","commonName"),n("2.5.4.4","surname"),n("2.5.4.5","serialNumber"),n("2.5.4.6","countryName"),n("2.5.4.7","localityName"),n("2.5.4.8","stateOrProvinceName"),n("2.5.4.9","streetAddress"),n("2.5.4.10","organizationName"),n("2.5.4.11","organizationalUnitName"),n("2.5.4.12","title"),n("2.5.4.13","description"),n("2.5.4.15","businessCategory"),n("2.5.4.17","postalCode"),n("2.5.4.42","givenName"),n("1.3.6.1.4.1.311.60.2.1.2","jurisdictionOfIncorporationStateOrProvinceName"),n("1.3.6.1.4.1.311.60.2.1.3","jurisdictionOfIncorporationCountryName"),n("2.16.840.1.113730.1.1","nsCertType"),n("2.16.840.1.113730.1.13","nsComment"),i("2.5.29.1","authorityKeyIdentifier"),i("2.5.29.2","keyAttributes"),i("2.5.29.3","certificatePolicies"),i("2.5.29.4","keyUsageRestriction"),i("2.5.29.5","policyMapping"),i("2.5.29.6","subtreesConstraint"),i("2.5.29.7","subjectAltName"),i("2.5.29.8","issuerAltName"),i("2.5.29.9","subjectDirectoryAttributes"),i("2.5.29.10","basicConstraints"),i("2.5.29.11","nameConstraints"),i("2.5.29.12","policyConstraints"),i("2.5.29.13","basicConstraints"),n("2.5.29.14","subjectKeyIdentifier"),n("2.5.29.15","keyUsage"),i("2.5.29.16","privateKeyUsagePeriod"),n("2.5.29.17","subjectAltName"),n("2.5.29.18","issuerAltName"),n("2.5.29.19","basicConstraints"),i("2.5.29.20","cRLNumber"),i("2.5.29.21","cRLReason"),i("2.5.29.22","expirationDate"),i("2.5.29.23","instructionCode"),i("2.5.29.24","invalidityDate"),i("2.5.29.25","cRLDistributionPoints"),i("2.5.29.26","issuingDistributionPoint"),i("2.5.29.27","deltaCRLIndicator"),i("2.5.29.28","issuingDistributionPoint"),i("2.5.29.29","certificateIssuer"),i("2.5.29.30","nameConstraints"),n("2.5.29.31","cRLDistributionPoints"),n("2.5.29.32","certificatePolicies"),i("2.5.29.33","policyMappings"),i("2.5.29.34","policyConstraints"),n("2.5.29.35","authorityKeyIdentifier"),i("2.5.29.36","policyConstraints"),n("2.5.29.37","extKeyUsage"),i("2.5.29.46","freshestCRL"),i("2.5.29.54","inhibitAnyPolicy"),n("1.3.6.1.4.1.11129.2.4.2","timestampList"),n("1.3.6.1.5.5.7.1.1","authorityInfoAccess"),n("1.3.6.1.5.5.7.3.1","serverAuth"),n("1.3.6.1.5.5.7.3.2","clientAuth"),n("1.3.6.1.5.5.7.3.3","codeSigning"),n("1.3.6.1.5.5.7.3.4","emailProtection"),n("1.3.6.1.5.5.7.3.8","timeStamping")}}),g=o({"node_modules/node-forge/lib/asn1.js"(e,t){var r=u();p(),y();var a=t.exports=r.asn1=r.asn1||{};function n(e,t,r){if(r>t){var a=new Error("Too few bytes to parse DER.");throw a.available=e.length(),a.remaining=t,a.requested=r,a}}a.Class={UNIVERSAL:0,APPLICATION:64,CONTEXT_SPECIFIC:128,PRIVATE:192},a.Type={NONE:0,BOOLEAN:1,INTEGER:2,BITSTRING:3,OCTETSTRING:4,NULL:5,OID:6,ODESC:7,EXTERNAL:8,REAL:9,ENUMERATED:10,EMBEDDED:11,UTF8:12,ROID:13,SEQUENCE:16,SET:17,PRINTABLESTRING:19,IA5STRING:22,UTCTIME:23,GENERALIZEDTIME:24,BMPSTRING:30},a.create=function(e,t,n,i,s){if(r.util.isArray(i)){for(var o=[],c=0;c<i.length;++c)void 0!==i[c]&&o.push(i[c]);i=o}var u={tagClass:e,type:t,constructed:n,composed:n||r.util.isArray(i),value:i};return s&&"bitStringContents"in s&&(u.bitStringContents=s.bitStringContents,u.original=a.copy(u)),u},a.copy=function(e,t){var n;if(r.util.isArray(e)){n=[];for(var i=0;i<e.length;++i)n.push(a.copy(e[i],t));return n}return"string"==typeof e?e:(n={tagClass:e.tagClass,type:e.type,constructed:e.constructed,composed:e.composed,value:a.copy(e.value,t)},t&&!t.excludeBitStringContents&&(n.bitStringContents=e.bitStringContents),n)},a.equals=function(e,t,n){if(r.util.isArray(e)){if(!r.util.isArray(t))return!1;if(e.length!==t.length)return!1;for(var i=0;i<e.length;++i)if(!a.equals(e[i],t[i]))return!1;return!0}if(typeof e!=typeof t)return!1;if("string"==typeof e)return e===t;var s=e.tagClass===t.tagClass&&e.type===t.type&&e.constructed===t.constructed&&e.composed===t.composed&&a.equals(e.value,t.value);return n&&n.includeBitStringContents&&(s=s&&e.bitStringContents===t.bitStringContents),s},a.getBerValueLength=function(e){var t=e.getByte();if(128!==t)return 128&t?e.getInt((127&t)<<3):t};function i(e,t,r,s){var o;n(e,t,2);var c=e.getByte();t--;var u=192&c,l=31&c;o=e.length();var p,h,f=function(e,t){var r=e.getByte();if(t--,128!==r){var a;if(128&r){var i=127&r;n(e,t,i),a=e.getInt(i<<3)}else a=r;if(a<0)throw new Error("Negative length: "+a);return a}}(e,t);if(t-=o-e.length(),void 0!==f&&f>t){if(s.strict){var d=new Error("Too few bytes to read ASN.1 value.");throw d.available=e.length(),d.remaining=t,d.requested=f,d}f=t}var y=!(32&~c);if(y)if(p=[],void 0===f)for(;;){if(n(e,t,2),e.bytes(2)===String.fromCharCode(0,0)){e.getBytes(2),t-=2;break}o=e.length(),p.push(i(e,t,r+1,s)),t-=o-e.length()}else for(;f>0;)o=e.length(),p.push(i(e,f,r+1,s)),t-=o-e.length(),f-=o-e.length();if(void 0===p&&u===a.Class.UNIVERSAL&&l===a.Type.BITSTRING&&(h=e.bytes(f)),void 0===p&&s.decodeBitStrings&&u===a.Class.UNIVERSAL&&l===a.Type.BITSTRING&&f>1){var g=e.read,v=t,m=0;if(l===a.Type.BITSTRING&&(n(e,t,1),m=e.getByte(),t--),0===m)try{o=e.length();var C=i(e,t,r+1,{strict:!0,decodeBitStrings:!0}),E=o-e.length();t-=E,l==a.Type.BITSTRING&&E++;var S=C.tagClass;E!==f||S!==a.Class.UNIVERSAL&&S!==a.Class.CONTEXT_SPECIFIC||(p=[C])}catch(e){}void 0===p&&(e.read=g,t=v)}if(void 0===p){if(void 0===f){if(s.strict)throw new Error("Non-constructed ASN.1 object of indefinite length.");f=t}if(l===a.Type.BMPSTRING)for(p="";f>0;f-=2)n(e,t,2),p+=String.fromCharCode(e.getInt16()),t-=2;else p=e.getBytes(f),t-=f}var T=void 0===h?null:{bitStringContents:h};return a.create(u,l,y,p,T)}a.fromDer=function(e,t){void 0===t&&(t={strict:!0,parseAllBytes:!0,decodeBitStrings:!0}),"boolean"==typeof t&&(t={strict:t,parseAllBytes:!0,decodeBitStrings:!0}),"strict"in t||(t.strict=!0),"parseAllBytes"in t||(t.parseAllBytes=!0),"decodeBitStrings"in t||(t.decodeBitStrings=!0),"string"==typeof e&&(e=r.util.createBuffer(e));var a=e.length(),n=i(e,e.length(),0,t);if(t.parseAllBytes&&0!==e.length()){var s=new Error("Unparsed DER bytes remain after ASN.1 parsing.");throw s.byteCount=a,s.remaining=e.length(),s}return n},a.toDer=function(e){var t=r.util.createBuffer(),n=e.tagClass|e.type,i=r.util.createBuffer(),s=!1;if("bitStringContents"in e&&(s=!0,e.original&&(s=a.equals(e,e.original))),s)i.putBytes(e.bitStringContents);else if(e.composed){e.constructed?n|=32:i.putByte(0);for(var o=0;o<e.value.length;++o)void 0!==e.value[o]&&i.putBuffer(a.toDer(e.value[o]))}else if(e.type===a.Type.BMPSTRING)for(o=0;o<e.value.length;++o)i.putInt16(e.value.charCodeAt(o));else!(e.type===a.Type.INTEGER&&e.value.length>1)||(0!==e.value.charCodeAt(0)||128&e.value.charCodeAt(1))&&(255!==e.value.charCodeAt(0)||128&~e.value.charCodeAt(1))?i.putBytes(e.value):i.putBytes(e.value.substr(1));if(t.putByte(n),i.length()<=127)t.putByte(127&i.length());else{var c=i.length(),u="";do{u+=String.fromCharCode(255&c),c>>>=8}while(c>0);t.putByte(128|u.length);for(o=u.length-1;o>=0;--o)t.putByte(u.charCodeAt(o))}return t.putBuffer(i),t},a.oidToDer=function(e){var t,a,n,i,s=e.split("."),o=r.util.createBuffer();o.putByte(40*parseInt(s[0],10)+parseInt(s[1],10));for(var c=2;c<s.length;++c){t=!0,a=[],n=parseInt(s[c],10);do{i=127&n,n>>>=7,t||(i|=128),a.push(i),t=!1}while(n>0);for(var u=a.length-1;u>=0;--u)o.putByte(a[u])}return o},a.derToOid=function(e){var t;"string"==typeof e&&(e=r.util.createBuffer(e));var a=e.getByte();t=Math.floor(a/40)+"."+a%40;for(var n=0;e.length()>0;)n<<=7,128&(a=e.getByte())?n+=127&a:(t+="."+(n+a),n=0);return t},a.utcTimeToDate=function(e){var t=new Date,r=parseInt(e.substr(0,2),10);r=r>=50?1900+r:2e3+r;var a=parseInt(e.substr(2,2),10)-1,n=parseInt(e.substr(4,2),10),i=parseInt(e.substr(6,2),10),s=parseInt(e.substr(8,2),10),o=0;if(e.length>11){var c=e.charAt(10),u=10;"+"!==c&&"-"!==c&&(o=parseInt(e.substr(10,2),10),u+=2)}if(t.setUTCFullYear(r,a,n),t.setUTCHours(i,s,o,0),u&&("+"===(c=e.charAt(u))||"-"===c)){var l=60*parseInt(e.substr(u+1,2),10)+parseInt(e.substr(u+4,2),10);l*=6e4,"+"===c?t.setTime(+t-l):t.setTime(+t+l)}return t},a.generalizedTimeToDate=function(e){var t=new Date,r=parseInt(e.substr(0,4),10),a=parseInt(e.substr(4,2),10)-1,n=parseInt(e.substr(6,2),10),i=parseInt(e.substr(8,2),10),s=parseInt(e.substr(10,2),10),o=parseInt(e.substr(12,2),10),c=0,u=0,l=!1;"Z"===e.charAt(e.length-1)&&(l=!0);var p=e.length-5,h=e.charAt(p);"+"!==h&&"-"!==h||(u=60*parseInt(e.substr(p+1,2),10)+parseInt(e.substr(p+4,2),10),u*=6e4,"+"===h&&(u*=-1),l=!0);return"."===e.charAt(14)&&(c=1e3*parseFloat(e.substr(14),10)),l?(t.setUTCFullYear(r,a,n),t.setUTCHours(i,s,o,c),t.setTime(+t+u)):(t.setFullYear(r,a,n),t.setHours(i,s,o,c)),t},a.dateToUtcTime=function(e){if("string"==typeof e)return e;var t="",r=[];r.push((""+e.getUTCFullYear()).substr(2)),r.push(""+(e.getUTCMonth()+1)),r.push(""+e.getUTCDate()),r.push(""+e.getUTCHours()),r.push(""+e.getUTCMinutes()),r.push(""+e.getUTCSeconds());for(var a=0;a<r.length;++a)r[a].length<2&&(t+="0"),t+=r[a];return t+="Z"},a.dateToGeneralizedTime=function(e){if("string"==typeof e)return e;var t="",r=[];r.push(""+e.getUTCFullYear()),r.push(""+(e.getUTCMonth()+1)),r.push(""+e.getUTCDate()),r.push(""+e.getUTCHours()),r.push(""+e.getUTCMinutes()),r.push(""+e.getUTCSeconds());for(var a=0;a<r.length;++a)r[a].length<2&&(t+="0"),t+=r[a];return t+="Z"},a.integerToDer=function(e){var t=r.util.createBuffer();if(e>=-128&&e<128)return t.putSignedInt(e,8);if(e>=-32768&&e<32768)return t.putSignedInt(e,16);if(e>=-8388608&&e<8388608)return t.putSignedInt(e,24);if(e>=-2147483648&&e<2147483648)return t.putSignedInt(e,32);var a=new Error("Integer too large; max is 32-bits.");throw a.integer=e,a},a.derToInteger=function(e){"string"==typeof e&&(e=r.util.createBuffer(e));var t=8*e.length();if(t>32)throw new Error("Integer too large; max is 32-bits.");return e.getSignedInt(t)},a.validate=function(e,t,n,i){var s=!1;if(e.tagClass!==t.tagClass&&void 0!==t.tagClass||e.type!==t.type&&void 0!==t.type)i&&(e.tagClass!==t.tagClass&&i.push("["+t.name+'] Expected tag class "'+t.tagClass+'", got "'+e.tagClass+'"'),e.type!==t.type&&i.push("["+t.name+'] Expected type "'+t.type+'", got "'+e.type+'"'));else if(e.constructed===t.constructed||void 0===t.constructed){if(s=!0,t.value&&r.util.isArray(t.value))for(var o=0,c=0;s&&c<t.value.length;++c)s=t.value[c].optional||!1,e.value[o]&&((s=a.validate(e.value[o],t.value[c],n,i))?++o:t.value[c].optional&&(s=!0)),!s&&i&&i.push("["+t.name+'] Tag class "'+t.tagClass+'", type "'+t.type+'" expected value length "'+t.value.length+'", got "'+e.value.length+'"');if(s&&n)if(t.capture&&(n[t.capture]=e.value),t.captureAsn1&&(n[t.captureAsn1]=e),t.captureBitStringContents&&"bitStringContents"in e&&(n[t.captureBitStringContents]=e.bitStringContents),t.captureBitStringValue&&"bitStringContents"in e)if(e.bitStringContents.length<2)n[t.captureBitStringValue]="";else{if(0!==e.bitStringContents.charCodeAt(0))throw new Error("captureBitStringValue only supported for zero unused bits");n[t.captureBitStringValue]=e.bitStringContents.slice(1)}}else i&&i.push("["+t.name+'] Expected constructed "'+t.constructed+'", got "'+e.constructed+'"');return s};var s=/[^\\u0000-\\u00ff]/;a.prettyPrint=function(e,t,n){var i="";n=n||2,(t=t||0)>0&&(i+="\n");for(var o="",c=0;c<t*n;++c)o+=" ";switch(i+=o+"Tag: ",e.tagClass){case a.Class.UNIVERSAL:i+="Universal:";break;case a.Class.APPLICATION:i+="Application:";break;case a.Class.CONTEXT_SPECIFIC:i+="Context-Specific:";break;case a.Class.PRIVATE:i+="Private:"}if(e.tagClass===a.Class.UNIVERSAL)switch(i+=e.type,e.type){case a.Type.NONE:i+=" (None)";break;case a.Type.BOOLEAN:i+=" (Boolean)";break;case a.Type.INTEGER:i+=" (Integer)";break;case a.Type.BITSTRING:i+=" (Bit string)";break;case a.Type.OCTETSTRING:i+=" (Octet string)";break;case a.Type.NULL:i+=" (Null)";break;case a.Type.OID:i+=" (Object Identifier)";break;case a.Type.ODESC:i+=" (Object Descriptor)";break;case a.Type.EXTERNAL:i+=" (External or Instance of)";break;case a.Type.REAL:i+=" (Real)";break;case a.Type.ENUMERATED:i+=" (Enumerated)";break;case a.Type.EMBEDDED:i+=" (Embedded PDV)";break;case a.Type.UTF8:i+=" (UTF8)";break;case a.Type.ROID:i+=" (Relative Object Identifier)";break;case a.Type.SEQUENCE:i+=" (Sequence)";break;case a.Type.SET:i+=" (Set)";break;case a.Type.PRINTABLESTRING:i+=" (Printable String)";break;case a.Type.IA5String:i+=" (IA5String (ASCII))";break;case a.Type.UTCTIME:i+=" (UTC time)";break;case a.Type.GENERALIZEDTIME:i+=" (Generalized time)";break;case a.Type.BMPSTRING:i+=" (BMP String)"}else i+=e.type;if(i+="\n",i+=o+"Constructed: "+e.constructed+"\n",e.composed){var u=0,l="";for(c=0;c<e.value.length;++c)void 0!==e.value[c]&&(u+=1,l+=a.prettyPrint(e.value[c],t+1,n),c+1<e.value.length&&(l+=","));i+=o+"Sub values: "+u+l}else{if(i+=o+"Value: ",e.type===a.Type.OID){var p=a.derToOid(e.value);i+=p,r.pki&&r.pki.oids&&p in r.pki.oids&&(i+=" ("+r.pki.oids[p]+") ")}if(e.type===a.Type.INTEGER)try{i+=a.derToInteger(e.value)}catch(t){i+="0x"+r.util.bytesToHex(e.value)}else if(e.type===a.Type.BITSTRING){if(e.value.length>1?i+="0x"+r.util.bytesToHex(e.value.slice(1)):i+="(none)",e.value.length>0){var h=e.value.charCodeAt(0);1==h?i+=" (1 unused bit shown)":h>1&&(i+=" ("+h+" unused bits shown)")}}else if(e.type===a.Type.OCTETSTRING)s.test(e.value)||(i+="("+e.value+") "),i+="0x"+r.util.bytesToHex(e.value);else if(e.type===a.Type.UTF8)try{i+=r.util.decodeUtf8(e.value)}catch(t){if("URI malformed"!==t.message)throw t;i+="0x"+r.util.bytesToHex(e.value)+" (malformed UTF8)"}else e.type===a.Type.PRINTABLESTRING||e.type===a.Type.IA5String?i+=e.value:s.test(e.value)?i+="0x"+r.util.bytesToHex(e.value):0===e.value.length?i+="[null]":i+=e.value}return i}}}),v=o({"node_modules/node-forge/lib/md.js"(e,t){var r=u();t.exports=r.md=r.md||{},r.md.algorithms=r.md.algorithms||{}}}),m=o({"node_modules/node-forge/lib/hmac.js"(e,t){var r=u();v(),p(),(t.exports=r.hmac=r.hmac||{}).create=function(){var e=null,t=null,a=null,n=null,i={start:function(i,s){if(null!==i)if("string"==typeof i){if(!((i=i.toLowerCase())in r.md.algorithms))throw new Error('Unknown hash algorithm "'+i+'"');t=r.md.algorithms[i].create()}else t=i;if(null===s)s=e;else{if("string"==typeof s)s=r.util.createBuffer(s);else if(r.util.isArray(s)){var o=s;s=r.util.createBuffer();for(var c=0;c<o.length;++c)s.putByte(o[c])}var u=s.length();u>t.blockLength&&(t.start(),t.update(s.bytes()),s=t.digest()),a=r.util.createBuffer(),n=r.util.createBuffer(),u=s.length();for(c=0;c<u;++c){o=s.at(c);a.putByte(54^o),n.putByte(92^o)}if(u<t.blockLength)for(o=t.blockLength-u,c=0;c<o;++c)a.putByte(54),n.putByte(92);e=s,a=a.bytes(),n=n.bytes()}t.start(),t.update(a)},update:function(e){t.update(e)},getMac:function(){var e=t.digest().bytes();return t.start(),t.update(n),t.update(e),t.digest()}};return i.digest=i.getMac,i}}}),C=o({"node_modules/node-forge/lib/md5.js"(e,t){var r=u();v(),p();var a=t.exports=r.md5=r.md5||{};r.md.md5=r.md.algorithms.md5=a,a.create=function(){c||function(){n=String.fromCharCode(128),n+=r.util.fillString(String.fromCharCode(0),64),i=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1,6,11,0,5,10,15,4,9,14,3,8,13,2,7,12,5,8,11,14,1,4,7,10,13,0,3,6,9,12,15,2,0,7,14,5,12,3,10,1,8,15,6,13,4,11,2,9],s=[7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21],o=new Array(64);for(var e=0;e<64;++e)o[e]=Math.floor(4294967296*Math.abs(Math.sin(e+1)));c=!0}();var e=null,t=r.util.createBuffer(),a=new Array(16),u={algorithm:"md5",blockLength:64,digestLength:16,messageLength:0,fullMessageLength:null,messageLengthSize:8,start:function(){u.messageLength=0,u.fullMessageLength=u.messageLength64=[];for(var a=u.messageLengthSize/4,n=0;n<a;++n)u.fullMessageLength.push(0);return t=r.util.createBuffer(),e={h0:1732584193,h1:4023233417,h2:2562383102,h3:271733878},u}};return u.start(),u.update=function(n,i){"utf8"===i&&(n=r.util.encodeUtf8(n));var s=n.length;u.messageLength+=s,s=[s/4294967296>>>0,s>>>0];for(var o=u.fullMessageLength.length-1;o>=0;--o)u.fullMessageLength[o]+=s[1],s[1]=s[0]+(u.fullMessageLength[o]/4294967296>>>0),u.fullMessageLength[o]=u.fullMessageLength[o]>>>0,s[0]=s[1]/4294967296>>>0;return t.putBytes(n),l(e,a,t),(t.read>2048||0===t.length())&&t.compact(),u},u.digest=function(){var i=r.util.createBuffer();i.putBytes(t.bytes());var s=u.fullMessageLength[u.fullMessageLength.length-1]+u.messageLengthSize&u.blockLength-1;i.putBytes(n.substr(0,u.blockLength-s));for(var o,c=0,p=u.fullMessageLength.length-1;p>=0;--p)c=(o=8*u.fullMessageLength[p]+c)/4294967296>>>0,i.putInt32Le(o>>>0);var h={h0:e.h0,h1:e.h1,h2:e.h2,h3:e.h3};l(h,a,i);var f=r.util.createBuffer();return f.putInt32Le(h.h0),f.putInt32Le(h.h1),f.putInt32Le(h.h2),f.putInt32Le(h.h3),f},u};var n=null,i=null,s=null,o=null,c=!1;function l(e,t,r){for(var a,n,c,u,l,p,h,f=r.length();f>=64;){for(n=e.h0,c=e.h1,u=e.h2,l=e.h3,h=0;h<16;++h)t[h]=r.getInt32Le(),a=n+(l^c&(u^l))+o[h]+t[h],n=l,l=u,u=c,c+=a<<(p=s[h])|a>>>32-p;for(;h<32;++h)a=n+(u^l&(c^u))+o[h]+t[i[h]],n=l,l=u,u=c,c+=a<<(p=s[h])|a>>>32-p;for(;h<48;++h)a=n+(c^u^l)+o[h]+t[i[h]],n=l,l=u,u=c,c+=a<<(p=s[h])|a>>>32-p;for(;h<64;++h)a=n+(u^(c|~l))+o[h]+t[i[h]],n=l,l=u,u=c,c+=a<<(p=s[h])|a>>>32-p;e.h0=e.h0+n|0,e.h1=e.h1+c|0,e.h2=e.h2+u|0,e.h3=e.h3+l|0,f-=64}}}}),E=o({"node_modules/node-forge/lib/pem.js"(e,t){var r=u();p();var a=t.exports=r.pem=r.pem||{};function n(e){for(var t=e.name+": ",r=[],a=function(e,t){return" "+t},n=0;n<e.values.length;++n)r.push(e.values[n].replace(/^(\S+\r\n)/,a));t+=r.join(",")+"\r\n";var i=0,s=-1;for(n=0;n<t.length;++n,++i)if(i>65&&-1!==s){var o=t[s];","===o?(++s,t=t.substr(0,s)+"\r\n "+t.substr(s)):t=t.substr(0,s)+"\r\n"+o+t.substr(s+1),i=n-s-1,s=-1,++n}else" "!==t[n]&&"\t"!==t[n]&&","!==t[n]||(s=n);return t}function i(e){return e.replace(/^\s+/,"")}a.encode=function(e,t){t=t||{};var a,i="-----BEGIN "+e.type+"-----\r\n";if(e.procType&&(i+=n(a={name:"Proc-Type",values:[String(e.procType.version),e.procType.type]})),e.contentDomain&&(i+=n(a={name:"Content-Domain",values:[e.contentDomain]})),e.dekInfo&&(a={name:"DEK-Info",values:[e.dekInfo.algorithm]},e.dekInfo.parameters&&a.values.push(e.dekInfo.parameters),i+=n(a)),e.headers)for(var s=0;s<e.headers.length;++s)i+=n(e.headers[s]);return e.procType&&(i+="\r\n"),i+=r.util.encode64(e.body,t.maxline||64)+"\r\n",i+="-----END "+e.type+"-----\r\n"},a.decode=function(e){for(var t,a=[],n=/\s*-----BEGIN ([A-Z0-9- ]+)-----\r?\n?([\x21-\x7e\s]+?(?:\r?\n\r?\n))?([:A-Za-z0-9+\/=\s]+?)-----END \1-----/g,s=/([\x21-\x7e]+):\s*([\x21-\x7e\s^:]+)/,o=/\r?\n/;t=n.exec(e);){var c=t[1];"NEW CERTIFICATE REQUEST"===c&&(c="CERTIFICATE REQUEST");var u={type:c,procType:null,contentDomain:null,dekInfo:null,headers:[],body:r.util.decode64(t[3])};if(a.push(u),t[2]){for(var l=t[2].split(o),p=0;t&&p<l.length;){for(var h=l[p].replace(/\s+$/,""),f=p+1;f<l.length;++f){var d=l[f];if(!/\s/.test(d[0]))break;h+=d,p=f}if(t=h.match(s)){for(var y={name:t[1],values:[]},g=t[2].split(","),v=0;v<g.length;++v)y.values.push(i(g[v]));if(u.procType)if(u.contentDomain||"Content-Domain"!==y.name)if(u.dekInfo||"DEK-Info"!==y.name)u.headers.push(y);else{if(0===y.values.length)throw new Error('Invalid PEM formatted message. The "DEK-Info" header must have at least one subfield.');u.dekInfo={algorithm:g[0],parameters:g[1]||null}}else u.contentDomain=g[0]||"";else{if("Proc-Type"!==y.name)throw new Error('Invalid PEM formatted message. The first encapsulated header must be "Proc-Type".');if(2!==y.values.length)throw new Error('Invalid PEM formatted message. The "Proc-Type" header must have two subfields.');u.procType={version:g[0],type:g[1]}}}++p}if("ENCRYPTED"===u.procType&&!u.dekInfo)throw new Error('Invalid PEM formatted message. The "DEK-Info" header must be present if "Proc-Type" is "ENCRYPTED".')}}if(0===a.length)throw new Error("Invalid PEM formatted message.");return a}}}),S=o({"node_modules/node-forge/lib/des.js"(e,t){var r=u();function a(e,t){r.cipher.registerAlgorithm(e,(function(){return new r.des.Algorithm(e,t)}))}h(),f(),p(),t.exports=r.des=r.des||{},r.des.startEncrypting=function(e,t,r,a){var n=v({key:e,output:r,decrypt:!1,mode:a||(null===t?"ECB":"CBC")});return n.start(t),n},r.des.createEncryptionCipher=function(e,t){return v({key:e,output:null,decrypt:!1,mode:t})},r.des.startDecrypting=function(e,t,r,a){var n=v({key:e,output:r,decrypt:!0,mode:a||(null===t?"ECB":"CBC")});return n.start(t),n},r.des.createDecryptionCipher=function(e,t){return v({key:e,output:null,decrypt:!0,mode:t})},r.des.Algorithm=function(e,t){var r=this;r.name=e,r.mode=new t({blockSize:8,cipher:{encrypt:function(e,t){return g(r._keys,e,t,!1)},decrypt:function(e,t){return g(r._keys,e,t,!0)}}}),r._init=!1},r.des.Algorithm.prototype.initialize=function(e){if(!this._init){var t=r.util.createBuffer(e.key);if(0===this.name.indexOf("3DES")&&24!==t.length())throw new Error("Invalid Triple-DES key size: "+8*t.length());this._keys=function(e){for(var t,r=[0,4,536870912,536870916,65536,65540,536936448,536936452,512,516,536871424,536871428,66048,66052,536936960,536936964],a=[0,1,1048576,1048577,67108864,67108865,68157440,68157441,256,257,1048832,1048833,67109120,67109121,68157696,68157697],n=[0,8,2048,2056,16777216,16777224,16779264,16779272,0,8,2048,2056,16777216,16777224,16779264,16779272],i=[0,2097152,134217728,136314880,8192,2105344,134225920,136323072,131072,2228224,134348800,136445952,139264,2236416,134356992,136454144],s=[0,262144,16,262160,0,262144,16,262160,4096,266240,4112,266256,4096,266240,4112,266256],o=[0,1024,32,1056,0,1024,32,1056,33554432,33555456,33554464,33555488,33554432,33555456,33554464,33555488],c=[0,268435456,524288,268959744,2,268435458,524290,268959746,0,268435456,524288,268959744,2,268435458,524290,268959746],u=[0,65536,2048,67584,536870912,536936448,536872960,536938496,131072,196608,133120,198656,537001984,537067520,537004032,537069568],l=[0,262144,0,262144,2,262146,2,262146,33554432,33816576,33554432,33816576,33554434,33816578,33554434,33816578],p=[0,268435456,8,268435464,0,268435456,8,268435464,1024,268436480,1032,268436488,1024,268436480,1032,268436488],h=[0,32,0,32,1048576,1048608,1048576,1048608,8192,8224,8192,8224,1056768,1056800,1056768,1056800],f=[0,16777216,512,16777728,2097152,18874368,2097664,18874880,67108864,83886080,67109376,83886592,69206016,85983232,69206528,85983744],d=[0,4096,134217728,134221824,524288,528384,134742016,134746112,16,4112,134217744,134221840,524304,528400,134742032,134746128],y=[0,4,256,260,0,4,256,260,1,5,257,261,1,5,257,261],g=e.length()>8?3:1,v=[],m=[0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,0],C=0,E=0;E<g;E++){var S=e.getInt32(),T=e.getInt32();S^=(t=252645135&(S>>>4^T))<<4,S^=t=65535&((T^=t)>>>-16^S),S^=(t=858993459&(S>>>2^(T^=t<<-16)))<<2,S^=t=65535&((T^=t)>>>-16^S),S^=(t=1431655765&(S>>>1^(T^=t<<-16)))<<1,S^=t=16711935&((T^=t)>>>8^S),t=(S^=(t=1431655765&(S>>>1^(T^=t<<8)))<<1)<<8|(T^=t)>>>20&240,S=T<<24|T<<8&16711680|T>>>8&65280|T>>>24&240,T=t;for(var I=0;I<m.length;++I){m[I]?(S=S<<2|S>>>26,T=T<<2|T>>>26):(S=S<<1|S>>>27,T=T<<1|T>>>27),T&=-15;var A=r[(S&=-15)>>>28]|a[S>>>24&15]|n[S>>>20&15]|i[S>>>16&15]|s[S>>>12&15]|o[S>>>8&15]|c[S>>>4&15],b=u[T>>>28]|l[T>>>24&15]|p[T>>>20&15]|h[T>>>16&15]|f[T>>>12&15]|d[T>>>8&15]|y[T>>>4&15];t=65535&(b>>>16^A),v[C++]=A^t,v[C++]=b^t<<16}}return v}(t),this._init=!0}},a("DES-ECB",r.cipher.modes.ecb),a("DES-CBC",r.cipher.modes.cbc),a("DES-CFB",r.cipher.modes.cfb),a("DES-OFB",r.cipher.modes.ofb),a("DES-CTR",r.cipher.modes.ctr),a("3DES-ECB",r.cipher.modes.ecb),a("3DES-CBC",r.cipher.modes.cbc),a("3DES-CFB",r.cipher.modes.cfb),a("3DES-OFB",r.cipher.modes.ofb),a("3DES-CTR",r.cipher.modes.ctr);var n=[16843776,0,65536,16843780,16842756,66564,4,65536,1024,16843776,16843780,1024,16778244,16842756,16777216,4,1028,16778240,16778240,66560,66560,16842752,16842752,16778244,65540,16777220,16777220,65540,0,1028,66564,16777216,65536,16843780,4,16842752,16843776,16777216,16777216,1024,16842756,65536,66560,16777220,1024,4,16778244,66564,16843780,65540,16842752,16778244,16777220,1028,66564,16843776,1028,16778240,16778240,0,65540,66560,0,16842756],i=[-2146402272,-2147450880,32768,1081376,1048576,32,-2146435040,-2147450848,-2147483616,-2146402272,-2146402304,-2147483648,-2147450880,1048576,32,-2146435040,1081344,1048608,-2147450848,0,-2147483648,32768,1081376,-2146435072,1048608,-2147483616,0,1081344,32800,-2146402304,-2146435072,32800,0,1081376,-2146435040,1048576,-2147450848,-2146435072,-2146402304,32768,-2146435072,-2147450880,32,-2146402272,1081376,32,32768,-2147483648,32800,-2146402304,1048576,-2147483616,1048608,-2147450848,-2147483616,1048608,1081344,0,-2147450880,32800,-2147483648,-2146435040,-2146402272,1081344],s=[520,134349312,0,134348808,134218240,0,131592,134218240,131080,134217736,134217736,131072,134349320,131080,134348800,520,134217728,8,134349312,512,131584,134348800,134348808,131592,134218248,131584,131072,134218248,8,134349320,512,134217728,134349312,134217728,131080,520,131072,134349312,134218240,0,512,131080,134349320,134218240,134217736,512,0,134348808,134218248,131072,134217728,134349320,8,131592,131584,134217736,134348800,134218248,520,134348800,131592,8,134348808,131584],o=[8396801,8321,8321,128,8396928,8388737,8388609,8193,0,8396800,8396800,8396929,129,0,8388736,8388609,1,8192,8388608,8396801,128,8388608,8193,8320,8388737,1,8320,8388736,8192,8396928,8396929,129,8388736,8388609,8396800,8396929,129,0,0,8396800,8320,8388736,8388737,1,8396801,8321,8321,128,8396929,129,1,8192,8388609,8193,8396928,8388737,8193,8320,8388608,8396801,128,8388608,8192,8396928],c=[256,34078976,34078720,1107296512,524288,256,1073741824,34078720,1074266368,524288,33554688,1074266368,1107296512,1107820544,524544,1073741824,33554432,1074266112,1074266112,0,1073742080,1107820800,1107820800,33554688,1107820544,1073742080,0,1107296256,34078976,33554432,1107296256,524544,524288,1107296512,256,33554432,1073741824,34078720,1107296512,1074266368,33554688,1073741824,1107820544,34078976,1074266368,256,33554432,1107820544,1107820800,524544,1107296256,1107820800,34078720,0,1074266112,1107296256,524544,33554688,1073742080,524288,0,1074266112,34078976,1073742080],l=[536870928,541065216,16384,541081616,541065216,16,541081616,4194304,536887296,4210704,4194304,536870928,4194320,536887296,536870912,16400,0,4194320,536887312,16384,4210688,536887312,16,541065232,541065232,0,4210704,541081600,16400,4210688,541081600,536870912,536887296,16,541065232,4210688,541081616,4194304,16400,536870928,4194304,536887296,536870912,16400,536870928,541081616,4210688,541065216,4210704,541081600,0,541065232,16,16384,541065216,4210704,16384,4194320,536887312,0,541081600,536870912,4194320,536887312],d=[2097152,69206018,67110914,0,2048,67110914,2099202,69208064,69208066,2097152,0,67108866,2,67108864,69206018,2050,67110912,2099202,2097154,67110912,67108866,69206016,69208064,2097154,69206016,2048,2050,69208066,2099200,2,67108864,2099200,67108864,2099200,2097152,67110914,67110914,69206018,69206018,2,2097154,67108864,67110912,2097152,69208064,2050,2099202,69208064,2050,67108866,69208066,69206016,2099200,0,2,69208066,0,2099202,69206016,2048,67108866,67110912,2048,2097154],y=[268439616,4096,262144,268701760,268435456,268439616,64,268435456,262208,268697600,268701760,266240,268701696,266304,4096,64,268697600,268435520,268439552,4160,266240,262208,268697664,268701696,4160,0,0,268697664,268435520,268439552,266304,262144,266304,262144,268701696,4096,64,268697664,4096,266304,268439552,64,268435520,268697600,268697664,268435456,262144,268439616,0,268701760,262208,268435520,268697600,268439552,268439616,0,268701760,266240,266240,4160,4160,262208,268435456,268701696];function g(e,t,r,a){var u,p,h=32===e.length?3:9;u=3===h?a?[30,-2,-2]:[0,32,2]:a?[94,62,-2,32,64,2,30,-2,-2]:[0,32,2,62,30,-2,64,96,2];var f=t[0],g=t[1];f^=(p=252645135&(f>>>4^g))<<4,f^=(p=65535&(f>>>16^(g^=p)))<<16,f^=p=858993459&((g^=p)>>>2^f),f^=p=16711935&((g^=p<<2)>>>8^f),f=(f^=(p=1431655765&(f>>>1^(g^=p<<8)))<<1)<<1|f>>>31,g=(g^=p)<<1|g>>>31;for(var v=0;v<h;v+=3){for(var m=u[v+1],C=u[v+2],E=u[v];E!=m;E+=C){var S=g^e[E],T=(g>>>4|g<<28)^e[E+1];p=f,f=g,g=p^(i[S>>>24&63]|o[S>>>16&63]|l[S>>>8&63]|y[63&S]|n[T>>>24&63]|s[T>>>16&63]|c[T>>>8&63]|d[63&T])}p=f,f=g,g=p}g=g>>>1|g<<31,g^=p=1431655765&((f=f>>>1|f<<31)>>>1^g),g^=(p=16711935&(g>>>8^(f^=p<<1)))<<8,g^=(p=858993459&(g>>>2^(f^=p)))<<2,g^=p=65535&((f^=p)>>>16^g),g^=p=252645135&((f^=p<<16)>>>4^g),f^=p<<4,r[0]=f,r[1]=g}function v(e){var t,a="DES-"+((e=e||{}).mode||"CBC").toUpperCase(),n=(t=e.decrypt?r.cipher.createDecipher(a,e.key):r.cipher.createCipher(a,e.key)).start;return t.start=function(e,a){var i=null;a instanceof r.util.ByteBuffer&&(i=a,a={}),(a=a||{}).output=i,a.iv=e,n.call(t,a)},t}}}),T=o({"node_modules/node-forge/lib/pbkdf2.js"(e,t){var r=u();m(),v(),p();var a,n=r.pkcs5=r.pkcs5||{};r.util.isNodejs&&!r.options.usePureJavaScript&&(a=s("crypto")),t.exports=r.pbkdf2=n.pbkdf2=function(e,t,n,i,s,o){if("function"==typeof s&&(o=s,s=null),r.util.isNodejs&&!r.options.usePureJavaScript&&a.pbkdf2&&(null===s||"object"!=typeof s)&&(a.pbkdf2Sync.length>4||!s||"sha1"===s))return"string"!=typeof s&&(s="sha1"),e=Buffer.from(e,"binary"),t=Buffer.from(t,"binary"),o?4===a.pbkdf2Sync.length?a.pbkdf2(e,t,n,i,(function(e,t){if(e)return o(e);o(null,t.toString("binary"))})):a.pbkdf2(e,t,n,i,s,(function(e,t){if(e)return o(e);o(null,t.toString("binary"))})):4===a.pbkdf2Sync.length?a.pbkdf2Sync(e,t,n,i).toString("binary"):a.pbkdf2Sync(e,t,n,i,s).toString("binary");if(null==s&&(s="sha1"),"string"==typeof s){if(!(s in r.md.algorithms))throw new Error("Unknown hash algorithm: "+s);s=r.md[s].create()}var c=s.digestLength;if(i>4294967295*c){var u=new Error("Derived key is too long.");if(o)return o(u);throw u}var l=Math.ceil(i/c),p=i-(l-1)*c,h=r.hmac.create();h.start(s,e);var f,d,y,g="";if(!o){for(var v=1;v<=l;++v){h.start(null,null),h.update(t),h.update(r.util.int32ToBytes(v)),f=y=h.digest().getBytes();for(var m=2;m<=n;++m)h.start(null,null),h.update(y),d=h.digest().getBytes(),f=r.util.xorBytes(f,d,c),y=d;g+=v<l?f:f.substr(0,p)}return g}v=1;function C(){if(v>l)return o(null,g);h.start(null,null),h.update(t),h.update(r.util.int32ToBytes(v)),f=y=h.digest().getBytes(),m=2,E()}function E(){if(m<=n)return h.start(null,null),h.update(y),d=h.digest().getBytes(),f=r.util.xorBytes(f,d,c),y=d,++m,r.util.setImmediate(E);g+=v<l?f:f.substr(0,p),++v,C()}C()}}}),I=o({"node_modules/node-forge/lib/sha256.js"(e,t){var r=u();v(),p();var a=t.exports=r.sha256=r.sha256||{};r.md.sha256=r.md.algorithms.sha256=a,a.create=function(){i||(n=String.fromCharCode(128),n+=r.util.fillString(String.fromCharCode(0),64),s=[1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298],i=!0);var e=null,t=r.util.createBuffer(),a=new Array(64),c={algorithm:"sha256",blockLength:64,digestLength:32,messageLength:0,fullMessageLength:null,messageLengthSize:8,start:function(){c.messageLength=0,c.fullMessageLength=c.messageLength64=[];for(var a=c.messageLengthSize/4,n=0;n<a;++n)c.fullMessageLength.push(0);return t=r.util.createBuffer(),e={h0:1779033703,h1:3144134277,h2:1013904242,h3:2773480762,h4:1359893119,h5:2600822924,h6:528734635,h7:1541459225},c}};return c.start(),c.update=function(n,i){"utf8"===i&&(n=r.util.encodeUtf8(n));var s=n.length;c.messageLength+=s,s=[s/4294967296>>>0,s>>>0];for(var u=c.fullMessageLength.length-1;u>=0;--u)c.fullMessageLength[u]+=s[1],s[1]=s[0]+(c.fullMessageLength[u]/4294967296>>>0),c.fullMessageLength[u]=c.fullMessageLength[u]>>>0,s[0]=s[1]/4294967296>>>0;return t.putBytes(n),o(e,a,t),(t.read>2048||0===t.length())&&t.compact(),c},c.digest=function(){var i=r.util.createBuffer();i.putBytes(t.bytes());var s,u=c.fullMessageLength[c.fullMessageLength.length-1]+c.messageLengthSize&c.blockLength-1;i.putBytes(n.substr(0,c.blockLength-u));for(var l=8*c.fullMessageLength[0],p=0;p<c.fullMessageLength.length-1;++p)l+=(s=8*c.fullMessageLength[p+1])/4294967296>>>0,i.putInt32(l>>>0),l=s>>>0;i.putInt32(l);var h={h0:e.h0,h1:e.h1,h2:e.h2,h3:e.h3,h4:e.h4,h5:e.h5,h6:e.h6,h7:e.h7};o(h,a,i);var f=r.util.createBuffer();return f.putInt32(h.h0),f.putInt32(h.h1),f.putInt32(h.h2),f.putInt32(h.h3),f.putInt32(h.h4),f.putInt32(h.h5),f.putInt32(h.h6),f.putInt32(h.h7),f},c};var n=null,i=!1,s=null;function o(e,t,r){for(var a,n,i,o,c,u,l,p,h,f,d,y,g,v=r.length();v>=64;){for(c=0;c<16;++c)t[c]=r.getInt32();for(;c<64;++c)a=((a=t[c-2])>>>17|a<<15)^(a>>>19|a<<13)^a>>>10,n=((n=t[c-15])>>>7|n<<25)^(n>>>18|n<<14)^n>>>3,t[c]=a+t[c-7]+n+t[c-16]|0;for(u=e.h0,l=e.h1,p=e.h2,h=e.h3,f=e.h4,d=e.h5,y=e.h6,g=e.h7,c=0;c<64;++c)i=(u>>>2|u<<30)^(u>>>13|u<<19)^(u>>>22|u<<10),o=u&l|p&(u^l),a=g+((f>>>6|f<<26)^(f>>>11|f<<21)^(f>>>25|f<<7))+(y^f&(d^y))+s[c]+t[c],g=y,y=d,d=f,f=h+a>>>0,h=p,p=l,l=u,u=a+(n=i+o)>>>0;e.h0=e.h0+u|0,e.h1=e.h1+l|0,e.h2=e.h2+p|0,e.h3=e.h3+h|0,e.h4=e.h4+f|0,e.h5=e.h5+d|0,e.h6=e.h6+y|0,e.h7=e.h7+g|0,v-=64}}}}),A=o({"node_modules/node-forge/lib/prng.js"(e,t){var r=u();p();var a=null;!r.util.isNodejs||r.options.usePureJavaScript||process.versions["node-webkit"]||(a=s("crypto")),(t.exports=r.prng=r.prng||{}).create=function(e){for(var t={plugin:e,key:null,seed:null,time:null,reseeds:0,generated:0,keyBytes:""},n=e.md,i=new Array(32),s=0;s<32;++s)i[s]=n.create();function o(){if(t.pools[0].messageLength>=32)return c();var e=32-t.pools[0].messageLength<<5;t.collect(t.seedFileSync(e)),c()}function c(){t.reseeds=4294967295===t.reseeds?0:t.reseeds+1;var e=t.plugin.md.create();e.update(t.keyBytes);for(var r=1,a=0;a<32;++a)t.reseeds%r==0&&(e.update(t.pools[a].digest().getBytes()),t.pools[a].start()),r<<=1;t.keyBytes=e.digest().getBytes(),e.start(),e.update(t.keyBytes);var n=e.digest().getBytes();t.key=t.plugin.formatKey(t.keyBytes),t.seed=t.plugin.formatSeed(n),t.generated=0}function u(e){var t=null,a=r.util.globalScope,n=a.crypto||a.msCrypto;n&&n.getRandomValues&&(t=function(e){return n.getRandomValues(e)});var i=r.util.createBuffer();if(t)for(;i.length()<e;){var s=Math.max(1,Math.min(e-i.length(),65536)/4),o=new Uint32Array(Math.floor(s));try{t(o);for(var c=0;c<o.length;++c)i.putInt32(o[c])}catch(e){if(!("undefined"!=typeof QuotaExceededError&&e instanceof QuotaExceededError))throw e}}if(i.length()<e)for(var u,l,p,h=Math.floor(65536*Math.random());i.length()<e;){l=16807*(65535&h),l+=(32767&(u=16807*(h>>16)))<<16,h=4294967295&(l=(2147483647&(l+=u>>15))+(l>>31));for(c=0;c<3;++c)p=h>>>(c<<3),p^=Math.floor(256*Math.random()),i.putByte(255&p)}return i.getBytes(e)}return t.pools=i,t.pool=0,t.generate=function(e,a){if(!a)return t.generateSync(e);var n=t.plugin.cipher,i=t.plugin.increment,s=t.plugin.formatKey,o=t.plugin.formatSeed,u=r.util.createBuffer();t.key=null,function l(p){if(p)return a(p);if(u.length()>=e)return a(null,u.getBytes(e));t.generated>1048575&&(t.key=null);if(null===t.key)return r.util.nextTick((function(){!function(e){if(t.pools[0].messageLength>=32)return c(),e();var r=32-t.pools[0].messageLength<<5;t.seedFile(r,(function(r,a){if(r)return e(r);t.collect(a),c(),e()}))}(l)}));var h=n(t.key,t.seed);t.generated+=h.length,u.putBytes(h),t.key=s(n(t.key,i(t.seed))),t.seed=o(n(t.key,t.seed)),r.util.setImmediate(l)}()},t.generateSync=function(e){var a=t.plugin.cipher,n=t.plugin.increment,i=t.plugin.formatKey,s=t.plugin.formatSeed;t.key=null;for(var c=r.util.createBuffer();c.length()<e;){t.generated>1048575&&(t.key=null),null===t.key&&o();var u=a(t.key,t.seed);t.generated+=u.length,c.putBytes(u),t.key=i(a(t.key,n(t.seed))),t.seed=s(a(t.key,t.seed))}return c.getBytes(e)},a?(t.seedFile=function(e,t){a.randomBytes(e,(function(e,r){if(e)return t(e);t(null,r.toString())}))},t.seedFileSync=function(e){return a.randomBytes(e).toString()}):(t.seedFile=function(e,t){try{t(null,u(e))}catch(e){t(e)}},t.seedFileSync=u),t.collect=function(e){for(var r=e.length,a=0;a<r;++a)t.pools[t.pool].update(e.substr(a,1)),t.pool=31===t.pool?0:t.pool+1},t.collectInt=function(e,r){for(var a="",n=0;n<r;n+=8)a+=String.fromCharCode(e>>n&255);t.collect(a)},t.registerWorker=function(e){if(e===self)t.seedFile=function(e,t){self.addEventListener("message",(function e(r){var a=r.data;a.forge&&a.forge.prng&&(self.removeEventListener("message",e),t(a.forge.prng.err,a.forge.prng.bytes))})),self.postMessage({forge:{prng:{needed:e}}})};else{e.addEventListener("message",(function(r){var a=r.data;a.forge&&a.forge.prng&&t.seedFile(a.forge.prng.needed,(function(t,r){e.postMessage({forge:{prng:{err:t,bytes:r}}})}))}))}},t}}}),b=o({"node_modules/node-forge/lib/random.js"(e,t){var r=u();d(),I(),A(),p(),r.random&&r.random.getBytes?t.exports=r.random:function(e){var a={},n=new Array(4),i=r.util.createBuffer();function s(){var e=r.prng.create(a);return e.getBytes=function(t,r){return e.generate(t,r)},e.getBytesSync=function(t){return e.generate(t)},e}a.formatKey=function(e){var t=r.util.createBuffer(e);return(e=new Array(4))[0]=t.getInt32(),e[1]=t.getInt32(),e[2]=t.getInt32(),e[3]=t.getInt32(),r.aes._expandKey(e,!1)},a.formatSeed=function(e){var t=r.util.createBuffer(e);return(e=new Array(4))[0]=t.getInt32(),e[1]=t.getInt32(),e[2]=t.getInt32(),e[3]=t.getInt32(),e},a.cipher=function(e,t){return r.aes._updateBlock(e,t,n,!1),i.putInt32(n[0]),i.putInt32(n[1]),i.putInt32(n[2]),i.putInt32(n[3]),i.getBytes()},a.increment=function(e){return++e[3],e},a.md=r.md.sha256;var o=s(),c=null,u=r.util.globalScope,l=u.crypto||u.msCrypto;if(l&&l.getRandomValues&&(c=function(e){return l.getRandomValues(e)}),r.options.usePureJavaScript||!r.util.isNodejs&&!c){if("undefined"==typeof window||window.document,o.collectInt(+new Date,32),"undefined"!=typeof navigator){var p="";for(var h in navigator)try{"string"==typeof navigator[h]&&(p+=navigator[h])}catch(e){}o.collect(p),p=null}e&&(e().mousemove((function(e){o.collectInt(e.clientX,16),o.collectInt(e.clientY,16)})),e().keypress((function(e){o.collectInt(e.charCode,8)})))}if(r.random)for(var h in o)r.random[h]=o[h];else r.random=o;r.random.createInstance=s,t.exports=r.random}("undefined"!=typeof jQuery?jQuery:null)}}),B=o({"node_modules/node-forge/lib/rc2.js"(e,t){var r=u();p();var a=[217,120,249,196,25,221,181,237,40,233,253,121,74,160,216,157,198,126,55,131,43,118,83,142,98,76,100,136,68,139,251,162,23,154,89,245,135,179,79,19,97,69,109,141,9,129,125,50,189,143,64,235,134,183,123,11,240,149,33,34,92,107,78,130,84,214,101,147,206,96,178,28,115,86,192,20,167,140,241,220,18,117,202,31,59,190,228,209,66,61,212,48,163,60,182,38,111,191,14,218,70,105,7,87,39,242,29,155,188,148,67,3,248,17,199,246,144,239,62,231,6,195,213,47,200,102,30,215,8,232,234,222,128,82,238,247,132,170,114,172,53,77,106,42,150,26,210,113,90,21,73,116,75,159,208,94,4,24,164,236,194,224,65,110,15,81,203,204,36,145,175,80,161,244,112,57,153,124,58,133,35,184,180,122,252,2,54,91,37,85,151,49,45,93,250,152,227,138,146,174,5,223,41,16,103,108,186,201,211,0,230,207,225,158,168,44,99,22,1,63,88,226,137,169,13,56,52,27,171,51,255,176,187,72,12,95,185,177,205,46,197,243,219,71,229,165,156,119,10,166,32,104,254,127,193,173],n=[1,2,3,5],i=function(e,t){return e<<t&65535|(65535&e)>>16-t},s=function(e,t){return(65535&e)>>t|e<<16-t&65535};t.exports=r.rc2=r.rc2||{},r.rc2.expandKey=function(e,t){"string"==typeof e&&(e=r.util.createBuffer(e)),t=t||128;var n,i=e,s=e.length(),o=t,c=Math.ceil(o/8),u=255>>(7&o);for(n=s;n<128;n++)i.putByte(a[i.at(n-1)+i.at(n-s)&255]);for(i.setAt(128-c,a[i.at(128-c)&u]),n=127-c;n>=0;n--)i.setAt(n,a[i.at(n+1)^i.at(n+c)]);return i};var o=function(e,t,a){var o,c,u,l,p=!1,h=null,f=null,d=null,y=[];for(e=r.rc2.expandKey(e,t),u=0;u<64;u++)y.push(e.getInt16Le());a?(o=function(e){for(u=0;u<4;u++)e[u]+=y[l]+(e[(u+3)%4]&e[(u+2)%4])+(~e[(u+3)%4]&e[(u+1)%4]),e[u]=i(e[u],n[u]),l++},c=function(e){for(u=0;u<4;u++)e[u]+=y[63&e[(u+3)%4]]}):(o=function(e){for(u=3;u>=0;u--)e[u]=s(e[u],n[u]),e[u]-=y[l]+(e[(u+3)%4]&e[(u+2)%4])+(~e[(u+3)%4]&e[(u+1)%4]),l--},c=function(e){for(u=3;u>=0;u--)e[u]-=y[63&e[(u+3)%4]]});var g=function(e){var t=[];for(u=0;u<4;u++){var r=h.getInt16Le();null!==d&&(a?r^=d.getInt16Le():d.putInt16Le(r)),t.push(65535&r)}l=a?0:63;for(var n=0;n<e.length;n++)for(var i=0;i<e[n][0];i++)e[n][1](t);for(u=0;u<4;u++)null!==d&&(a?d.putInt16Le(t[u]):t[u]^=d.getInt16Le()),f.putInt16Le(t[u])},v=null;return v={start:function(e,t){e&&"string"==typeof e&&(e=r.util.createBuffer(e)),p=!1,h=r.util.createBuffer(),f=t||new r.util.createBuffer,d=e,v.output=f},update:function(e){for(p||h.putBuffer(e);h.length()>=8;)g([[5,o],[1,c],[6,o],[1,c],[5,o]])},finish:function(e){var t=!0;if(a)if(e)t=e(8,h,!a);else{var r=8===h.length()?8:8-h.length();h.fillWithByte(r,r)}if(t&&(p=!0,v.update()),!a&&(t=0===h.length()))if(e)t=e(8,f,!a);else{var n=f.length(),i=f.at(n-1);i>n?t=!1:f.truncate(i)}return t}}};r.rc2.startEncrypting=function(e,t,a){var n=r.rc2.createEncryptionCipher(e,128);return n.start(t,a),n},r.rc2.createEncryptionCipher=function(e,t){return o(e,t,!0)},r.rc2.startDecrypting=function(e,t,a){var n=r.rc2.createDecryptionCipher(e,128);return n.start(t,a),n},r.rc2.createDecryptionCipher=function(e,t){return o(e,t,!1)}}}),N=o({"node_modules/node-forge/lib/jsbn.js"(e,t){var r,a=u();t.exports=a.jsbn=a.jsbn||{};function n(e,t,r){this.data=[],null!=e&&("number"==typeof e?this.fromNumber(e,t,r):null==t&&"string"!=typeof e?this.fromString(e,256):this.fromString(e,t))}function i(){return new n(null)}function s(e,t,r,a,n,i){for(var s=16383&t,o=t>>14;--i>=0;){var c=16383&this.data[e],u=this.data[e++]>>14,l=o*c+u*s;n=((c=s*c+((16383&l)<<14)+r.data[a]+n)>>28)+(l>>14)+o*u,r.data[a++]=268435455&c}return n}a.jsbn.BigInteger=n,"undefined"==typeof navigator?(n.prototype.am=s,r=28):"Microsoft Internet Explorer"==navigator.appName?(n.prototype.am=function(e,t,r,a,n,i){for(var s=32767&t,o=t>>15;--i>=0;){var c=32767&this.data[e],u=this.data[e++]>>15,l=o*c+u*s;n=((c=s*c+((32767&l)<<15)+r.data[a]+(1073741823&n))>>>30)+(l>>>15)+o*u+(n>>>30),r.data[a++]=1073741823&c}return n},r=30):"Netscape"!=navigator.appName?(n.prototype.am=function(e,t,r,a,n,i){for(;--i>=0;){var s=t*this.data[e++]+r.data[a]+n;n=Math.floor(s/67108864),r.data[a++]=67108863&s}return n},r=26):(n.prototype.am=s,r=28),n.prototype.DB=r,n.prototype.DM=(1<<r)-1,n.prototype.DV=1<<r;n.prototype.FV=Math.pow(2,52),n.prototype.F1=52-r,n.prototype.F2=2*r-52;var o,c,l=new Array;for(o="0".charCodeAt(0),c=0;c<=9;++c)l[o++]=c;for(o="a".charCodeAt(0),c=10;c<36;++c)l[o++]=c;for(o="A".charCodeAt(0),c=10;c<36;++c)l[o++]=c;function p(e){return"0123456789abcdefghijklmnopqrstuvwxyz".charAt(e)}function h(e,t){var r=l[e.charCodeAt(t)];return null==r?-1:r}function f(e){var t=i();return t.fromInt(e),t}function d(e){var t,r=1;return 0!=(t=e>>>16)&&(e=t,r+=16),0!=(t=e>>8)&&(e=t,r+=8),0!=(t=e>>4)&&(e=t,r+=4),0!=(t=e>>2)&&(e=t,r+=2),0!=(t=e>>1)&&(e=t,r+=1),r}function y(e){this.m=e}function g(e){this.m=e,this.mp=e.invDigit(),this.mpl=32767&this.mp,this.mph=this.mp>>15,this.um=(1<<e.DB-15)-1,this.mt2=2*e.t}function v(e,t){return e&t}function m(e,t){return e|t}function C(e,t){return e^t}function E(e,t){return e&~t}function S(e){if(0==e)return-1;var t=0;return 65535&e||(e>>=16,t+=16),255&e||(e>>=8,t+=8),15&e||(e>>=4,t+=4),3&e||(e>>=2,t+=2),1&e||++t,t}function T(e){for(var t=0;0!=e;)e&=e-1,++t;return t}function I(){}function A(e){return e}function b(e){this.r2=i(),this.q3=i(),n.ONE.dlShiftTo(2*e.t,this.r2),this.mu=this.r2.divide(e),this.m=e}y.prototype.convert=function(e){return e.s<0||e.compareTo(this.m)>=0?e.mod(this.m):e},y.prototype.revert=function(e){return e},y.prototype.reduce=function(e){e.divRemTo(this.m,null,e)},y.prototype.mulTo=function(e,t,r){e.multiplyTo(t,r),this.reduce(r)},y.prototype.sqrTo=function(e,t){e.squareTo(t),this.reduce(t)},g.prototype.convert=function(e){var t=i();return e.abs().dlShiftTo(this.m.t,t),t.divRemTo(this.m,null,t),e.s<0&&t.compareTo(n.ZERO)>0&&this.m.subTo(t,t),t},g.prototype.revert=function(e){var t=i();return e.copyTo(t),this.reduce(t),t},g.prototype.reduce=function(e){for(;e.t<=this.mt2;)e.data[e.t++]=0;for(var t=0;t<this.m.t;++t){var r=32767&e.data[t],a=r*this.mpl+((r*this.mph+(e.data[t]>>15)*this.mpl&this.um)<<15)&e.DM;for(r=t+this.m.t,e.data[r]+=this.m.am(0,a,e,t,0,this.m.t);e.data[r]>=e.DV;)e.data[r]-=e.DV,e.data[++r]++}e.clamp(),e.drShiftTo(this.m.t,e),e.compareTo(this.m)>=0&&e.subTo(this.m,e)},g.prototype.mulTo=function(e,t,r){e.multiplyTo(t,r),this.reduce(r)},g.prototype.sqrTo=function(e,t){e.squareTo(t),this.reduce(t)},n.prototype.copyTo=function(e){for(var t=this.t-1;t>=0;--t)e.data[t]=this.data[t];e.t=this.t,e.s=this.s},n.prototype.fromInt=function(e){this.t=1,this.s=e<0?-1:0,e>0?this.data[0]=e:e<-1?this.data[0]=e+this.DV:this.t=0},n.prototype.fromString=function(e,t){var r;if(16==t)r=4;else if(8==t)r=3;else if(256==t)r=8;else if(2==t)r=1;else if(32==t)r=5;else{if(4!=t)return void this.fromRadix(e,t);r=2}this.t=0,this.s=0;for(var a=e.length,i=!1,s=0;--a>=0;){var o=8==r?255&e[a]:h(e,a);o<0?"-"==e.charAt(a)&&(i=!0):(i=!1,0==s?this.data[this.t++]=o:s+r>this.DB?(this.data[this.t-1]|=(o&(1<<this.DB-s)-1)<<s,this.data[this.t++]=o>>this.DB-s):this.data[this.t-1]|=o<<s,(s+=r)>=this.DB&&(s-=this.DB))}8==r&&128&e[0]&&(this.s=-1,s>0&&(this.data[this.t-1]|=(1<<this.DB-s)-1<<s)),this.clamp(),i&&n.ZERO.subTo(this,this)},n.prototype.clamp=function(){for(var e=this.s&this.DM;this.t>0&&this.data[this.t-1]==e;)--this.t},n.prototype.dlShiftTo=function(e,t){var r;for(r=this.t-1;r>=0;--r)t.data[r+e]=this.data[r];for(r=e-1;r>=0;--r)t.data[r]=0;t.t=this.t+e,t.s=this.s},n.prototype.drShiftTo=function(e,t){for(var r=e;r<this.t;++r)t.data[r-e]=this.data[r];t.t=Math.max(this.t-e,0),t.s=this.s},n.prototype.lShiftTo=function(e,t){var r,a=e%this.DB,n=this.DB-a,i=(1<<n)-1,s=Math.floor(e/this.DB),o=this.s<<a&this.DM;for(r=this.t-1;r>=0;--r)t.data[r+s+1]=this.data[r]>>n|o,o=(this.data[r]&i)<<a;for(r=s-1;r>=0;--r)t.data[r]=0;t.data[s]=o,t.t=this.t+s+1,t.s=this.s,t.clamp()},n.prototype.rShiftTo=function(e,t){t.s=this.s;var r=Math.floor(e/this.DB);if(r>=this.t)t.t=0;else{var a=e%this.DB,n=this.DB-a,i=(1<<a)-1;t.data[0]=this.data[r]>>a;for(var s=r+1;s<this.t;++s)t.data[s-r-1]|=(this.data[s]&i)<<n,t.data[s-r]=this.data[s]>>a;a>0&&(t.data[this.t-r-1]|=(this.s&i)<<n),t.t=this.t-r,t.clamp()}},n.prototype.subTo=function(e,t){for(var r=0,a=0,n=Math.min(e.t,this.t);r<n;)a+=this.data[r]-e.data[r],t.data[r++]=a&this.DM,a>>=this.DB;if(e.t<this.t){for(a-=e.s;r<this.t;)a+=this.data[r],t.data[r++]=a&this.DM,a>>=this.DB;a+=this.s}else{for(a+=this.s;r<e.t;)a-=e.data[r],t.data[r++]=a&this.DM,a>>=this.DB;a-=e.s}t.s=a<0?-1:0,a<-1?t.data[r++]=this.DV+a:a>0&&(t.data[r++]=a),t.t=r,t.clamp()},n.prototype.multiplyTo=function(e,t){var r=this.abs(),a=e.abs(),i=r.t;for(t.t=i+a.t;--i>=0;)t.data[i]=0;for(i=0;i<a.t;++i)t.data[i+r.t]=r.am(0,a.data[i],t,i,0,r.t);t.s=0,t.clamp(),this.s!=e.s&&n.ZERO.subTo(t,t)},n.prototype.squareTo=function(e){for(var t=this.abs(),r=e.t=2*t.t;--r>=0;)e.data[r]=0;for(r=0;r<t.t-1;++r){var a=t.am(r,t.data[r],e,2*r,0,1);(e.data[r+t.t]+=t.am(r+1,2*t.data[r],e,2*r+1,a,t.t-r-1))>=t.DV&&(e.data[r+t.t]-=t.DV,e.data[r+t.t+1]=1)}e.t>0&&(e.data[e.t-1]+=t.am(r,t.data[r],e,2*r,0,1)),e.s=0,e.clamp()},n.prototype.divRemTo=function(e,t,r){var a=e.abs();if(!(a.t<=0)){var s=this.abs();if(s.t<a.t)return null!=t&&t.fromInt(0),void(null!=r&&this.copyTo(r));null==r&&(r=i());var o=i(),c=this.s,u=e.s,l=this.DB-d(a.data[a.t-1]);l>0?(a.lShiftTo(l,o),s.lShiftTo(l,r)):(a.copyTo(o),s.copyTo(r));var p=o.t,h=o.data[p-1];if(0!=h){var f=h*(1<<this.F1)+(p>1?o.data[p-2]>>this.F2:0),y=this.FV/f,g=(1<<this.F1)/f,v=1<<this.F2,m=r.t,C=m-p,E=null==t?i():t;for(o.dlShiftTo(C,E),r.compareTo(E)>=0&&(r.data[r.t++]=1,r.subTo(E,r)),n.ONE.dlShiftTo(p,E),E.subTo(o,o);o.t<p;)o.data[o.t++]=0;for(;--C>=0;){var S=r.data[--m]==h?this.DM:Math.floor(r.data[m]*y+(r.data[m-1]+v)*g);if((r.data[m]+=o.am(0,S,r,C,0,p))<S)for(o.dlShiftTo(C,E),r.subTo(E,r);r.data[m]<--S;)r.subTo(E,r)}null!=t&&(r.drShiftTo(p,t),c!=u&&n.ZERO.subTo(t,t)),r.t=p,r.clamp(),l>0&&r.rShiftTo(l,r),c<0&&n.ZERO.subTo(r,r)}}},n.prototype.invDigit=function(){if(this.t<1)return 0;var e=this.data[0];if(!(1&e))return 0;var t=3&e;return(t=(t=(t=(t=t*(2-(15&e)*t)&15)*(2-(255&e)*t)&255)*(2-((65535&e)*t&65535))&65535)*(2-e*t%this.DV)%this.DV)>0?this.DV-t:-t},n.prototype.isEven=function(){return 0==(this.t>0?1&this.data[0]:this.s)},n.prototype.exp=function(e,t){if(e>4294967295||e<1)return n.ONE;var r=i(),a=i(),s=t.convert(this),o=d(e)-1;for(s.copyTo(r);--o>=0;)if(t.sqrTo(r,a),(e&1<<o)>0)t.mulTo(a,s,r);else{var c=r;r=a,a=c}return t.revert(r)},n.prototype.toString=function(e){if(this.s<0)return"-"+this.negate().toString(e);var t;if(16==e)t=4;else if(8==e)t=3;else if(2==e)t=1;else if(32==e)t=5;else{if(4!=e)return this.toRadix(e);t=2}var r,a=(1<<t)-1,n=!1,i="",s=this.t,o=this.DB-s*this.DB%t;if(s-- >0)for(o<this.DB&&(r=this.data[s]>>o)>0&&(n=!0,i=p(r));s>=0;)o<t?(r=(this.data[s]&(1<<o)-1)<<t-o,r|=this.data[--s]>>(o+=this.DB-t)):(r=this.data[s]>>(o-=t)&a,o<=0&&(o+=this.DB,--s)),r>0&&(n=!0),n&&(i+=p(r));return n?i:"0"},n.prototype.negate=function(){var e=i();return n.ZERO.subTo(this,e),e},n.prototype.abs=function(){return this.s<0?this.negate():this},n.prototype.compareTo=function(e){var t=this.s-e.s;if(0!=t)return t;var r=this.t;if(0!=(t=r-e.t))return this.s<0?-t:t;for(;--r>=0;)if(0!=(t=this.data[r]-e.data[r]))return t;return 0},n.prototype.bitLength=function(){return this.t<=0?0:this.DB*(this.t-1)+d(this.data[this.t-1]^this.s&this.DM)},n.prototype.mod=function(e){var t=i();return this.abs().divRemTo(e,null,t),this.s<0&&t.compareTo(n.ZERO)>0&&e.subTo(t,t),t},n.prototype.modPowInt=function(e,t){var r;return r=e<256||t.isEven()?new y(t):new g(t),this.exp(e,r)},n.ZERO=f(0),n.ONE=f(1),I.prototype.convert=A,I.prototype.revert=A,I.prototype.mulTo=function(e,t,r){e.multiplyTo(t,r)},I.prototype.sqrTo=function(e,t){e.squareTo(t)},b.prototype.convert=function(e){if(e.s<0||e.t>2*this.m.t)return e.mod(this.m);if(e.compareTo(this.m)<0)return e;var t=i();return e.copyTo(t),this.reduce(t),t},b.prototype.revert=function(e){return e},b.prototype.reduce=function(e){for(e.drShiftTo(this.m.t-1,this.r2),e.t>this.m.t+1&&(e.t=this.m.t+1,e.clamp()),this.mu.multiplyUpperTo(this.r2,this.m.t+1,this.q3),this.m.multiplyLowerTo(this.q3,this.m.t+1,this.r2);e.compareTo(this.r2)<0;)e.dAddOffset(1,this.m.t+1);for(e.subTo(this.r2,e);e.compareTo(this.m)>=0;)e.subTo(this.m,e)},b.prototype.mulTo=function(e,t,r){e.multiplyTo(t,r),this.reduce(r)},b.prototype.sqrTo=function(e,t){e.squareTo(t),this.reduce(t)};var B=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293,307,311,313,317,331,337,347,349,353,359,367,373,379,383,389,397,401,409,419,421,431,433,439,443,449,457,461,463,467,479,487,491,499,503,509],N=(1<<26)/B[B.length-1];n.prototype.chunkSize=function(e){return Math.floor(Math.LN2*this.DB/Math.log(e))},n.prototype.toRadix=function(e){if(null==e&&(e=10),0==this.signum()||e<2||e>36)return"0";var t=this.chunkSize(e),r=Math.pow(e,t),a=f(r),n=i(),s=i(),o="";for(this.divRemTo(a,n,s);n.signum()>0;)o=(r+s.intValue()).toString(e).substr(1)+o,n.divRemTo(a,n,s);return s.intValue().toString(e)+o},n.prototype.fromRadix=function(e,t){this.fromInt(0),null==t&&(t=10);for(var r=this.chunkSize(t),a=Math.pow(t,r),i=!1,s=0,o=0,c=0;c<e.length;++c){var u=h(e,c);u<0?"-"==e.charAt(c)&&0==this.signum()&&(i=!0):(o=t*o+u,++s>=r&&(this.dMultiply(a),this.dAddOffset(o,0),s=0,o=0))}s>0&&(this.dMultiply(Math.pow(t,s)),this.dAddOffset(o,0)),i&&n.ZERO.subTo(this,this)},n.prototype.fromNumber=function(e,t,r){if("number"==typeof t)if(e<2)this.fromInt(1);else for(this.fromNumber(e,r),this.testBit(e-1)||this.bitwiseTo(n.ONE.shiftLeft(e-1),m,this),this.isEven()&&this.dAddOffset(1,0);!this.isProbablePrime(t);)this.dAddOffset(2,0),this.bitLength()>e&&this.subTo(n.ONE.shiftLeft(e-1),this);else{var a=new Array,i=7&e;a.length=1+(e>>3),t.nextBytes(a),i>0?a[0]&=(1<<i)-1:a[0]=0,this.fromString(a,256)}},n.prototype.bitwiseTo=function(e,t,r){var a,n,i=Math.min(e.t,this.t);for(a=0;a<i;++a)r.data[a]=t(this.data[a],e.data[a]);if(e.t<this.t){for(n=e.s&this.DM,a=i;a<this.t;++a)r.data[a]=t(this.data[a],n);r.t=this.t}else{for(n=this.s&this.DM,a=i;a<e.t;++a)r.data[a]=t(n,e.data[a]);r.t=e.t}r.s=t(this.s,e.s),r.clamp()},n.prototype.changeBit=function(e,t){var r=n.ONE.shiftLeft(e);return this.bitwiseTo(r,t,r),r},n.prototype.addTo=function(e,t){for(var r=0,a=0,n=Math.min(e.t,this.t);r<n;)a+=this.data[r]+e.data[r],t.data[r++]=a&this.DM,a>>=this.DB;if(e.t<this.t){for(a+=e.s;r<this.t;)a+=this.data[r],t.data[r++]=a&this.DM,a>>=this.DB;a+=this.s}else{for(a+=this.s;r<e.t;)a+=e.data[r],t.data[r++]=a&this.DM,a>>=this.DB;a+=e.s}t.s=a<0?-1:0,a>0?t.data[r++]=a:a<-1&&(t.data[r++]=this.DV+a),t.t=r,t.clamp()},n.prototype.dMultiply=function(e){this.data[this.t]=this.am(0,e-1,this,0,0,this.t),++this.t,this.clamp()},n.prototype.dAddOffset=function(e,t){if(0!=e){for(;this.t<=t;)this.data[this.t++]=0;for(this.data[t]+=e;this.data[t]>=this.DV;)this.data[t]-=this.DV,++t>=this.t&&(this.data[this.t++]=0),++this.data[t]}},n.prototype.multiplyLowerTo=function(e,t,r){var a,n=Math.min(this.t+e.t,t);for(r.s=0,r.t=n;n>0;)r.data[--n]=0;for(a=r.t-this.t;n<a;++n)r.data[n+this.t]=this.am(0,e.data[n],r,n,0,this.t);for(a=Math.min(e.t,t);n<a;++n)this.am(0,e.data[n],r,n,0,t-n);r.clamp()},n.prototype.multiplyUpperTo=function(e,t,r){--t;var a=r.t=this.t+e.t-t;for(r.s=0;--a>=0;)r.data[a]=0;for(a=Math.max(t-this.t,0);a<e.t;++a)r.data[this.t+a-t]=this.am(t-a,e.data[a],r,0,0,this.t+a-t);r.clamp(),r.drShiftTo(1,r)},n.prototype.modInt=function(e){if(e<=0)return 0;var t=this.DV%e,r=this.s<0?e-1:0;if(this.t>0)if(0==t)r=this.data[0]%e;else for(var a=this.t-1;a>=0;--a)r=(t*r+this.data[a])%e;return r},n.prototype.millerRabin=function(e){var t=this.subtract(n.ONE),r=t.getLowestSetBit();if(r<=0)return!1;for(var a,i=t.shiftRight(r),s={nextBytes:function(e){for(var t=0;t<e.length;++t)e[t]=Math.floor(256*Math.random())}},o=0;o<e;++o){do{a=new n(this.bitLength(),s)}while(a.compareTo(n.ONE)<=0||a.compareTo(t)>=0);var c=a.modPow(i,this);if(0!=c.compareTo(n.ONE)&&0!=c.compareTo(t)){for(var u=1;u++<r&&0!=c.compareTo(t);)if(0==(c=c.modPowInt(2,this)).compareTo(n.ONE))return!1;if(0!=c.compareTo(t))return!1}}return!0},n.prototype.clone=function(){var e=i();return this.copyTo(e),e},n.prototype.intValue=function(){if(this.s<0){if(1==this.t)return this.data[0]-this.DV;if(0==this.t)return-1}else{if(1==this.t)return this.data[0];if(0==this.t)return 0}return(this.data[1]&(1<<32-this.DB)-1)<<this.DB|this.data[0]},n.prototype.byteValue=function(){return 0==this.t?this.s:this.data[0]<<24>>24},n.prototype.shortValue=function(){return 0==this.t?this.s:this.data[0]<<16>>16},n.prototype.signum=function(){return this.s<0?-1:this.t<=0||1==this.t&&this.data[0]<=0?0:1},n.prototype.toByteArray=function(){var e=this.t,t=new Array;t[0]=this.s;var r,a=this.DB-e*this.DB%8,n=0;if(e-- >0)for(a<this.DB&&(r=this.data[e]>>a)!=(this.s&this.DM)>>a&&(t[n++]=r|this.s<<this.DB-a);e>=0;)a<8?(r=(this.data[e]&(1<<a)-1)<<8-a,r|=this.data[--e]>>(a+=this.DB-8)):(r=this.data[e]>>(a-=8)&255,a<=0&&(a+=this.DB,--e)),128&r&&(r|=-256),0==n&&(128&this.s)!=(128&r)&&++n,(n>0||r!=this.s)&&(t[n++]=r);return t},n.prototype.equals=function(e){return 0==this.compareTo(e)},n.prototype.min=function(e){return this.compareTo(e)<0?this:e},n.prototype.max=function(e){return this.compareTo(e)>0?this:e},n.prototype.and=function(e){var t=i();return this.bitwiseTo(e,v,t),t},n.prototype.or=function(e){var t=i();return this.bitwiseTo(e,m,t),t},n.prototype.xor=function(e){var t=i();return this.bitwiseTo(e,C,t),t},n.prototype.andNot=function(e){var t=i();return this.bitwiseTo(e,E,t),t},n.prototype.not=function(){for(var e=i(),t=0;t<this.t;++t)e.data[t]=this.DM&~this.data[t];return e.t=this.t,e.s=~this.s,e},n.prototype.shiftLeft=function(e){var t=i();return e<0?this.rShiftTo(-e,t):this.lShiftTo(e,t),t},n.prototype.shiftRight=function(e){var t=i();return e<0?this.lShiftTo(-e,t):this.rShiftTo(e,t),t},n.prototype.getLowestSetBit=function(){for(var e=0;e<this.t;++e)if(0!=this.data[e])return e*this.DB+S(this.data[e]);return this.s<0?this.t*this.DB:-1},n.prototype.bitCount=function(){for(var e=0,t=this.s&this.DM,r=0;r<this.t;++r)e+=T(this.data[r]^t);return e},n.prototype.testBit=function(e){var t=Math.floor(e/this.DB);return t>=this.t?0!=this.s:!!(this.data[t]&1<<e%this.DB)},n.prototype.setBit=function(e){return this.changeBit(e,m)},n.prototype.clearBit=function(e){return this.changeBit(e,E)},n.prototype.flipBit=function(e){return this.changeBit(e,C)},n.prototype.add=function(e){var t=i();return this.addTo(e,t),t},n.prototype.subtract=function(e){var t=i();return this.subTo(e,t),t},n.prototype.multiply=function(e){var t=i();return this.multiplyTo(e,t),t},n.prototype.divide=function(e){var t=i();return this.divRemTo(e,t,null),t},n.prototype.remainder=function(e){var t=i();return this.divRemTo(e,null,t),t},n.prototype.divideAndRemainder=function(e){var t=i(),r=i();return this.divRemTo(e,t,r),new Array(t,r)},n.prototype.modPow=function(e,t){var r,a,n=e.bitLength(),s=f(1);if(n<=0)return s;r=n<18?1:n<48?3:n<144?4:n<768?5:6,a=n<8?new y(t):t.isEven()?new b(t):new g(t);var o=new Array,c=3,u=r-1,l=(1<<r)-1;if(o[1]=a.convert(this),r>1){var p=i();for(a.sqrTo(o[1],p);c<=l;)o[c]=i(),a.mulTo(p,o[c-2],o[c]),c+=2}var h,v,m=e.t-1,C=!0,E=i();for(n=d(e.data[m])-1;m>=0;){for(n>=u?h=e.data[m]>>n-u&l:(h=(e.data[m]&(1<<n+1)-1)<<u-n,m>0&&(h|=e.data[m-1]>>this.DB+n-u)),c=r;!(1&h);)h>>=1,--c;if((n-=c)<0&&(n+=this.DB,--m),C)o[h].copyTo(s),C=!1;else{for(;c>1;)a.sqrTo(s,E),a.sqrTo(E,s),c-=2;c>0?a.sqrTo(s,E):(v=s,s=E,E=v),a.mulTo(E,o[h],s)}for(;m>=0&&!(e.data[m]&1<<n);)a.sqrTo(s,E),v=s,s=E,E=v,--n<0&&(n=this.DB-1,--m)}return a.revert(s)},n.prototype.modInverse=function(e){var t=e.isEven();if(this.isEven()&&t||0==e.signum())return n.ZERO;for(var r=e.clone(),a=this.clone(),i=f(1),s=f(0),o=f(0),c=f(1);0!=r.signum();){for(;r.isEven();)r.rShiftTo(1,r),t?(i.isEven()&&s.isEven()||(i.addTo(this,i),s.subTo(e,s)),i.rShiftTo(1,i)):s.isEven()||s.subTo(e,s),s.rShiftTo(1,s);for(;a.isEven();)a.rShiftTo(1,a),t?(o.isEven()&&c.isEven()||(o.addTo(this,o),c.subTo(e,c)),o.rShiftTo(1,o)):c.isEven()||c.subTo(e,c),c.rShiftTo(1,c);r.compareTo(a)>=0?(r.subTo(a,r),t&&i.subTo(o,i),s.subTo(c,s)):(a.subTo(r,a),t&&o.subTo(i,o),c.subTo(s,c))}return 0!=a.compareTo(n.ONE)?n.ZERO:c.compareTo(e)>=0?c.subtract(e):c.signum()<0?(c.addTo(e,c),c.signum()<0?c.add(e):c):c},n.prototype.pow=function(e){return this.exp(e,new I)},n.prototype.gcd=function(e){var t=this.s<0?this.negate():this.clone(),r=e.s<0?e.negate():e.clone();if(t.compareTo(r)<0){var a=t;t=r,r=a}var n=t.getLowestSetBit(),i=r.getLowestSetBit();if(i<0)return t;for(n<i&&(i=n),i>0&&(t.rShiftTo(i,t),r.rShiftTo(i,r));t.signum()>0;)(n=t.getLowestSetBit())>0&&t.rShiftTo(n,t),(n=r.getLowestSetBit())>0&&r.rShiftTo(n,r),t.compareTo(r)>=0?(t.subTo(r,t),t.rShiftTo(1,t)):(r.subTo(t,r),r.rShiftTo(1,r));return i>0&&r.lShiftTo(i,r),r},n.prototype.isProbablePrime=function(e){var t,r=this.abs();if(1==r.t&&r.data[0]<=B[B.length-1]){for(t=0;t<B.length;++t)if(r.data[0]==B[t])return!0;return!1}if(r.isEven())return!1;for(t=1;t<B.length;){for(var a=B[t],n=t+1;n<B.length&&a<N;)a*=B[n++];for(a=r.modInt(a);t<n;)if(a%B[t++]==0)return!1}return r.millerRabin(e)}}}),w=o({"node_modules/node-forge/lib/sha1.js"(e,t){var r=u();v(),p();var a=t.exports=r.sha1=r.sha1||{};r.md.sha1=r.md.algorithms.sha1=a,a.create=function(){i||(n=String.fromCharCode(128),n+=r.util.fillString(String.fromCharCode(0),64),i=!0);var e=null,t=r.util.createBuffer(),a=new Array(80),o={algorithm:"sha1",blockLength:64,digestLength:20,messageLength:0,fullMessageLength:null,messageLengthSize:8,start:function(){o.messageLength=0,o.fullMessageLength=o.messageLength64=[];for(var a=o.messageLengthSize/4,n=0;n<a;++n)o.fullMessageLength.push(0);return t=r.util.createBuffer(),e={h0:1732584193,h1:4023233417,h2:2562383102,h3:271733878,h4:3285377520},o}};return o.start(),o.update=function(n,i){"utf8"===i&&(n=r.util.encodeUtf8(n));var c=n.length;o.messageLength+=c,c=[c/4294967296>>>0,c>>>0];for(var u=o.fullMessageLength.length-1;u>=0;--u)o.fullMessageLength[u]+=c[1],c[1]=c[0]+(o.fullMessageLength[u]/4294967296>>>0),o.fullMessageLength[u]=o.fullMessageLength[u]>>>0,c[0]=c[1]/4294967296>>>0;return t.putBytes(n),s(e,a,t),(t.read>2048||0===t.length())&&t.compact(),o},o.digest=function(){var i=r.util.createBuffer();i.putBytes(t.bytes());var c,u=o.fullMessageLength[o.fullMessageLength.length-1]+o.messageLengthSize&o.blockLength-1;i.putBytes(n.substr(0,o.blockLength-u));for(var l=8*o.fullMessageLength[0],p=0;p<o.fullMessageLength.length-1;++p)l+=(c=8*o.fullMessageLength[p+1])/4294967296>>>0,i.putInt32(l>>>0),l=c>>>0;i.putInt32(l);var h={h0:e.h0,h1:e.h1,h2:e.h2,h3:e.h3,h4:e.h4};s(h,a,i);var f=r.util.createBuffer();return f.putInt32(h.h0),f.putInt32(h.h1),f.putInt32(h.h2),f.putInt32(h.h3),f.putInt32(h.h4),f},o};var n=null,i=!1;function s(e,t,r){for(var a,n,i,s,o,c,u,l=r.length();l>=64;){for(n=e.h0,i=e.h1,s=e.h2,o=e.h3,c=e.h4,u=0;u<16;++u)a=r.getInt32(),t[u]=a,a=(n<<5|n>>>27)+(o^i&(s^o))+c+1518500249+a,c=o,o=s,s=(i<<30|i>>>2)>>>0,i=n,n=a;for(;u<20;++u)a=(a=t[u-3]^t[u-8]^t[u-14]^t[u-16])<<1|a>>>31,t[u]=a,a=(n<<5|n>>>27)+(o^i&(s^o))+c+1518500249+a,c=o,o=s,s=(i<<30|i>>>2)>>>0,i=n,n=a;for(;u<32;++u)a=(a=t[u-3]^t[u-8]^t[u-14]^t[u-16])<<1|a>>>31,t[u]=a,a=(n<<5|n>>>27)+(i^s^o)+c+1859775393+a,c=o,o=s,s=(i<<30|i>>>2)>>>0,i=n,n=a;for(;u<40;++u)a=(a=t[u-6]^t[u-16]^t[u-28]^t[u-32])<<2|a>>>30,t[u]=a,a=(n<<5|n>>>27)+(i^s^o)+c+1859775393+a,c=o,o=s,s=(i<<30|i>>>2)>>>0,i=n,n=a;for(;u<60;++u)a=(a=t[u-6]^t[u-16]^t[u-28]^t[u-32])<<2|a>>>30,t[u]=a,a=(n<<5|n>>>27)+(i&s|o&(i^s))+c+2400959708+a,c=o,o=s,s=(i<<30|i>>>2)>>>0,i=n,n=a;for(;u<80;++u)a=(a=t[u-6]^t[u-16]^t[u-28]^t[u-32])<<2|a>>>30,t[u]=a,a=(n<<5|n>>>27)+(i^s^o)+c+3395469782+a,c=o,o=s,s=(i<<30|i>>>2)>>>0,i=n,n=a;e.h0=e.h0+n|0,e.h1=e.h1+i|0,e.h2=e.h2+s|0,e.h3=e.h3+o|0,e.h4=e.h4+c|0,l-=64}}}}),_=o({"node_modules/node-forge/lib/pkcs1.js"(e,t){var r=u();p(),b(),w();var a=t.exports=r.pkcs1=r.pkcs1||{};function n(e,t,a){a||(a=r.md.sha1.create());for(var n="",i=Math.ceil(t/a.digestLength),s=0;s<i;++s){var o=String.fromCharCode(s>>24&255,s>>16&255,s>>8&255,255&s);a.start(),a.update(e+o),n+=a.digest().getBytes()}return n.substring(0,t)}a.encode_rsa_oaep=function(e,t,a){var i,s,o,c;"string"==typeof a?(i=a,s=arguments[3]||void 0,o=arguments[4]||void 0):a&&(i=a.label||void 0,s=a.seed||void 0,o=a.md||void 0,a.mgf1&&a.mgf1.md&&(c=a.mgf1.md)),o?o.start():o=r.md.sha1.create(),c||(c=o);var u=Math.ceil(e.n.bitLength()/8),l=u-2*o.digestLength-2;if(t.length>l)throw(g=new Error("RSAES-OAEP input message length is too long.")).length=t.length,g.maxLength=l,g;i||(i=""),o.update(i,"raw");for(var p=o.digest(),h="",f=l-t.length,d=0;d<f;d++)h+="\0";var y=p.getBytes()+h+""+t;if(s){if(s.length!==o.digestLength){var g;throw(g=new Error("Invalid RSAES-OAEP seed. The seed length must match the digest length.")).seedLength=s.length,g.digestLength=o.digestLength,g}}else s=r.random.getBytes(o.digestLength);var v=n(s,u-o.digestLength-1,c),m=r.util.xorBytes(y,v,y.length),C=n(m,o.digestLength,c);return"\0"+r.util.xorBytes(s,C,s.length)+m},a.decode_rsa_oaep=function(e,t,a){var i,s,o;"string"==typeof a?(i=a,s=arguments[3]||void 0):a&&(i=a.label||void 0,s=a.md||void 0,a.mgf1&&a.mgf1.md&&(o=a.mgf1.md));var c=Math.ceil(e.n.bitLength()/8);if(t.length!==c)throw(v=new Error("RSAES-OAEP encoded message length is invalid.")).length=t.length,v.expectedLength=c,v;if(void 0===s?s=r.md.sha1.create():s.start(),o||(o=s),c<2*s.digestLength+2)throw new Error("RSAES-OAEP key is too short for the hash function.");i||(i=""),s.update(i,"raw");for(var u=s.digest().getBytes(),l=t.charAt(0),p=t.substring(1,s.digestLength+1),h=t.substring(1+s.digestLength),f=n(h,s.digestLength,o),d=n(r.util.xorBytes(p,f,p.length),c-s.digestLength-1,o),y=r.util.xorBytes(h,d,h.length),g=y.substring(0,s.digestLength),v="\0"!==l,m=0;m<s.digestLength;++m)v|=u.charAt(m)!==g.charAt(m);for(var C=1,E=s.digestLength,S=s.digestLength;S<y.length;S++){var T=y.charCodeAt(S);v|=T&(C?65534:0),E+=C&=1&T^1}if(v||1!==y.charCodeAt(E))throw new Error("Invalid RSAES-OAEP padding.");return y.substring(E+1)}}}),R=o({"node_modules/node-forge/lib/prime.js"(e,t){var r=u();p(),N(),b(),function(){if(r.prime)t.exports=r.prime;else{var e=t.exports=r.prime=r.prime||{},a=r.jsbn.BigInteger,n=[6,4,2,4,2,4,6,2],i=new a(null);i.fromInt(30);var s=function(e,t){return e|t};e.generateProbablePrime=function(e,t,n){"function"==typeof t&&(n=t,t={});var i=(t=t||{}).algorithm||"PRIMEINC";"string"==typeof i&&(i={name:i}),i.options=i.options||{};var s=t.prng||r.random,c={nextBytes:function(e){for(var t=s.getBytesSync(e.length),r=0;r<e.length;++r)e[r]=t.charCodeAt(r)}};if("PRIMEINC"===i.name)return function(e,t,n,i){if("workers"in n)return function(e,t,n,i){if("undefined"==typeof Worker)return o(e,t,n,i);var s=u(e,t),c=n.workers,l=n.workLoad||100,p=30*l/8,h=n.workerScript||"forge/prime.worker.js";if(-1===c)return r.util.estimateCores((function(e,t){e&&(t=2),c=t-1,f()}));function f(){c=Math.max(1,c);for(var r=[],n=0;n<c;++n)r[n]=new Worker(h);for(n=0;n<c;++n)r[n].addEventListener("message",f);var o=!1;function f(n){if(!o){0;var c=n.data;if(c.found){for(var h=0;h<r.length;++h)r[h].terminate();return o=!0,i(null,new a(c.prime,16))}s.bitLength()>e&&(s=u(e,t));var f=s.toString(16);n.target.postMessage({hex:f,workLoad:l}),s.dAddOffset(p,0)}}}f()}(e,t,n,i);return o(e,t,n,i)}(e,c,i.options,n);throw new Error("Invalid prime generation algorithm: "+i.name)}}function o(e,t,r,a){var n=u(e,t),i=function(e){return e<=100?27:e<=150?18:e<=200?15:e<=250?12:e<=300?9:e<=350?8:e<=400?7:e<=500?6:e<=600?5:e<=800?4:e<=1250?3:2}(n.bitLength());"millerRabinTests"in r&&(i=r.millerRabinTests);var s=10;"maxBlockTime"in r&&(s=r.maxBlockTime),c(n,e,t,0,i,s,a)}function c(e,t,a,i,s,o,l){var p=+new Date;do{if(e.bitLength()>t&&(e=u(t,a)),e.isProbablePrime(s))return l(null,e);e.dAddOffset(n[i++%8],0)}while(o<0||+new Date-p<o);r.util.setImmediate((function(){c(e,t,a,i,s,o,l)}))}function u(e,t){var r=new a(e,t),n=e-1;return r.testBit(n)||r.bitwiseTo(a.ONE.shiftLeft(n),s,r),r.dAddOffset(31-r.mod(i).byteValue(),0),r}}()}}),k=o({"node_modules/node-forge/lib/rsa.js"(e,t){var r,a=u();g(),N(),y(),_(),R(),b(),p(),void 0===r&&(r=a.jsbn.BigInteger);var n=a.util.isNodejs?s("crypto"):null,i=a.asn1,o=a.util;a.pki=a.pki||{},t.exports=a.pki.rsa=a.rsa=a.rsa||{};var c=a.pki,l=[6,4,2,4,2,4,6,2],h={name:"PrivateKeyInfo",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"PrivateKeyInfo.version",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyVersion"},{name:"PrivateKeyInfo.privateKeyAlgorithm",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"AlgorithmIdentifier.algorithm",tagClass:i.Class.UNIVERSAL,type:i.Type.OID,constructed:!1,capture:"privateKeyOid"}]},{name:"PrivateKeyInfo",tagClass:i.Class.UNIVERSAL,type:i.Type.OCTETSTRING,constructed:!1,capture:"privateKey"}]},f={name:"RSAPrivateKey",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"RSAPrivateKey.version",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyVersion"},{name:"RSAPrivateKey.modulus",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyModulus"},{name:"RSAPrivateKey.publicExponent",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyPublicExponent"},{name:"RSAPrivateKey.privateExponent",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyPrivateExponent"},{name:"RSAPrivateKey.prime1",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyPrime1"},{name:"RSAPrivateKey.prime2",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyPrime2"},{name:"RSAPrivateKey.exponent1",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyExponent1"},{name:"RSAPrivateKey.exponent2",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyExponent2"},{name:"RSAPrivateKey.coefficient",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"privateKeyCoefficient"}]},d={name:"RSAPublicKey",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"RSAPublicKey.modulus",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"publicKeyModulus"},{name:"RSAPublicKey.exponent",tagClass:i.Class.UNIVERSAL,type:i.Type.INTEGER,constructed:!1,capture:"publicKeyExponent"}]},v=a.pki.rsa.publicKeyValidator={name:"SubjectPublicKeyInfo",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,captureAsn1:"subjectPublicKeyInfo",value:[{name:"SubjectPublicKeyInfo.AlgorithmIdentifier",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"AlgorithmIdentifier.algorithm",tagClass:i.Class.UNIVERSAL,type:i.Type.OID,constructed:!1,capture:"publicKeyOid"}]},{name:"SubjectPublicKeyInfo.subjectPublicKey",tagClass:i.Class.UNIVERSAL,type:i.Type.BITSTRING,constructed:!1,value:[{name:"SubjectPublicKeyInfo.subjectPublicKey.RSAPublicKey",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,optional:!0,captureAsn1:"rsaPublicKey"}]}]},m={name:"DigestInfo",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"DigestInfo.DigestAlgorithm",tagClass:i.Class.UNIVERSAL,type:i.Type.SEQUENCE,constructed:!0,value:[{name:"DigestInfo.DigestAlgorithm.algorithmIdentifier",tagClass:i.Class.UNIVERSAL,type:i.Type.OID,constructed:!1,capture:"algorithmIdentifier"},{name:"DigestInfo.DigestAlgorithm.parameters",tagClass:i.Class.UNIVERSAL,type:i.Type.NULL,capture:"parameters",optional:!0,constructed:!1}]},{name:"DigestInfo.digest",tagClass:i.Class.UNIVERSAL,type:i.Type.OCTETSTRING,constructed:!1,capture:"digest"}]},C=function(e){var t;if(!(e.algorithm in c.oids)){var r=new Error("Unknown message digest algorithm.");throw r.algorithm=e.algorithm,r}t=c.oids[e.algorithm];var a=i.oidToDer(t).getBytes(),n=i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[]),s=i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[]);s.value.push(i.create(i.Class.UNIVERSAL,i.Type.OID,!1,a)),s.value.push(i.create(i.Class.UNIVERSAL,i.Type.NULL,!1,""));var o=i.create(i.Class.UNIVERSAL,i.Type.OCTETSTRING,!1,e.digest().getBytes());return n.value.push(s),n.value.push(o),i.toDer(n).getBytes()},E=function(e,t,n){if(n)return e.modPow(t.e,t.n);if(!t.p||!t.q)return e.modPow(t.d,t.n);var i;t.dP||(t.dP=t.d.mod(t.p.subtract(r.ONE))),t.dQ||(t.dQ=t.d.mod(t.q.subtract(r.ONE))),t.qInv||(t.qInv=t.q.modInverse(t.p));do{i=new r(a.util.bytesToHex(a.random.getBytes(t.n.bitLength()/8)),16)}while(i.compareTo(t.n)>=0||!i.gcd(t.n).equals(r.ONE));for(var s=(e=e.multiply(i.modPow(t.e,t.n)).mod(t.n)).mod(t.p).modPow(t.dP,t.p),o=e.mod(t.q).modPow(t.dQ,t.q);s.compareTo(o)<0;)s=s.add(t.p);var c=s.subtract(o).multiply(t.qInv).mod(t.p).multiply(t.q).add(o);return c=c.multiply(i.modInverse(t.n)).mod(t.n)};function S(e,t,r){var n=a.util.createBuffer(),i=Math.ceil(t.n.bitLength()/8);if(e.length>i-11){var s=new Error("Message is too long for PKCS#1 v1.5 padding.");throw s.length=e.length,s.max=i-11,s}n.putByte(0),n.putByte(r);var o,c=i-3-e.length;if(0===r||1===r){o=0===r?0:255;for(var u=0;u<c;++u)n.putByte(o)}else for(;c>0;){var l=0,p=a.random.getBytes(c);for(u=0;u<c;++u)0===(o=p.charCodeAt(u))?++l:n.putByte(o);c=l}return n.putByte(0),n.putBytes(e),n}function T(e,t,r,n){var i=Math.ceil(t.n.bitLength()/8),s=a.util.createBuffer(e),o=s.getByte(),c=s.getByte();if(0!==o||r&&0!==c&&1!==c||!r&&2!=c||r&&0===c&&void 0===n)throw new Error("Encryption block is invalid.");var u=0;if(0===c){u=i-3-n;for(var l=0;l<u;++l)if(0!==s.getByte())throw new Error("Encryption block is invalid.")}else if(1===c)for(u=0;s.length()>1;){if(255!==s.getByte()){--s.read;break}++u}else if(2===c)for(u=0;s.length()>1;){if(0===s.getByte()){--s.read;break}++u}if(0!==s.getByte()||u!==i-3-s.length())throw new Error("Encryption block is invalid.");return s.getBytes()}function I(e){var t=e.toString(16);t[0]>="8"&&(t="00"+t);var r=a.util.hexToBytes(t);return!(r.length>1)||(0!==r.charCodeAt(0)||128&r.charCodeAt(1))&&(255!==r.charCodeAt(0)||128&~r.charCodeAt(1))?r:r.substr(1)}function A(e){return e<=100?27:e<=150?18:e<=200?15:e<=250?12:e<=300?9:e<=350?8:e<=400?7:e<=500?6:e<=600?5:e<=800?4:e<=1250?3:2}function B(e){return a.util.isNodejs&&"function"==typeof n[e]}function w(e){return void 0!==o.globalScope&&"object"==typeof o.globalScope.crypto&&"object"==typeof o.globalScope.crypto.subtle&&"function"==typeof o.globalScope.crypto.subtle[e]}function k(e){return void 0!==o.globalScope&&"object"==typeof o.globalScope.msCrypto&&"object"==typeof o.globalScope.msCrypto.subtle&&"function"==typeof o.globalScope.msCrypto.subtle[e]}function L(e){for(var t=a.util.hexToBytes(e.toString(16)),r=new Uint8Array(t.length),n=0;n<t.length;++n)r[n]=t.charCodeAt(n);return r}c.rsa.encrypt=function(e,t,n){var i,s=n,o=Math.ceil(t.n.bitLength()/8);!1!==n&&!0!==n?(s=2===n,i=S(e,t,n)):(i=a.util.createBuffer()).putBytes(e);for(var c=new r(i.toHex(),16),u=E(c,t,s).toString(16),l=a.util.createBuffer(),p=o-Math.ceil(u.length/2);p>0;)l.putByte(0),--p;return l.putBytes(a.util.hexToBytes(u)),l.getBytes()},c.rsa.decrypt=function(e,t,n,i){var s=Math.ceil(t.n.bitLength()/8);if(e.length!==s){var o=new Error("Encrypted message length is invalid.");throw o.length=e.length,o.expected=s,o}var c=new r(a.util.createBuffer(e).toHex(),16);if(c.compareTo(t.n)>=0)throw new Error("Encrypted message is invalid.");for(var u=E(c,t,n).toString(16),l=a.util.createBuffer(),p=s-Math.ceil(u.length/2);p>0;)l.putByte(0),--p;return l.putBytes(a.util.hexToBytes(u)),!1!==i?T(l.getBytes(),t,n):l.getBytes()},c.rsa.createKeyPairGenerationState=function(e,t,n){"string"==typeof e&&(e=parseInt(e,10)),e=e||2048;var i,s=(n=n||{}).prng||a.random,o={nextBytes:function(e){for(var t=s.getBytesSync(e.length),r=0;r<e.length;++r)e[r]=t.charCodeAt(r)}},c=n.algorithm||"PRIMEINC";if("PRIMEINC"!==c)throw new Error("Invalid key generation algorithm: "+c);return(i={algorithm:c,state:0,bits:e,rng:o,eInt:t||65537,e:new r(null),p:null,q:null,qBits:e>>1,pBits:e-(e>>1),pqState:0,num:null,keys:null}).e.fromInt(i.eInt),i},c.rsa.stepKeyPairGenerationState=function(e,t){"algorithm"in e||(e.algorithm="PRIMEINC");var a=new r(null);a.fromInt(30);for(var n,i=0,s=function(e,t){return e|t},o=+new Date,u=0;null===e.keys&&(t<=0||u<t);){if(0===e.state){var p=null===e.p?e.pBits:e.qBits,h=p-1;0===e.pqState?(e.num=new r(p,e.rng),e.num.testBit(h)||e.num.bitwiseTo(r.ONE.shiftLeft(h),s,e.num),e.num.dAddOffset(31-e.num.mod(a).byteValue(),0),i=0,++e.pqState):1===e.pqState?e.num.bitLength()>p?e.pqState=0:e.num.isProbablePrime(A(e.num.bitLength()))?++e.pqState:e.num.dAddOffset(l[i++%8],0):2===e.pqState?e.pqState=0===e.num.subtract(r.ONE).gcd(e.e).compareTo(r.ONE)?3:0:3===e.pqState&&(e.pqState=0,null===e.p?e.p=e.num:e.q=e.num,null!==e.p&&null!==e.q&&++e.state,e.num=null)}else if(1===e.state)e.p.compareTo(e.q)<0&&(e.num=e.p,e.p=e.q,e.q=e.num),++e.state;else if(2===e.state)e.p1=e.p.subtract(r.ONE),e.q1=e.q.subtract(r.ONE),e.phi=e.p1.multiply(e.q1),++e.state;else if(3===e.state)0===e.phi.gcd(e.e).compareTo(r.ONE)?++e.state:(e.p=null,e.q=null,e.state=0);else if(4===e.state)e.n=e.p.multiply(e.q),e.n.bitLength()===e.bits?++e.state:(e.q=null,e.state=0);else if(5===e.state){var f=e.e.modInverse(e.phi);e.keys={privateKey:c.rsa.setPrivateKey(e.n,e.e,f,e.p,e.q,f.mod(e.p1),f.mod(e.q1),e.q.modInverse(e.p)),publicKey:c.rsa.setPublicKey(e.n,e.e)}}u+=(n=+new Date)-o,o=n}return null!==e.keys},c.rsa.generateKeyPair=function(e,t,s,u){if(1===arguments.length?"object"==typeof e?(s=e,e=void 0):"function"==typeof e&&(u=e,e=void 0):2===arguments.length?"number"==typeof e?"function"==typeof t?(u=t,t=void 0):"number"!=typeof t&&(s=t,t=void 0):(s=e,u=t,e=void 0,t=void 0):3===arguments.length&&("number"==typeof t?"function"==typeof s&&(u=s,s=void 0):(u=s,s=t,t=void 0)),s=s||{},void 0===e&&(e=s.bits||2048),void 0===t&&(t=s.e||65537),!a.options.usePureJavaScript&&!s.prng&&e>=256&&e<=16384&&(65537===t||3===t))if(u){if(B("generateKeyPair"))return n.generateKeyPair("rsa",{modulusLength:e,publicExponent:t,publicKeyEncoding:{type:"spki",format:"pem"},privateKeyEncoding:{type:"pkcs8",format:"pem"}},(function(e,t,r){if(e)return u(e);u(null,{privateKey:c.privateKeyFromPem(r),publicKey:c.publicKeyFromPem(t)})}));if(w("generateKey")&&w("exportKey"))return o.globalScope.crypto.subtle.generateKey({name:"RSASSA-PKCS1-v1_5",modulusLength:e,publicExponent:L(t),hash:{name:"SHA-256"}},!0,["sign","verify"]).then((function(e){return o.globalScope.crypto.subtle.exportKey("pkcs8",e.privateKey)})).then(void 0,(function(e){u(e)})).then((function(e){if(e){var t=c.privateKeyFromAsn1(i.fromDer(a.util.createBuffer(e)));u(null,{privateKey:t,publicKey:c.setRsaPublicKey(t.n,t.e)})}}));if(k("generateKey")&&k("exportKey")){var l=o.globalScope.msCrypto.subtle.generateKey({name:"RSASSA-PKCS1-v1_5",modulusLength:e,publicExponent:L(t),hash:{name:"SHA-256"}},!0,["sign","verify"]);return l.oncomplete=function(e){var t=e.target.result,r=o.globalScope.msCrypto.subtle.exportKey("pkcs8",t.privateKey);r.oncomplete=function(e){var t=e.target.result,r=c.privateKeyFromAsn1(i.fromDer(a.util.createBuffer(t)));u(null,{privateKey:r,publicKey:c.setRsaPublicKey(r.n,r.e)})},r.onerror=function(e){u(e)}},void(l.onerror=function(e){u(e)})}}else if(B("generateKeyPairSync")){var p=n.generateKeyPairSync("rsa",{modulusLength:e,publicExponent:t,publicKeyEncoding:{type:"spki",format:"pem"},privateKeyEncoding:{type:"pkcs8",format:"pem"}});return{privateKey:c.privateKeyFromPem(p.privateKey),publicKey:c.publicKeyFromPem(p.publicKey)}}var h=c.rsa.createKeyPairGenerationState(e,t,s);if(!u)return c.rsa.stepKeyPairGenerationState(h,0),h.keys;!function(e,t,n){"function"==typeof t&&(n=t,t={});t=t||{};var i={algorithm:{name:t.algorithm||"PRIMEINC",options:{workers:t.workers||2,workLoad:t.workLoad||100,workerScript:t.workerScript}}};"prng"in t&&(i.prng=t.prng);function s(){o(e.pBits,(function(t,r){return t?n(t):(e.p=r,null!==e.q?u(t,e.q):void o(e.qBits,u))}))}function o(e,t){a.prime.generateProbablePrime(e,i,t)}function u(t,a){if(t)return n(t);if(e.q=a,e.p.compareTo(e.q)<0){var i=e.p;e.p=e.q,e.q=i}if(0!==e.p.subtract(r.ONE).gcd(e.e).compareTo(r.ONE))return e.p=null,void s();if(0!==e.q.subtract(r.ONE).gcd(e.e).compareTo(r.ONE))return e.q=null,void o(e.qBits,u);if(e.p1=e.p.subtract(r.ONE),e.q1=e.q.subtract(r.ONE),e.phi=e.p1.multiply(e.q1),0!==e.phi.gcd(e.e).compareTo(r.ONE))return e.p=e.q=null,void s();if(e.n=e.p.multiply(e.q),e.n.bitLength()!==e.bits)return e.q=null,void o(e.qBits,u);var l=e.e.modInverse(e.phi);e.keys={privateKey:c.rsa.setPrivateKey(e.n,e.e,l,e.p,e.q,l.mod(e.p1),l.mod(e.q1),e.q.modInverse(e.p)),publicKey:c.rsa.setPublicKey(e.n,e.e)},n(null,e.keys)}s()}(h,s,u)},c.setRsaPublicKey=c.rsa.setPublicKey=function(e,t){var r={n:e,e:t,encrypt:function(e,t,n){if("string"==typeof t?t=t.toUpperCase():void 0===t&&(t="RSAES-PKCS1-V1_5"),"RSAES-PKCS1-V1_5"===t)t={encode:function(e,t,r){return S(e,t,2).getBytes()}};else if("RSA-OAEP"===t||"RSAES-OAEP"===t)t={encode:function(e,t){return a.pkcs1.encode_rsa_oaep(t,e,n)}};else if(-1!==["RAW","NONE","NULL",null].indexOf(t))t={encode:function(e){return e}};else if("string"==typeof t)throw new Error('Unsupported encryption scheme: "'+t+'".');var i=t.encode(e,r,!0);return c.rsa.encrypt(i,r,!0)},verify:function(e,t,n,s){"string"==typeof n?n=n.toUpperCase():void 0===n&&(n="RSASSA-PKCS1-V1_5"),void 0===s&&(s={_parseAllDigestBytes:!0}),"_parseAllDigestBytes"in s||(s._parseAllDigestBytes=!0),"RSASSA-PKCS1-V1_5"===n?n={verify:function(e,t){t=T(t,r,!0);var n=i.fromDer(t,{parseAllBytes:s._parseAllDigestBytes}),o={},c=[];if(!i.validate(n,m,o,c))throw(u=new Error("ASN.1 object does not contain a valid RSASSA-PKCS1-v1_5 DigestInfo value.")).errors=c,u;var u,l=i.derToOid(o.algorithmIdentifier);if(l!==a.oids.md2&&l!==a.oids.md5&&l!==a.oids.sha1&&l!==a.oids.sha224&&l!==a.oids.sha256&&l!==a.oids.sha384&&l!==a.oids.sha512&&l!==a.oids["sha512-224"]&&l!==a.oids["sha512-256"])throw(u=new Error("Unknown RSASSA-PKCS1-v1_5 DigestAlgorithm identifier.")).oid=l,u;if((l===a.oids.md2||l===a.oids.md5)&&!("parameters"in o))throw new Error("ASN.1 object does not contain a valid RSASSA-PKCS1-v1_5 DigestInfo value. Missing algorithm identifer NULL parameters.");return e===o.digest}}:"NONE"!==n&&"NULL"!==n&&null!==n||(n={verify:function(e,t){return e===(t=T(t,r,!0))}});var o=c.rsa.decrypt(t,r,!0,!1);return n.verify(e,o,r.n.bitLength())}};return r},c.setRsaPrivateKey=c.rsa.setPrivateKey=function(e,t,r,n,i,s,o,u){var l={n:e,e:t,d:r,p:n,q:i,dP:s,dQ:o,qInv:u,decrypt:function(e,t,r){"string"==typeof t?t=t.toUpperCase():void 0===t&&(t="RSAES-PKCS1-V1_5");var n=c.rsa.decrypt(e,l,!1,!1);if("RSAES-PKCS1-V1_5"===t)t={decode:T};else if("RSA-OAEP"===t||"RSAES-OAEP"===t)t={decode:function(e,t){return a.pkcs1.decode_rsa_oaep(t,e,r)}};else{if(-1===["RAW","NONE","NULL",null].indexOf(t))throw new Error('Unsupported encryption scheme: "'+t+'".');t={decode:function(e){return e}}}return t.decode(n,l,!1)},sign:function(e,t){var r=!1;"string"==typeof t&&(t=t.toUpperCase()),void 0===t||"RSASSA-PKCS1-V1_5"===t?(t={encode:C},r=1):"NONE"!==t&&"NULL"!==t&&null!==t||(t={encode:function(){return e}},r=1);var a=t.encode(e,l.n.bitLength());return c.rsa.encrypt(a,l,r)}};return l},c.wrapRsaPrivateKey=function(e){return i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,i.integerToDer(0).getBytes()),i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[i.create(i.Class.UNIVERSAL,i.Type.OID,!1,i.oidToDer(c.oids.rsaEncryption).getBytes()),i.create(i.Class.UNIVERSAL,i.Type.NULL,!1,"")]),i.create(i.Class.UNIVERSAL,i.Type.OCTETSTRING,!1,i.toDer(e).getBytes())])},c.privateKeyFromAsn1=function(e){var t,n,s,o,u,l,p,d,y={},g=[];if(i.validate(e,h,y,g)&&(e=i.fromDer(a.util.createBuffer(y.privateKey))),y={},g=[],!i.validate(e,f,y,g)){var v=new Error("Cannot read private key. ASN.1 object does not contain an RSAPrivateKey.");throw v.errors=g,v}return t=a.util.createBuffer(y.privateKeyModulus).toHex(),n=a.util.createBuffer(y.privateKeyPublicExponent).toHex(),s=a.util.createBuffer(y.privateKeyPrivateExponent).toHex(),o=a.util.createBuffer(y.privateKeyPrime1).toHex(),u=a.util.createBuffer(y.privateKeyPrime2).toHex(),l=a.util.createBuffer(y.privateKeyExponent1).toHex(),p=a.util.createBuffer(y.privateKeyExponent2).toHex(),d=a.util.createBuffer(y.privateKeyCoefficient).toHex(),c.setRsaPrivateKey(new r(t,16),new r(n,16),new r(s,16),new r(o,16),new r(u,16),new r(l,16),new r(p,16),new r(d,16))},c.privateKeyToAsn1=c.privateKeyToRSAPrivateKey=function(e){return i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,i.integerToDer(0).getBytes()),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.n)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.e)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.d)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.p)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.q)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.dP)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.dQ)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.qInv))])},c.publicKeyFromAsn1=function(e){var t={},n=[];if(i.validate(e,v,t,n)){var s,o=i.derToOid(t.publicKeyOid);if(o!==c.oids.rsaEncryption)throw(s=new Error("Cannot read public key. Unknown OID.")).oid=o,s;e=t.rsaPublicKey}if(n=[],!i.validate(e,d,t,n))throw(s=new Error("Cannot read public key. ASN.1 object does not contain an RSAPublicKey.")).errors=n,s;var u=a.util.createBuffer(t.publicKeyModulus).toHex(),l=a.util.createBuffer(t.publicKeyExponent).toHex();return c.setRsaPublicKey(new r(u,16),new r(l,16))},c.publicKeyToAsn1=c.publicKeyToSubjectPublicKeyInfo=function(e){return i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[i.create(i.Class.UNIVERSAL,i.Type.OID,!1,i.oidToDer(c.oids.rsaEncryption).getBytes()),i.create(i.Class.UNIVERSAL,i.Type.NULL,!1,"")]),i.create(i.Class.UNIVERSAL,i.Type.BITSTRING,!1,[c.publicKeyToRSAPublicKey(e)])])},c.publicKeyToRSAPublicKey=function(e){return i.create(i.Class.UNIVERSAL,i.Type.SEQUENCE,!0,[i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.n)),i.create(i.Class.UNIVERSAL,i.Type.INTEGER,!1,I(e.e))])}}}),L=o({"node_modules/node-forge/lib/pbe.js"(e,t){var r,a=u();d(),g(),S(),v(),y(),T(),E(),b(),B(),k(),p(),void 0===r&&(r=a.jsbn.BigInteger);var n=a.asn1,i=a.pki=a.pki||{};t.exports=i.pbe=a.pbe=a.pbe||{};var s=i.oids,o={name:"EncryptedPrivateKeyInfo",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"EncryptedPrivateKeyInfo.encryptionAlgorithm",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"AlgorithmIdentifier.algorithm",tagClass:n.Class.UNIVERSAL,type:n.Type.OID,constructed:!1,capture:"encryptionOid"},{name:"AlgorithmIdentifier.parameters",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,captureAsn1:"encryptionParams"}]},{name:"EncryptedPrivateKeyInfo.encryptedData",tagClass:n.Class.UNIVERSAL,type:n.Type.OCTETSTRING,constructed:!1,capture:"encryptedData"}]},c={name:"PBES2Algorithms",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"PBES2Algorithms.keyDerivationFunc",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"PBES2Algorithms.keyDerivationFunc.oid",tagClass:n.Class.UNIVERSAL,type:n.Type.OID,constructed:!1,capture:"kdfOid"},{name:"PBES2Algorithms.params",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"PBES2Algorithms.params.salt",tagClass:n.Class.UNIVERSAL,type:n.Type.OCTETSTRING,constructed:!1,capture:"kdfSalt"},{name:"PBES2Algorithms.params.iterationCount",tagClass:n.Class.UNIVERSAL,type:n.Type.INTEGER,constructed:!1,capture:"kdfIterationCount"},{name:"PBES2Algorithms.params.keyLength",tagClass:n.Class.UNIVERSAL,type:n.Type.INTEGER,constructed:!1,optional:!0,capture:"keyLength"},{name:"PBES2Algorithms.params.prf",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,optional:!0,value:[{name:"PBES2Algorithms.params.prf.algorithm",tagClass:n.Class.UNIVERSAL,type:n.Type.OID,constructed:!1,capture:"prfOid"}]}]}]},{name:"PBES2Algorithms.encryptionScheme",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"PBES2Algorithms.encryptionScheme.oid",tagClass:n.Class.UNIVERSAL,type:n.Type.OID,constructed:!1,capture:"encOid"},{name:"PBES2Algorithms.encryptionScheme.iv",tagClass:n.Class.UNIVERSAL,type:n.Type.OCTETSTRING,constructed:!1,capture:"encIv"}]}]},l={name:"pkcs-12PbeParams",tagClass:n.Class.UNIVERSAL,type:n.Type.SEQUENCE,constructed:!0,value:[{name:"pkcs-12PbeParams.salt",tagClass:n.Class.UNIVERSAL,type:n.Type.OCTETSTRING,constructed:!1,capture:"salt"},{name:"pkcs-12PbeParams.iterations",tagClass:n.Class.UNIVERSAL,type:n.Type.INTEGER,constructed:!1,capture:"iterations"}]};function h(e,t){return e.start().update(t).digest().getBytes()}function f(e){var t;if(e){if(!(t=i.oids[n.derToOid(e)])){var r=new Error("Unsupported PRF OID.");throw r.oid=e,r.supported=["hmacWithSHA1","hmacWithSHA224","hmacWithSHA256","hmacWithSHA384","hmacWithSHA512"],r}}else t="hmacWithSHA1";return m(t)}function m(e){var t=a.md;switch(e){case"hmacWithSHA224":t=a.md.sha512;case"hmacWithSHA1":case"hmacWithSHA256":case"hmacWithSHA384":case"hmacWithSHA512":e=e.substr(8).toLowerCase();break;default:var r=new Error("Unsupported PRF algorithm.");throw r.algorithm=e,r.supported=["hmacWithSHA1","hmacWithSHA224","hmacWithSHA256","hmacWithSHA384","hmacWithSHA512"],r}if(!t||!(e in t))throw new Error("Unknown hash algorithm: "+e);return t[e].create()}i.encryptPrivateKeyInfo=function(e,t,r){(r=r||{}).saltSize=r.saltSize||8,r.count=r.count||2048,r.algorithm=r.algorithm||"aes128",r.prfAlgorithm=r.prfAlgorithm||"sha1";var o,c,u,l=a.random.getBytesSync(r.saltSize),p=r.count,h=n.integerToDer(p);if(0===r.algorithm.indexOf("aes")||"des"===r.algorithm){var f,d,y;switch(r.algorithm){case"aes128":o=16,f=16,d=s["aes128-CBC"],y=a.aes.createEncryptionCipher;break;case"aes192":o=24,f=16,d=s["aes192-CBC"],y=a.aes.createEncryptionCipher;break;case"aes256":o=32,f=16,d=s["aes256-CBC"],y=a.aes.createEncryptionCipher;break;case"des":o=8,f=8,d=s.desCBC,y=a.des.createEncryptionCipher;break;default:throw(T=new Error("Cannot encrypt private key. Unknown encryption algorithm.")).algorithm=r.algorithm,T}var g="hmacWith"+r.prfAlgorithm.toUpperCase(),v=m(g),C=a.pkcs5.pbkdf2(t,l,p,o,v),E=a.random.getBytesSync(f);(I=y(C)).start(E),I.update(n.toDer(e)),I.finish(),u=I.output.getBytes();var S=function(e,t,r,s){var o=n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OCTETSTRING,!1,e),n.create(n.Class.UNIVERSAL,n.Type.INTEGER,!1,t.getBytes())]);"hmacWithSHA1"!==s&&o.value.push(n.create(n.Class.UNIVERSAL,n.Type.INTEGER,!1,a.util.hexToBytes(r.toString(16))),n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OID,!1,n.oidToDer(i.oids[s]).getBytes()),n.create(n.Class.UNIVERSAL,n.Type.NULL,!1,"")]));return o}(l,h,o,g);c=n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OID,!1,n.oidToDer(s.pkcs5PBES2).getBytes()),n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OID,!1,n.oidToDer(s.pkcs5PBKDF2).getBytes()),S]),n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OID,!1,n.oidToDer(d).getBytes()),n.create(n.Class.UNIVERSAL,n.Type.OCTETSTRING,!1,E)])])])}else{var T;if("3des"!==r.algorithm)throw(T=new Error("Cannot encrypt private key. Unknown encryption algorithm.")).algorithm=r.algorithm,T;o=24;var I,A=new a.util.ByteBuffer(l);C=i.pbe.generatePkcs12Key(t,A,1,p,o),E=i.pbe.generatePkcs12Key(t,A,2,p,o);(I=a.des.createEncryptionCipher(C)).start(E),I.update(n.toDer(e)),I.finish(),u=I.output.getBytes(),c=n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OID,!1,n.oidToDer(s["pbeWithSHAAnd3-KeyTripleDES-CBC"]).getBytes()),n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[n.create(n.Class.UNIVERSAL,n.Type.OCTETSTRING,!1,l),n.create(n.Class.UNIVERSAL,n.Type.INTEGER,!1,h.getBytes())])])}return n.create(n.Class.UNIVERSAL,n.Type.SEQUENCE,!0,[c,n.create(n.Class.UNIVERSAL,n.Type.OCTETSTRING,!1,u)])},i.decryptPrivateKeyInfo=function(e,t){var r=null,s={},c=[];if(!n.validate(e,o,s,c)){var u=new Error("Cannot read encrypted private key. ASN.1 object is not a supported EncryptedPrivateKeyInfo.");throw u.errors=c,u}var l=n.derToOid(s.encryptionOid),p=i.pbe.getCipher(l,s.encryptionParams,t),h=a.util.createBuffer(s.encryptedData);return p.update(h),p.finish()&&(r=n.fromDer(p.output)),r},i.encryptedPrivateKeyToPem=function(e,t){var r={type:"ENCRYPTED PRIVATE KEY",body:n.toDer(e).getBytes()};return a.pem.encode(r,{maxline:t})},i.encryptedPrivateKeyFromPem=function(e){var t=a.pem.decode(e)[0];if("ENCRYPTED PRIVATE KEY"!==t.type){var r=new Error('Could not convert encrypted private key from PEM; PEM header type is "ENCRYPTED PRIVATE KEY".');throw r.headerType=t.type,r}if(t.procType&&"ENCRYPTED"===t.procType.type)throw new Error("Could not convert encrypted private key from PEM; PEM is encrypted.");return n.fromDer(t.body)},i.encryptRsaPrivateKey=function(e,t,r){if(!(r=r||{}).legacy){var s=i.wrapRsaPrivateKey(i.privateKeyToAsn1(e));return s=i.encryptPrivateKeyInfo(s,t,r),i.encryptedPrivateKeyToPem(s)}var o,c,u,l;switch(r.algorithm){case"aes128":o="AES-128-CBC",u=16,c=a.random.getBytesSync(16),l=a.aes.createEncryptionCipher;break;case"aes192":o="AES-192-CBC",u=24,c=a.random.getBytesSync(16),l=a.aes.createEncryptionCipher;break;case"aes256":o="AES-256-CBC",u=32,c=a.random.getBytesSync(16),l=a.aes.createEncryptionCipher;break;case"3des":o="DES-EDE3-CBC",u=24,c=a.random.getBytesSync(8),l=a.des.createEncryptionCipher;break;case"des":o="DES-CBC",u=8,c=a.random.getBytesSync(8),l=a.des.createEncryptionCipher;break;default:var p=new Error('Could not encrypt RSA private key; unsupported encryption algorithm "'+r.algorithm+'".');throw p.algorithm=r.algorithm,p}var h=l(a.pbe.opensslDeriveBytes(t,c.substr(0,8),u));h.start(c),h.update(n.toDer(i.privateKeyToAsn1(e))),h.finish();var f={type:"RSA PRIVATE KEY",procType:{version:"4",type:"ENCRYPTED"},dekInfo:{algorithm:o,parameters:a.util.bytesToHex(c).toUpperCase()},body:h.output.getBytes()};return a.pem.encode(f)},i.decryptRsaPrivateKey=function(e,t){var r=null,s=a.pem.decode(e)[0];if("ENCRYPTED PRIVATE KEY"!==s.type&&"PRIVATE KEY"!==s.type&&"RSA PRIVATE KEY"!==s.type)throw(u=new Error('Could not convert private key from PEM; PEM header type is not "ENCRYPTED PRIVATE KEY", "PRIVATE KEY", or "RSA PRIVATE KEY".')).headerType=u,u;if(s.procType&&"ENCRYPTED"===s.procType.type){var o,c;switch(s.dekInfo.algorithm){case"DES-CBC":o=8,c=a.des.createDecryptionCipher;break;case"DES-EDE3-CBC":o=24,c=a.des.createDecryptionCipher;break;case"AES-128-CBC":o=16,c=a.aes.createDecryptionCipher;break;case"AES-192-CBC":o=24,c=a.aes.createDecryptionCipher;break;case"AES-256-CBC":o=32,c=a.aes.createDecryptionCipher;break;case"RC2-40-CBC":o=5,c=function(e){return a.rc2.createDecryptionCipher(e,40)};break;case"RC2-64-CBC":o=8,c=function(e){return a.rc2.createDecryptionCipher(e,64)};break;case"RC2-128-CBC":o=16,c=function(e){return a.rc2.createDecryptionCipher(e,128)};break;default:var u;throw(u=new Error('Could not decrypt private key; unsupported encryption algorithm "'+s.dekInfo.algorithm+'".')).algorithm=s.dekInfo.algorithm,u}var l=a.util.hexToBytes(s.dekInfo.parameters),p=c(a.pbe.opensslDeriveBytes(t,l.substr(0,8),o));if(p.start(l),p.update(a.util.createBuffer(s.body)),!p.finish())return r;r=p.output.getBytes()}else r=s.body;return null!==(r="ENCRYPTED PRIVATE KEY"===s.type?i.decryptPrivateKeyInfo(n.fromDer(r),t):n.fromDer(r))&&(r=i.privateKeyFromAsn1(r)),r},i.pbe.generatePkcs12Key=function(e,t,r,n,i,s){var o,c;if(null==s){if(!("sha1"in a.md))throw new Error('"sha1" hash algorithm unavailable.');s=a.md.sha1.create()}var u=s.digestLength,l=s.blockLength,p=new a.util.ByteBuffer,h=new a.util.ByteBuffer;if(null!=e){for(c=0;c<e.length;c++)h.putInt16(e.charCodeAt(c));h.putInt16(0)}var f=h.length(),d=t.length(),y=new a.util.ByteBuffer;y.fillWithByte(r,l);var g=l*Math.ceil(d/l),v=new a.util.ByteBuffer;for(c=0;c<g;c++)v.putByte(t.at(c%d));var m=l*Math.ceil(f/l),C=new a.util.ByteBuffer;for(c=0;c<m;c++)C.putByte(h.at(c%f));var E=v;E.putBuffer(C);for(var S=Math.ceil(i/u),T=1;T<=S;T++){var I=new a.util.ByteBuffer;I.putBytes(y.bytes()),I.putBytes(E.bytes());for(var A=0;A<n;A++)s.start(),s.update(I.getBytes()),I=s.digest();var b=new a.util.ByteBuffer;for(c=0;c<l;c++)b.putByte(I.at(c%u));var B=Math.ceil(d/l)+Math.ceil(f/l),N=new a.util.ByteBuffer;for(o=0;o<B;o++){var w=new a.util.ByteBuffer(E.getBytes(l)),_=511;for(c=b.length()-1;c>=0;c--)_>>=8,_+=b.at(c)+w.at(c),w.setAt(c,255&_);N.putBuffer(w)}E=N,p.putBuffer(I)}return p.truncate(p.length()-i),p},i.pbe.getCipher=function(e,t,r){switch(e){case i.oids.pkcs5PBES2:return i.pbe.getCipherForPBES2(e,t,r);case i.oids["pbeWithSHAAnd3-KeyTripleDES-CBC"]:case i.oids["pbewithSHAAnd40BitRC2-CBC"]:return i.pbe.getCipherForPKCS12PBE(e,t,r);default:var a=new Error("Cannot read encrypted PBE data block. Unsupported OID.");throw a.oid=e,a.supportedOids=["pkcs5PBES2","pbeWithSHAAnd3-KeyTripleDES-CBC","pbewithSHAAnd40BitRC2-CBC"],a}},i.pbe.getCipherForPBES2=function(e,t,r){var s,o={},u=[];if(!n.validate(t,c,o,u))throw(s=new Error("Cannot read password-based-encryption algorithm parameters. ASN.1 object is not a supported EncryptedPrivateKeyInfo.")).errors=u,s;if((e=n.derToOid(o.kdfOid))!==i.oids.pkcs5PBKDF2)throw(s=new Error("Cannot read encrypted private key. Unsupported key derivation function OID.")).oid=e,s.supportedOids=["pkcs5PBKDF2"],s;if((e=n.derToOid(o.encOid))!==i.oids["aes128-CBC"]&&e!==i.oids["aes192-CBC"]&&e!==i.oids["aes256-CBC"]&&e!==i.oids["des-EDE3-CBC"]&&e!==i.oids.desCBC)throw(s=new Error("Cannot read encrypted private key. Unsupported encryption scheme OID.")).oid=e,s.supportedOids=["aes128-CBC","aes192-CBC","aes256-CBC","des-EDE3-CBC","desCBC"],s;var l,p,h=o.kdfSalt,d=a.util.createBuffer(o.kdfIterationCount);switch(d=d.getInt(d.length()<<3),i.oids[e]){case"aes128-CBC":l=16,p=a.aes.createDecryptionCipher;break;case"aes192-CBC":l=24,p=a.aes.createDecryptionCipher;break;case"aes256-CBC":l=32,p=a.aes.createDecryptionCipher;break;case"des-EDE3-CBC":l=24,p=a.des.createDecryptionCipher;break;case"desCBC":l=8,p=a.des.createDecryptionCipher}var y=f(o.prfOid),g=a.pkcs5.pbkdf2(r,h,d,l,y),v=o.encIv,m=p(g);return m.start(v),m},i.pbe.getCipherForPKCS12PBE=function(e,t,r){var s={},o=[];if(!n.validate(t,l,s,o))throw(y=new Error("Cannot read password-based-encryption algorithm parameters. ASN.1 object is not a supported EncryptedPrivateKeyInfo.")).errors=o,y;var c,u,p,h=a.util.createBuffer(s.salt),d=a.util.createBuffer(s.iterations);switch(d=d.getInt(d.length()<<3),e){case i.oids["pbeWithSHAAnd3-KeyTripleDES-CBC"]:c=24,u=8,p=a.des.startDecrypting;break;case i.oids["pbewithSHAAnd40BitRC2-CBC"]:c=5,u=8,p=function(e,t){var r=a.rc2.createDecryptionCipher(e,40);return r.start(t,null),r};break;default:var y;throw(y=new Error("Cannot read PKCS #12 PBE data block. Unsupported OID.")).oid=e,y}var g=f(s.prfOid),v=i.pbe.generatePkcs12Key(r,h,1,d,c,g);return g.start(),p(v,i.pbe.generatePkcs12Key(r,h,2,d,u,g))},i.pbe.opensslDeriveBytes=function(e,t,r,n){if(null==n){if(!("md5"in a.md))throw new Error('"md5" hash algorithm unavailable.');n=a.md.md5.create()}null===t&&(t="");for(var i=[h(n,e+t)],s=16,o=1;s<r;++o,s+=16)i.push(h(n,i[o-1]+e+t));return i.join("").substr(0,r)}}}),U=o({"node_modules/node-forge/lib/pkcs7asn1.js"(e,t){var r=u();g(),p();var a=r.asn1,n=t.exports=r.pkcs7asn1=r.pkcs7asn1||{};r.pkcs7=r.pkcs7||{},r.pkcs7.asn1=n;var i={name:"ContentInfo",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"ContentInfo.ContentType",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"contentType"},{name:"ContentInfo.content",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,constructed:!0,optional:!0,captureAsn1:"content"}]};n.contentInfoValidator=i;var s={name:"EncryptedContentInfo",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"EncryptedContentInfo.contentType",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"contentType"},{name:"EncryptedContentInfo.contentEncryptionAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"EncryptedContentInfo.contentEncryptionAlgorithm.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"encAlgorithm"},{name:"EncryptedContentInfo.contentEncryptionAlgorithm.parameter",tagClass:a.Class.UNIVERSAL,captureAsn1:"encParameter"}]},{name:"EncryptedContentInfo.encryptedContent",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,capture:"encryptedContent",captureAsn1:"encryptedContentAsn1"}]};n.envelopedDataValidator={name:"EnvelopedData",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"EnvelopedData.Version",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"version"},{name:"EnvelopedData.RecipientInfos",tagClass:a.Class.UNIVERSAL,type:a.Type.SET,constructed:!0,captureAsn1:"recipientInfos"}].concat(s)},n.encryptedDataValidator={name:"EncryptedData",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"EncryptedData.Version",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"version"}].concat(s)};var o={name:"SignerInfo",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"SignerInfo.version",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1},{name:"SignerInfo.issuerAndSerialNumber",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"SignerInfo.issuerAndSerialNumber.issuer",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"issuer"},{name:"SignerInfo.issuerAndSerialNumber.serialNumber",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"serial"}]},{name:"SignerInfo.digestAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"SignerInfo.digestAlgorithm.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"digestAlgorithm"},{name:"SignerInfo.digestAlgorithm.parameter",tagClass:a.Class.UNIVERSAL,constructed:!1,captureAsn1:"digestParameter",optional:!0}]},{name:"SignerInfo.authenticatedAttributes",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,constructed:!0,optional:!0,capture:"authenticatedAttributes"},{name:"SignerInfo.digestEncryptionAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,capture:"signatureAlgorithm"},{name:"SignerInfo.encryptedDigest",tagClass:a.Class.UNIVERSAL,type:a.Type.OCTETSTRING,constructed:!1,capture:"signature"},{name:"SignerInfo.unauthenticatedAttributes",tagClass:a.Class.CONTEXT_SPECIFIC,type:1,constructed:!0,optional:!0,capture:"unauthenticatedAttributes"}]};n.signedDataValidator={name:"SignedData",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"SignedData.Version",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"version"},{name:"SignedData.DigestAlgorithms",tagClass:a.Class.UNIVERSAL,type:a.Type.SET,constructed:!0,captureAsn1:"digestAlgorithms"},i,{name:"SignedData.Certificates",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,optional:!0,captureAsn1:"certificates"},{name:"SignedData.CertificateRevocationLists",tagClass:a.Class.CONTEXT_SPECIFIC,type:1,optional:!0,captureAsn1:"crls"},{name:"SignedData.SignerInfos",tagClass:a.Class.UNIVERSAL,type:a.Type.SET,capture:"signerInfos",optional:!0,value:[o]}]},n.recipientInfoValidator={name:"RecipientInfo",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"RecipientInfo.version",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"version"},{name:"RecipientInfo.issuerAndSerial",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"RecipientInfo.issuerAndSerial.issuer",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"issuer"},{name:"RecipientInfo.issuerAndSerial.serialNumber",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"serial"}]},{name:"RecipientInfo.keyEncryptionAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"RecipientInfo.keyEncryptionAlgorithm.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"encAlgorithm"},{name:"RecipientInfo.keyEncryptionAlgorithm.parameter",tagClass:a.Class.UNIVERSAL,constructed:!1,captureAsn1:"encParameter",optional:!0}]},{name:"RecipientInfo.encryptedKey",tagClass:a.Class.UNIVERSAL,type:a.Type.OCTETSTRING,constructed:!1,capture:"encKey"}]}}}),D=o({"node_modules/node-forge/lib/mgf1.js"(e,t){var r=u();p(),r.mgf=r.mgf||{},(t.exports=r.mgf.mgf1=r.mgf1=r.mgf1||{}).create=function(e){return{generate:function(t,a){for(var n=new r.util.ByteBuffer,i=Math.ceil(a/e.digestLength),s=0;s<i;s++){var o=new r.util.ByteBuffer;o.putInt32(s),e.start(),e.update(t+o.getBytes()),n.putBuffer(e.digest())}return n.truncate(n.length()-a),n.getBytes()}}}}}),P=o({"node_modules/node-forge/lib/mgf.js"(e,t){var r=u();D(),t.exports=r.mgf=r.mgf||{},r.mgf.mgf1=r.mgf1}}),O=o({"node_modules/node-forge/lib/pss.js"(e,t){var r=u();b(),p(),(t.exports=r.pss=r.pss||{}).create=function(e){3===arguments.length&&(e={md:arguments[0],mgf:arguments[1],saltLength:arguments[2]});var t,a=e.md,n=e.mgf,i=a.digestLength,s=e.salt||null;if("string"==typeof s&&(s=r.util.createBuffer(s)),"saltLength"in e)t=e.saltLength;else{if(null===s)throw new Error("Salt length not specified or specific salt not given.");t=s.length()}if(null!==s&&s.length()!==t)throw new Error("Given salt length does not match length of given salt.");var o=e.prng||r.random,c={encode:function(e,c){var u,l,p=c-1,h=Math.ceil(p/8),f=e.digest().getBytes();if(h<i+t+2)throw new Error("Message is too long to encrypt.");l=null===s?o.getBytesSync(t):s.bytes();var d=new r.util.ByteBuffer;d.fillWithByte(0,8),d.putBytes(f),d.putBytes(l),a.start(),a.update(d.getBytes());var y=a.digest().getBytes(),g=new r.util.ByteBuffer;g.fillWithByte(0,h-t-i-2),g.putByte(1),g.putBytes(l);var v=g.getBytes(),m=h-i-1,C=n.generate(y,m),E="";for(u=0;u<m;u++)E+=String.fromCharCode(v.charCodeAt(u)^C.charCodeAt(u));var S=65280>>8*h-p&255;return(E=String.fromCharCode(E.charCodeAt(0)&~S)+E.substr(1))+y+String.fromCharCode(188)},verify:function(e,s,o){var c,u=o-1,l=Math.ceil(u/8);if(s=s.substr(-l),l<i+t+2)throw new Error("Inconsistent parameters to PSS signature verification.");if(188!==s.charCodeAt(l-1))throw new Error("Encoded message does not end in 0xBC.");var p=l-i-1,h=s.substr(0,p),f=s.substr(p,i),d=65280>>8*l-u&255;if(h.charCodeAt(0)&d)throw new Error("Bits beyond keysize not zero as expected.");var y=n.generate(f,p),g="";for(c=0;c<p;c++)g+=String.fromCharCode(h.charCodeAt(c)^y.charCodeAt(c));g=String.fromCharCode(g.charCodeAt(0)&~d)+g.substr(1);var v=l-i-t-2;for(c=0;c<v;c++)if(0!==g.charCodeAt(c))throw new Error("Leftmost octets not zero as expected");if(1!==g.charCodeAt(v))throw new Error("Inconsistent PSS signature, 0x01 marker not found");var m=g.substr(-t),C=new r.util.ByteBuffer;return C.fillWithByte(0,8),C.putBytes(e),C.putBytes(m),a.start(),a.update(C.getBytes()),f===a.digest().getBytes()}};return c}}}),V=o({"node_modules/node-forge/lib/x509.js"(e,t){var r=u();d(),g(),S(),v(),P(),y(),E(),O(),k(),p();var a=r.asn1,n=t.exports=r.pki=r.pki||{},i=n.oids,s={};s.CN=i.commonName,s.commonName="CN",s.C=i.countryName,s.countryName="C",s.L=i.localityName,s.localityName="L",s.ST=i.stateOrProvinceName,s.stateOrProvinceName="ST",s.O=i.organizationName,s.organizationName="O",s.OU=i.organizationalUnitName,s.organizationalUnitName="OU",s.E=i.emailAddress,s.emailAddress="E";var o=r.pki.rsa.publicKeyValidator,c={name:"Certificate",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"Certificate.TBSCertificate",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"tbsCertificate",value:[{name:"Certificate.TBSCertificate.version",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,constructed:!0,optional:!0,value:[{name:"Certificate.TBSCertificate.version.integer",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"certVersion"}]},{name:"Certificate.TBSCertificate.serialNumber",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"certSerialNumber"},{name:"Certificate.TBSCertificate.signature",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"Certificate.TBSCertificate.signature.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"certinfoSignatureOid"},{name:"Certificate.TBSCertificate.signature.parameters",tagClass:a.Class.UNIVERSAL,optional:!0,captureAsn1:"certinfoSignatureParams"}]},{name:"Certificate.TBSCertificate.issuer",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"certIssuer"},{name:"Certificate.TBSCertificate.validity",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"Certificate.TBSCertificate.validity.notBefore (utc)",tagClass:a.Class.UNIVERSAL,type:a.Type.UTCTIME,constructed:!1,optional:!0,capture:"certValidity1UTCTime"},{name:"Certificate.TBSCertificate.validity.notBefore (generalized)",tagClass:a.Class.UNIVERSAL,type:a.Type.GENERALIZEDTIME,constructed:!1,optional:!0,capture:"certValidity2GeneralizedTime"},{name:"Certificate.TBSCertificate.validity.notAfter (utc)",tagClass:a.Class.UNIVERSAL,type:a.Type.UTCTIME,constructed:!1,optional:!0,capture:"certValidity3UTCTime"},{name:"Certificate.TBSCertificate.validity.notAfter (generalized)",tagClass:a.Class.UNIVERSAL,type:a.Type.GENERALIZEDTIME,constructed:!1,optional:!0,capture:"certValidity4GeneralizedTime"}]},{name:"Certificate.TBSCertificate.subject",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"certSubject"},o,{name:"Certificate.TBSCertificate.issuerUniqueID",tagClass:a.Class.CONTEXT_SPECIFIC,type:1,constructed:!0,optional:!0,value:[{name:"Certificate.TBSCertificate.issuerUniqueID.id",tagClass:a.Class.UNIVERSAL,type:a.Type.BITSTRING,constructed:!1,captureBitStringValue:"certIssuerUniqueId"}]},{name:"Certificate.TBSCertificate.subjectUniqueID",tagClass:a.Class.CONTEXT_SPECIFIC,type:2,constructed:!0,optional:!0,value:[{name:"Certificate.TBSCertificate.subjectUniqueID.id",tagClass:a.Class.UNIVERSAL,type:a.Type.BITSTRING,constructed:!1,captureBitStringValue:"certSubjectUniqueId"}]},{name:"Certificate.TBSCertificate.extensions",tagClass:a.Class.CONTEXT_SPECIFIC,type:3,constructed:!0,captureAsn1:"certExtensions",optional:!0}]},{name:"Certificate.signatureAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"Certificate.signatureAlgorithm.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"certSignatureOid"},{name:"Certificate.TBSCertificate.signature.parameters",tagClass:a.Class.UNIVERSAL,optional:!0,captureAsn1:"certSignatureParams"}]},{name:"Certificate.signatureValue",tagClass:a.Class.UNIVERSAL,type:a.Type.BITSTRING,constructed:!1,captureBitStringValue:"certSignature"}]},l={name:"rsapss",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"rsapss.hashAlgorithm",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,constructed:!0,value:[{name:"rsapss.hashAlgorithm.AlgorithmIdentifier",tagClass:a.Class.UNIVERSAL,type:a.Class.SEQUENCE,constructed:!0,optional:!0,value:[{name:"rsapss.hashAlgorithm.AlgorithmIdentifier.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"hashOid"}]}]},{name:"rsapss.maskGenAlgorithm",tagClass:a.Class.CONTEXT_SPECIFIC,type:1,constructed:!0,value:[{name:"rsapss.maskGenAlgorithm.AlgorithmIdentifier",tagClass:a.Class.UNIVERSAL,type:a.Class.SEQUENCE,constructed:!0,optional:!0,value:[{name:"rsapss.maskGenAlgorithm.AlgorithmIdentifier.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"maskGenOid"},{name:"rsapss.maskGenAlgorithm.AlgorithmIdentifier.params",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"rsapss.maskGenAlgorithm.AlgorithmIdentifier.params.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"maskGenHashOid"}]}]}]},{name:"rsapss.saltLength",tagClass:a.Class.CONTEXT_SPECIFIC,type:2,optional:!0,value:[{name:"rsapss.saltLength.saltLength",tagClass:a.Class.UNIVERSAL,type:a.Class.INTEGER,constructed:!1,capture:"saltLength"}]},{name:"rsapss.trailerField",tagClass:a.Class.CONTEXT_SPECIFIC,type:3,optional:!0,value:[{name:"rsapss.trailer.trailer",tagClass:a.Class.UNIVERSAL,type:a.Class.INTEGER,constructed:!1,capture:"trailer"}]}]},h={name:"CertificationRequestInfo",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"certificationRequestInfo",value:[{name:"CertificationRequestInfo.integer",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"certificationRequestInfoVersion"},{name:"CertificationRequestInfo.subject",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"certificationRequestInfoSubject"},o,{name:"CertificationRequestInfo.attributes",tagClass:a.Class.CONTEXT_SPECIFIC,type:0,constructed:!0,optional:!0,capture:"certificationRequestInfoAttributes",value:[{name:"CertificationRequestInfo.attributes",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"CertificationRequestInfo.attributes.type",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1},{name:"CertificationRequestInfo.attributes.value",tagClass:a.Class.UNIVERSAL,type:a.Type.SET,constructed:!0}]}]}]},f={name:"CertificationRequest",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,captureAsn1:"csr",value:[h,{name:"CertificationRequest.signatureAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"CertificationRequest.signatureAlgorithm.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"csrSignatureOid"},{name:"CertificationRequest.signatureAlgorithm.parameters",tagClass:a.Class.UNIVERSAL,optional:!0,captureAsn1:"csrSignatureParams"}]},{name:"CertificationRequest.signature",tagClass:a.Class.UNIVERSAL,type:a.Type.BITSTRING,constructed:!1,captureBitStringValue:"csrSignature"}]};function m(e,t){"string"==typeof t&&(t={shortName:t});for(var r,a=null,n=0;null===a&&n<e.attributes.length;++n)r=e.attributes[n],(t.type&&t.type===r.type||t.name&&t.name===r.name||t.shortName&&t.shortName===r.shortName)&&(a=r);return a}n.RDNAttributesAsArray=function(e,t){for(var r,n,o,c=[],u=0;u<e.value.length;++u){r=e.value[u];for(var l=0;l<r.value.length;++l)o={},n=r.value[l],o.type=a.derToOid(n.value[0].value),o.value=n.value[1].value,o.valueTagClass=n.value[1].type,o.type in i&&(o.name=i[o.type],o.name in s&&(o.shortName=s[o.name])),t&&(t.update(o.type),t.update(o.value)),c.push(o)}return c},n.CRIAttributesAsArray=function(e){for(var t=[],r=0;r<e.length;++r)for(var o=e[r],c=a.derToOid(o.value[0].value),u=o.value[1].value,l=0;l<u.length;++l){var p={};if(p.type=c,p.value=u[l].value,p.valueTagClass=u[l].type,p.type in i&&(p.name=i[p.type],p.name in s&&(p.shortName=s[p.name])),p.type===i.extensionRequest){p.extensions=[];for(var h=0;h<p.value.length;++h)p.extensions.push(n.certificateExtensionFromAsn1(p.value[h]))}t.push(p)}return t};var C=function(e,t,r){var n={};if(e!==i["RSASSA-PSS"])return n;r&&(n={hash:{algorithmOid:i.sha1},mgf:{algorithmOid:i.mgf1,hash:{algorithmOid:i.sha1}},saltLength:20});var s={},o=[];if(!a.validate(t,l,s,o)){var c=new Error("Cannot read RSASSA-PSS parameter block.");throw c.errors=o,c}return void 0!==s.hashOid&&(n.hash=n.hash||{},n.hash.algorithmOid=a.derToOid(s.hashOid)),void 0!==s.maskGenOid&&(n.mgf=n.mgf||{},n.mgf.algorithmOid=a.derToOid(s.maskGenOid),n.mgf.hash=n.mgf.hash||{},n.mgf.hash.algorithmOid=a.derToOid(s.maskGenHashOid)),void 0!==s.saltLength&&(n.saltLength=s.saltLength.charCodeAt(0)),n},T=function(e){switch(i[e.signatureOid]){case"sha1WithRSAEncryption":case"sha1WithRSASignature":return r.md.sha1.create();case"md5WithRSAEncryption":return r.md.md5.create();case"sha256WithRSAEncryption":case"RSASSA-PSS":return r.md.sha256.create();case"sha384WithRSAEncryption":return r.md.sha384.create();case"sha512WithRSAEncryption":return r.md.sha512.create();default:var t=new Error("Could not compute "+e.type+" digest. Unknown signature OID.");throw t.signatureOid=e.signatureOid,t}},I=function(e){var t,a=e.certificate;switch(a.signatureOid){case i.sha1WithRSAEncryption:case i.sha1WithRSASignature:break;case i["RSASSA-PSS"]:var n,s,o;if(void 0===(n=i[a.signatureParameters.mgf.hash.algorithmOid])||void 0===r.md[n])throw(o=new Error("Unsupported MGF hash function.")).oid=a.signatureParameters.mgf.hash.algorithmOid,o.name=n,o;if(void 0===(s=i[a.signatureParameters.mgf.algorithmOid])||void 0===r.mgf[s])throw(o=new Error("Unsupported MGF function.")).oid=a.signatureParameters.mgf.algorithmOid,o.name=s,o;if(s=r.mgf[s].create(r.md[n].create()),void 0===(n=i[a.signatureParameters.hash.algorithmOid])||void 0===r.md[n])throw(o=new Error("Unsupported RSASSA-PSS hash function.")).oid=a.signatureParameters.hash.algorithmOid,o.name=n,o;t=r.pss.create(r.md[n].create(),s,a.signatureParameters.saltLength)}return a.publicKey.verify(e.md.digest().getBytes(),e.signature,t)};function A(e){for(var t,n,i=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]),s=e.attributes,o=0;o<s.length;++o){var c=(t=s[o]).value,u=a.Type.PRINTABLESTRING;"valueTagClass"in t&&(u=t.valueTagClass)===a.Type.UTF8&&(c=r.util.encodeUtf8(c)),n=a.create(a.Class.UNIVERSAL,a.Type.SET,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(t.type).getBytes()),a.create(a.Class.UNIVERSAL,u,!1,c)])]),i.value.push(n)}return i}function b(e){for(var t,r=0;r<e.length;++r){if(void 0===(t=e[r]).name&&(t.type&&t.type in n.oids?t.name=n.oids[t.type]:t.shortName&&t.shortName in s&&(t.name=n.oids[s[t.shortName]])),void 0===t.type){if(!t.name||!(t.name in n.oids))throw(c=new Error("Attribute type not specified.")).attribute=t,c;t.type=n.oids[t.name]}if(void 0===t.shortName&&t.name&&t.name in s&&(t.shortName=s[t.name]),t.type===i.extensionRequest&&(t.valueConstructed=!0,t.valueTagClass=a.Type.SEQUENCE,!t.value&&t.extensions)){t.value=[];for(var o=0;o<t.extensions.length;++o)t.value.push(n.certificateExtensionToAsn1(B(t.extensions[o])))}var c;if(void 0===t.value)throw(c=new Error("Attribute value not specified.")).attribute=t,c}}function B(e,t){if(t=t||{},void 0===e.name&&e.id&&e.id in n.oids&&(e.name=n.oids[e.id]),void 0===e.id){if(!e.name||!(e.name in n.oids))throw(E=new Error("Extension ID not specified.")).extension=e,E;e.id=n.oids[e.name]}if(void 0!==e.value)return e;if("keyUsage"===e.name){var s=0,o=0,c=0;e.digitalSignature&&(o|=128,s=7),e.nonRepudiation&&(o|=64,s=6),e.keyEncipherment&&(o|=32,s=5),e.dataEncipherment&&(o|=16,s=4),e.keyAgreement&&(o|=8,s=3),e.keyCertSign&&(o|=4,s=2),e.cRLSign&&(o|=2,s=1),e.encipherOnly&&(o|=1,s=0),e.decipherOnly&&(c|=128,s=7);var u=String.fromCharCode(s);0!==c?u+=String.fromCharCode(o)+String.fromCharCode(c):0!==o&&(u+=String.fromCharCode(o)),e.value=a.create(a.Class.UNIVERSAL,a.Type.BITSTRING,!1,u)}else if("basicConstraints"===e.name)e.value=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]),e.cA&&e.value.value.push(a.create(a.Class.UNIVERSAL,a.Type.BOOLEAN,!1,String.fromCharCode(255))),"pathLenConstraint"in e&&e.value.value.push(a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(e.pathLenConstraint).getBytes()));else if("extKeyUsage"===e.name){e.value=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]);var l=e.value.value;for(var p in e)!0===e[p]&&(p in i?l.push(a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(i[p]).getBytes())):-1!==p.indexOf(".")&&l.push(a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(p).getBytes())))}else if("nsCertType"===e.name){s=0,o=0;e.client&&(o|=128,s=7),e.server&&(o|=64,s=6),e.email&&(o|=32,s=5),e.objsign&&(o|=16,s=4),e.reserved&&(o|=8,s=3),e.sslCA&&(o|=4,s=2),e.emailCA&&(o|=2,s=1),e.objCA&&(o|=1,s=0);u=String.fromCharCode(s);0!==o&&(u+=String.fromCharCode(o)),e.value=a.create(a.Class.UNIVERSAL,a.Type.BITSTRING,!1,u)}else if("subjectAltName"===e.name||"issuerAltName"===e.name){e.value=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]);for(var h=0;h<e.altNames.length;++h){u=(v=e.altNames[h]).value;if(7===v.type&&v.ip){if(null===(u=r.util.bytesFromIP(v.ip)))throw(E=new Error('Extension "ip" value is not a valid IPv4 or IPv6 address.')).extension=e,E}else 8===v.type&&(u=v.oid?a.oidToDer(a.oidToDer(v.oid)):a.oidToDer(u));e.value.value.push(a.create(a.Class.CONTEXT_SPECIFIC,v.type,!1,u))}}else if("nsComment"===e.name&&t.cert){if(!/^[\x00-\x7F]*$/.test(e.comment)||e.comment.length<1||e.comment.length>128)throw new Error('Invalid "nsComment" content.');e.value=a.create(a.Class.UNIVERSAL,a.Type.IA5STRING,!1,e.comment)}else if("subjectKeyIdentifier"===e.name&&t.cert){var f=t.cert.generateSubjectKeyIdentifier();e.subjectKeyIdentifier=f.toHex(),e.value=a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,f.getBytes())}else if("authorityKeyIdentifier"===e.name&&t.cert){e.value=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]);l=e.value.value;if(e.keyIdentifier){var d=!0===e.keyIdentifier?t.cert.generateSubjectKeyIdentifier().getBytes():e.keyIdentifier;l.push(a.create(a.Class.CONTEXT_SPECIFIC,0,!1,d))}if(e.authorityCertIssuer){var y=[a.create(a.Class.CONTEXT_SPECIFIC,4,!0,[A(!0===e.authorityCertIssuer?t.cert.issuer:e.authorityCertIssuer)])];l.push(a.create(a.Class.CONTEXT_SPECIFIC,1,!0,y))}if(e.serialNumber){var g=r.util.hexToBytes(!0===e.serialNumber?t.cert.serialNumber:e.serialNumber);l.push(a.create(a.Class.CONTEXT_SPECIFIC,2,!1,g))}}else if("cRLDistributionPoints"===e.name){e.value=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]);l=e.value.value;var v,m=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]),C=a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[]);for(h=0;h<e.altNames.length;++h){u=(v=e.altNames[h]).value;if(7===v.type&&v.ip){if(null===(u=r.util.bytesFromIP(v.ip)))throw(E=new Error('Extension "ip" value is not a valid IPv4 or IPv6 address.')).extension=e,E}else 8===v.type&&(u=v.oid?a.oidToDer(a.oidToDer(v.oid)):a.oidToDer(u));C.value.push(a.create(a.Class.CONTEXT_SPECIFIC,v.type,!1,u))}m.value.push(a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[C])),l.push(m)}var E;if(void 0===e.value)throw(E=new Error("Extension value not specified.")).extension=e,E;return e}function N(e,t){if(e===i["RSASSA-PSS"]){var r=[];return void 0!==t.hash.algorithmOid&&r.push(a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(t.hash.algorithmOid).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")])])),void 0!==t.mgf.algorithmOid&&r.push(a.create(a.Class.CONTEXT_SPECIFIC,1,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(t.mgf.algorithmOid).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(t.mgf.hash.algorithmOid).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")])])])),void 0!==t.saltLength&&r.push(a.create(a.Class.CONTEXT_SPECIFIC,2,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(t.saltLength).getBytes())])),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,r)}return a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")}function w(e){var t=a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[]);if(0===e.attributes.length)return t;for(var n=e.attributes,i=0;i<n.length;++i){var s=n[i],o=s.value,c=a.Type.UTF8;"valueTagClass"in s&&(c=s.valueTagClass),c===a.Type.UTF8&&(o=r.util.encodeUtf8(o));var u=!1;"valueConstructed"in s&&(u=s.valueConstructed);var l=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(s.type).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SET,!0,[a.create(a.Class.UNIVERSAL,c,u,o)])]);t.value.push(l)}return t}n.certificateFromPem=function(e,t,i){var s=r.pem.decode(e)[0];if("CERTIFICATE"!==s.type&&"X509 CERTIFICATE"!==s.type&&"TRUSTED CERTIFICATE"!==s.type){var o=new Error('Could not convert certificate from PEM; PEM header type is not "CERTIFICATE", "X509 CERTIFICATE", or "TRUSTED CERTIFICATE".');throw o.headerType=s.type,o}if(s.procType&&"ENCRYPTED"===s.procType.type)throw new Error("Could not convert certificate from PEM; PEM is encrypted.");var c=a.fromDer(s.body,i);return n.certificateFromAsn1(c,t)},n.certificateToPem=function(e,t){var i={type:"CERTIFICATE",body:a.toDer(n.certificateToAsn1(e)).getBytes()};return r.pem.encode(i,{maxline:t})},n.publicKeyFromPem=function(e){var t=r.pem.decode(e)[0];if("PUBLIC KEY"!==t.type&&"RSA PUBLIC KEY"!==t.type){var i=new Error('Could not convert public key from PEM; PEM header type is not "PUBLIC KEY" or "RSA PUBLIC KEY".');throw i.headerType=t.type,i}if(t.procType&&"ENCRYPTED"===t.procType.type)throw new Error("Could not convert public key from PEM; PEM is encrypted.");var s=a.fromDer(t.body);return n.publicKeyFromAsn1(s)},n.publicKeyToPem=function(e,t){var i={type:"PUBLIC KEY",body:a.toDer(n.publicKeyToAsn1(e)).getBytes()};return r.pem.encode(i,{maxline:t})},n.publicKeyToRSAPublicKeyPem=function(e,t){var i={type:"RSA PUBLIC KEY",body:a.toDer(n.publicKeyToRSAPublicKey(e)).getBytes()};return r.pem.encode(i,{maxline:t})},n.getPublicKeyFingerprint=function(e,t){var i,s=(t=t||{}).md||r.md.sha1.create();switch(t.type||"RSAPublicKey"){case"RSAPublicKey":i=a.toDer(n.publicKeyToRSAPublicKey(e)).getBytes();break;case"SubjectPublicKeyInfo":i=a.toDer(n.publicKeyToAsn1(e)).getBytes();break;default:throw new Error('Unknown fingerprint type "'+t.type+'".')}s.start(),s.update(i);var o=s.digest();if("hex"===t.encoding){var c=o.toHex();return t.delimiter?c.match(/.{2}/g).join(t.delimiter):c}if("binary"===t.encoding)return o.getBytes();if(t.encoding)throw new Error('Unknown encoding "'+t.encoding+'".');return o},n.certificationRequestFromPem=function(e,t,i){var s=r.pem.decode(e)[0];if("CERTIFICATE REQUEST"!==s.type){var o=new Error('Could not convert certification request from PEM; PEM header type is not "CERTIFICATE REQUEST".');throw o.headerType=s.type,o}if(s.procType&&"ENCRYPTED"===s.procType.type)throw new Error("Could not convert certification request from PEM; PEM is encrypted.");var c=a.fromDer(s.body,i);return n.certificationRequestFromAsn1(c,t)},n.certificationRequestToPem=function(e,t){var i={type:"CERTIFICATE REQUEST",body:a.toDer(n.certificationRequestToAsn1(e)).getBytes()};return r.pem.encode(i,{maxline:t})},n.createCertificate=function(){var e={version:2,serialNumber:"00",signatureOid:null,signature:null,siginfo:{}};return e.siginfo.algorithmOid=null,e.validity={},e.validity.notBefore=new Date,e.validity.notAfter=new Date,e.issuer={},e.issuer.getField=function(t){return m(e.issuer,t)},e.issuer.addField=function(t){b([t]),e.issuer.attributes.push(t)},e.issuer.attributes=[],e.issuer.hash=null,e.subject={},e.subject.getField=function(t){return m(e.subject,t)},e.subject.addField=function(t){b([t]),e.subject.attributes.push(t)},e.subject.attributes=[],e.subject.hash=null,e.extensions=[],e.publicKey=null,e.md=null,e.setSubject=function(t,r){b(t),e.subject.attributes=t,delete e.subject.uniqueId,r&&(e.subject.uniqueId=r),e.subject.hash=null},e.setIssuer=function(t,r){b(t),e.issuer.attributes=t,delete e.issuer.uniqueId,r&&(e.issuer.uniqueId=r),e.issuer.hash=null},e.setExtensions=function(t){for(var r=0;r<t.length;++r)B(t[r],{cert:e});e.extensions=t},e.getExtension=function(t){"string"==typeof t&&(t={name:t});for(var r,a=null,n=0;null===a&&n<e.extensions.length;++n)r=e.extensions[n],(t.id&&r.id===t.id||t.name&&r.name===t.name)&&(a=r);return a},e.sign=function(t,s){e.md=s||r.md.sha1.create();var o=i[e.md.algorithm+"WithRSAEncryption"];if(!o){var c=new Error("Could not compute certificate digest. Unknown message digest algorithm OID.");throw c.algorithm=e.md.algorithm,c}e.signatureOid=e.siginfo.algorithmOid=o,e.tbsCertificate=n.getTBSCertificate(e);var u=a.toDer(e.tbsCertificate);e.md.update(u.getBytes()),e.signature=t.sign(e.md)},e.verify=function(t){var r=!1;if(!e.issued(t)){var i=t.issuer,s=e.subject,o=new Error("The parent certificate did not issue the given child certificate; the child certificate's issuer does not match the parent's subject.");throw o.expectedIssuer=s.attributes,o.actualIssuer=i.attributes,o}var c=t.md;if(null===c){c=T({signatureOid:t.signatureOid,type:"certificate"});var u=t.tbsCertificate||n.getTBSCertificate(t),l=a.toDer(u);c.update(l.getBytes())}return null!==c&&(r=I({certificate:e,md:c,signature:t.signature})),r},e.isIssuer=function(t){var r=!1,a=e.issuer,n=t.subject;if(a.hash&&n.hash)r=a.hash===n.hash;else if(a.attributes.length===n.attributes.length){var i,s;r=!0;for(var o=0;r&&o<a.attributes.length;++o)i=a.attributes[o],s=n.attributes[o],i.type===s.type&&i.value===s.value||(r=!1)}return r},e.issued=function(t){return t.isIssuer(e)},e.generateSubjectKeyIdentifier=function(){return n.getPublicKeyFingerprint(e.publicKey,{type:"RSAPublicKey"})},e.verifySubjectKeyIdentifier=function(){for(var t=i.subjectKeyIdentifier,a=0;a<e.extensions.length;++a){var n=e.extensions[a];if(n.id===t){var s=e.generateSubjectKeyIdentifier().getBytes();return r.util.hexToBytes(n.subjectKeyIdentifier)===s}}return!1},e},n.certificateFromAsn1=function(e,t){var i={},s=[];if(!a.validate(e,c,i,s)){var o=new Error("Cannot read X.509 certificate. ASN.1 object is not an X509v3 Certificate.");throw o.errors=s,o}if(a.derToOid(i.publicKeyOid)!==n.oids.rsaEncryption)throw new Error("Cannot read public key. OID is not RSA.");var u=n.createCertificate();u.version=i.certVersion?i.certVersion.charCodeAt(0):0;var l=r.util.createBuffer(i.certSerialNumber);u.serialNumber=l.toHex(),u.signatureOid=r.asn1.derToOid(i.certSignatureOid),u.signatureParameters=C(u.signatureOid,i.certSignatureParams,!0),u.siginfo.algorithmOid=r.asn1.derToOid(i.certinfoSignatureOid),u.siginfo.parameters=C(u.siginfo.algorithmOid,i.certinfoSignatureParams,!1),u.signature=i.certSignature;var p=[];if(void 0!==i.certValidity1UTCTime&&p.push(a.utcTimeToDate(i.certValidity1UTCTime)),void 0!==i.certValidity2GeneralizedTime&&p.push(a.generalizedTimeToDate(i.certValidity2GeneralizedTime)),void 0!==i.certValidity3UTCTime&&p.push(a.utcTimeToDate(i.certValidity3UTCTime)),void 0!==i.certValidity4GeneralizedTime&&p.push(a.generalizedTimeToDate(i.certValidity4GeneralizedTime)),p.length>2)throw new Error("Cannot read notBefore/notAfter validity times; more than two times were provided in the certificate.");if(p.length<2)throw new Error("Cannot read notBefore/notAfter validity times; they were not provided as either UTCTime or GeneralizedTime.");if(u.validity.notBefore=p[0],u.validity.notAfter=p[1],u.tbsCertificate=i.tbsCertificate,t){u.md=T({signatureOid:u.signatureOid,type:"certificate"});var h=a.toDer(u.tbsCertificate);u.md.update(h.getBytes())}var f=r.md.sha1.create(),d=a.toDer(i.certIssuer);f.update(d.getBytes()),u.issuer.getField=function(e){return m(u.issuer,e)},u.issuer.addField=function(e){b([e]),u.issuer.attributes.push(e)},u.issuer.attributes=n.RDNAttributesAsArray(i.certIssuer),i.certIssuerUniqueId&&(u.issuer.uniqueId=i.certIssuerUniqueId),u.issuer.hash=f.digest().toHex();var y=r.md.sha1.create(),g=a.toDer(i.certSubject);return y.update(g.getBytes()),u.subject.getField=function(e){return m(u.subject,e)},u.subject.addField=function(e){b([e]),u.subject.attributes.push(e)},u.subject.attributes=n.RDNAttributesAsArray(i.certSubject),i.certSubjectUniqueId&&(u.subject.uniqueId=i.certSubjectUniqueId),u.subject.hash=y.digest().toHex(),i.certExtensions?u.extensions=n.certificateExtensionsFromAsn1(i.certExtensions):u.extensions=[],u.publicKey=n.publicKeyFromAsn1(i.subjectPublicKeyInfo),u},n.certificateExtensionsFromAsn1=function(e){for(var t=[],r=0;r<e.value.length;++r)for(var a=e.value[r],i=0;i<a.value.length;++i)t.push(n.certificateExtensionFromAsn1(a.value[i]));return t},n.certificateExtensionFromAsn1=function(e){var t={};if(t.id=a.derToOid(e.value[0].value),t.critical=!1,e.value[1].type===a.Type.BOOLEAN?(t.critical=0!==e.value[1].value.charCodeAt(0),t.value=e.value[2].value):t.value=e.value[1].value,t.id in i)if(t.name=i[t.id],"keyUsage"===t.name){var n=0,s=0;(c=a.fromDer(t.value)).value.length>1&&(n=c.value.charCodeAt(1),s=c.value.length>2?c.value.charCodeAt(2):0),t.digitalSignature=!(128&~n),t.nonRepudiation=!(64&~n),t.keyEncipherment=!(32&~n),t.dataEncipherment=!(16&~n),t.keyAgreement=!(8&~n),t.keyCertSign=!(4&~n),t.cRLSign=!(2&~n),t.encipherOnly=!(1&~n),t.decipherOnly=!(128&~s)}else if("basicConstraints"===t.name){(c=a.fromDer(t.value)).value.length>0&&c.value[0].type===a.Type.BOOLEAN?t.cA=0!==c.value[0].value.charCodeAt(0):t.cA=!1;var o=null;c.value.length>0&&c.value[0].type===a.Type.INTEGER?o=c.value[0].value:c.value.length>1&&(o=c.value[1].value),null!==o&&(t.pathLenConstraint=a.derToInteger(o))}else if("extKeyUsage"===t.name)for(var c=a.fromDer(t.value),u=0;u<c.value.length;++u){var l=a.derToOid(c.value[u].value);l in i?t[i[l]]=!0:t[l]=!0}else if("nsCertType"===t.name){n=0;(c=a.fromDer(t.value)).value.length>1&&(n=c.value.charCodeAt(1)),t.client=!(128&~n),t.server=!(64&~n),t.email=!(32&~n),t.objsign=!(16&~n),t.reserved=!(8&~n),t.sslCA=!(4&~n),t.emailCA=!(2&~n),t.objCA=!(1&~n)}else if("subjectAltName"===t.name||"issuerAltName"===t.name){var p;t.altNames=[];c=a.fromDer(t.value);for(var h=0;h<c.value.length;++h){var f={type:(p=c.value[h]).type,value:p.value};switch(t.altNames.push(f),p.type){case 1:case 2:case 6:break;case 7:f.ip=r.util.bytesToIP(p.value);break;case 8:f.oid=a.derToOid(p.value)}}}else if("subjectKeyIdentifier"===t.name){c=a.fromDer(t.value);t.subjectKeyIdentifier=r.util.bytesToHex(c.value)}return t},n.certificationRequestFromAsn1=function(e,t){var i={},s=[];if(!a.validate(e,f,i,s)){var o=new Error("Cannot read PKCS#10 certificate request. ASN.1 object is not a PKCS#10 CertificationRequest.");throw o.errors=s,o}if(a.derToOid(i.publicKeyOid)!==n.oids.rsaEncryption)throw new Error("Cannot read public key. OID is not RSA.");var c=n.createCertificationRequest();if(c.version=i.csrVersion?i.csrVersion.charCodeAt(0):0,c.signatureOid=r.asn1.derToOid(i.csrSignatureOid),c.signatureParameters=C(c.signatureOid,i.csrSignatureParams,!0),c.siginfo.algorithmOid=r.asn1.derToOid(i.csrSignatureOid),c.siginfo.parameters=C(c.siginfo.algorithmOid,i.csrSignatureParams,!1),c.signature=i.csrSignature,c.certificationRequestInfo=i.certificationRequestInfo,t){c.md=T({signatureOid:c.signatureOid,type:"certification request"});var u=a.toDer(c.certificationRequestInfo);c.md.update(u.getBytes())}var l=r.md.sha1.create();return c.subject.getField=function(e){return m(c.subject,e)},c.subject.addField=function(e){b([e]),c.subject.attributes.push(e)},c.subject.attributes=n.RDNAttributesAsArray(i.certificationRequestInfoSubject,l),c.subject.hash=l.digest().toHex(),c.publicKey=n.publicKeyFromAsn1(i.subjectPublicKeyInfo),c.getAttribute=function(e){return m(c,e)},c.addAttribute=function(e){b([e]),c.attributes.push(e)},c.attributes=n.CRIAttributesAsArray(i.certificationRequestInfoAttributes||[]),c},n.createCertificationRequest=function(){var e={version:0,signatureOid:null,signature:null,siginfo:{}};return e.siginfo.algorithmOid=null,e.subject={},e.subject.getField=function(t){return m(e.subject,t)},e.subject.addField=function(t){b([t]),e.subject.attributes.push(t)},e.subject.attributes=[],e.subject.hash=null,e.publicKey=null,e.attributes=[],e.getAttribute=function(t){return m(e,t)},e.addAttribute=function(t){b([t]),e.attributes.push(t)},e.md=null,e.setSubject=function(t){b(t),e.subject.attributes=t,e.subject.hash=null},e.setAttributes=function(t){b(t),e.attributes=t},e.sign=function(t,s){e.md=s||r.md.sha1.create();var o=i[e.md.algorithm+"WithRSAEncryption"];if(!o){var c=new Error("Could not compute certification request digest. Unknown message digest algorithm OID.");throw c.algorithm=e.md.algorithm,c}e.signatureOid=e.siginfo.algorithmOid=o,e.certificationRequestInfo=n.getCertificationRequestInfo(e);var u=a.toDer(e.certificationRequestInfo);e.md.update(u.getBytes()),e.signature=t.sign(e.md)},e.verify=function(){var t=!1,r=e.md;if(null===r){r=T({signatureOid:e.signatureOid,type:"certification request"});var i=e.certificationRequestInfo||n.getCertificationRequestInfo(e),s=a.toDer(i);r.update(s.getBytes())}return null!==r&&(t=I({certificate:e,md:r,signature:e.signature})),t},e};var _=new Date("1950-01-01T00:00:00Z"),R=new Date("2050-01-01T00:00:00Z");function L(e){return e>=_&&e<R?a.create(a.Class.UNIVERSAL,a.Type.UTCTIME,!1,a.dateToUtcTime(e)):a.create(a.Class.UNIVERSAL,a.Type.GENERALIZEDTIME,!1,a.dateToGeneralizedTime(e))}n.getTBSCertificate=function(e){var t=L(e.validity.notBefore),i=L(e.validity.notAfter),s=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(e.version).getBytes())]),a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,r.util.hexToBytes(e.serialNumber)),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.siginfo.algorithmOid).getBytes()),N(e.siginfo.algorithmOid,e.siginfo.parameters)]),A(e.issuer),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[t,i]),A(e.subject),n.publicKeyToAsn1(e.publicKey)]);return e.issuer.uniqueId&&s.value.push(a.create(a.Class.CONTEXT_SPECIFIC,1,!0,[a.create(a.Class.UNIVERSAL,a.Type.BITSTRING,!1,String.fromCharCode(0)+e.issuer.uniqueId)])),e.subject.uniqueId&&s.value.push(a.create(a.Class.CONTEXT_SPECIFIC,2,!0,[a.create(a.Class.UNIVERSAL,a.Type.BITSTRING,!1,String.fromCharCode(0)+e.subject.uniqueId)])),e.extensions.length>0&&s.value.push(n.certificateExtensionsToAsn1(e.extensions)),s},n.getCertificationRequestInfo=function(e){return a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(e.version).getBytes()),A(e.subject),n.publicKeyToAsn1(e.publicKey),w(e)])},n.distinguishedNameToAsn1=function(e){return A(e)},n.certificateToAsn1=function(e){var t=e.tbsCertificate||n.getTBSCertificate(e);return a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[t,a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.signatureOid).getBytes()),N(e.signatureOid,e.signatureParameters)]),a.create(a.Class.UNIVERSAL,a.Type.BITSTRING,!1,String.fromCharCode(0)+e.signature)])},n.certificateExtensionsToAsn1=function(e){var t=a.create(a.Class.CONTEXT_SPECIFIC,3,!0,[]),r=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]);t.value.push(r);for(var i=0;i<e.length;++i)r.value.push(n.certificateExtensionToAsn1(e[i]));return t},n.certificateExtensionToAsn1=function(e){var t=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[]);t.value.push(a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.id).getBytes())),e.critical&&t.value.push(a.create(a.Class.UNIVERSAL,a.Type.BOOLEAN,!1,String.fromCharCode(255)));var r=e.value;return"string"!=typeof e.value&&(r=a.toDer(r).getBytes()),t.value.push(a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,r)),t},n.certificationRequestToAsn1=function(e){var t=e.certificationRequestInfo||n.getCertificationRequestInfo(e);return a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[t,a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.signatureOid).getBytes()),N(e.signatureOid,e.signatureParameters)]),a.create(a.Class.UNIVERSAL,a.Type.BITSTRING,!1,String.fromCharCode(0)+e.signature)])},n.createCaStore=function(e){var t={certs:{}};function i(e){return s(e),t.certs[e.hash]||null}function s(e){if(!e.hash){var t=r.md.sha1.create();e.attributes=n.RDNAttributesAsArray(A(e),t),e.hash=t.digest().toHex()}}if(t.getIssuer=function(e){return i(e.issuer)},t.addCertificate=function(e){if("string"==typeof e&&(e=r.pki.certificateFromPem(e)),s(e.subject),!t.hasCertificate(e))if(e.subject.hash in t.certs){var a=t.certs[e.subject.hash];r.util.isArray(a)||(a=[a]),a.push(e),t.certs[e.subject.hash]=a}else t.certs[e.subject.hash]=e},t.hasCertificate=function(e){"string"==typeof e&&(e=r.pki.certificateFromPem(e));var t=i(e.subject);if(!t)return!1;r.util.isArray(t)||(t=[t]);for(var s=a.toDer(n.certificateToAsn1(e)).getBytes(),o=0;o<t.length;++o){if(s===a.toDer(n.certificateToAsn1(t[o])).getBytes())return!0}return!1},t.listAllCertificates=function(){var e=[];for(var a in t.certs)if(t.certs.hasOwnProperty(a)){var n=t.certs[a];if(r.util.isArray(n))for(var i=0;i<n.length;++i)e.push(n[i]);else e.push(n)}return e},t.removeCertificate=function(e){var o;if("string"==typeof e&&(e=r.pki.certificateFromPem(e)),s(e.subject),!t.hasCertificate(e))return null;var c=i(e.subject);if(!r.util.isArray(c))return o=t.certs[e.subject.hash],delete t.certs[e.subject.hash],o;for(var u=a.toDer(n.certificateToAsn1(e)).getBytes(),l=0;l<c.length;++l){u===a.toDer(n.certificateToAsn1(c[l])).getBytes()&&(o=c[l],c.splice(l,1))}return 0===c.length&&delete t.certs[e.subject.hash],o},e)for(var o=0;o<e.length;++o){var c=e[o];t.addCertificate(c)}return t},n.certificateError={bad_certificate:"forge.pki.BadCertificate",unsupported_certificate:"forge.pki.UnsupportedCertificate",certificate_revoked:"forge.pki.CertificateRevoked",certificate_expired:"forge.pki.CertificateExpired",certificate_unknown:"forge.pki.CertificateUnknown",unknown_ca:"forge.pki.UnknownCertificateAuthority"},n.verifyCertificateChain=function(e,t,a){"function"==typeof a&&(a={verify:a}),a=a||{};var i=(t=t.slice(0)).slice(0),s=a.validityCheckDate;void 0===s&&(s=new Date);var o=!0,c=null,u=0;do{var l=t.shift(),p=null,h=!1;if(s&&(s<l.validity.notBefore||s>l.validity.notAfter)&&(c={message:"Certificate is not valid yet or has expired.",error:n.certificateError.certificate_expired,notBefore:l.validity.notBefore,notAfter:l.validity.notAfter,now:s}),null===c){if(null===(p=t[0]||e.getIssuer(l))&&l.isIssuer(l)&&(h=!0,p=l),p){var f=p;r.util.isArray(f)||(f=[f]);for(var d=!1;!d&&f.length>0;){p=f.shift();try{d=p.verify(l)}catch(e){}}d||(c={message:"Certificate signature is invalid.",error:n.certificateError.bad_certificate})}null!==c||p&&!h||e.hasCertificate(l)||(c={message:"Certificate is not trusted.",error:n.certificateError.unknown_ca})}if(null===c&&p&&!l.isIssuer(p)&&(c={message:"Certificate issuer is invalid.",error:n.certificateError.bad_certificate}),null===c)for(var y={keyUsage:!0,basicConstraints:!0},g=0;null===c&&g<l.extensions.length;++g){var v=l.extensions[g];v.critical&&!(v.name in y)&&(c={message:"Certificate has an unsupported critical extension.",error:n.certificateError.unsupported_certificate})}if(null===c&&(!o||0===t.length&&(!p||h))){var m=l.getExtension("basicConstraints"),C=l.getExtension("keyUsage");if(null!==C&&(C.keyCertSign&&null!==m||(c={message:"Certificate keyUsage or basicConstraints conflict or indicate that the certificate is not a CA. If the certificate is the only one in the chain or isn't the first then the certificate must be a valid CA.",error:n.certificateError.bad_certificate})),null!==c||null===m||m.cA||(c={message:"Certificate basicConstraints indicates the certificate is not a CA.",error:n.certificateError.bad_certificate}),null===c&&null!==C&&"pathLenConstraint"in m)u-1>m.pathLenConstraint&&(c={message:"Certificate basicConstraints pathLenConstraint violated.",error:n.certificateError.bad_certificate})}var E=null===c||c.error,S=a.verify?a.verify(E,u,i):E;if(!0!==S)throw!0===E&&(c={message:"The application rejected the certificate.",error:n.certificateError.bad_certificate}),(S||0===S)&&("object"!=typeof S||r.util.isArray(S)?"string"==typeof S&&(c.error=S):(S.message&&(c.message=S.message),S.error&&(c.error=S.error))),c;c=null,o=!1,++u}while(t.length>0);return!0}}}),K=o({"node_modules/node-forge/lib/pkcs12.js"(e,t){var r=u();g(),m(),y(),U(),L(),b(),k(),w(),p(),V();var a=r.asn1,n=r.pki,i=t.exports=r.pkcs12=r.pkcs12||{},s={name:"ContentInfo",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"ContentInfo.contentType",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"contentType"},{name:"ContentInfo.content",tagClass:a.Class.CONTEXT_SPECIFIC,constructed:!0,captureAsn1:"content"}]},o={name:"PFX",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"PFX.version",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,capture:"version"},s,{name:"PFX.macData",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,optional:!0,captureAsn1:"mac",value:[{name:"PFX.macData.mac",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"PFX.macData.mac.digestAlgorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"PFX.macData.mac.digestAlgorithm.algorithm",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"macAlgorithm"},{name:"PFX.macData.mac.digestAlgorithm.parameters",tagClass:a.Class.UNIVERSAL,captureAsn1:"macAlgorithmParameters"}]},{name:"PFX.macData.mac.digest",tagClass:a.Class.UNIVERSAL,type:a.Type.OCTETSTRING,constructed:!1,capture:"macDigest"}]},{name:"PFX.macData.macSalt",tagClass:a.Class.UNIVERSAL,type:a.Type.OCTETSTRING,constructed:!1,capture:"macSalt"},{name:"PFX.macData.iterations",tagClass:a.Class.UNIVERSAL,type:a.Type.INTEGER,constructed:!1,optional:!0,capture:"macIterations"}]}]},c={name:"SafeBag",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"SafeBag.bagId",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"bagId"},{name:"SafeBag.bagValue",tagClass:a.Class.CONTEXT_SPECIFIC,constructed:!0,captureAsn1:"bagValue"},{name:"SafeBag.bagAttributes",tagClass:a.Class.UNIVERSAL,type:a.Type.SET,constructed:!0,optional:!0,capture:"bagAttributes"}]},l={name:"Attribute",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"Attribute.attrId",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"oid"},{name:"Attribute.attrValues",tagClass:a.Class.UNIVERSAL,type:a.Type.SET,constructed:!0,capture:"values"}]},h={name:"CertBag",tagClass:a.Class.UNIVERSAL,type:a.Type.SEQUENCE,constructed:!0,value:[{name:"CertBag.certId",tagClass:a.Class.UNIVERSAL,type:a.Type.OID,constructed:!1,capture:"certId"},{name:"CertBag.certValue",tagClass:a.Class.CONTEXT_SPECIFIC,constructed:!0,value:[{name:"CertBag.certValue[0]",tagClass:a.Class.UNIVERSAL,type:a.Class.OCTETSTRING,constructed:!1,capture:"cert"}]}]};function f(e,t,r,a){for(var n=[],i=0;i<e.length;i++)for(var s=0;s<e[i].safeBags.length;s++){var o=e[i].safeBags[s];void 0!==a&&o.type!==a||(null!==t?void 0!==o.attributes[t]&&o.attributes[t].indexOf(r)>=0&&n.push(o):n.push(o))}return n}function d(e){if(e.composed||e.constructed){for(var t=r.util.createBuffer(),a=0;a<e.value.length;++a)t.putBytes(e.value[a].value);e.composed=e.constructed=!1,e.value=t.getBytes()}return e}function v(e,t){var i={},s=[];if(!a.validate(e,r.pkcs7.asn1.encryptedDataValidator,i,s))throw(o=new Error("Cannot read EncryptedContentInfo.")).errors=s,o;var o,c=a.derToOid(i.contentType);if(c!==n.oids.data)throw(o=new Error("PKCS#12 EncryptedContentInfo ContentType is not Data.")).oid=c,o;c=a.derToOid(i.encAlgorithm);var u=n.pbe.getCipher(c,i.encParameter,t),l=d(i.encryptedContentAsn1),p=r.util.createBuffer(l.value);if(u.update(p),!u.finish())throw new Error("Failed to decrypt PKCS#12 SafeContents.");return u.output.getBytes()}function C(e,t,r){if(!t&&0===e.length)return[];if((e=a.fromDer(e,t)).tagClass!==a.Class.UNIVERSAL||e.type!==a.Type.SEQUENCE||!0!==e.constructed)throw new Error("PKCS#12 SafeContents expected to be a SEQUENCE OF SafeBag.");for(var i=[],s=0;s<e.value.length;s++){var o=e.value[s],u={},l=[];if(!a.validate(o,c,u,l))throw(g=new Error("Cannot read SafeBag.")).errors=l,g;var p,f,d={type:a.derToOid(u.bagId),attributes:E(u.bagAttributes)};i.push(d);var y=u.bagValue.value[0];switch(d.type){case n.oids.pkcs8ShroudedKeyBag:if(null===(y=n.decryptPrivateKeyInfo(y,r)))throw new Error("Unable to decrypt PKCS#8 ShroudedKeyBag, wrong password?");case n.oids.keyBag:try{d.key=n.privateKeyFromAsn1(y)}catch(e){d.key=null,d.asn1=y}continue;case n.oids.certBag:p=h,f=function(){if(a.derToOid(u.certId)!==n.oids.x509Certificate){var e=new Error("Unsupported certificate type, only X.509 supported.");throw e.oid=a.derToOid(u.certId),e}var r=a.fromDer(u.cert,t);try{d.cert=n.certificateFromAsn1(r,!0)}catch(e){d.cert=null,d.asn1=r}};break;default:var g;throw(g=new Error("Unsupported PKCS#12 SafeBag type.")).oid=d.type,g}if(void 0!==p&&!a.validate(y,p,u,l))throw(g=new Error("Cannot read PKCS#12 "+p.name)).errors=l,g;f()}return i}function E(e){var t={};if(void 0!==e)for(var r=0;r<e.length;++r){var i={},s=[];if(!a.validate(e[r],l,i,s)){var o=new Error("Cannot read PKCS#12 BagAttribute.");throw o.errors=s,o}var c=a.derToOid(i.oid);if(void 0!==n.oids[c]){t[n.oids[c]]=[];for(var u=0;u<i.values.length;++u)t[n.oids[c]].push(i.values[u].value)}}return t}i.pkcs12FromAsn1=function(e,t,c){"string"==typeof t?(c=t,t=!0):void 0===t&&(t=!0);var u={};if(!a.validate(e,o,u,[]))throw(l=new Error("Cannot read PKCS#12 PFX. ASN.1 object is not an PKCS#12 PFX.")).errors=l,l;var l,p={version:u.version.charCodeAt(0),safeContents:[],getBags:function(e){var t,a={};return"localKeyId"in e?t=e.localKeyId:"localKeyIdHex"in e&&(t=r.util.hexToBytes(e.localKeyIdHex)),void 0===t&&!("friendlyName"in e)&&"bagType"in e&&(a[e.bagType]=f(p.safeContents,null,null,e.bagType)),void 0!==t&&(a.localKeyId=f(p.safeContents,"localKeyId",t,e.bagType)),"friendlyName"in e&&(a.friendlyName=f(p.safeContents,"friendlyName",e.friendlyName,e.bagType)),a},getBagsByFriendlyName:function(e,t){return f(p.safeContents,"friendlyName",e,t)},getBagsByLocalKeyId:function(e,t){return f(p.safeContents,"localKeyId",e,t)}};if(3!==u.version.charCodeAt(0))throw(l=new Error("PKCS#12 PFX of version other than 3 not supported.")).version=u.version.charCodeAt(0),l;if(a.derToOid(u.contentType)!==n.oids.data)throw(l=new Error("Only PKCS#12 PFX in password integrity mode supported.")).oid=a.derToOid(u.contentType),l;var h=u.content.value[0];if(h.tagClass!==a.Class.UNIVERSAL||h.type!==a.Type.OCTETSTRING)throw new Error("PKCS#12 authSafe content data is not an OCTET STRING.");if(h=d(h),u.mac){var y=null,g=0,m=a.derToOid(u.macAlgorithm);switch(m){case n.oids.sha1:y=r.md.sha1.create(),g=20;break;case n.oids.sha256:y=r.md.sha256.create(),g=32;break;case n.oids.sha384:y=r.md.sha384.create(),g=48;break;case n.oids.sha512:y=r.md.sha512.create(),g=64;break;case n.oids.md5:y=r.md.md5.create(),g=16}if(null===y)throw new Error("PKCS#12 uses unsupported MAC algorithm: "+m);var E=new r.util.ByteBuffer(u.macSalt),S="macIterations"in u?parseInt(r.util.bytesToHex(u.macIterations),16):1,T=i.generateKey(c,E,3,S,g,y),I=r.hmac.create();if(I.start(y,T),I.update(h.value),I.getMac().getBytes()!==u.macDigest)throw new Error("PKCS#12 MAC could not be verified. Invalid password?")}return function(e,t,r,i){if(t=a.fromDer(t,r),t.tagClass!==a.Class.UNIVERSAL||t.type!==a.Type.SEQUENCE||!0!==t.constructed)throw new Error("PKCS#12 AuthenticatedSafe expected to be a SEQUENCE OF ContentInfo");for(var o=0;o<t.value.length;o++){var c=t.value[o],u={},l=[];if(!a.validate(c,s,u,l))throw(y=new Error("Cannot read ContentInfo.")).errors=l,y;var p={encrypted:!1},h=null,f=u.content.value[0];switch(a.derToOid(u.contentType)){case n.oids.data:if(f.tagClass!==a.Class.UNIVERSAL||f.type!==a.Type.OCTETSTRING)throw new Error("PKCS#12 SafeContents Data is not an OCTET STRING.");h=d(f).value;break;case n.oids.encryptedData:h=v(f,i),p.encrypted=!0;break;default:var y;throw(y=new Error("Unsupported PKCS#12 contentType.")).contentType=a.derToOid(u.contentType),y}p.safeBags=C(h,r,i),e.safeContents.push(p)}}(p,h.value,t,c),p},i.toPkcs12Asn1=function(e,t,s,o){(o=o||{}).saltSize=o.saltSize||8,o.count=o.count||2048,o.algorithm=o.algorithm||o.encAlgorithm||"aes128","useMac"in o||(o.useMac=!0),"localKeyId"in o||(o.localKeyId=null),"generateLocalKeyId"in o||(o.generateLocalKeyId=!0);var c,u=o.localKeyId;if(null!==u)u=r.util.hexToBytes(u);else if(o.generateLocalKeyId)if(t){var l=r.util.isArray(t)?t[0]:t;"string"==typeof l&&(l=n.certificateFromPem(l)),(N=r.md.sha1.create()).update(a.toDer(n.certificateToAsn1(l)).getBytes()),u=N.digest().getBytes()}else u=r.random.getBytes(20);var p=[];null!==u&&p.push(a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.localKeyId).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SET,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,u)])])),"friendlyName"in o&&p.push(a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.friendlyName).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SET,!0,[a.create(a.Class.UNIVERSAL,a.Type.BMPSTRING,!1,o.friendlyName)])])),p.length>0&&(c=a.create(a.Class.UNIVERSAL,a.Type.SET,!0,p));var h=[],f=[];null!==t&&(f=r.util.isArray(t)?t:[t]);for(var d=[],y=0;y<f.length;++y){"string"==typeof(t=f[y])&&(t=n.certificateFromPem(t));var g=0===y?c:void 0,v=n.certificateToAsn1(t),m=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.certBag).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.x509Certificate).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,a.toDer(v).getBytes())])])]),g]);d.push(m)}if(d.length>0){var C=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,d),E=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.data).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,a.toDer(C).getBytes())])]);h.push(E)}var S=null;if(null!==e){var T=n.wrapRsaPrivateKey(n.privateKeyToAsn1(e));S=null===s?a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.keyBag).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[T]),c]):a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.pkcs8ShroudedKeyBag).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[n.encryptPrivateKeyInfo(T,s,o)]),c]);var I=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[S]),A=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.data).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,a.toDer(I).getBytes())])]);h.push(A)}var b,B=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,h);if(o.useMac){var N=r.md.sha1.create(),w=new r.util.ByteBuffer(r.random.getBytes(o.saltSize)),_=o.count,R=(e=i.generateKey(s,w,3,_,20),r.hmac.create());R.start(N,e),R.update(a.toDer(B).getBytes());var k=R.getMac();b=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.sha1).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")]),a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,k.getBytes())]),a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,w.getBytes()),a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(_).getBytes())])}return a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(3).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(n.oids.data).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,a.toDer(B).getBytes())])]),b])},i.generateKey=r.pbe.generatePkcs12Key}}),x=o({"node_modules/node-forge/lib/pki.js"(e,t){var r=u();g(),y(),L(),E(),T(),K(),O(),k(),p(),V();var a=r.asn1,n=t.exports=r.pki=r.pki||{};n.pemToDer=function(e){var t=r.pem.decode(e)[0];if(t.procType&&"ENCRYPTED"===t.procType.type)throw new Error("Could not convert PEM to DER; PEM is encrypted.");return r.util.createBuffer(t.body)},n.privateKeyFromPem=function(e){var t=r.pem.decode(e)[0];if("PRIVATE KEY"!==t.type&&"RSA PRIVATE KEY"!==t.type){var i=new Error('Could not convert private key from PEM; PEM header type is not "PRIVATE KEY" or "RSA PRIVATE KEY".');throw i.headerType=t.type,i}if(t.procType&&"ENCRYPTED"===t.procType.type)throw new Error("Could not convert private key from PEM; PEM is encrypted.");var s=a.fromDer(t.body);return n.privateKeyFromAsn1(s)},n.privateKeyToPem=function(e,t){var i={type:"RSA PRIVATE KEY",body:a.toDer(n.privateKeyToAsn1(e)).getBytes()};return r.pem.encode(i,{maxline:t})},n.privateKeyInfoToPem=function(e,t){var n={type:"PRIVATE KEY",body:a.toDer(e).getBytes()};return r.pem.encode(n,{maxline:t})}}}),M=o({"node_modules/node-forge/lib/tls.js"(e,t){var r=u();g(),m(),C(),E(),x(),b(),w(),p();var a=function(e,t,a,n){var i=r.util.createBuffer(),s=e.length>>1,o=s+(1&e.length),c=e.substr(0,o),u=e.substr(s,o),l=r.util.createBuffer(),p=r.hmac.create();a=t+a;var h=Math.ceil(n/16),f=Math.ceil(n/20);p.start("MD5",c);var d=r.util.createBuffer();l.putBytes(a);for(var y=0;y<h;++y)p.start(null,null),p.update(l.getBytes()),l.putBuffer(p.digest()),p.start(null,null),p.update(l.bytes()+a),d.putBuffer(p.digest());p.start("SHA1",u);var g=r.util.createBuffer();l.clear(),l.putBytes(a);for(y=0;y<f;++y)p.start(null,null),p.update(l.getBytes()),l.putBuffer(p.digest()),p.start(null,null),p.update(l.bytes()+a),g.putBuffer(p.digest());return i.putBytes(r.util.xorBytes(d.getBytes(),g.getBytes(),n)),i},n=function(e,t,a){var n=!1;try{var i=e.deflate(t.fragment.getBytes());t.fragment=r.util.createBuffer(i),t.length=i.length,n=!0}catch(e){}return n},i=function(e,t,a){var n=!1;try{var i=e.inflate(t.fragment.getBytes());t.fragment=r.util.createBuffer(i),t.length=i.length,n=!0}catch(e){}return n},s=function(e,t){var a=0;switch(t){case 1:a=e.getByte();break;case 2:a=e.getInt16();break;case 3:a=e.getInt24();break;case 4:a=e.getInt32()}return r.util.createBuffer(e.getBytes(a))},o=function(e,t,r){e.putInt(r.length(),t<<3),e.putBuffer(r)},c={Versions:{TLS_1_0:{major:3,minor:1},TLS_1_1:{major:3,minor:2},TLS_1_2:{major:3,minor:3}}};c.SupportedVersions=[c.Versions.TLS_1_1,c.Versions.TLS_1_0],c.Version=c.SupportedVersions[0],c.MaxFragment=15360,c.ConnectionEnd={server:0,client:1},c.PRFAlgorithm={tls_prf_sha256:0},c.BulkCipherAlgorithm={none:null,rc4:0,des3:1,aes:2},c.CipherType={stream:0,block:1,aead:2},c.MACAlgorithm={none:null,hmac_md5:0,hmac_sha1:1,hmac_sha256:2,hmac_sha384:3,hmac_sha512:4},c.CompressionMethod={none:0,deflate:1},c.ContentType={change_cipher_spec:20,alert:21,handshake:22,application_data:23,heartbeat:24},c.HandshakeType={hello_request:0,client_hello:1,server_hello:2,certificate:11,server_key_exchange:12,certificate_request:13,server_hello_done:14,certificate_verify:15,client_key_exchange:16,finished:20},c.Alert={},c.Alert.Level={warning:1,fatal:2},c.Alert.Description={close_notify:0,unexpected_message:10,bad_record_mac:20,decryption_failed:21,record_overflow:22,decompression_failure:30,handshake_failure:40,bad_certificate:42,unsupported_certificate:43,certificate_revoked:44,certificate_expired:45,certificate_unknown:46,illegal_parameter:47,unknown_ca:48,access_denied:49,decode_error:50,decrypt_error:51,export_restriction:60,protocol_version:70,insufficient_security:71,internal_error:80,user_canceled:90,no_renegotiation:100},c.HeartbeatMessageType={heartbeat_request:1,heartbeat_response:2},c.CipherSuites={},c.getCipherSuite=function(e){var t=null;for(var r in c.CipherSuites){var a=c.CipherSuites[r];if(a.id[0]===e.charCodeAt(0)&&a.id[1]===e.charCodeAt(1)){t=a;break}}return t},c.handleUnexpected=function(e,t){!e.open&&e.entity===c.ConnectionEnd.client||e.error(e,{message:"Unexpected message. Received TLS record out of order.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.unexpected_message}})},c.handleHelloRequest=function(e,t,r){!e.handshaking&&e.handshakes>0&&(c.queue(e,c.createAlert(e,{level:c.Alert.Level.warning,description:c.Alert.Description.no_renegotiation})),c.flush(e)),e.process()},c.parseHelloMessage=function(e,t,a){var n=null,i=e.entity===c.ConnectionEnd.client;if(a<38)e.error(e,{message:i?"Invalid ServerHello message. Message too short.":"Invalid ClientHello message. Message too short.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.illegal_parameter}});else{var o=t.fragment,u=o.length();if(n={version:{major:o.getByte(),minor:o.getByte()},random:r.util.createBuffer(o.getBytes(32)),session_id:s(o,1),extensions:[]},i?(n.cipher_suite=o.getBytes(2),n.compression_method=o.getByte()):(n.cipher_suites=s(o,2),n.compression_methods=s(o,1)),(u=a-(u-o.length()))>0){for(var l=s(o,2);l.length()>0;)n.extensions.push({type:[l.getByte(),l.getByte()],data:s(l,2)});if(!i)for(var p=0;p<n.extensions.length;++p){var h=n.extensions[p];if(0===h.type[0]&&0===h.type[1])for(var f=s(h.data,2);f.length()>0;){if(0!==f.getByte())break;e.session.extensions.server_name.serverNameList.push(s(f,2).getBytes())}}}if(e.session.version&&(n.version.major!==e.session.version.major||n.version.minor!==e.session.version.minor))return e.error(e,{message:"TLS version change is disallowed during renegotiation.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.protocol_version}});if(i)e.session.cipherSuite=c.getCipherSuite(n.cipher_suite);else for(var d=r.util.createBuffer(n.cipher_suites.bytes());d.length()>0&&(e.session.cipherSuite=c.getCipherSuite(d.getBytes(2)),null===e.session.cipherSuite););if(null===e.session.cipherSuite)return e.error(e,{message:"No cipher suites in common.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.handshake_failure},cipherSuite:r.util.bytesToHex(n.cipher_suite)});e.session.compressionMethod=i?n.compression_method:c.CompressionMethod.none}return n},c.createSecurityParameters=function(e,t){var r=e.entity===c.ConnectionEnd.client,a=t.random.bytes(),n=r?e.session.sp.client_random:a,i=r?a:c.createRandom().getBytes();e.session.sp={entity:e.entity,prf_algorithm:c.PRFAlgorithm.tls_prf_sha256,bulk_cipher_algorithm:null,cipher_type:null,enc_key_length:null,block_length:null,fixed_iv_length:null,record_iv_length:null,mac_algorithm:null,mac_length:null,mac_key_length:null,compression_algorithm:e.session.compressionMethod,pre_master_secret:null,master_secret:null,client_random:n,server_random:i}},c.handleServerHello=function(e,t,r){var a=c.parseHelloMessage(e,t,r);if(!e.fail){if(!(a.version.minor<=e.version.minor))return e.error(e,{message:"Incompatible TLS version.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.protocol_version}});e.version.minor=a.version.minor,e.session.version=e.version;var n=a.session_id.bytes();n.length>0&&n===e.session.id?(e.expect=y,e.session.resuming=!0,e.session.sp.server_random=a.random.bytes()):(e.expect=l,e.session.resuming=!1,c.createSecurityParameters(e,a)),e.session.id=n,e.process()}},c.handleClientHello=function(e,t,a){var n=c.parseHelloMessage(e,t,a);if(!e.fail){var i=n.session_id.bytes(),s=null;if(e.sessionCache&&(null===(s=e.sessionCache.getSession(i))?i="":(s.version.major!==n.version.major||s.version.minor>n.version.minor)&&(s=null,i="")),0===i.length&&(i=r.random.getBytes(32)),e.session.id=i,e.session.clientHelloVersion=n.version,e.session.sp={},s)e.version=e.session.version=s.version,e.session.sp=s.sp;else{for(var o,u=1;u<c.SupportedVersions.length&&!((o=c.SupportedVersions[u]).minor<=n.version.minor);++u);e.version={major:o.major,minor:o.minor},e.session.version=e.version}null!==s?(e.expect=N,e.session.resuming=!0,e.session.sp.client_random=n.random.bytes()):(e.expect=!1!==e.verifyClient?I:A,e.session.resuming=!1,c.createSecurityParameters(e,n)),e.open=!0,c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createServerHello(e)})),e.session.resuming?(c.queue(e,c.createRecord(e,{type:c.ContentType.change_cipher_spec,data:c.createChangeCipherSpec()})),e.state.pending=c.createConnectionState(e),e.state.current.write=e.state.pending.write,c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createFinished(e)}))):(c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createCertificate(e)})),e.fail||(c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createServerKeyExchange(e)})),!1!==e.verifyClient&&c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createCertificateRequest(e)})),c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createServerHelloDone(e)})))),c.flush(e),e.process()}},c.handleCertificate=function(e,t,a){if(a<3)return e.error(e,{message:"Invalid Certificate message. Message too short.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.illegal_parameter}});var n,i,o=t.fragment,u={certificate_list:s(o,3)},l=[];try{for(;u.certificate_list.length()>0;)n=s(u.certificate_list,3),i=r.asn1.fromDer(n),n=r.pki.certificateFromAsn1(i,!0),l.push(n)}catch(t){return e.error(e,{message:"Could not parse certificate list.",cause:t,send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.bad_certificate}})}var p=e.entity===c.ConnectionEnd.client;!p&&!0!==e.verifyClient||0!==l.length?0===l.length?e.expect=p?h:A:(p?e.session.serverCertificate=l[0]:e.session.clientCertificate=l[0],c.verifyCertificateChain(e,l)&&(e.expect=p?h:A)):e.error(e,{message:p?"No server certificate provided.":"No client certificate provided.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.illegal_parameter}}),e.process()},c.handleServerKeyExchange=function(e,t,r){if(r>0)return e.error(e,{message:"Invalid key parameters. Only RSA is supported.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.unsupported_certificate}});e.expect=f,e.process()},c.handleClientKeyExchange=function(e,t,a){if(a<48)return e.error(e,{message:"Invalid key parameters. Only RSA is supported.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.unsupported_certificate}});var n=t.fragment,i={enc_pre_master_secret:s(n,2).getBytes()},o=null;if(e.getPrivateKey)try{o=e.getPrivateKey(e,e.session.serverCertificate),o=r.pki.privateKeyFromPem(o)}catch(t){e.error(e,{message:"Could not get private key.",cause:t,send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.internal_error}})}if(null===o)return e.error(e,{message:"No private key set.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.internal_error}});try{var u=e.session.sp;u.pre_master_secret=o.decrypt(i.enc_pre_master_secret);var l=e.session.clientHelloVersion;if(l.major!==u.pre_master_secret.charCodeAt(0)||l.minor!==u.pre_master_secret.charCodeAt(1))throw new Error("TLS version rollback attack detected.")}catch(e){u.pre_master_secret=r.random.getBytes(48)}e.expect=N,null!==e.session.clientCertificate&&(e.expect=B),e.process()},c.handleCertificateRequest=function(e,t,r){if(r<3)return e.error(e,{message:"Invalid CertificateRequest. Message too short.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.illegal_parameter}});var a=t.fragment,n={certificate_types:s(a,1),certificate_authorities:s(a,2)};e.session.certificateRequest=n,e.expect=d,e.process()},c.handleCertificateVerify=function(e,t,a){if(a<2)return e.error(e,{message:"Invalid CertificateVerify. Message too short.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.illegal_parameter}});var n=t.fragment;n.read-=4;var i=n.bytes();n.read+=4;var o={signature:s(n,2).getBytes()},u=r.util.createBuffer();u.putBuffer(e.session.md5.digest()),u.putBuffer(e.session.sha1.digest()),u=u.getBytes();try{if(!e.session.clientCertificate.publicKey.verify(u,o.signature,"NONE"))throw new Error("CertificateVerify signature does not match.");e.session.md5.update(i),e.session.sha1.update(i)}catch(t){return e.error(e,{message:"Bad signature in CertificateVerify.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.handshake_failure}})}e.expect=N,e.process()},c.handleServerHelloDone=function(e,t,a){if(a>0)return e.error(e,{message:"Invalid ServerHelloDone message. Invalid length.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.record_overflow}});if(null===e.serverCertificate){var n={message:"No server certificate provided. Not enough security.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.insufficient_security}},i=e.verify(e,n.alert.description,0,[]);if(!0!==i)return(i||0===i)&&("object"!=typeof i||r.util.isArray(i)?"number"==typeof i&&(n.alert.description=i):(i.message&&(n.message=i.message),i.alert&&(n.alert.description=i.alert))),e.error(e,n)}null!==e.session.certificateRequest&&(t=c.createRecord(e,{type:c.ContentType.handshake,data:c.createCertificate(e)}),c.queue(e,t)),t=c.createRecord(e,{type:c.ContentType.handshake,data:c.createClientKeyExchange(e)}),c.queue(e,t),e.expect=T;var s=function(e,t){null!==e.session.certificateRequest&&null!==e.session.clientCertificate&&c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createCertificateVerify(e,t)})),c.queue(e,c.createRecord(e,{type:c.ContentType.change_cipher_spec,data:c.createChangeCipherSpec()})),e.state.pending=c.createConnectionState(e),e.state.current.write=e.state.pending.write,c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createFinished(e)})),e.expect=y,c.flush(e),e.process()};if(null===e.session.certificateRequest||null===e.session.clientCertificate)return s(e,null);c.getClientSignature(e,s)},c.handleChangeCipherSpec=function(e,t){if(1!==t.fragment.getByte())return e.error(e,{message:"Invalid ChangeCipherSpec message received.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.illegal_parameter}});var r=e.entity===c.ConnectionEnd.client;(e.session.resuming&&r||!e.session.resuming&&!r)&&(e.state.pending=c.createConnectionState(e)),e.state.current.read=e.state.pending.read,(!e.session.resuming&&r||e.session.resuming&&!r)&&(e.state.pending=null),e.expect=r?v:_,e.process()},c.handleFinished=function(e,t,n){var i=t.fragment;i.read-=4;var s=i.bytes();i.read+=4;var o=t.fragment.getBytes();(i=r.util.createBuffer()).putBuffer(e.session.md5.digest()),i.putBuffer(e.session.sha1.digest());var u=e.entity===c.ConnectionEnd.client,l=u?"server finished":"client finished",p=e.session.sp;if((i=a(p.master_secret,l,i.getBytes(),12)).getBytes()!==o)return e.error(e,{message:"Invalid verify_data in Finished message.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.decrypt_error}});e.session.md5.update(s),e.session.sha1.update(s),(e.session.resuming&&u||!e.session.resuming&&!u)&&(c.queue(e,c.createRecord(e,{type:c.ContentType.change_cipher_spec,data:c.createChangeCipherSpec()})),e.state.current.write=e.state.pending.write,e.state.pending=null,c.queue(e,c.createRecord(e,{type:c.ContentType.handshake,data:c.createFinished(e)}))),e.expect=u?S:R,e.handshaking=!1,++e.handshakes,e.peerCertificate=u?e.session.serverCertificate:e.session.clientCertificate,c.flush(e),e.isConnected=!0,e.connected(e),e.process()},c.handleAlert=function(e,t){var r,a=t.fragment,n={level:a.getByte(),description:a.getByte()};switch(n.description){case c.Alert.Description.close_notify:r="Connection closed.";break;case c.Alert.Description.unexpected_message:r="Unexpected message.";break;case c.Alert.Description.bad_record_mac:r="Bad record MAC.";break;case c.Alert.Description.decryption_failed:r="Decryption failed.";break;case c.Alert.Description.record_overflow:r="Record overflow.";break;case c.Alert.Description.decompression_failure:r="Decompression failed.";break;case c.Alert.Description.handshake_failure:r="Handshake failure.";break;case c.Alert.Description.bad_certificate:r="Bad certificate.";break;case c.Alert.Description.unsupported_certificate:r="Unsupported certificate.";break;case c.Alert.Description.certificate_revoked:r="Certificate revoked.";break;case c.Alert.Description.certificate_expired:r="Certificate expired.";break;case c.Alert.Description.certificate_unknown:r="Certificate unknown.";break;case c.Alert.Description.illegal_parameter:r="Illegal parameter.";break;case c.Alert.Description.unknown_ca:r="Unknown certificate authority.";break;case c.Alert.Description.access_denied:r="Access denied.";break;case c.Alert.Description.decode_error:r="Decode error.";break;case c.Alert.Description.decrypt_error:r="Decrypt error.";break;case c.Alert.Description.export_restriction:r="Export restriction.";break;case c.Alert.Description.protocol_version:r="Unsupported protocol version.";break;case c.Alert.Description.insufficient_security:r="Insufficient security.";break;case c.Alert.Description.internal_error:r="Internal error.";break;case c.Alert.Description.user_canceled:r="User canceled.";break;case c.Alert.Description.no_renegotiation:r="Renegotiation not supported.";break;default:r="Unknown error."}if(n.description===c.Alert.Description.close_notify)return e.close();e.error(e,{message:r,send:!1,origin:e.entity===c.ConnectionEnd.client?"server":"client",alert:n}),e.process()},c.handleHandshake=function(e,t){var a=t.fragment,n=a.getByte(),i=a.getInt24();if(i>a.length())return e.fragmented=t,t.fragment=r.util.createBuffer(),a.read-=4,e.process();e.fragmented=null,a.read-=4;var s=a.bytes(i+4);a.read+=4,n in Q[e.entity][e.expect]?(e.entity!==c.ConnectionEnd.server||e.open||e.fail||(e.handshaking=!0,e.session={version:null,extensions:{server_name:{serverNameList:[]}},cipherSuite:null,compressionMethod:null,serverCertificate:null,clientCertificate:null,md5:r.md.md5.create(),sha1:r.md.sha1.create()}),n!==c.HandshakeType.hello_request&&n!==c.HandshakeType.certificate_verify&&n!==c.HandshakeType.finished&&(e.session.md5.update(s),e.session.sha1.update(s)),Q[e.entity][e.expect][n](e,t,i)):c.handleUnexpected(e,t)},c.handleApplicationData=function(e,t){e.data.putBuffer(t.fragment),e.dataReady(e),e.process()},c.handleHeartbeat=function(e,t){var a=t.fragment,n=a.getByte(),i=a.getInt16(),s=a.getBytes(i);if(n===c.HeartbeatMessageType.heartbeat_request){if(e.handshaking||i>s.length)return e.process();c.queue(e,c.createRecord(e,{type:c.ContentType.heartbeat,data:c.createHeartbeat(c.HeartbeatMessageType.heartbeat_response,s)})),c.flush(e)}else if(n===c.HeartbeatMessageType.heartbeat_response){if(s!==e.expectedHeartbeatPayload)return e.process();e.heartbeatReceived&&e.heartbeatReceived(e,r.util.createBuffer(s))}e.process()};var l=1,h=2,f=3,d=4,y=5,v=6,S=7,T=8,I=1,A=2,B=3,N=4,_=5,R=6,k=c.handleUnexpected,L=c.handleChangeCipherSpec,U=c.handleAlert,D=c.handleHandshake,P=c.handleApplicationData,O=c.handleHeartbeat,V=[];V[c.ConnectionEnd.client]=[[k,U,D,k,O],[k,U,D,k,O],[k,U,D,k,O],[k,U,D,k,O],[k,U,D,k,O],[L,U,k,k,O],[k,U,D,k,O],[k,U,D,P,O],[k,U,D,k,O]],V[c.ConnectionEnd.server]=[[k,U,D,k,O],[k,U,D,k,O],[k,U,D,k,O],[k,U,D,k,O],[L,U,k,k,O],[k,U,D,k,O],[k,U,D,P,O],[k,U,D,k,O]];var K=c.handleHelloRequest,M=c.handleServerHello,F=c.handleCertificate,j=c.handleServerKeyExchange,H=c.handleCertificateRequest,G=c.handleServerHelloDone,q=c.handleFinished,Q=[];Q[c.ConnectionEnd.client]=[[k,k,M,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,F,j,H,G,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,k,j,H,G,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,k,k,H,G,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,k,k,k,G,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,q],[K,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k],[K,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k]];var z=c.handleClientHello,Y=c.handleClientKeyExchange,W=c.handleCertificateVerify;Q[c.ConnectionEnd.server]=[[k,z,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k],[k,k,k,k,k,k,k,k,k,k,k,F,k,k,k,k,k,k,k,k,k],[k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,Y,k,k,k,k],[k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,W,k,k,k,k,k],[k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k],[k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,q],[k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k],[k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k,k]],c.generateKeys=function(e,t){var r=a,n=t.client_random+t.server_random;e.session.resuming||(t.master_secret=r(t.pre_master_secret,"master secret",n,48).bytes(),t.pre_master_secret=null),n=t.server_random+t.client_random;var i=2*t.mac_key_length+2*t.enc_key_length,s=e.version.major===c.Versions.TLS_1_0.major&&e.version.minor===c.Versions.TLS_1_0.minor;s&&(i+=2*t.fixed_iv_length);var o=r(t.master_secret,"key expansion",n,i),u={client_write_MAC_key:o.getBytes(t.mac_key_length),server_write_MAC_key:o.getBytes(t.mac_key_length),client_write_key:o.getBytes(t.enc_key_length),server_write_key:o.getBytes(t.enc_key_length)};return s&&(u.client_write_IV=o.getBytes(t.fixed_iv_length),u.server_write_IV=o.getBytes(t.fixed_iv_length)),u},c.createConnectionState=function(e){var t=e.entity===c.ConnectionEnd.client,r=function(){var e={sequenceNumber:[0,0],macKey:null,macLength:0,macFunction:null,cipherState:null,cipherFunction:function(e){return!0},compressionState:null,compressFunction:function(e){return!0},updateSequenceNumber:function(){4294967295===e.sequenceNumber[1]?(e.sequenceNumber[1]=0,++e.sequenceNumber[0]):++e.sequenceNumber[1]}};return e},a={read:r(),write:r()};if(a.read.update=function(e,t){return a.read.cipherFunction(t,a.read)?a.read.compressFunction(e,t,a.read)||e.error(e,{message:"Could not decompress record.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.decompression_failure}}):e.error(e,{message:"Could not decrypt record or bad MAC.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.bad_record_mac}}),!e.fail},a.write.update=function(e,t){return a.write.compressFunction(e,t,a.write)?a.write.cipherFunction(t,a.write)||e.error(e,{message:"Could not encrypt record.",send:!1,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.internal_error}}):e.error(e,{message:"Could not compress record.",send:!1,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.internal_error}}),!e.fail},e.session){var s=e.session.sp;switch(e.session.cipherSuite.initSecurityParameters(s),s.keys=c.generateKeys(e,s),a.read.macKey=t?s.keys.server_write_MAC_key:s.keys.client_write_MAC_key,a.write.macKey=t?s.keys.client_write_MAC_key:s.keys.server_write_MAC_key,e.session.cipherSuite.initConnectionState(a,e,s),s.compression_algorithm){case c.CompressionMethod.none:break;case c.CompressionMethod.deflate:a.read.compressFunction=i,a.write.compressFunction=n;break;default:throw new Error("Unsupported compression algorithm.")}}return a},c.createRandom=function(){var e=new Date,t=+e+6e4*e.getTimezoneOffset(),a=r.util.createBuffer();return a.putInt32(t),a.putBytes(r.random.getBytes(28)),a},c.createRecord=function(e,t){return t.data?{type:t.type,version:{major:e.version.major,minor:e.version.minor},length:t.data.length(),fragment:t.data}:null},c.createAlert=function(e,t){var a=r.util.createBuffer();return a.putByte(t.level),a.putByte(t.description),c.createRecord(e,{type:c.ContentType.alert,data:a})},c.createClientHello=function(e){e.session.clientHelloVersion={major:e.version.major,minor:e.version.minor};for(var t=r.util.createBuffer(),a=0;a<e.cipherSuites.length;++a){var n=e.cipherSuites[a];t.putByte(n.id[0]),t.putByte(n.id[1])}var i=t.length(),s=r.util.createBuffer();s.putByte(c.CompressionMethod.none);var u=s.length(),l=r.util.createBuffer();if(e.virtualHost){var p=r.util.createBuffer();p.putByte(0),p.putByte(0);var h=r.util.createBuffer();h.putByte(0),o(h,2,r.util.createBuffer(e.virtualHost));var f=r.util.createBuffer();o(f,2,h),o(p,2,f),l.putBuffer(p)}var d=l.length();d>0&&(d+=2);var y=e.session.id,g=y.length+1+2+4+28+2+i+1+u+d,v=r.util.createBuffer();return v.putByte(c.HandshakeType.client_hello),v.putInt24(g),v.putByte(e.version.major),v.putByte(e.version.minor),v.putBytes(e.session.sp.client_random),o(v,1,r.util.createBuffer(y)),o(v,2,t),o(v,1,s),d>0&&o(v,2,l),v},c.createServerHello=function(e){var t=e.session.id,a=t.length+1+2+4+28+2+1,n=r.util.createBuffer();return n.putByte(c.HandshakeType.server_hello),n.putInt24(a),n.putByte(e.version.major),n.putByte(e.version.minor),n.putBytes(e.session.sp.server_random),o(n,1,r.util.createBuffer(t)),n.putByte(e.session.cipherSuite.id[0]),n.putByte(e.session.cipherSuite.id[1]),n.putByte(e.session.compressionMethod),n},c.createCertificate=function(e){var t,a=e.entity===c.ConnectionEnd.client,n=null;e.getCertificate&&(t=a?e.session.certificateRequest:e.session.extensions.server_name.serverNameList,n=e.getCertificate(e,t));var i=r.util.createBuffer();if(null!==n)try{r.util.isArray(n)||(n=[n]);for(var s=null,u=0;u<n.length;++u){var l=r.pem.decode(n[u])[0];if("CERTIFICATE"!==l.type&&"X509 CERTIFICATE"!==l.type&&"TRUSTED CERTIFICATE"!==l.type){var p=new Error('Could not convert certificate from PEM; PEM header type is not "CERTIFICATE", "X509 CERTIFICATE", or "TRUSTED CERTIFICATE".');throw p.headerType=l.type,p}if(l.procType&&"ENCRYPTED"===l.procType.type)throw new Error("Could not convert certificate from PEM; PEM is encrypted.");var h=r.util.createBuffer(l.body);null===s&&(s=r.asn1.fromDer(h.bytes(),!1));var f=r.util.createBuffer();o(f,3,h),i.putBuffer(f)}n=r.pki.certificateFromAsn1(s),a?e.session.clientCertificate=n:e.session.serverCertificate=n}catch(t){return e.error(e,{message:"Could not send certificate list.",cause:t,send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.bad_certificate}})}var d=3+i.length(),y=r.util.createBuffer();return y.putByte(c.HandshakeType.certificate),y.putInt24(d),o(y,3,i),y},c.createClientKeyExchange=function(e){var t=r.util.createBuffer();t.putByte(e.session.clientHelloVersion.major),t.putByte(e.session.clientHelloVersion.minor),t.putBytes(r.random.getBytes(46));var a=e.session.sp;a.pre_master_secret=t.getBytes();var n=(t=e.session.serverCertificate.publicKey.encrypt(a.pre_master_secret)).length+2,i=r.util.createBuffer();return i.putByte(c.HandshakeType.client_key_exchange),i.putInt24(n),i.putInt16(t.length),i.putBytes(t),i},c.createServerKeyExchange=function(e){var t=r.util.createBuffer();return t},c.getClientSignature=function(e,t){var a=r.util.createBuffer();a.putBuffer(e.session.md5.digest()),a.putBuffer(e.session.sha1.digest()),a=a.getBytes(),e.getSignature=e.getSignature||function(e,t,a){var n=null;if(e.getPrivateKey)try{n=e.getPrivateKey(e,e.session.clientCertificate),n=r.pki.privateKeyFromPem(n)}catch(t){e.error(e,{message:"Could not get private key.",cause:t,send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.internal_error}})}null===n?e.error(e,{message:"No private key set.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.internal_error}}):t=n.sign(t,null),a(e,t)},e.getSignature(e,a,t)},c.createCertificateVerify=function(e,t){var a=t.length+2,n=r.util.createBuffer();return n.putByte(c.HandshakeType.certificate_verify),n.putInt24(a),n.putInt16(t.length),n.putBytes(t),n},c.createCertificateRequest=function(e){var t=r.util.createBuffer();t.putByte(1);var a=r.util.createBuffer();for(var n in e.caStore.certs){var i=e.caStore.certs[n],s=r.pki.distinguishedNameToAsn1(i.subject),u=r.asn1.toDer(s);a.putInt16(u.length()),a.putBuffer(u)}var l=1+t.length()+2+a.length(),p=r.util.createBuffer();return p.putByte(c.HandshakeType.certificate_request),p.putInt24(l),o(p,1,t),o(p,2,a),p},c.createServerHelloDone=function(e){var t=r.util.createBuffer();return t.putByte(c.HandshakeType.server_hello_done),t.putInt24(0),t},c.createChangeCipherSpec=function(){var e=r.util.createBuffer();return e.putByte(1),e},c.createFinished=function(e){var t=r.util.createBuffer();t.putBuffer(e.session.md5.digest()),t.putBuffer(e.session.sha1.digest());var n=e.entity===c.ConnectionEnd.client,i=e.session.sp,s=n?"client finished":"server finished";t=a(i.master_secret,s,t.getBytes(),12);var o=r.util.createBuffer();return o.putByte(c.HandshakeType.finished),o.putInt24(t.length()),o.putBuffer(t),o},c.createHeartbeat=function(e,t,a){void 0===a&&(a=t.length);var n=r.util.createBuffer();n.putByte(e),n.putInt16(a),n.putBytes(t);var i=n.length(),s=Math.max(16,i-a-3);return n.putBytes(r.random.getBytes(s)),n},c.queue=function(e,t){if(t&&(0!==t.fragment.length()||t.type!==c.ContentType.handshake&&t.type!==c.ContentType.alert&&t.type!==c.ContentType.change_cipher_spec)){if(t.type===c.ContentType.handshake){var a=t.fragment.bytes();e.session.md5.update(a),e.session.sha1.update(a),a=null}var n;if(t.fragment.length()<=c.MaxFragment)n=[t];else{n=[];for(var i=t.fragment.bytes();i.length>c.MaxFragment;)n.push(c.createRecord(e,{type:t.type,data:r.util.createBuffer(i.slice(0,c.MaxFragment))})),i=i.slice(c.MaxFragment);i.length>0&&n.push(c.createRecord(e,{type:t.type,data:r.util.createBuffer(i)}))}for(var s=0;s<n.length&&!e.fail;++s){var o=n[s];e.state.current.write.update(e,o)&&e.records.push(o)}}},c.flush=function(e){for(var t=0;t<e.records.length;++t){var r=e.records[t];e.tlsData.putByte(r.type),e.tlsData.putByte(r.version.major),e.tlsData.putByte(r.version.minor),e.tlsData.putInt16(r.fragment.length()),e.tlsData.putBuffer(e.records[t].fragment)}return e.records=[],e.tlsDataReady(e)};var X,Z=function(e){switch(e){case!0:return!0;case r.pki.certificateError.bad_certificate:return c.Alert.Description.bad_certificate;case r.pki.certificateError.unsupported_certificate:return c.Alert.Description.unsupported_certificate;case r.pki.certificateError.certificate_revoked:return c.Alert.Description.certificate_revoked;case r.pki.certificateError.certificate_expired:return c.Alert.Description.certificate_expired;case r.pki.certificateError.certificate_unknown:return c.Alert.Description.certificate_unknown;case r.pki.certificateError.unknown_ca:return c.Alert.Description.unknown_ca;default:return c.Alert.Description.bad_certificate}};for(X in c.verifyCertificateChain=function(e,t){try{var a={};for(var n in e.verifyOptions)a[n]=e.verifyOptions[n];a.verify=function(t,a,n){Z(t);var i=e.verify(e,t,a,n);if(!0!==i){if("object"==typeof i&&!r.util.isArray(i)){var s=new Error("The application rejected the certificate.");throw s.send=!0,s.alert={level:c.Alert.Level.fatal,description:c.Alert.Description.bad_certificate},i.message&&(s.message=i.message),i.alert&&(s.alert.description=i.alert),s}i!==t&&(i=function(e){switch(e){case!0:return!0;case c.Alert.Description.bad_certificate:return r.pki.certificateError.bad_certificate;case c.Alert.Description.unsupported_certificate:return r.pki.certificateError.unsupported_certificate;case c.Alert.Description.certificate_revoked:return r.pki.certificateError.certificate_revoked;case c.Alert.Description.certificate_expired:return r.pki.certificateError.certificate_expired;case c.Alert.Description.certificate_unknown:return r.pki.certificateError.certificate_unknown;case c.Alert.Description.unknown_ca:return r.pki.certificateError.unknown_ca;default:return r.pki.certificateError.bad_certificate}}(i))}return i},r.pki.verifyCertificateChain(e.caStore,t,a)}catch(t){var i=t;("object"!=typeof i||r.util.isArray(i))&&(i={send:!0,alert:{level:c.Alert.Level.fatal,description:Z(t)}}),"send"in i||(i.send=!0),"alert"in i||(i.alert={level:c.Alert.Level.fatal,description:Z(i.error)}),e.error(e,i)}return!e.fail},c.createSessionCache=function(e,t){var a=null;if(e&&e.getSession&&e.setSession&&e.order)a=e;else{for(var n in(a={}).cache=e||{},a.capacity=Math.max(t||100,1),a.order=[],e)a.order.length<=t?a.order.push(n):delete e[n];a.getSession=function(e){var t=null,n=null;if(e?n=r.util.bytesToHex(e):a.order.length>0&&(n=a.order[0]),null!==n&&n in a.cache)for(var i in t=a.cache[n],delete a.cache[n],a.order)if(a.order[i]===n){a.order.splice(i,1);break}return t},a.setSession=function(e,t){if(a.order.length===a.capacity){var n=a.order.shift();delete a.cache[n]}n=r.util.bytesToHex(e);a.order.push(n),a.cache[n]=t}}return a},c.createConnection=function(e){var t=null;t=e.caStore?r.util.isArray(e.caStore)?r.pki.createCaStore(e.caStore):e.caStore:r.pki.createCaStore();var a=e.cipherSuites||null;if(null===a)for(var n in a=[],c.CipherSuites)a.push(c.CipherSuites[n]);var i=e.server?c.ConnectionEnd.server:c.ConnectionEnd.client,s=e.sessionCache?c.createSessionCache(e.sessionCache):null,o={version:{major:c.Version.major,minor:c.Version.minor},entity:i,sessionId:e.sessionId,caStore:t,sessionCache:s,cipherSuites:a,connected:e.connected,virtualHost:e.virtualHost||null,verifyClient:e.verifyClient||!1,verify:e.verify||function(e,t,r,a){return t},verifyOptions:e.verifyOptions||{},getCertificate:e.getCertificate||null,getPrivateKey:e.getPrivateKey||null,getSignature:e.getSignature||null,input:r.util.createBuffer(),tlsData:r.util.createBuffer(),data:r.util.createBuffer(),tlsDataReady:e.tlsDataReady,dataReady:e.dataReady,heartbeatReceived:e.heartbeatReceived,closed:e.closed,error:function(t,r){r.origin=r.origin||(t.entity===c.ConnectionEnd.client?"client":"server"),r.send&&(c.queue(t,c.createAlert(t,r.alert)),c.flush(t));var a=!1!==r.fatal;a&&(t.fail=!0),e.error(t,r),a&&t.close(!1)},deflate:e.deflate||null,inflate:e.inflate||null,reset:function(e){o.version={major:c.Version.major,minor:c.Version.minor},o.record=null,o.session=null,o.peerCertificate=null,o.state={pending:null,current:null},o.expect=(o.entity,c.ConnectionEnd.client,0),o.fragmented=null,o.records=[],o.open=!1,o.handshakes=0,o.handshaking=!1,o.isConnected=!1,o.fail=!(e||void 0===e),o.input.clear(),o.tlsData.clear(),o.data.clear(),o.state.current=c.createConnectionState(o)}};o.reset();return o.handshake=function(e){if(o.entity!==c.ConnectionEnd.client)o.error(o,{message:"Cannot initiate handshake as a server.",fatal:!1});else if(o.handshaking)o.error(o,{message:"Handshake already in progress.",fatal:!1});else{o.fail&&!o.open&&0===o.handshakes&&(o.fail=!1),o.handshaking=!0;var t=null;(e=e||"").length>0&&(o.sessionCache&&(t=o.sessionCache.getSession(e)),null===t&&(e="")),0===e.length&&o.sessionCache&&null!==(t=o.sessionCache.getSession())&&(e=t.id),o.session={id:e,version:null,cipherSuite:null,compressionMethod:null,serverCertificate:null,certificateRequest:null,clientCertificate:null,sp:{},md5:r.md.md5.create(),sha1:r.md.sha1.create()},t&&(o.version=t.version,o.session.sp=t.sp),o.session.sp.client_random=c.createRandom().getBytes(),o.open=!0,c.queue(o,c.createRecord(o,{type:c.ContentType.handshake,data:c.createClientHello(o)})),c.flush(o)}},o.process=function(e){var t,a,n,i,s=0;return e&&o.input.putBytes(e),o.fail||(null!==o.record&&o.record.ready&&o.record.fragment.isEmpty()&&(o.record=null),null===o.record&&(s=function(e){var t=0,a=e.input,n=a.length();if(n<5)t=5-n;else{e.record={type:a.getByte(),version:{major:a.getByte(),minor:a.getByte()},length:a.getInt16(),fragment:r.util.createBuffer(),ready:!1};var i=e.record.version.major===e.version.major;i&&e.session&&e.session.version&&(i=e.record.version.minor===e.version.minor),i||e.error(e,{message:"Incompatible TLS version.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.protocol_version}})}return t}(o)),o.fail||null===o.record||o.record.ready||(s=function(e){var t=0,r=e.input,a=r.length();return a<e.record.length?t=e.record.length-a:(e.record.fragment.putBytes(r.getBytes(e.record.length)),r.compact(),e.state.current.read.update(e,e.record)&&(null!==e.fragmented&&(e.fragmented.type===e.record.type?(e.fragmented.fragment.putBuffer(e.record.fragment),e.record=e.fragmented):e.error(e,{message:"Invalid fragmented record.",send:!0,alert:{level:c.Alert.Level.fatal,description:c.Alert.Description.unexpected_message}})),e.record.ready=!0)),t}(o)),!o.fail&&null!==o.record&&o.record.ready&&(t=o,a=o.record,n=a.type-c.ContentType.change_cipher_spec,i=V[t.entity][t.expect],n in i?i[n](t,a):c.handleUnexpected(t,a))),s},o.prepare=function(e){return c.queue(o,c.createRecord(o,{type:c.ContentType.application_data,data:r.util.createBuffer(e)})),c.flush(o)},o.prepareHeartbeatRequest=function(e,t){return e instanceof r.util.ByteBuffer&&(e=e.bytes()),void 0===t&&(t=e.length),o.expectedHeartbeatPayload=e,c.queue(o,c.createRecord(o,{type:c.ContentType.heartbeat,data:c.createHeartbeat(c.HeartbeatMessageType.heartbeat_request,e,t)})),c.flush(o)},o.close=function(e){if(!o.fail&&o.sessionCache&&o.session){var t={id:o.session.id,version:o.session.version,sp:o.session.sp};t.sp.keys=null,o.sessionCache.setSession(t.id,t)}o.open&&(o.open=!1,o.input.clear(),(o.isConnected||o.handshaking)&&(o.isConnected=o.handshaking=!1,c.queue(o,c.createAlert(o,{level:c.Alert.Level.warning,description:c.Alert.Description.close_notify})),c.flush(o)),o.closed(o)),o.reset(e)},o},t.exports=r.tls=r.tls||{},c)"function"!=typeof c[X]&&(r.tls[X]=c[X]);r.tls.prf_tls1=a,r.tls.hmac_sha1=function(e,t,a){var n=r.hmac.create();n.start("SHA1",e);var i=r.util.createBuffer();return i.putInt32(t[0]),i.putInt32(t[1]),i.putByte(a.type),i.putByte(a.version.major),i.putByte(a.version.minor),i.putInt16(a.length),i.putBytes(a.fragment.bytes()),n.update(i.getBytes()),n.digest().getBytes()},r.tls.createSessionCache=c.createSessionCache,r.tls.createConnection=c.createConnection}}),F=o({"node_modules/node-forge/lib/aesCipherSuites.js"(e,t){var r=u();d(),M();var a=t.exports=r.tls;function n(e,t,n){var s=t.entity===r.tls.ConnectionEnd.client;e.read.cipherState={init:!1,cipher:r.cipher.createDecipher("AES-CBC",s?n.keys.server_write_key:n.keys.client_write_key),iv:s?n.keys.server_write_IV:n.keys.client_write_IV},e.write.cipherState={init:!1,cipher:r.cipher.createCipher("AES-CBC",s?n.keys.client_write_key:n.keys.server_write_key),iv:s?n.keys.client_write_IV:n.keys.server_write_IV},e.read.cipherFunction=c,e.write.cipherFunction=i,e.read.macLength=e.write.macLength=n.mac_length,e.read.macFunction=e.write.macFunction=a.hmac_sha1}function i(e,t){var n,i=!1,o=t.macFunction(t.macKey,t.sequenceNumber,e);e.fragment.putBytes(o),t.updateSequenceNumber(),n=e.version.minor===a.Versions.TLS_1_0.minor?t.cipherState.init?null:t.cipherState.iv:r.random.getBytesSync(16),t.cipherState.init=!0;var c=t.cipherState.cipher;return c.start({iv:n}),e.version.minor>=a.Versions.TLS_1_1.minor&&c.output.putBytes(n),c.update(e.fragment),c.finish(s)&&(e.fragment=c.output,e.length=e.fragment.length(),i=!0),i}function s(e,t,r){if(!r){var a=e-t.length()%e;t.fillWithByte(a-1,a)}return!0}function o(e,t,r){var a=!0;if(r){for(var n=t.length(),i=t.last(),s=n-1-i;s<n-1;++s)a=a&&t.at(s)==i;a&&t.truncate(i+1)}return a}function c(e,t){var n,i=!1;n=e.version.minor===a.Versions.TLS_1_0.minor?t.cipherState.init?null:t.cipherState.iv:e.fragment.getBytes(16),t.cipherState.init=!0;var s=t.cipherState.cipher;s.start({iv:n}),s.update(e.fragment),i=s.finish(o);var c=t.macLength,u=r.random.getBytesSync(c),l=s.output.length();l>=c?(e.fragment=s.output.getBytes(l-c),u=s.output.getBytes(c)):e.fragment=s.output.getBytes(),e.fragment=r.util.createBuffer(e.fragment),e.length=e.fragment.length();var p=t.macFunction(t.macKey,t.sequenceNumber,e);return t.updateSequenceNumber(),i=function(e,t,a){var n=r.hmac.create();return n.start("SHA1",e),n.update(t),t=n.digest().getBytes(),n.start(null,null),n.update(a),a=n.digest().getBytes(),t===a}(t.macKey,u,p)&&i,i}a.CipherSuites.TLS_RSA_WITH_AES_128_CBC_SHA={id:[0,47],name:"TLS_RSA_WITH_AES_128_CBC_SHA",initSecurityParameters:function(e){e.bulk_cipher_algorithm=a.BulkCipherAlgorithm.aes,e.cipher_type=a.CipherType.block,e.enc_key_length=16,e.block_length=16,e.fixed_iv_length=16,e.record_iv_length=16,e.mac_algorithm=a.MACAlgorithm.hmac_sha1,e.mac_length=20,e.mac_key_length=20},initConnectionState:n},a.CipherSuites.TLS_RSA_WITH_AES_256_CBC_SHA={id:[0,53],name:"TLS_RSA_WITH_AES_256_CBC_SHA",initSecurityParameters:function(e){e.bulk_cipher_algorithm=a.BulkCipherAlgorithm.aes,e.cipher_type=a.CipherType.block,e.enc_key_length=32,e.block_length=16,e.fixed_iv_length=16,e.record_iv_length=16,e.mac_algorithm=a.MACAlgorithm.hmac_sha1,e.mac_length=20,e.mac_key_length=20},initConnectionState:n}}}),j=o({"node_modules/node-forge/lib/sha512.js"(e,t){var r=u();v(),p();var a=t.exports=r.sha512=r.sha512||{};r.md.sha512=r.md.algorithms.sha512=a;var n=r.sha384=r.sha512.sha384=r.sha512.sha384||{};n.create=function(){return a.create("SHA-384")},r.md.sha384=r.md.algorithms.sha384=n,r.sha512.sha256=r.sha512.sha256||{create:function(){return a.create("SHA-512/256")}},r.md["sha512/256"]=r.md.algorithms["sha512/256"]=r.sha512.sha256,r.sha512.sha224=r.sha512.sha224||{create:function(){return a.create("SHA-512/224")}},r.md["sha512/224"]=r.md.algorithms["sha512/224"]=r.sha512.sha224,a.create=function(e){if(s||(i=String.fromCharCode(128),i+=r.util.fillString(String.fromCharCode(0),128),o=[[1116352408,3609767458],[1899447441,602891725],[3049323471,3964484399],[3921009573,2173295548],[961987163,4081628472],[1508970993,3053834265],[2453635748,2937671579],[2870763221,3664609560],[3624381080,2734883394],[310598401,1164996542],[607225278,1323610764],[1426881987,3590304994],[1925078388,4068182383],[2162078206,991336113],[2614888103,633803317],[3248222580,3479774868],[3835390401,2666613458],[4022224774,944711139],[264347078,2341262773],[604807628,2007800933],[770255983,1495990901],[1249150122,1856431235],[1555081692,3175218132],[1996064986,2198950837],[2554220882,3999719339],[2821834349,766784016],[2952996808,2566594879],[3210313671,3203337956],[3336571891,1034457026],[3584528711,2466948901],[113926993,3758326383],[338241895,168717936],[666307205,1188179964],[773529912,1546045734],[1294757372,1522805485],[1396182291,2643833823],[1695183700,2343527390],[1986661051,1014477480],[2177026350,1206759142],[2456956037,344077627],[2730485921,1290863460],[2820302411,3158454273],[3259730800,3505952657],[3345764771,106217008],[3516065817,3606008344],[3600352804,1432725776],[4094571909,1467031594],[275423344,851169720],[430227734,3100823752],[506948616,1363258195],[659060556,3750685593],[883997877,3785050280],[958139571,3318307427],[1322822218,3812723403],[1537002063,2003034995],[1747873779,3602036899],[1955562222,1575990012],[2024104815,1125592928],[2227730452,2716904306],[2361852424,442776044],[2428436474,593698344],[2756734187,3733110249],[3204031479,2999351573],[3329325298,3815920427],[3391569614,3928383900],[3515267271,566280711],[3940187606,3454069534],[4118630271,4000239992],[116418474,1914138554],[174292421,2731055270],[289380356,3203993006],[460393269,320620315],[685471733,587496836],[852142971,1086792851],[1017036298,365543100],[1126000580,2618297676],[1288033470,3409855158],[1501505948,4234509866],[1607167915,987167468],[1816402316,1246189591]],(c={})["SHA-512"]=[[1779033703,4089235720],[3144134277,2227873595],[1013904242,4271175723],[2773480762,1595750129],[1359893119,2917565137],[2600822924,725511199],[528734635,4215389547],[1541459225,327033209]],c["SHA-384"]=[[3418070365,3238371032],[1654270250,914150663],[2438529370,812702999],[355462360,4144912697],[1731405415,4290775857],[2394180231,1750603025],[3675008525,1694076839],[1203062813,3204075428]],c["SHA-512/256"]=[[573645204,4230739756],[2673172387,3360449730],[596883563,1867755857],[2520282905,1497426621],[2519219938,2827943907],[3193839141,1401305490],[721525244,746961066],[246885852,2177182882]],c["SHA-512/224"]=[[2352822216,424955298],[1944164710,2312950998],[502970286,855612546],[1738396948,1479516111],[258812777,2077511080],[2011393907,79989058],[1067287976,1780299464],[286451373,2446758561]],s=!0),void 0===e&&(e="SHA-512"),!(e in c))throw new Error("Invalid SHA-512 algorithm: "+e);for(var t=c[e],a=null,n=r.util.createBuffer(),u=new Array(80),p=0;p<80;++p)u[p]=new Array(2);var h=64;switch(e){case"SHA-384":h=48;break;case"SHA-512/256":h=32;break;case"SHA-512/224":h=28}var f={algorithm:e.replace("-","").toLowerCase(),blockLength:128,digestLength:h,messageLength:0,fullMessageLength:null,messageLengthSize:16,start:function(){f.messageLength=0,f.fullMessageLength=f.messageLength128=[];for(var e=f.messageLengthSize/4,i=0;i<e;++i)f.fullMessageLength.push(0);n=r.util.createBuffer(),a=new Array(t.length);for(i=0;i<t.length;++i)a[i]=t[i].slice(0);return f}};return f.start(),f.update=function(e,t){"utf8"===t&&(e=r.util.encodeUtf8(e));var i=e.length;f.messageLength+=i,i=[i/4294967296>>>0,i>>>0];for(var s=f.fullMessageLength.length-1;s>=0;--s)f.fullMessageLength[s]+=i[1],i[1]=i[0]+(f.fullMessageLength[s]/4294967296>>>0),f.fullMessageLength[s]=f.fullMessageLength[s]>>>0,i[0]=i[1]/4294967296>>>0;return n.putBytes(e),l(a,u,n),(n.read>2048||0===n.length())&&n.compact(),f},f.digest=function(){var t=r.util.createBuffer();t.putBytes(n.bytes());var s,o=f.fullMessageLength[f.fullMessageLength.length-1]+f.messageLengthSize&f.blockLength-1;t.putBytes(i.substr(0,f.blockLength-o));for(var c=8*f.fullMessageLength[0],p=0;p<f.fullMessageLength.length-1;++p)c+=(s=8*f.fullMessageLength[p+1])/4294967296>>>0,t.putInt32(c>>>0),c=s>>>0;t.putInt32(c);var h=new Array(a.length);for(p=0;p<a.length;++p)h[p]=a[p].slice(0);l(h,u,t);var d,y=r.util.createBuffer();d="SHA-512"===e?h.length:"SHA-384"===e?h.length-2:h.length-4;for(p=0;p<d;++p)y.putInt32(h[p][0]),p===d-1&&"SHA-512/224"===e||y.putInt32(h[p][1]);return y},f};var i=null,s=!1,o=null,c=null;function l(e,t,r){for(var a,n,i,s,c,u,l,p,h,f,d,y,g,v,m,C,E,S,T,I,A,b,B,N,w,_,R,k,L,U,D,P,O,V=r.length();V>=128;){for(R=0;R<16;++R)t[R][0]=r.getInt32()>>>0,t[R][1]=r.getInt32()>>>0;for(;R<80;++R)a=(((k=(U=t[R-2])[0])>>>19|(L=U[1])<<13)^(L>>>29|k<<3)^k>>>6)>>>0,n=((k<<13|L>>>19)^(L<<3|k>>>29)^(k<<26|L>>>6))>>>0,i=(((k=(P=t[R-15])[0])>>>1|(L=P[1])<<31)^(k>>>8|L<<24)^k>>>7)>>>0,s=((k<<31|L>>>1)^(k<<24|L>>>8)^(k<<25|L>>>7))>>>0,D=t[R-7],O=t[R-16],L=n+D[1]+s+O[1],t[R][0]=a+D[0]+i+O[0]+(L/4294967296>>>0)>>>0,t[R][1]=L>>>0;for(d=e[0][0],y=e[0][1],g=e[1][0],v=e[1][1],m=e[2][0],C=e[2][1],E=e[3][0],S=e[3][1],T=e[4][0],I=e[4][1],A=e[5][0],b=e[5][1],B=e[6][0],N=e[6][1],w=e[7][0],_=e[7][1],R=0;R<80;++R)l=((T>>>14|I<<18)^(T>>>18|I<<14)^(I>>>9|T<<23))>>>0,p=(B^T&(A^B))>>>0,c=((d>>>28|y<<4)^(y>>>2|d<<30)^(y>>>7|d<<25))>>>0,u=((d<<4|y>>>28)^(y<<30|d>>>2)^(y<<25|d>>>7))>>>0,h=(d&g|m&(d^g))>>>0,f=(y&v|C&(y^v))>>>0,L=_+(((T<<18|I>>>14)^(T<<14|I>>>18)^(I<<23|T>>>9))>>>0)+((N^I&(b^N))>>>0)+o[R][1]+t[R][1],a=w+l+p+o[R][0]+t[R][0]+(L/4294967296>>>0)>>>0,n=L>>>0,i=c+h+((L=u+f)/4294967296>>>0)>>>0,s=L>>>0,w=B,_=N,B=A,N=b,A=T,b=I,T=E+a+((L=S+n)/4294967296>>>0)>>>0,I=L>>>0,E=m,S=C,m=g,C=v,g=d,v=y,d=a+i+((L=n+s)/4294967296>>>0)>>>0,y=L>>>0;L=e[0][1]+y,e[0][0]=e[0][0]+d+(L/4294967296>>>0)>>>0,e[0][1]=L>>>0,L=e[1][1]+v,e[1][0]=e[1][0]+g+(L/4294967296>>>0)>>>0,e[1][1]=L>>>0,L=e[2][1]+C,e[2][0]=e[2][0]+m+(L/4294967296>>>0)>>>0,e[2][1]=L>>>0,L=e[3][1]+S,e[3][0]=e[3][0]+E+(L/4294967296>>>0)>>>0,e[3][1]=L>>>0,L=e[4][1]+I,e[4][0]=e[4][0]+T+(L/4294967296>>>0)>>>0,e[4][1]=L>>>0,L=e[5][1]+b,e[5][0]=e[5][0]+A+(L/4294967296>>>0)>>>0,e[5][1]=L>>>0,L=e[6][1]+N,e[6][0]=e[6][0]+B+(L/4294967296>>>0)>>>0,e[6][1]=L>>>0,L=e[7][1]+_,e[7][0]=e[7][0]+w+(L/4294967296>>>0)>>>0,e[7][1]=L>>>0,V-=128}}}}),H=o({"node_modules/node-forge/lib/asn1-validator.js"(e){var t=u();g();var r=t.asn1;e.privateKeyValidator={name:"PrivateKeyInfo",tagClass:r.Class.UNIVERSAL,type:r.Type.SEQUENCE,constructed:!0,value:[{name:"PrivateKeyInfo.version",tagClass:r.Class.UNIVERSAL,type:r.Type.INTEGER,constructed:!1,capture:"privateKeyVersion"},{name:"PrivateKeyInfo.privateKeyAlgorithm",tagClass:r.Class.UNIVERSAL,type:r.Type.SEQUENCE,constructed:!0,value:[{name:"AlgorithmIdentifier.algorithm",tagClass:r.Class.UNIVERSAL,type:r.Type.OID,constructed:!1,capture:"privateKeyOid"}]},{name:"PrivateKeyInfo",tagClass:r.Class.UNIVERSAL,type:r.Type.OCTETSTRING,constructed:!1,capture:"privateKey"}]},e.publicKeyValidator={name:"SubjectPublicKeyInfo",tagClass:r.Class.UNIVERSAL,type:r.Type.SEQUENCE,constructed:!0,captureAsn1:"subjectPublicKeyInfo",value:[{name:"SubjectPublicKeyInfo.AlgorithmIdentifier",tagClass:r.Class.UNIVERSAL,type:r.Type.SEQUENCE,constructed:!0,value:[{name:"AlgorithmIdentifier.algorithm",tagClass:r.Class.UNIVERSAL,type:r.Type.OID,constructed:!1,capture:"publicKeyOid"}]},{tagClass:r.Class.UNIVERSAL,type:r.Type.BITSTRING,constructed:!1,composed:!0,captureBitStringValue:"ed25519PublicKey"}]}}}),G=o({"node_modules/node-forge/lib/ed25519.js"(e,t){var r=u();N(),b(),j(),p();var a,n=H(),i=n.publicKeyValidator,s=n.privateKeyValidator;void 0===a&&(a=r.jsbn.BigInteger);var o=r.util.ByteBuffer,c="undefined"==typeof Buffer?Uint8Array:Buffer;r.pki=r.pki||{},t.exports=r.pki.ed25519=r.ed25519=r.ed25519||{};var l=r.ed25519;function h(e){var t=e.message;if(t instanceof Uint8Array||t instanceof c)return t;var r=e.encoding;if(void 0===t){if(!e.md)throw new TypeError('"options.message" or "options.md" not specified.');t=e.md.digest().getBytes(),r="binary"}if("string"==typeof t&&!r)throw new TypeError('"options.encoding" must be "binary" or "utf8".');if("string"==typeof t){if("undefined"!=typeof Buffer)return Buffer.from(t,r);t=new o(t,r)}else if(!(t instanceof o))throw new TypeError('"options.message" must be a node.js Buffer, a Uint8Array, a forge ByteBuffer, or a string with "options.encoding" specifying its encoding.');for(var a=new c(t.length()),n=0;n<a.length;++n)a[n]=t.at(n);return a}l.constants={},l.constants.PUBLIC_KEY_BYTE_LENGTH=32,l.constants.PRIVATE_KEY_BYTE_LENGTH=64,l.constants.SEED_BYTE_LENGTH=32,l.constants.SIGN_BYTE_LENGTH=64,l.constants.HASH_BYTE_LENGTH=64,l.generateKeyPair=function(e){var t=(e=e||{}).seed;if(void 0===t)t=r.random.getBytesSync(l.constants.SEED_BYTE_LENGTH);else if("string"==typeof t){if(t.length!==l.constants.SEED_BYTE_LENGTH)throw new TypeError('"seed" must be '+l.constants.SEED_BYTE_LENGTH+" bytes in length.")}else if(!(t instanceof Uint8Array))throw new TypeError('"seed" must be a node.js Buffer, Uint8Array, or a binary string.');t=h({message:t,encoding:"binary"});for(var a=new c(l.constants.PUBLIC_KEY_BYTE_LENGTH),n=new c(l.constants.PRIVATE_KEY_BYTE_LENGTH),i=0;i<32;++i)n[i]=t[i];return function(e,t){var r,a=[K(),K(),K(),K()],n=S(t,32);for(n[0]&=248,n[31]&=127,n[31]|=64,D(a,n),w(e,a),r=0;r<32;++r)t[r+32]=e[r]}(a,n),{publicKey:a,privateKey:n}},l.privateKeyFromAsn1=function(e){var t={},a=[];if(!r.asn1.validate(e,s,t,a)){var n=new Error("Invalid Key.");throw n.errors=a,n}var i=r.asn1.derToOid(t.privateKeyOid),o=r.oids.EdDSA25519;if(i!==o)throw new Error('Invalid OID "'+i+'"; OID must be "'+o+'".');var c=t.privateKey;return{privateKeyBytes:h({message:r.asn1.fromDer(c).value,encoding:"binary"})}},l.publicKeyFromAsn1=function(e){var t={},a=[];if(!r.asn1.validate(e,i,t,a)){var n=new Error("Invalid Key.");throw n.errors=a,n}var s=r.asn1.derToOid(t.publicKeyOid),o=r.oids.EdDSA25519;if(s!==o)throw new Error('Invalid OID "'+s+'"; OID must be "'+o+'".');var c=t.ed25519PublicKey;if(c.length!==l.constants.PUBLIC_KEY_BYTE_LENGTH)throw new Error("Key length is invalid.");return h({message:c,encoding:"binary"})},l.publicKeyFromPrivateKey=function(e){var t=h({message:(e=e||{}).privateKey,encoding:"binary"});if(t.length!==l.constants.PRIVATE_KEY_BYTE_LENGTH)throw new TypeError('"options.privateKey" must have a byte length of '+l.constants.PRIVATE_KEY_BYTE_LENGTH);for(var r=new c(l.constants.PUBLIC_KEY_BYTE_LENGTH),a=0;a<r.length;++a)r[a]=t[32+a];return r},l.sign=function(e){var t=h(e=e||{}),r=h({message:e.privateKey,encoding:"binary"});if(r.length===l.constants.SEED_BYTE_LENGTH)r=l.generateKeyPair({seed:r}).privateKey;else if(r.length!==l.constants.PRIVATE_KEY_BYTE_LENGTH)throw new TypeError('"options.privateKey" must have a byte length of '+l.constants.SEED_BYTE_LENGTH+" or "+l.constants.PRIVATE_KEY_BYTE_LENGTH);var a=new c(l.constants.SIGN_BYTE_LENGTH+t.length);!function(e,t,r,a){var n,i,s=new Float64Array(64),o=[K(),K(),K(),K()],c=S(a,32);c[0]&=248,c[31]&=127,c[31]|=64;var u=r+64;for(n=0;n<r;++n)e[64+n]=t[n];for(n=0;n<32;++n)e[32+n]=c[32+n];var l=S(e.subarray(32),r+32);for(I(l),D(o,l),w(e,o),n=32;n<64;++n)e[n]=a[n];var p=S(e,r+64);for(I(p),n=32;n<64;++n)s[n]=0;for(n=0;n<32;++n)s[n]=l[n];for(n=0;n<32;++n)for(i=0;i<32;i++)s[n+i]+=p[n]*c[i];T(e.subarray(32),s)}(a,t,t.length,r);for(var n=new c(l.constants.SIGN_BYTE_LENGTH),i=0;i<n.length;++i)n[i]=a[i];return n},l.verify=function(e){var t=h(e=e||{});if(void 0===e.signature)throw new TypeError('"options.signature" must be a node.js Buffer, a Uint8Array, a forge ByteBuffer, or a binary string.');var r=h({message:e.signature,encoding:"binary"});if(r.length!==l.constants.SIGN_BYTE_LENGTH)throw new TypeError('"options.signature" must have a byte length of '+l.constants.SIGN_BYTE_LENGTH);var a=h({message:e.publicKey,encoding:"binary"});if(a.length!==l.constants.PUBLIC_KEY_BYTE_LENGTH)throw new TypeError('"options.publicKey" must have a byte length of '+l.constants.PUBLIC_KEY_BYTE_LENGTH);var n,i=new c(l.constants.SIGN_BYTE_LENGTH+t.length),s=new c(l.constants.SIGN_BYTE_LENGTH+t.length);for(n=0;n<l.constants.SIGN_BYTE_LENGTH;++n)i[n]=r[n];for(n=0;n<t.length;++n)i[n+l.constants.SIGN_BYTE_LENGTH]=t[n];return function(e,t,r,a){var n,i=new c(32),s=[K(),K(),K(),K()],o=[K(),K(),K(),K()];if(-1,r<64)return-1;if(function(e,t){var r=K(),a=K(),n=K(),i=K(),s=K(),o=K(),c=K();P(e[2],d),function(e,t){var r;for(r=0;r<16;++r)e[r]=t[2*r]+(t[2*r+1]<<8);e[15]&=32767}(e[1],t),F(n,e[1]),G(i,n,y),M(n,n,e[2]),x(i,e[2],i),F(s,i),F(o,s),G(c,o,s),G(r,c,n),G(r,r,i),function(e,t){var r,a=K();for(r=0;r<16;++r)a[r]=t[r];for(r=250;r>=0;--r)F(a,a),1!==r&&G(a,a,t);for(r=0;r<16;++r)e[r]=a[r]}(r,r),G(r,r,n),G(r,r,i),G(r,r,i),G(e[0],r,i),F(a,e[0]),G(a,a,i),R(a,n)&&G(e[0],e[0],E);if(F(a,e[0]),G(a,a,i),R(a,n))return-1;L(e[0])===t[31]>>7&&M(e[0],f,e[0]);return G(e[3],e[0],e[1]),0}(o,a))return-1;for(n=0;n<r;++n)e[n]=t[n];for(n=0;n<32;++n)e[n+32]=a[n];var u=S(e,r);if(I(u),U(s,o,u),D(o,t.subarray(32)),A(s,o),w(i,s),r-=64,k(t,0,i,0)){for(n=0;n<r;++n)e[n]=0;return-1}for(n=0;n<r;++n)e[n]=t[n+64];return r}(s,i,i.length,a)>=0};var f=K(),d=K([1]),y=K([30883,4953,19914,30187,55467,16705,2637,112,59544,30585,16505,36039,65139,11119,27886,20995]),g=K([61785,9906,39828,60374,45398,33411,5274,224,53552,61171,33010,6542,64743,22239,55772,9222]),v=K([54554,36645,11616,51542,42930,38181,51040,26924,56412,64982,57905,49316,21502,52590,14035,8553]),m=K([26200,26214,26214,26214,26214,26214,26214,26214,26214,26214,26214,26214,26214,26214,26214,26214]),C=new Float64Array([237,211,245,92,26,99,18,88,214,156,247,162,222,249,222,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16]),E=K([41136,18958,6951,50414,58488,44335,6150,12099,55207,15867,153,11085,57099,20417,9344,11139]);function S(e,t){var a=r.md.sha512.create(),n=new o(e);a.update(n.getBytes(t),"binary");var i=a.digest().getBytes();if("undefined"!=typeof Buffer)return Buffer.from(i,"binary");for(var s=new c(l.constants.HASH_BYTE_LENGTH),u=0;u<64;++u)s[u]=i.charCodeAt(u);return s}function T(e,t){var r,a,n,i;for(a=63;a>=32;--a){for(r=0,n=a-32,i=a-12;n<i;++n)t[n]+=r-16*t[a]*C[n-(a-32)],r=t[n]+128>>8,t[n]-=256*r;t[n]+=r,t[a]=0}for(r=0,n=0;n<32;++n)t[n]+=r-(t[31]>>4)*C[n],r=t[n]>>8,t[n]&=255;for(n=0;n<32;++n)t[n]-=r*C[n];for(a=0;a<32;++a)t[a+1]+=t[a]>>8,e[a]=255&t[a]}function I(e){for(var t=new Float64Array(64),r=0;r<64;++r)t[r]=e[r],e[r]=0;T(e,t)}function A(e,t){var r=K(),a=K(),n=K(),i=K(),s=K(),o=K(),c=K(),u=K(),l=K();M(r,e[1],e[0]),M(l,t[1],t[0]),G(r,r,l),x(a,e[0],e[1]),x(l,t[0],t[1]),G(a,a,l),G(n,e[3],t[3]),G(n,n,g),G(i,e[2],t[2]),x(i,i,i),M(s,a,r),M(o,i,n),x(c,i,n),x(u,a,r),G(e[0],s,o),G(e[1],u,c),G(e[2],c,o),G(e[3],s,u)}function B(e,t,r){for(var a=0;a<4;++a)V(e[a],t[a],r)}function w(e,t){var r=K(),a=K(),n=K();!function(e,t){var r,a=K();for(r=0;r<16;++r)a[r]=t[r];for(r=253;r>=0;--r)F(a,a),2!==r&&4!==r&&G(a,a,t);for(r=0;r<16;++r)e[r]=a[r]}(n,t[2]),G(r,t[0],n),G(a,t[1],n),_(e,a),e[31]^=L(r)<<7}function _(e,t){var r,a,n,i=K(),s=K();for(r=0;r<16;++r)s[r]=t[r];for(O(s),O(s),O(s),a=0;a<2;++a){for(i[0]=s[0]-65517,r=1;r<15;++r)i[r]=s[r]-65535-(i[r-1]>>16&1),i[r-1]&=65535;i[15]=s[15]-32767-(i[14]>>16&1),n=i[15]>>16&1,i[14]&=65535,V(s,i,1-n)}for(r=0;r<16;r++)e[2*r]=255&s[r],e[2*r+1]=s[r]>>8}function R(e,t){var r=new c(32),a=new c(32);return _(r,e),_(a,t),k(r,0,a,0)}function k(e,t,r,a){return function(e,t,r,a,n){var i,s=0;for(i=0;i<n;++i)s|=e[t+i]^r[a+i];return(1&s-1>>>8)-1}(e,t,r,a,32)}function L(e){var t=new c(32);return _(t,e),1&t[0]}function U(e,t,r){var a,n;for(P(e[0],f),P(e[1],d),P(e[2],d),P(e[3],f),n=255;n>=0;--n)B(e,t,a=r[n/8|0]>>(7&n)&1),A(t,e),A(e,e),B(e,t,a)}function D(e,t){var r=[K(),K(),K(),K()];P(r[0],v),P(r[1],m),P(r[2],d),G(r[3],v,m),U(e,r,t)}function P(e,t){var r;for(r=0;r<16;r++)e[r]=0|t[r]}function O(e){var t,r,a=1;for(t=0;t<16;++t)r=e[t]+a+65535,a=Math.floor(r/65536),e[t]=r-65536*a;e[0]+=a-1+37*(a-1)}function V(e,t,r){for(var a,n=~(r-1),i=0;i<16;++i)a=n&(e[i]^t[i]),e[i]^=a,t[i]^=a}function K(e){var t,r=new Float64Array(16);if(e)for(t=0;t<e.length;++t)r[t]=e[t];return r}function x(e,t,r){for(var a=0;a<16;++a)e[a]=t[a]+r[a]}function M(e,t,r){for(var a=0;a<16;++a)e[a]=t[a]-r[a]}function F(e,t){G(e,t,t)}function G(e,t,r){var a,n,i=0,s=0,o=0,c=0,u=0,l=0,p=0,h=0,f=0,d=0,y=0,g=0,v=0,m=0,C=0,E=0,S=0,T=0,I=0,A=0,b=0,B=0,N=0,w=0,_=0,R=0,k=0,L=0,U=0,D=0,P=0,O=r[0],V=r[1],K=r[2],x=r[3],M=r[4],F=r[5],j=r[6],H=r[7],G=r[8],q=r[9],Q=r[10],z=r[11],Y=r[12],W=r[13],X=r[14],Z=r[15];i+=(a=t[0])*O,s+=a*V,o+=a*K,c+=a*x,u+=a*M,l+=a*F,p+=a*j,h+=a*H,f+=a*G,d+=a*q,y+=a*Q,g+=a*z,v+=a*Y,m+=a*W,C+=a*X,E+=a*Z,s+=(a=t[1])*O,o+=a*V,c+=a*K,u+=a*x,l+=a*M,p+=a*F,h+=a*j,f+=a*H,d+=a*G,y+=a*q,g+=a*Q,v+=a*z,m+=a*Y,C+=a*W,E+=a*X,S+=a*Z,o+=(a=t[2])*O,c+=a*V,u+=a*K,l+=a*x,p+=a*M,h+=a*F,f+=a*j,d+=a*H,y+=a*G,g+=a*q,v+=a*Q,m+=a*z,C+=a*Y,E+=a*W,S+=a*X,T+=a*Z,c+=(a=t[3])*O,u+=a*V,l+=a*K,p+=a*x,h+=a*M,f+=a*F,d+=a*j,y+=a*H,g+=a*G,v+=a*q,m+=a*Q,C+=a*z,E+=a*Y,S+=a*W,T+=a*X,I+=a*Z,u+=(a=t[4])*O,l+=a*V,p+=a*K,h+=a*x,f+=a*M,d+=a*F,y+=a*j,g+=a*H,v+=a*G,m+=a*q,C+=a*Q,E+=a*z,S+=a*Y,T+=a*W,I+=a*X,A+=a*Z,l+=(a=t[5])*O,p+=a*V,h+=a*K,f+=a*x,d+=a*M,y+=a*F,g+=a*j,v+=a*H,m+=a*G,C+=a*q,E+=a*Q,S+=a*z,T+=a*Y,I+=a*W,A+=a*X,b+=a*Z,p+=(a=t[6])*O,h+=a*V,f+=a*K,d+=a*x,y+=a*M,g+=a*F,v+=a*j,m+=a*H,C+=a*G,E+=a*q,S+=a*Q,T+=a*z,I+=a*Y,A+=a*W,b+=a*X,B+=a*Z,h+=(a=t[7])*O,f+=a*V,d+=a*K,y+=a*x,g+=a*M,v+=a*F,m+=a*j,C+=a*H,E+=a*G,S+=a*q,T+=a*Q,I+=a*z,A+=a*Y,b+=a*W,B+=a*X,N+=a*Z,f+=(a=t[8])*O,d+=a*V,y+=a*K,g+=a*x,v+=a*M,m+=a*F,C+=a*j,E+=a*H,S+=a*G,T+=a*q,I+=a*Q,A+=a*z,b+=a*Y,B+=a*W,N+=a*X,w+=a*Z,d+=(a=t[9])*O,y+=a*V,g+=a*K,v+=a*x,m+=a*M,C+=a*F,E+=a*j,S+=a*H,T+=a*G,I+=a*q,A+=a*Q,b+=a*z,B+=a*Y,N+=a*W,w+=a*X,_+=a*Z,y+=(a=t[10])*O,g+=a*V,v+=a*K,m+=a*x,C+=a*M,E+=a*F,S+=a*j,T+=a*H,I+=a*G,A+=a*q,b+=a*Q,B+=a*z,N+=a*Y,w+=a*W,_+=a*X,R+=a*Z,g+=(a=t[11])*O,v+=a*V,m+=a*K,C+=a*x,E+=a*M,S+=a*F,T+=a*j,I+=a*H,A+=a*G,b+=a*q,B+=a*Q,N+=a*z,w+=a*Y,_+=a*W,R+=a*X,k+=a*Z,v+=(a=t[12])*O,m+=a*V,C+=a*K,E+=a*x,S+=a*M,T+=a*F,I+=a*j,A+=a*H,b+=a*G,B+=a*q,N+=a*Q,w+=a*z,_+=a*Y,R+=a*W,k+=a*X,L+=a*Z,m+=(a=t[13])*O,C+=a*V,E+=a*K,S+=a*x,T+=a*M,I+=a*F,A+=a*j,b+=a*H,B+=a*G,N+=a*q,w+=a*Q,_+=a*z,R+=a*Y,k+=a*W,L+=a*X,U+=a*Z,C+=(a=t[14])*O,E+=a*V,S+=a*K,T+=a*x,I+=a*M,A+=a*F,b+=a*j,B+=a*H,N+=a*G,w+=a*q,_+=a*Q,R+=a*z,k+=a*Y,L+=a*W,U+=a*X,D+=a*Z,E+=(a=t[15])*O,s+=38*(T+=a*K),o+=38*(I+=a*x),c+=38*(A+=a*M),u+=38*(b+=a*F),l+=38*(B+=a*j),p+=38*(N+=a*H),h+=38*(w+=a*G),f+=38*(_+=a*q),d+=38*(R+=a*Q),y+=38*(k+=a*z),g+=38*(L+=a*Y),v+=38*(U+=a*W),m+=38*(D+=a*X),C+=38*(P+=a*Z),i=(a=(i+=38*(S+=a*V))+(n=1)+65535)-65536*(n=Math.floor(a/65536)),s=(a=s+n+65535)-65536*(n=Math.floor(a/65536)),o=(a=o+n+65535)-65536*(n=Math.floor(a/65536)),c=(a=c+n+65535)-65536*(n=Math.floor(a/65536)),u=(a=u+n+65535)-65536*(n=Math.floor(a/65536)),l=(a=l+n+65535)-65536*(n=Math.floor(a/65536)),p=(a=p+n+65535)-65536*(n=Math.floor(a/65536)),h=(a=h+n+65535)-65536*(n=Math.floor(a/65536)),f=(a=f+n+65535)-65536*(n=Math.floor(a/65536)),d=(a=d+n+65535)-65536*(n=Math.floor(a/65536)),y=(a=y+n+65535)-65536*(n=Math.floor(a/65536)),g=(a=g+n+65535)-65536*(n=Math.floor(a/65536)),v=(a=v+n+65535)-65536*(n=Math.floor(a/65536)),m=(a=m+n+65535)-65536*(n=Math.floor(a/65536)),C=(a=C+n+65535)-65536*(n=Math.floor(a/65536)),E=(a=E+n+65535)-65536*(n=Math.floor(a/65536)),i=(a=(i+=n-1+37*(n-1))+(n=1)+65535)-65536*(n=Math.floor(a/65536)),s=(a=s+n+65535)-65536*(n=Math.floor(a/65536)),o=(a=o+n+65535)-65536*(n=Math.floor(a/65536)),c=(a=c+n+65535)-65536*(n=Math.floor(a/65536)),u=(a=u+n+65535)-65536*(n=Math.floor(a/65536)),l=(a=l+n+65535)-65536*(n=Math.floor(a/65536)),p=(a=p+n+65535)-65536*(n=Math.floor(a/65536)),h=(a=h+n+65535)-65536*(n=Math.floor(a/65536)),f=(a=f+n+65535)-65536*(n=Math.floor(a/65536)),d=(a=d+n+65535)-65536*(n=Math.floor(a/65536)),y=(a=y+n+65535)-65536*(n=Math.floor(a/65536)),g=(a=g+n+65535)-65536*(n=Math.floor(a/65536)),v=(a=v+n+65535)-65536*(n=Math.floor(a/65536)),m=(a=m+n+65535)-65536*(n=Math.floor(a/65536)),C=(a=C+n+65535)-65536*(n=Math.floor(a/65536)),E=(a=E+n+65535)-65536*(n=Math.floor(a/65536)),i+=n-1+37*(n-1),e[0]=i,e[1]=s,e[2]=o,e[3]=c,e[4]=u,e[5]=l,e[6]=p,e[7]=h,e[8]=f,e[9]=d,e[10]=y,e[11]=g,e[12]=v,e[13]=m,e[14]=C,e[15]=E}}}),q=o({"node_modules/node-forge/lib/kem.js"(e,t){var r=u();p(),b(),N(),t.exports=r.kem=r.kem||{};var a=r.jsbn.BigInteger;function n(e,t,a,n){e.generate=function(e,i){for(var s=new r.util.ByteBuffer,o=Math.ceil(i/n)+a,c=new r.util.ByteBuffer,u=a;u<o;++u){c.putInt32(u),t.start(),t.update(e+c.getBytes());var l=t.digest();s.putBytes(l.getBytes(n))}return s.truncate(s.length()-i),s.getBytes()}}r.kem.rsa={},r.kem.rsa.create=function(e,t){var n=(t=t||{}).prng||r.random,i={encrypt:function(t,i){var s,o=Math.ceil(t.n.bitLength()/8);do{s=new a(r.util.bytesToHex(n.getBytesSync(o)),16).mod(t.n)}while(s.compareTo(a.ONE)<=0);var c=o-(s=r.util.hexToBytes(s.toString(16))).length;return c>0&&(s=r.util.fillString(String.fromCharCode(0),c)+s),{encapsulation:t.encrypt(s,"NONE"),key:e.generate(s,i)}},decrypt:function(t,r,a){var n=t.decrypt(r,"NONE");return e.generate(n,a)}};return i},r.kem.kdf1=function(e,t){n(this,e,0,t||e.digestLength)},r.kem.kdf2=function(e,t){n(this,e,1,t||e.digestLength)}}}),Q=o({"node_modules/node-forge/lib/log.js"(e,t){var r=u();p(),t.exports=r.log=r.log||{},r.log.levels=["none","error","warning","info","debug","verbose","max"];var a,n,i,s,o,c,l,h={},f=[],d=null;for(r.log.LEVEL_LOCKED=2,r.log.NO_LEVEL_CHECK=4,r.log.INTERPOLATE=8,i=0;i<r.log.levels.length;++i)a=r.log.levels[i],h[a]={index:i,name:a.toUpperCase()};for(r.log.logMessage=function(e){for(var t=h[e.level].index,a=0;a<f.length;++a){var n=f[a];if(n.flags&r.log.NO_LEVEL_CHECK)n.f(e);else t<=h[n.level].index&&n.f(n,e)}},r.log.prepareStandard=function(e){"standard"in e||(e.standard=h[e.level].name+" ["+e.category+"] "+e.message)},r.log.prepareFull=function(e){if(!("full"in e)){var t=[e.message];t=t.concat([]),e.full=r.util.format.apply(this,t)}},r.log.prepareStandardFull=function(e){"standardFull"in e||(r.log.prepareStandard(e),e.standardFull=e.standard)},n=["error","warning","info","debug","verbose"],i=0;i<n.length;++i)!function(e){r.log[e]=function(t,a){var n=Array.prototype.slice.call(arguments).slice(2),i={timestamp:new Date,level:e,category:t,message:a,arguments:n};r.log.logMessage(i)}}(n[i]);r.log.makeLogger=function(e){var t={flags:0,f:e};return r.log.setLevel(t,"none"),t},r.log.setLevel=function(e,t){var a=!1;if(e&&!(e.flags&r.log.LEVEL_LOCKED))for(var n=0;n<r.log.levels.length;++n){if(t==r.log.levels[n]){e.level=t,a=!0;break}}return a},r.log.lock=function(e,t){void 0===t||t?e.flags|=r.log.LEVEL_LOCKED:e.flags&=~r.log.LEVEL_LOCKED},r.log.addLogger=function(e){f.push(e)},"undefined"!=typeof console&&"log"in console?(console.error&&console.warn&&console.info&&console.debug?(o={error:console.error,warning:console.warn,info:console.info,debug:console.debug,verbose:console.debug},c=function(e,t){r.log.prepareStandard(t);var a=o[t.level],n=[t.standard];n=n.concat(t.arguments.slice()),a.apply(console,n)},s=r.log.makeLogger(c)):(c=function(e,t){r.log.prepareStandardFull(t),console.log(t.standardFull)},s=r.log.makeLogger(c)),r.log.setLevel(s,"debug"),r.log.addLogger(s),d=s):console={log:function(){}},null!==d&&"undefined"!=typeof window&&window.location&&((l=new URL(window.location.href).searchParams).has("console.level")&&r.log.setLevel(d,l.get("console.level").slice(-1)[0]),l.has("console.lock")&&"true"==l.get("console.lock").slice(-1)[0]&&r.log.lock(d)),r.log.consoleLogger=d}}),z=o({"node_modules/node-forge/lib/md.all.js"(e,t){t.exports=v(),C(),w(),I(),j()}}),Y=o({"node_modules/node-forge/lib/pkcs7.js"(e,t){var r=u();d(),g(),S(),y(),E(),U(),b(),p(),V();var a=r.asn1,n=t.exports=r.pkcs7=r.pkcs7||{};function i(e){var t={},i=[];if(!a.validate(e,n.asn1.recipientInfoValidator,t,i)){var s=new Error("Cannot read PKCS#7 RecipientInfo. ASN.1 object is not an PKCS#7 RecipientInfo.");throw s.errors=i,s}return{version:t.version.charCodeAt(0),issuer:r.pki.RDNAttributesAsArray(t.issuer),serialNumber:r.util.createBuffer(t.serial).toHex(),encryptedContent:{algorithm:a.derToOid(t.encAlgorithm),parameter:t.encParameter?t.encParameter.value:void 0,content:t.encKey}}}function s(e){for(var t,n=[],i=0;i<e.length;++i)n.push((t=e[i],a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(t.version).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[r.pki.distinguishedNameToAsn1({attributes:t.issuer}),a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,r.util.hexToBytes(t.serialNumber))]),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(t.encryptedContent.algorithm).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")]),a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,t.encryptedContent.content)])));return n}function o(e){var t=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(e.version).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[r.pki.distinguishedNameToAsn1({attributes:e.issuer}),a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,r.util.hexToBytes(e.serialNumber))]),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.digestAlgorithm).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")])]);if(e.authenticatedAttributesAsn1&&t.value.push(e.authenticatedAttributesAsn1),t.value.push(a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.signatureAlgorithm).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")])),t.value.push(a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,e.signature)),e.unauthenticatedAttributes.length>0){for(var n=a.create(a.Class.CONTEXT_SPECIFIC,1,!0,[]),i=0;i<e.unauthenticatedAttributes.length;++i){var s=e.unauthenticatedAttributes[i];n.values.push(c(s))}t.value.push(n)}return t}function c(e){var t;if(e.type===r.pki.oids.contentType)t=a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.value).getBytes());else if(e.type===r.pki.oids.messageDigest)t=a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,e.value.bytes());else if(e.type===r.pki.oids.signingTime){var n=new Date("1950-01-01T00:00:00Z"),i=new Date("2050-01-01T00:00:00Z"),s=e.value;if("string"==typeof s){var o=Date.parse(s);s=isNaN(o)?13===s.length?a.utcTimeToDate(s):a.generalizedTimeToDate(s):new Date(o)}t=s>=n&&s<i?a.create(a.Class.UNIVERSAL,a.Type.UTCTIME,!1,a.dateToUtcTime(s)):a.create(a.Class.UNIVERSAL,a.Type.GENERALIZEDTIME,!1,a.dateToGeneralizedTime(s))}return a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.type).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SET,!0,[t])])}function l(e,t,n){var i={};if(!a.validate(t,n,i,[])){var s=new Error("Cannot read PKCS#7 message. ASN.1 object is not a supported PKCS#7 message.");throw s.errors=s,s}if(a.derToOid(i.contentType)!==r.pki.oids.data)throw new Error("Unsupported PKCS#7 message. Only wrapped ContentType Data supported.");if(i.encryptedContent){var o="";if(r.util.isArray(i.encryptedContent))for(var c=0;c<i.encryptedContent.length;++c){if(i.encryptedContent[c].type!==a.Type.OCTETSTRING)throw new Error("Malformed PKCS#7 message, expecting encrypted content constructed of only OCTET STRING objects.");o+=i.encryptedContent[c].value}else o=i.encryptedContent;e.encryptedContent={algorithm:a.derToOid(i.encAlgorithm),parameter:r.util.createBuffer(i.encParameter.value),content:r.util.createBuffer(o)}}if(i.content){o="";if(r.util.isArray(i.content))for(c=0;c<i.content.length;++c){if(i.content[c].type!==a.Type.OCTETSTRING)throw new Error("Malformed PKCS#7 message, expecting content constructed of only OCTET STRING objects.");o+=i.content[c].value}else o=i.content;e.content=r.util.createBuffer(o)}return e.version=i.version.charCodeAt(0),e.rawCapture=i,i}function h(e){if(void 0===e.encryptedContent.key)throw new Error("Symmetric key not available.");if(void 0===e.content){var t;switch(e.encryptedContent.algorithm){case r.pki.oids["aes128-CBC"]:case r.pki.oids["aes192-CBC"]:case r.pki.oids["aes256-CBC"]:t=r.aes.createDecryptionCipher(e.encryptedContent.key);break;case r.pki.oids.desCBC:case r.pki.oids["des-EDE3-CBC"]:t=r.des.createDecryptionCipher(e.encryptedContent.key);break;default:throw new Error("Unsupported symmetric cipher, OID "+e.encryptedContent.algorithm)}if(t.start(e.encryptedContent.parameter),t.update(e.encryptedContent.content),!t.finish())throw new Error("Symmetric decryption failed.");e.content=t.output}}n.messageFromPem=function(e){var t=r.pem.decode(e)[0];if("PKCS7"!==t.type){var i=new Error('Could not convert PKCS#7 message from PEM; PEM header type is not "PKCS#7".');throw i.headerType=t.type,i}if(t.procType&&"ENCRYPTED"===t.procType.type)throw new Error("Could not convert PKCS#7 message from PEM; PEM is encrypted.");var s=a.fromDer(t.body);return n.messageFromAsn1(s)},n.messageToPem=function(e,t){var n={type:"PKCS7",body:a.toDer(e.toAsn1()).getBytes()};return r.pem.encode(n,{maxline:t})},n.messageFromAsn1=function(e){var t={},i=[];if(!a.validate(e,n.asn1.contentInfoValidator,t,i)){var s=new Error("Cannot read PKCS#7 message. ASN.1 object is not an PKCS#7 ContentInfo.");throw s.errors=i,s}var o,c=a.derToOid(t.contentType);switch(c){case r.pki.oids.envelopedData:o=n.createEnvelopedData();break;case r.pki.oids.encryptedData:o=n.createEncryptedData();break;case r.pki.oids.signedData:o=n.createSignedData();break;default:throw new Error("Cannot read PKCS#7 message. ContentType with OID "+c+" is not (yet) supported.")}return o.fromAsn1(t.content.value[0]),o},n.createSignedData=function(){var e=null;return e={type:r.pki.oids.signedData,version:1,certificates:[],crls:[],signers:[],digestAlgorithmIdentifiers:[],contentInfo:null,signerInfos:[],fromAsn1:function(t){if(l(e,t,n.asn1.signedDataValidator),e.certificates=[],e.crls=[],e.digestAlgorithmIdentifiers=[],e.contentInfo=null,e.signerInfos=[],e.rawCapture.certificates)for(var a=e.rawCapture.certificates.value,i=0;i<a.length;++i)e.certificates.push(r.pki.certificateFromAsn1(a[i]))},toAsn1:function(){e.contentInfo||e.sign();for(var t=[],n=0;n<e.certificates.length;++n)t.push(r.pki.certificateToAsn1(e.certificates[n]));var i=[],s=a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(e.version).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SET,!0,e.digestAlgorithmIdentifiers),e.contentInfo])]);return t.length>0&&s.value[0].value.push(a.create(a.Class.CONTEXT_SPECIFIC,0,!0,t)),i.length>0&&s.value[0].value.push(a.create(a.Class.CONTEXT_SPECIFIC,1,!0,i)),s.value[0].value.push(a.create(a.Class.UNIVERSAL,a.Type.SET,!0,e.signerInfos)),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.type).getBytes()),s])},addSigner:function(t){var a=t.issuer,n=t.serialNumber;if(t.certificate){var i=t.certificate;"string"==typeof i&&(i=r.pki.certificateFromPem(i)),a=i.issuer.attributes,n=i.serialNumber}var s=t.key;if(!s)throw new Error("Could not add PKCS#7 signer; no private key specified.");"string"==typeof s&&(s=r.pki.privateKeyFromPem(s));var o=t.digestAlgorithm||r.pki.oids.sha1;switch(o){case r.pki.oids.sha1:case r.pki.oids.sha256:case r.pki.oids.sha384:case r.pki.oids.sha512:case r.pki.oids.md5:break;default:throw new Error("Could not add PKCS#7 signer; unknown message digest algorithm: "+o)}var c=t.authenticatedAttributes||[];if(c.length>0){for(var u=!1,l=!1,p=0;p<c.length;++p){var h=c[p];if(u||h.type!==r.pki.oids.contentType){if(l||h.type!==r.pki.oids.messageDigest);else if(l=!0,u)break}else if(u=!0,l)break}if(!u||!l)throw new Error("Invalid signer.authenticatedAttributes. If signer.authenticatedAttributes is specified, then it must contain at least two attributes, PKCS #9 content-type and PKCS #9 message-digest.")}e.signers.push({key:s,version:1,issuer:a,serialNumber:n,digestAlgorithm:o,signatureAlgorithm:r.pki.oids.rsaEncryption,signature:null,authenticatedAttributes:c,unauthenticatedAttributes:[]})},sign:function(t){var n;(t=t||{},"object"!=typeof e.content||null===e.contentInfo)&&(e.contentInfo=a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(r.pki.oids.data).getBytes())]),"content"in e&&(e.content instanceof r.util.ByteBuffer?n=e.content.bytes():"string"==typeof e.content&&(n=r.util.encodeUtf8(e.content)),t.detached?e.detachedContent=a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,n):e.contentInfo.value.push(a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,n)]))));0!==e.signers.length&&function(t){var n;n=e.detachedContent?e.detachedContent:(n=e.contentInfo.value[1]).value[0];if(!n)throw new Error("Could not sign PKCS#7 message; there is no content to sign.");var i=a.derToOid(e.contentInfo.value[0].value),s=a.toDer(n);for(var u in s.getByte(),a.getBerValueLength(s),s=s.getBytes(),t)t[u].start().update(s);for(var l=new Date,p=0;p<e.signers.length;++p){var h=e.signers[p];if(0===h.authenticatedAttributes.length){if(i!==r.pki.oids.data)throw new Error("Invalid signer; authenticatedAttributes must be present when the ContentInfo content type is not PKCS#7 Data.")}else{h.authenticatedAttributesAsn1=a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[]);for(var f=a.create(a.Class.UNIVERSAL,a.Type.SET,!0,[]),d=0;d<h.authenticatedAttributes.length;++d){var y=h.authenticatedAttributes[d];y.type===r.pki.oids.messageDigest?y.value=t[h.digestAlgorithm].digest():y.type===r.pki.oids.signingTime&&(y.value||(y.value=l)),f.value.push(c(y)),h.authenticatedAttributesAsn1.value.push(c(y))}s=a.toDer(f).getBytes(),h.md.start().update(s)}h.signature=h.key.sign(h.md,"RSASSA-PKCS1-V1_5")}e.signerInfos=function(e){for(var t=[],r=0;r<e.length;++r)t.push(o(e[r]));return t}(e.signers)}(function(){for(var t={},n=0;n<e.signers.length;++n){var i=e.signers[n];(s=i.digestAlgorithm)in t||(t[s]=r.md[r.pki.oids[s]].create()),0===i.authenticatedAttributes.length?i.md=t[s]:i.md=r.md[r.pki.oids[s]].create()}for(var s in e.digestAlgorithmIdentifiers=[],t)e.digestAlgorithmIdentifiers.push(a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(s).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.NULL,!1,"")]));return t}())},verify:function(){throw new Error("PKCS#7 signature verification not yet implemented.")},addCertificate:function(t){"string"==typeof t&&(t=r.pki.certificateFromPem(t)),e.certificates.push(t)},addCertificateRevokationList:function(e){throw new Error("PKCS#7 CRL support not yet implemented.")}}},n.createEncryptedData=function(){var e=null;return e={type:r.pki.oids.encryptedData,version:0,encryptedContent:{algorithm:r.pki.oids["aes256-CBC"]},fromAsn1:function(t){l(e,t,n.asn1.encryptedDataValidator)},decrypt:function(t){void 0!==t&&(e.encryptedContent.key=t),h(e)}}},n.createEnvelopedData=function(){var e=null;return e={type:r.pki.oids.envelopedData,version:0,recipients:[],encryptedContent:{algorithm:r.pki.oids["aes256-CBC"]},fromAsn1:function(t){var r=l(e,t,n.asn1.envelopedDataValidator);e.recipients=function(e){for(var t=[],r=0;r<e.length;++r)t.push(i(e[r]));return t}(r.recipientInfos.value)},toAsn1:function(){return a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(e.type).getBytes()),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.INTEGER,!1,a.integerToDer(e.version).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SET,!0,s(e.recipients)),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,(t=e.encryptedContent,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(r.pki.oids.data).getBytes()),a.create(a.Class.UNIVERSAL,a.Type.SEQUENCE,!0,[a.create(a.Class.UNIVERSAL,a.Type.OID,!1,a.oidToDer(t.algorithm).getBytes()),t.parameter?a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,t.parameter.getBytes()):void 0]),a.create(a.Class.CONTEXT_SPECIFIC,0,!0,[a.create(a.Class.UNIVERSAL,a.Type.OCTETSTRING,!1,t.content.getBytes())])]))])])]);var t},findRecipient:function(t){for(var r=t.issuer.attributes,a=0;a<e.recipients.length;++a){var n=e.recipients[a],i=n.issuer;if(n.serialNumber===t.serialNumber&&i.length===r.length){for(var s=!0,o=0;o<r.length;++o)if(i[o].type!==r[o].type||i[o].value!==r[o].value){s=!1;break}if(s)return n}}return null},decrypt:function(t,a){if(void 0===e.encryptedContent.key&&void 0!==t&&void 0!==a)switch(t.encryptedContent.algorithm){case r.pki.oids.rsaEncryption:case r.pki.oids.desCBC:var n=a.decrypt(t.encryptedContent.content);e.encryptedContent.key=r.util.createBuffer(n);break;default:throw new Error("Unsupported asymmetric cipher, OID "+t.encryptedContent.algorithm)}h(e)},addRecipient:function(t){e.recipients.push({version:0,issuer:t.issuer.attributes,serialNumber:t.serialNumber,encryptedContent:{algorithm:r.pki.oids.rsaEncryption,key:t.publicKey}})},encrypt:function(t,a){if(void 0===e.encryptedContent.content){var n,i,s;switch(a=a||e.encryptedContent.algorithm,t=t||e.encryptedContent.key,a){case r.pki.oids["aes128-CBC"]:n=16,i=16,s=r.aes.createEncryptionCipher;break;case r.pki.oids["aes192-CBC"]:n=24,i=16,s=r.aes.createEncryptionCipher;break;case r.pki.oids["aes256-CBC"]:n=32,i=16,s=r.aes.createEncryptionCipher;break;case r.pki.oids["des-EDE3-CBC"]:n=24,i=8,s=r.des.createEncryptionCipher;break;default:throw new Error("Unsupported symmetric cipher, OID "+a)}if(void 0===t)t=r.util.createBuffer(r.random.getBytes(n));else if(t.length()!=n)throw new Error("Symmetric key has wrong length; got "+t.length()+" bytes, expected "+n+".");e.encryptedContent.algorithm=a,e.encryptedContent.key=t,e.encryptedContent.parameter=r.util.createBuffer(r.random.getBytes(i));var o=s(t);if(o.start(e.encryptedContent.parameter.copy()),o.update(e.content),!o.finish())throw new Error("Symmetric encryption failed.");e.encryptedContent.content=o.output}for(var c=0;c<e.recipients.length;++c){var u=e.recipients[c];if(void 0===u.encryptedContent.content){if(u.encryptedContent.algorithm!==r.pki.oids.rsaEncryption)throw new Error("Unsupported asymmetric cipher, OID "+u.encryptedContent.algorithm);u.encryptedContent.content=u.encryptedContent.key.encrypt(e.encryptedContent.key.data)}}}}}}}),W=o({"node_modules/node-forge/lib/ssh.js"(e,t){var r=u();d(),m(),C(),w(),p();var a=t.exports=r.ssh=r.ssh||{};function n(e,t){var a=t.toString(16);a[0]>="8"&&(a="00"+a);var n=r.util.hexToBytes(a);e.putInt32(n.length),e.putBytes(n)}function i(e,t){e.putInt32(t.length),e.putString(t)}function s(){for(var e=r.md.sha1.create(),t=arguments.length,a=0;a<t;++a)e.update(arguments[a]);return e.digest()}a.privateKeyToPutty=function(e,t,a){var o="ssh-rsa",c=""===(t=t||"")?"none":"aes256-cbc",u="PuTTY-User-Key-File-2: "+o+"\r\n";u+="Encryption: "+c+"\r\n",u+="Comment: "+(a=a||"")+"\r\n";var l=r.util.createBuffer();i(l,o),n(l,e.e),n(l,e.n);var p=r.util.encode64(l.bytes(),64),h=Math.floor(p.length/66)+1;u+="Public-Lines: "+h+"\r\n",u+=p;var f,d=r.util.createBuffer();if(n(d,e.d),n(d,e.p),n(d,e.q),n(d,e.qInv),t){var y=d.length()+16-1;y-=y%16;var g=s(d.bytes());g.truncate(g.length()-y+d.length()),d.putBuffer(g);var v=r.util.createBuffer();v.putBuffer(s("\0\0\0\0",t)),v.putBuffer(s("\0\0\0",t));var m=r.aes.createEncryptionCipher(v.truncate(8),"CBC");m.start(r.util.createBuffer().fillWithByte(0,16)),m.update(d.copy()),m.finish();var C=m.output;C.truncate(16),f=r.util.encode64(C.bytes(),64)}else f=r.util.encode64(d.bytes(),64);u+="\r\nPrivate-Lines: "+(h=Math.floor(f.length/66)+1)+"\r\n",u+=f;var E=s("putty-private-key-file-mac-key",t),S=r.util.createBuffer();i(S,o),i(S,c),i(S,a),S.putInt32(l.length()),S.putBuffer(l),S.putInt32(d.length()),S.putBuffer(d);var T=r.hmac.create();return T.start("sha1",E),T.update(S.bytes()),u+="\r\nPrivate-MAC: "+T.digest().toHex()+"\r\n"},a.publicKeyToOpenSSH=function(e,t){var a="ssh-rsa";t=t||"";var s=r.util.createBuffer();return i(s,a),n(s,e.e),n(s,e.n),a+" "+r.util.encode64(s.bytes())+" "+t},a.privateKeyToOpenSSH=function(e,t){return t?r.pki.encryptRsaPrivateKey(e,t,{legacy:!0,algorithm:"aes128"}):r.pki.privateKeyToPem(e)},a.getPublicKeyFingerprint=function(e,t){var a=(t=t||{}).md||r.md.md5.create(),s=r.util.createBuffer();i(s,"ssh-rsa"),n(s,e.e),n(s,e.n),a.start(),a.update(s.getBytes());var o=a.digest();if("hex"===t.encoding){var c=o.toHex();return t.delimiter?c.match(/.{2}/g).join(t.delimiter):c}if("binary"===t.encoding)return o.getBytes();if(t.encoding)throw new Error('Unknown encoding "'+t.encoding+'".');return o}}}),X=o({"node_modules/node-forge/lib/index.js"(e,t){t.exports=u(),d(),F(),g(),h(),S(),G(),m(),q(),Q(),z(),D(),T(),E(),_(),K(),Y(),x(),R(),A(),O(),b(),B(),W(),M(),p()}}),Z=c(X(),1),J=c(X(),1),$=class{key;next;prev;constructor(){this.key=0n,this.next=this,this.prev=this}unlink(){this.prev&&this.next&&(this.prev.next=this.next,this.next.prev=this.prev,this.next=null,this.prev=null)}},ee=class{sentinel;cursor=null;constructor(){const e=new $;e.next=e,e.prev=e,this.sentinel=e}addTail(e){e.prev&&e.unlink(),e.prev=this.sentinel.prev,e.next=this.sentinel,e.prev&&(e.prev.next=e),e.next.prev=e}addHead(e){e.prev&&e.unlink(),e.prev=this.sentinel,e.next=this.sentinel.next,e.prev.next=e,e.next&&(e.next.prev=e)}removeHead(){const e=this.sentinel.next;return e===this.sentinel?null:(e?.unlink(),e)}head(){const e=this.sentinel.next;return e===this.sentinel?(this.cursor=null,null):(this.cursor=e?.next||null,e)}tail(){const e=this.sentinel.prev;return e===this.sentinel?(this.cursor=null,null):(this.cursor=e?.prev||null,e)}next(){const e=this.cursor;return e===this.sentinel?(this.cursor=null,null):(this.cursor=e?.next||null,e)}prev(){const e=this.cursor;return e===this.sentinel?(this.cursor=null,null):(this.cursor=e?.prev||null,e)}clear(){for(;;){const e=this.sentinel.next;if(e===this.sentinel)return;e?.unlink()}}},te=class extends ${nextHashable;prevHashable;constructor(){super(),this.nextHashable=this,this.prevHashable=this}uncache(){this.prevHashable&&this.nextHashable&&(this.prevHashable.nextHashable=this.nextHashable,this.nextHashable.prevHashable=this.prevHashable,this.nextHashable=null,this.prevHashable=null)}},re=J.default.jsbn.BigInteger,ae=class e extends te{static crctable=new Int32Array(256);static bitmask=new Uint32Array(33);static crc32b=3988292384;static{for(let e=0;e<32;e++)this.bitmask[e]=(1<<e)-1;this.bitmask[32]=4294967295;for(let e=0;e<256;e++){let t=e;for(let e=0;e<8;e++)1&~t?t>>>=1:t=t>>>1^this.crc32b;this.crctable[e]=t}}static getcrc(e,t,r){let a=4294967295;for(let n=t;n<r;n++)a=a>>>8^this.crctable[255&(a^e[n])];return~a}static checkcrc(t,r,a,n=0){return e.getcrc(t,r,a)==n}static alloc(t){let r=null;return 0===t&&this.cacheMinCount>0?(r=this.cacheMin.removeHead(),this.cacheMinCount--):1===t&&this.cacheMidCount>0?(r=this.cacheMid.removeHead(),this.cacheMidCount--):2===t&&this.cacheMaxCount>0?(r=this.cacheMax.removeHead(),this.cacheMaxCount--):3===t&&this.cacheBigCount>0?(r=this.cacheBig.removeHead(),this.cacheBigCount--):4===t&&this.cacheHugeCount>0?(r=this.cacheHuge.removeHead(),this.cacheHugeCount--):5===t&&this.cacheUnimaginableCount>0&&(r=this.cacheUnimaginable.removeHead(),this.cacheUnimaginableCount--),null!==r?(r.pos=0,r.bitPos=0,r):new e(0===t?new Uint8Array(100):1===t?new Uint8Array(5e3):2===t?new Uint8Array(3e4):3===t?new Uint8Array(1e5):4===t?new Uint8Array(5e5):5===t?new Uint8Array(2e6):new Uint8Array(t))}static load(t,r=!1){const a=new e(new Uint8Array(fs.readFileSync(t)));return r&&(a.pos=a.data.length),a}static async loadAsync(t,r=!1){const a=new e(new Uint8Array(await(await fetch(t)).arrayBuffer()));return r&&(a.pos=a.data.length),a}static cacheMinCount=0;static cacheMidCount=0;static cacheMaxCount=0;static cacheBigCount=0;static cacheHugeCount=0;static cacheUnimaginableCount=0;static cacheMin=new ee;static cacheMid=new ee;static cacheMax=new ee;static cacheBig=new ee;static cacheHuge=new ee;static cacheUnimaginable=new ee;data;#e;pos;bitPos;constructor(e){super(),this.data=e,this.#e=new DataView(this.data.buffer),this.pos=0,this.bitPos=0}get available(){return this.data.length-this.pos}get length(){return this.data.length}release(){this.pos=0,this.bitPos=0,100===this.data.length&&e.cacheMinCount<1e3?(e.cacheMin.addTail(this),e.cacheMinCount++):5e3===this.data.length&&e.cacheMidCount<250?(e.cacheMid.addTail(this),e.cacheMidCount++):3e4===this.data.length&&e.cacheMaxCount<50?(e.cacheMax.addTail(this),e.cacheMaxCount++):1e5===this.data.length&&e.cacheBigCount<10?(e.cacheBig.addTail(this),e.cacheBigCount++):5e5===this.data.length&&e.cacheHugeCount<5?(e.cacheHuge.addTail(this),e.cacheHugeCount++):2e6===this.data.length&&e.cacheUnimaginableCount<2&&(e.cacheUnimaginable.addTail(this),e.cacheUnimaginableCount++)}save(e,t=this.pos,r=0){if("undefined"==typeof self){const a=path.dirname(e);fs.existsSync(a)||fs.mkdirSync(a,{recursive:!0}),fs.writeFileSync(e,this.data.subarray(r,r+t))}else{const a=new Blob([this.data.subarray(r,r+t)],{type:"application/octet-stream"}),n=URL.createObjectURL(a);self.postMessage({type:"save",value:n,path:e})}}p1(e){this.#e.setUint8(this.pos++,e)}p2(e){this.#e.setUint16(this.pos,e),this.pos+=2}ip2(e){this.#e.setUint16(this.pos,e,!0),this.pos+=2}p3(e){this.#e.setUint8(this.pos++,e>>16),this.#e.setUint16(this.pos,e),this.pos+=2}p4(e){this.#e.setInt32(this.pos,e),this.pos+=4}ip4(e){this.#e.setInt32(this.pos,e,!0),this.pos+=4}p8(e){this.#e.setBigInt64(this.pos,e),this.pos+=8}pbool(e){this.p1(e?1:0)}pjstr(e,t=10){const r=e.length;for(let t=0;t<r;t++)this.#e.setUint8(this.pos++,e.charCodeAt(t));this.#e.setUint8(this.pos++,t)}pdata(e,t,r){this.data.set(e.subarray(t,t+r),this.pos),this.pos+=r-t}psize4(e){this.#e.setUint32(this.pos-e-4,e)}psize2(e){this.#e.setUint16(this.pos-e-2,e)}psize1(e){this.#e.setUint8(this.pos-e-1,e)}psmarts(e){if(e<64&&e>=64)this.p1(e+64);else{if(!(e<16384&&e>=-16384))throw new Error("Error psmarts out of range: "+e);this.p2(e+49152)}}psmart(e){if(e>=0&&e<128)this.p1(e);else{if(!(e>=0&&e<32768))throw new Error("Error psmart out of range: "+e);this.p2(e+32768)}}g1(){return this.#e.getUint8(this.pos++)}g1b(){return this.#e.getInt8(this.pos++)}g2(){return this.pos+=2,this.#e.getUint16(this.pos-2)}g2s(){return this.pos+=2,this.#e.getInt16(this.pos-2)}ig2(){return this.pos+=2,this.#e.getUint16(this.pos-2,!0)}g3(){const e=this.#e.getUint8(this.pos++)<<16|this.#e.getUint16(this.pos);return this.pos+=2,e}g4(){return this.pos+=4,this.#e.getInt32(this.pos-4)}ig4(){return this.pos+=4,this.#e.getInt32(this.pos-4,!0)}g8(){return this.pos+=8,this.#e.getBigInt64(this.pos-8)}gbool(){return 1===this.g1()}gjstr(e=10){const t=this.data.length;let r,a="";for(;(r=this.#e.getUint8(this.pos++))!==e&&this.pos<t;)a+=String.fromCharCode(r);return a}gdata(e,t,r){e.set(this.data.subarray(this.pos,this.pos+r),t),this.pos+=r}gsmarts(){return this.#e.getUint8(this.pos)<128?this.g1()-64:this.g2()-49152}gsmart(){return this.#e.getUint8(this.pos)<128?this.g1():this.g2()-32768}bits(){this.bitPos=this.pos<<3}bytes(){this.pos=this.bitPos+7>>>3}gBit(t){let r=this.bitPos>>>3,a=8-(7&this.bitPos),n=0;for(this.bitPos+=t;t>a;a=8)n+=(this.#e.getUint8(r++)&e.bitmask[a])<<t-a,t-=a;return n+=t==a?this.#e.getUint8(r)&e.bitmask[a]:this.#e.getUint8(r)>>>a-t&e.bitmask[t],n}pBit(e,t){const r=this.bitPos;this.bitPos+=e;let a=r>>>3,n=8-(7&r);const i=this.#e;for(;e>n;n=8){const r=(1<<n)-1,s=i.getUint8(a);i.setUint8(a++,s&~r|t>>>e-n&r),e-=n}const s=n-e,o=(1<<e)-1,c=i.getUint8(a);i.setUint8(a,c&~o<<s|(t&o)<<s)}rsaenc(e){const t=this.pos;this.pos=0;const r=new Uint8Array(t);this.gdata(r,0,r.length);const a=new re(Array.from(r)),n=Uint8Array.from(a.modPow(e.e,e.n).toByteArray());this.pos=0,this.p1(n.length),this.pdata(n,0,n.length)}rsadec(e){const t=e.p,r=e.q,a=e.dP,n=e.dQ,i=e.qInv,s=new Uint8Array(this.g1());this.gdata(s,0,s.length);const o=new re(Array.from(s)),c=o.mod(t).modPow(a,t),u=o.mod(r).modPow(n,r),l=i.multiply(c.subtract(u)).mod(t),p=new Uint8Array(u.add(l.multiply(r)).toByteArray());this.pos=0,this.pdata(p,0,p.length),this.pos=0}};function ne(e){e=e.trim();let t=0n;for(let r=0;r<e.length&&r<12;r++){const a=e.charCodeAt(r);t*=37n,a>=65&&a<=90?t+=BigInt(a+1-65):a>=97&&a<=122?t+=BigInt(a+1-97):a>=48&&a<=57&&(t+=BigInt(a+27-48))}return t}var ie=["_","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"];function se(e){return function(e){if(e<0n||e>=6582952005840035281n)return"invalid_name";if(e%37n===0n)return"invalid_name";let t=0;const r=Array(12);for(;0n!==e;){const a=e;e/=37n,r[11-t++]=ie[Number(a-37n*e)]}return r.slice(12-t).join("")}(ne(e))}var oe=class{queue=[];available=0;buffer=null;offset=0;waiting=0;received(e){this.queue.push(e),this.available+=e.length}clear(){this.queue=[],this.available=0,this.buffer=null,this.offset=0}async readByte(e){if(null===e||e.closed)return 0;if(this.available<1)return await new Promise((e=>setTimeout(e,10))),this.readByte(e);null===this.buffer&&(this.buffer=this.queue.shift()??null,this.offset=0);const t=this.buffer?.[this.offset]??0;return this.offset++,this.available--,this.buffer&&this.offset===this.buffer.length&&(this.buffer=null),t}async readBytes(e,t,r,a,n=!0){if(null===e||e.closed)return 0;if(this.available<a){if(n)return await new Promise((e=>setTimeout(e,10))),this.readBytes(e,t,r,a);a=this.available}t.pos=r;for(let e=0;e<a;e++)null===this.buffer&&(this.buffer=this.queue.shift()??null,this.offset=0),t.data[r+e]=this.buffer?.[this.offset]??0,this.offset++,this.available--,this.buffer&&this.offset===this.buffer.length&&(this.buffer=null);return a}};function ce(e,t){return"true"===e||!0===e||"false"!==e&&!1!==e&&t}function ue(e,t){if("number"==typeof e)return e;if("string"!=typeof e&&"number"!=typeof e)return t;const r=parseInt(e);return isNaN(r)?t:r}function le(e,t){return"string"!=typeof e?t:e}var pe,he,fe={WEB_PORT:ue(void 0,8888),WEB_CORS:ce(void 0,!0),NODE_ID:ue(void 0,10),NODE_PORT:ue(void 0,43594),NODE_MEMBERS:ce(void 0,!0),NODE_XPRATE:ue(void 0,1),NODE_PRODUCTION:ce(void 0,!1),NODE_KILLTIMER:ue(void 0,50),NODE_ALLOW_CHEATS:ce(void 0,!0),NODE_DEBUG:ce(void 0,!0),NODE_DEBUG_PROFILE:ce(void 0,!1),NODE_STAFF:(pe=void 0,he=["pazaz"],Array.isArray(pe)?pe:he),NODE_CLIENT_ROUTEFINDER:ce(void 0,!0),NODE_SOCKET_TIMEOUT:ce(void 0,!0),LOGIN_HOST:le(void 0,"localhost"),LOGIN_PORT:ue(void 0,43500),LOGIN_KEY:le(void 0,""),DB_HOST:le(void 0,"localhost"),DB_USER:le(void 0,"root"),DB_PASS:le(void 0,"password"),DB_NAME:le(void 0,"lostcity"),BUILD_JAVA_PATH:le(void 0,"java"),BUILD_STARTUP:ce(void 0,!0),BUILD_STARTUP_UPDATE:ce(void 0,!0),BUILD_VERIFY:ce(void 0,!0),BUILD_VERIFY_FOLDER:ce(void 0,!0),BUILD_VERIFY_PACK:ce(void 0,!0),BUILD_SRC_DIR:le(void 0,"data/src")},de=class{static SUCCESSFUL=Uint8Array.from([2]);static INVALID_USER_OR_PASS=Uint8Array.from([3]);static ACCOUNT_DISABLED=Uint8Array.from([4]);static LOGGED_IN=Uint8Array.from([5]);static SERVER_UPDATED=Uint8Array.from([6]);static WORLD_FULL=Uint8Array.from([7]);static LOGIN_SERVER_OFFLINE=Uint8Array.from([8]);static LOGIN_LIMIT_EXCEEDED=Uint8Array.from([9]);static UNABLE_TO_CONNECT=Uint8Array.from([10]);static LOGIN_REJECTED=Uint8Array.from([11]);static NEED_MEMBERS_ACCOUNT=Uint8Array.from([12]);static COULD_NOT_COMPLETE=Uint8Array.from([13]);static SERVER_UPDATING=Uint8Array.from([14]);static RECONNECTING=Uint8Array.from([15]);static LOGIN_ATTEMPTS_EXCEEDED=Uint8Array.from([16]);static STANDING_IN_MEMBERS=Uint8Array.from([17]);static STAFF_MOD_LEVEL=Uint8Array.from([18])},ye=class{socket=null;stream=new oe;async connect(){if(!this.socket)return new Promise((e=>{this.socket=net.createConnection({port:fe.LOGIN_PORT,host:fe.LOGIN_HOST}),this.socket.setNoDelay(!0),this.socket.setTimeout(1e3),this.socket.on("data",(async e=>{this.stream.received(e)})),this.socket.once("close",(()=>{this.disconnect(),e()})),this.socket.once("error",(()=>{this.disconnect(),e()})),this.socket.once("connect",(()=>{e()}))}))}disconnect(){null!==this.socket&&(this.socket.destroy(),this.socket=null,this.stream.clear())}async write(e,t,r=null,a=!0){if(null===e)return;const n=new ae(new Uint8Array(3+(null!==r?r?.length:0)));n.p1(t),null!==r?(n.p2(r.length),n.pdata(r,0,r.length)):n.p2(0);!e.write(n.data)&&a&&await new Promise((t=>{const r=setInterval((()=>{(null===e||e.closed)&&(clearInterval(r),t())}),100);e.once("drain",(()=>{clearInterval(r),t()}))}))}async load(e,t,r){if(await this.connect(),null===this.socket)return{reply:-1,data:null};const a=new ae(new Uint8Array(10+t.length+1+4));a.p2(fe.NODE_ID),a.p8(e),a.pjstr(t),a.p4(r),await this.write(this.socket,1,a.data);const n=await this.stream.readByte(this.socket);if(1!==n)return this.disconnect(),{reply:n,data:null};const i=new ae(new Uint8Array(2));await this.stream.readBytes(this.socket,i,0,2);const s=i.g2(),o=new ae(new Uint8Array(s));return await this.stream.readBytes(this.socket,o,0,s),this.disconnect(),{reply:n,data:o}}async save(e,t){if(await this.connect(),null===this.socket)return-1;const r=new ae(new Uint8Array(12+t.length));r.p2(fe.NODE_ID),r.p8(e),r.p2(t.length),r.pdata(t,0,t.length),await this.write(this.socket,2,r.data);const a=await this.stream.readByte(this.socket);return this.disconnect(),a}async reset(){if(await this.connect(),null===this.socket)return-1;const e=new ae(new Uint8Array(2));e.p2(fe.NODE_ID),await this.write(this.socket,3,e.data),this.disconnect()}async count(e){if(await this.connect(),null===this.socket)return-1;const t=new ae(new Uint8Array(2));t.p2(e),await this.write(this.socket,4,t.data);const r=new ae(new Uint8Array(2));await this.stream.readBytes(this.socket,r,0,2);const a=r.g2();return this.disconnect(),a}async heartbeat(e){if(await this.connect(),null===this.socket)return-1;const t=new ae(new Uint8Array(4+8*e.length));t.p2(fe.NODE_ID),t.p2(e.length);for(const r of e)t.p8(r);await this.write(this.socket,5,t.data),this.disconnect()}};if("undefined"==typeof self){if(!parentPort)throw new Error("This file must be run as a worker thread.");const e=Z.default.pki.privateKeyFromPem(fs3.readFileSync("data/config/private.pem","ascii"));parentPort.on("message",(async t=>{try{if(!parentPort)throw new Error("This file must be run as a worker thread.");await ge(parentPort,t,e)}catch(e){console.error(e)}}))}else{const e=Z.default.pki.privateKeyFromPem(await(await fetch("data/config/private.pem")).text());self.onmessage=async t=>{try{await ge(self,t.data,e)}catch(e){console.error(e)}}}async function ge(e,t,r){switch(t.type){case"reset":{if(!fe.LOGIN_KEY)return;const e=new ye;await e.reset();break}case"heartbeat":{if(!fe.LOGIN_KEY)return;const e=new ye;await e.heartbeat(t.players);break}case"loginreq":{const{opcode:a,data:n,socket:i}=t,s=new ae(n);if(225!==s.g1())return void e.postMessage({type:"loginreply",status:de.SERVER_UPDATED,socket:i});const o=s.g1(),c=new Uint8Array(36);if(s.gdata(c,0,c.length),s.rsadec(r),10!==s.g1())return void e.postMessage({type:"loginreply",status:de.LOGIN_REJECTED,socket:i});const u=[];for(let e=0;e<4;e++)u[e]=s.g4();const l=s.g4(),p=s.gjstr(),h=s.gjstr();if(p.length<1||p.length>12)return void e.postMessage({type:"loginreply",status:de.INVALID_USER_OR_PASS,socket:i});if(fe.LOGIN_KEY){if(h.length<5||h.length>20)return void e.postMessage({type:"loginreply",status:de.INVALID_USER_OR_PASS,socket:i});const t=new ye,r=await t.load(ne(se(p)),h,l);if(1===r.reply&&r.data)e.postMessage({type:"loginreply",status:de.SUCCESSFUL,socket:i,info:o,seed:u,username:se(p),save:r.data.data});else{if((2===r.reply||3===r.reply)&&16===a)return void e.postMessage({type:"loginreply",status:de.LOGGED_IN,socket:i});if(3===r.reply&&18===a)return void e.postMessage({type:"loginreply",status:de.LOGGED_IN,socket:i});if(4!==r.reply)return 5===r.reply?void e.postMessage({type:"loginreply",status:de.INVALID_USER_OR_PASS,socket:i}):-1===r.reply?void e.postMessage({type:"loginreply",status:de.LOGIN_SERVER_OFFLINE,socket:i}):void e.postMessage({type:"loginreply",status:de.LOGIN_REJECTED,socket:i});e.postMessage({type:"loginreply",status:de.SUCCESSFUL,socket:i,info:o,seed:u,username:se(p),save:new Uint8Array})}}else{let t=new Uint8Array;const r=se(p);if("undefined"==typeof self)fs3.existsSync(`data/players/${r}.sav`)&&(t=await fsp2.readFile(`data/players/${r}.sav`));else{const e=await fetch(`data/players/${r}.sav`);e.ok&&(t=new Uint8Array(await e.arrayBuffer()))}e.postMessage({type:"loginreply",status:de.SUCCESSFUL,socket:i,info:o,seed:u,username:r,save:t})}break}case"logout":{const{username:r,save:a}=t;if(fe.LOGIN_KEY){const t=new ye;0===await t.save(ne(r),a)&&e.postMessage({type:"logoutreply",username:r})}else e.postMessage({type:"logoutreply",username:r});break}default:console.error("Unknown message type: "+t.type)}}
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined") return require.apply(this, arguments);
+  throw Error('Dynamic require of "' + x + '" is not supported');
+});
+var __commonJS = (cb, mod) => function __require2() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+
+// node_modules/node-forge/lib/forge.js
+var require_forge = __commonJS({
+  "node_modules/node-forge/lib/forge.js"(exports, module) {
+    module.exports = {
+      // default options
+      options: {
+        usePureJavaScript: false
+      }
+    };
+  }
+});
+
+// node_modules/node-forge/lib/baseN.js
+var require_baseN = __commonJS({
+  "node_modules/node-forge/lib/baseN.js"(exports, module) {
+    var api = {};
+    module.exports = api;
+    var _reverseAlphabets = {};
+    api.encode = function(input, alphabet, maxline) {
+      if (typeof alphabet !== "string") {
+        throw new TypeError('"alphabet" must be a string.');
+      }
+      if (maxline !== void 0 && typeof maxline !== "number") {
+        throw new TypeError('"maxline" must be a number.');
+      }
+      var output = "";
+      if (!(input instanceof Uint8Array)) {
+        output = _encodeWithByteBuffer(input, alphabet);
+      } else {
+        var i = 0;
+        var base = alphabet.length;
+        var first = alphabet.charAt(0);
+        var digits = [0];
+        for (i = 0; i < input.length; ++i) {
+          for (var j = 0, carry = input[i]; j < digits.length; ++j) {
+            carry += digits[j] << 8;
+            digits[j] = carry % base;
+            carry = carry / base | 0;
+          }
+          while (carry > 0) {
+            digits.push(carry % base);
+            carry = carry / base | 0;
+          }
+        }
+        for (i = 0; input[i] === 0 && i < input.length - 1; ++i) {
+          output += first;
+        }
+        for (i = digits.length - 1; i >= 0; --i) {
+          output += alphabet[digits[i]];
+        }
+      }
+      if (maxline) {
+        var regex = new RegExp(".{1," + maxline + "}", "g");
+        output = output.match(regex).join("\r\n");
+      }
+      return output;
+    };
+    api.decode = function(input, alphabet) {
+      if (typeof input !== "string") {
+        throw new TypeError('"input" must be a string.');
+      }
+      if (typeof alphabet !== "string") {
+        throw new TypeError('"alphabet" must be a string.');
+      }
+      var table = _reverseAlphabets[alphabet];
+      if (!table) {
+        table = _reverseAlphabets[alphabet] = [];
+        for (var i = 0; i < alphabet.length; ++i) {
+          table[alphabet.charCodeAt(i)] = i;
+        }
+      }
+      input = input.replace(/\s/g, "");
+      var base = alphabet.length;
+      var first = alphabet.charAt(0);
+      var bytes = [0];
+      for (var i = 0; i < input.length; i++) {
+        var value = table[input.charCodeAt(i)];
+        if (value === void 0) {
+          return;
+        }
+        for (var j = 0, carry = value; j < bytes.length; ++j) {
+          carry += bytes[j] * base;
+          bytes[j] = carry & 255;
+          carry >>= 8;
+        }
+        while (carry > 0) {
+          bytes.push(carry & 255);
+          carry >>= 8;
+        }
+      }
+      for (var k = 0; input[k] === first && k < input.length - 1; ++k) {
+        bytes.push(0);
+      }
+      if (typeof Buffer !== "undefined") {
+        return Buffer.from(bytes.reverse());
+      }
+      return new Uint8Array(bytes.reverse());
+    };
+    function _encodeWithByteBuffer(input, alphabet) {
+      var i = 0;
+      var base = alphabet.length;
+      var first = alphabet.charAt(0);
+      var digits = [0];
+      for (i = 0; i < input.length(); ++i) {
+        for (var j = 0, carry = input.at(i); j < digits.length; ++j) {
+          carry += digits[j] << 8;
+          digits[j] = carry % base;
+          carry = carry / base | 0;
+        }
+        while (carry > 0) {
+          digits.push(carry % base);
+          carry = carry / base | 0;
+        }
+      }
+      var output = "";
+      for (i = 0; input.at(i) === 0 && i < input.length() - 1; ++i) {
+        output += first;
+      }
+      for (i = digits.length - 1; i >= 0; --i) {
+        output += alphabet[digits[i]];
+      }
+      return output;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/util.js
+var require_util = __commonJS({
+  "node_modules/node-forge/lib/util.js"(exports, module) {
+    var forge3 = require_forge();
+    var baseN = require_baseN();
+    var util = module.exports = forge3.util = forge3.util || {};
+    (function() {
+      if (typeof process !== "undefined" && process.nextTick && !process.browser) {
+        util.nextTick = process.nextTick;
+        if (typeof setImmediate === "function") {
+          util.setImmediate = setImmediate;
+        } else {
+          util.setImmediate = util.nextTick;
+        }
+        return;
+      }
+      if (typeof setImmediate === "function") {
+        util.setImmediate = function() {
+          return setImmediate.apply(void 0, arguments);
+        };
+        util.nextTick = function(callback) {
+          return setImmediate(callback);
+        };
+        return;
+      }
+      util.setImmediate = function(callback) {
+        setTimeout(callback, 0);
+      };
+      if (typeof window !== "undefined" && typeof window.postMessage === "function") {
+        let handler2 = function(event) {
+          if (event.source === window && event.data === msg) {
+            event.stopPropagation();
+            var copy = callbacks.slice();
+            callbacks.length = 0;
+            copy.forEach(function(callback) {
+              callback();
+            });
+          }
+        };
+        var handler = handler2;
+        var msg = "forge.setImmediate";
+        var callbacks = [];
+        util.setImmediate = function(callback) {
+          callbacks.push(callback);
+          if (callbacks.length === 1) {
+            window.postMessage(msg, "*");
+          }
+        };
+        window.addEventListener("message", handler2, true);
+      }
+      if (typeof MutationObserver !== "undefined") {
+        var now = Date.now();
+        var attr = true;
+        var div = document.createElement("div");
+        var callbacks = [];
+        new MutationObserver(function() {
+          var copy = callbacks.slice();
+          callbacks.length = 0;
+          copy.forEach(function(callback) {
+            callback();
+          });
+        }).observe(div, { attributes: true });
+        var oldSetImmediate = util.setImmediate;
+        util.setImmediate = function(callback) {
+          if (Date.now() - now > 15) {
+            now = Date.now();
+            oldSetImmediate(callback);
+          } else {
+            callbacks.push(callback);
+            if (callbacks.length === 1) {
+              div.setAttribute("a", attr = !attr);
+            }
+          }
+        };
+      }
+      util.nextTick = util.setImmediate;
+    })();
+    util.isNodejs = typeof process !== "undefined" && process.versions && process.versions.node;
+    util.globalScope = function() {
+      if (util.isNodejs) {
+        return global;
+      }
+      return typeof self === "undefined" ? window : self;
+    }();
+    util.isArray = Array.isArray || function(x) {
+      return Object.prototype.toString.call(x) === "[object Array]";
+    };
+    util.isArrayBuffer = function(x) {
+      return typeof ArrayBuffer !== "undefined" && x instanceof ArrayBuffer;
+    };
+    util.isArrayBufferView = function(x) {
+      return x && util.isArrayBuffer(x.buffer) && x.byteLength !== void 0;
+    };
+    function _checkBitsParam(n) {
+      if (!(n === 8 || n === 16 || n === 24 || n === 32)) {
+        throw new Error("Only 8, 16, 24, or 32 bits supported: " + n);
+      }
+    }
+    util.ByteBuffer = ByteStringBuffer;
+    function ByteStringBuffer(b) {
+      this.data = "";
+      this.read = 0;
+      if (typeof b === "string") {
+        this.data = b;
+      } else if (util.isArrayBuffer(b) || util.isArrayBufferView(b)) {
+        if (typeof Buffer !== "undefined" && b instanceof Buffer) {
+          this.data = b.toString("binary");
+        } else {
+          var arr = new Uint8Array(b);
+          try {
+            this.data = String.fromCharCode.apply(null, arr);
+          } catch (e) {
+            for (var i = 0; i < arr.length; ++i) {
+              this.putByte(arr[i]);
+            }
+          }
+        }
+      } else if (b instanceof ByteStringBuffer || typeof b === "object" && typeof b.data === "string" && typeof b.read === "number") {
+        this.data = b.data;
+        this.read = b.read;
+      }
+      this._constructedStringLength = 0;
+    }
+    util.ByteStringBuffer = ByteStringBuffer;
+    var _MAX_CONSTRUCTED_STRING_LENGTH = 4096;
+    util.ByteStringBuffer.prototype._optimizeConstructedString = function(x) {
+      this._constructedStringLength += x;
+      if (this._constructedStringLength > _MAX_CONSTRUCTED_STRING_LENGTH) {
+        this.data.substr(0, 1);
+        this._constructedStringLength = 0;
+      }
+    };
+    util.ByteStringBuffer.prototype.length = function() {
+      return this.data.length - this.read;
+    };
+    util.ByteStringBuffer.prototype.isEmpty = function() {
+      return this.length() <= 0;
+    };
+    util.ByteStringBuffer.prototype.putByte = function(b) {
+      return this.putBytes(String.fromCharCode(b));
+    };
+    util.ByteStringBuffer.prototype.fillWithByte = function(b, n) {
+      b = String.fromCharCode(b);
+      var d = this.data;
+      while (n > 0) {
+        if (n & 1) {
+          d += b;
+        }
+        n >>>= 1;
+        if (n > 0) {
+          b += b;
+        }
+      }
+      this.data = d;
+      this._optimizeConstructedString(n);
+      return this;
+    };
+    util.ByteStringBuffer.prototype.putBytes = function(bytes) {
+      this.data += bytes;
+      this._optimizeConstructedString(bytes.length);
+      return this;
+    };
+    util.ByteStringBuffer.prototype.putString = function(str) {
+      return this.putBytes(util.encodeUtf8(str));
+    };
+    util.ByteStringBuffer.prototype.putInt16 = function(i) {
+      return this.putBytes(
+        String.fromCharCode(i >> 8 & 255) + String.fromCharCode(i & 255)
+      );
+    };
+    util.ByteStringBuffer.prototype.putInt24 = function(i) {
+      return this.putBytes(
+        String.fromCharCode(i >> 16 & 255) + String.fromCharCode(i >> 8 & 255) + String.fromCharCode(i & 255)
+      );
+    };
+    util.ByteStringBuffer.prototype.putInt32 = function(i) {
+      return this.putBytes(
+        String.fromCharCode(i >> 24 & 255) + String.fromCharCode(i >> 16 & 255) + String.fromCharCode(i >> 8 & 255) + String.fromCharCode(i & 255)
+      );
+    };
+    util.ByteStringBuffer.prototype.putInt16Le = function(i) {
+      return this.putBytes(
+        String.fromCharCode(i & 255) + String.fromCharCode(i >> 8 & 255)
+      );
+    };
+    util.ByteStringBuffer.prototype.putInt24Le = function(i) {
+      return this.putBytes(
+        String.fromCharCode(i & 255) + String.fromCharCode(i >> 8 & 255) + String.fromCharCode(i >> 16 & 255)
+      );
+    };
+    util.ByteStringBuffer.prototype.putInt32Le = function(i) {
+      return this.putBytes(
+        String.fromCharCode(i & 255) + String.fromCharCode(i >> 8 & 255) + String.fromCharCode(i >> 16 & 255) + String.fromCharCode(i >> 24 & 255)
+      );
+    };
+    util.ByteStringBuffer.prototype.putInt = function(i, n) {
+      _checkBitsParam(n);
+      var bytes = "";
+      do {
+        n -= 8;
+        bytes += String.fromCharCode(i >> n & 255);
+      } while (n > 0);
+      return this.putBytes(bytes);
+    };
+    util.ByteStringBuffer.prototype.putSignedInt = function(i, n) {
+      if (i < 0) {
+        i += 2 << n - 1;
+      }
+      return this.putInt(i, n);
+    };
+    util.ByteStringBuffer.prototype.putBuffer = function(buffer) {
+      return this.putBytes(buffer.getBytes());
+    };
+    util.ByteStringBuffer.prototype.getByte = function() {
+      return this.data.charCodeAt(this.read++);
+    };
+    util.ByteStringBuffer.prototype.getInt16 = function() {
+      var rval = this.data.charCodeAt(this.read) << 8 ^ this.data.charCodeAt(this.read + 1);
+      this.read += 2;
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getInt24 = function() {
+      var rval = this.data.charCodeAt(this.read) << 16 ^ this.data.charCodeAt(this.read + 1) << 8 ^ this.data.charCodeAt(this.read + 2);
+      this.read += 3;
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getInt32 = function() {
+      var rval = this.data.charCodeAt(this.read) << 24 ^ this.data.charCodeAt(this.read + 1) << 16 ^ this.data.charCodeAt(this.read + 2) << 8 ^ this.data.charCodeAt(this.read + 3);
+      this.read += 4;
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getInt16Le = function() {
+      var rval = this.data.charCodeAt(this.read) ^ this.data.charCodeAt(this.read + 1) << 8;
+      this.read += 2;
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getInt24Le = function() {
+      var rval = this.data.charCodeAt(this.read) ^ this.data.charCodeAt(this.read + 1) << 8 ^ this.data.charCodeAt(this.read + 2) << 16;
+      this.read += 3;
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getInt32Le = function() {
+      var rval = this.data.charCodeAt(this.read) ^ this.data.charCodeAt(this.read + 1) << 8 ^ this.data.charCodeAt(this.read + 2) << 16 ^ this.data.charCodeAt(this.read + 3) << 24;
+      this.read += 4;
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getInt = function(n) {
+      _checkBitsParam(n);
+      var rval = 0;
+      do {
+        rval = (rval << 8) + this.data.charCodeAt(this.read++);
+        n -= 8;
+      } while (n > 0);
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.getSignedInt = function(n) {
+      var x = this.getInt(n);
+      var max = 2 << n - 2;
+      if (x >= max) {
+        x -= max << 1;
+      }
+      return x;
+    };
+    util.ByteStringBuffer.prototype.getBytes = function(count) {
+      var rval;
+      if (count) {
+        count = Math.min(this.length(), count);
+        rval = this.data.slice(this.read, this.read + count);
+        this.read += count;
+      } else if (count === 0) {
+        rval = "";
+      } else {
+        rval = this.read === 0 ? this.data : this.data.slice(this.read);
+        this.clear();
+      }
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.bytes = function(count) {
+      return typeof count === "undefined" ? this.data.slice(this.read) : this.data.slice(this.read, this.read + count);
+    };
+    util.ByteStringBuffer.prototype.at = function(i) {
+      return this.data.charCodeAt(this.read + i);
+    };
+    util.ByteStringBuffer.prototype.setAt = function(i, b) {
+      this.data = this.data.substr(0, this.read + i) + String.fromCharCode(b) + this.data.substr(this.read + i + 1);
+      return this;
+    };
+    util.ByteStringBuffer.prototype.last = function() {
+      return this.data.charCodeAt(this.data.length - 1);
+    };
+    util.ByteStringBuffer.prototype.copy = function() {
+      var c = util.createBuffer(this.data);
+      c.read = this.read;
+      return c;
+    };
+    util.ByteStringBuffer.prototype.compact = function() {
+      if (this.read > 0) {
+        this.data = this.data.slice(this.read);
+        this.read = 0;
+      }
+      return this;
+    };
+    util.ByteStringBuffer.prototype.clear = function() {
+      this.data = "";
+      this.read = 0;
+      return this;
+    };
+    util.ByteStringBuffer.prototype.truncate = function(count) {
+      var len = Math.max(0, this.length() - count);
+      this.data = this.data.substr(this.read, len);
+      this.read = 0;
+      return this;
+    };
+    util.ByteStringBuffer.prototype.toHex = function() {
+      var rval = "";
+      for (var i = this.read; i < this.data.length; ++i) {
+        var b = this.data.charCodeAt(i);
+        if (b < 16) {
+          rval += "0";
+        }
+        rval += b.toString(16);
+      }
+      return rval;
+    };
+    util.ByteStringBuffer.prototype.toString = function() {
+      return util.decodeUtf8(this.bytes());
+    };
+    function DataBuffer(b, options) {
+      options = options || {};
+      this.read = options.readOffset || 0;
+      this.growSize = options.growSize || 1024;
+      var isArrayBuffer = util.isArrayBuffer(b);
+      var isArrayBufferView = util.isArrayBufferView(b);
+      if (isArrayBuffer || isArrayBufferView) {
+        if (isArrayBuffer) {
+          this.data = new DataView(b);
+        } else {
+          this.data = new DataView(b.buffer, b.byteOffset, b.byteLength);
+        }
+        this.write = "writeOffset" in options ? options.writeOffset : this.data.byteLength;
+        return;
+      }
+      this.data = new DataView(new ArrayBuffer(0));
+      this.write = 0;
+      if (b !== null && b !== void 0) {
+        this.putBytes(b);
+      }
+      if ("writeOffset" in options) {
+        this.write = options.writeOffset;
+      }
+    }
+    util.DataBuffer = DataBuffer;
+    util.DataBuffer.prototype.length = function() {
+      return this.write - this.read;
+    };
+    util.DataBuffer.prototype.isEmpty = function() {
+      return this.length() <= 0;
+    };
+    util.DataBuffer.prototype.accommodate = function(amount, growSize) {
+      if (this.length() >= amount) {
+        return this;
+      }
+      growSize = Math.max(growSize || this.growSize, amount);
+      var src = new Uint8Array(
+        this.data.buffer,
+        this.data.byteOffset,
+        this.data.byteLength
+      );
+      var dst = new Uint8Array(this.length() + growSize);
+      dst.set(src);
+      this.data = new DataView(dst.buffer);
+      return this;
+    };
+    util.DataBuffer.prototype.putByte = function(b) {
+      this.accommodate(1);
+      this.data.setUint8(this.write++, b);
+      return this;
+    };
+    util.DataBuffer.prototype.fillWithByte = function(b, n) {
+      this.accommodate(n);
+      for (var i = 0; i < n; ++i) {
+        this.data.setUint8(b);
+      }
+      return this;
+    };
+    util.DataBuffer.prototype.putBytes = function(bytes, encoding) {
+      if (util.isArrayBufferView(bytes)) {
+        var src = new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+        var len = src.byteLength - src.byteOffset;
+        this.accommodate(len);
+        var dst = new Uint8Array(this.data.buffer, this.write);
+        dst.set(src);
+        this.write += len;
+        return this;
+      }
+      if (util.isArrayBuffer(bytes)) {
+        var src = new Uint8Array(bytes);
+        this.accommodate(src.byteLength);
+        var dst = new Uint8Array(this.data.buffer);
+        dst.set(src, this.write);
+        this.write += src.byteLength;
+        return this;
+      }
+      if (bytes instanceof util.DataBuffer || typeof bytes === "object" && typeof bytes.read === "number" && typeof bytes.write === "number" && util.isArrayBufferView(bytes.data)) {
+        var src = new Uint8Array(bytes.data.byteLength, bytes.read, bytes.length());
+        this.accommodate(src.byteLength);
+        var dst = new Uint8Array(bytes.data.byteLength, this.write);
+        dst.set(src);
+        this.write += src.byteLength;
+        return this;
+      }
+      if (bytes instanceof util.ByteStringBuffer) {
+        bytes = bytes.data;
+        encoding = "binary";
+      }
+      encoding = encoding || "binary";
+      if (typeof bytes === "string") {
+        var view;
+        if (encoding === "hex") {
+          this.accommodate(Math.ceil(bytes.length / 2));
+          view = new Uint8Array(this.data.buffer, this.write);
+          this.write += util.binary.hex.decode(bytes, view, this.write);
+          return this;
+        }
+        if (encoding === "base64") {
+          this.accommodate(Math.ceil(bytes.length / 4) * 3);
+          view = new Uint8Array(this.data.buffer, this.write);
+          this.write += util.binary.base64.decode(bytes, view, this.write);
+          return this;
+        }
+        if (encoding === "utf8") {
+          bytes = util.encodeUtf8(bytes);
+          encoding = "binary";
+        }
+        if (encoding === "binary" || encoding === "raw") {
+          this.accommodate(bytes.length);
+          view = new Uint8Array(this.data.buffer, this.write);
+          this.write += util.binary.raw.decode(view);
+          return this;
+        }
+        if (encoding === "utf16") {
+          this.accommodate(bytes.length * 2);
+          view = new Uint16Array(this.data.buffer, this.write);
+          this.write += util.text.utf16.encode(view);
+          return this;
+        }
+        throw new Error("Invalid encoding: " + encoding);
+      }
+      throw Error("Invalid parameter: " + bytes);
+    };
+    util.DataBuffer.prototype.putBuffer = function(buffer) {
+      this.putBytes(buffer);
+      buffer.clear();
+      return this;
+    };
+    util.DataBuffer.prototype.putString = function(str) {
+      return this.putBytes(str, "utf16");
+    };
+    util.DataBuffer.prototype.putInt16 = function(i) {
+      this.accommodate(2);
+      this.data.setInt16(this.write, i);
+      this.write += 2;
+      return this;
+    };
+    util.DataBuffer.prototype.putInt24 = function(i) {
+      this.accommodate(3);
+      this.data.setInt16(this.write, i >> 8 & 65535);
+      this.data.setInt8(this.write, i >> 16 & 255);
+      this.write += 3;
+      return this;
+    };
+    util.DataBuffer.prototype.putInt32 = function(i) {
+      this.accommodate(4);
+      this.data.setInt32(this.write, i);
+      this.write += 4;
+      return this;
+    };
+    util.DataBuffer.prototype.putInt16Le = function(i) {
+      this.accommodate(2);
+      this.data.setInt16(this.write, i, true);
+      this.write += 2;
+      return this;
+    };
+    util.DataBuffer.prototype.putInt24Le = function(i) {
+      this.accommodate(3);
+      this.data.setInt8(this.write, i >> 16 & 255);
+      this.data.setInt16(this.write, i >> 8 & 65535, true);
+      this.write += 3;
+      return this;
+    };
+    util.DataBuffer.prototype.putInt32Le = function(i) {
+      this.accommodate(4);
+      this.data.setInt32(this.write, i, true);
+      this.write += 4;
+      return this;
+    };
+    util.DataBuffer.prototype.putInt = function(i, n) {
+      _checkBitsParam(n);
+      this.accommodate(n / 8);
+      do {
+        n -= 8;
+        this.data.setInt8(this.write++, i >> n & 255);
+      } while (n > 0);
+      return this;
+    };
+    util.DataBuffer.prototype.putSignedInt = function(i, n) {
+      _checkBitsParam(n);
+      this.accommodate(n / 8);
+      if (i < 0) {
+        i += 2 << n - 1;
+      }
+      return this.putInt(i, n);
+    };
+    util.DataBuffer.prototype.getByte = function() {
+      return this.data.getInt8(this.read++);
+    };
+    util.DataBuffer.prototype.getInt16 = function() {
+      var rval = this.data.getInt16(this.read);
+      this.read += 2;
+      return rval;
+    };
+    util.DataBuffer.prototype.getInt24 = function() {
+      var rval = this.data.getInt16(this.read) << 8 ^ this.data.getInt8(this.read + 2);
+      this.read += 3;
+      return rval;
+    };
+    util.DataBuffer.prototype.getInt32 = function() {
+      var rval = this.data.getInt32(this.read);
+      this.read += 4;
+      return rval;
+    };
+    util.DataBuffer.prototype.getInt16Le = function() {
+      var rval = this.data.getInt16(this.read, true);
+      this.read += 2;
+      return rval;
+    };
+    util.DataBuffer.prototype.getInt24Le = function() {
+      var rval = this.data.getInt8(this.read) ^ this.data.getInt16(this.read + 1, true) << 8;
+      this.read += 3;
+      return rval;
+    };
+    util.DataBuffer.prototype.getInt32Le = function() {
+      var rval = this.data.getInt32(this.read, true);
+      this.read += 4;
+      return rval;
+    };
+    util.DataBuffer.prototype.getInt = function(n) {
+      _checkBitsParam(n);
+      var rval = 0;
+      do {
+        rval = (rval << 8) + this.data.getInt8(this.read++);
+        n -= 8;
+      } while (n > 0);
+      return rval;
+    };
+    util.DataBuffer.prototype.getSignedInt = function(n) {
+      var x = this.getInt(n);
+      var max = 2 << n - 2;
+      if (x >= max) {
+        x -= max << 1;
+      }
+      return x;
+    };
+    util.DataBuffer.prototype.getBytes = function(count) {
+      var rval;
+      if (count) {
+        count = Math.min(this.length(), count);
+        rval = this.data.slice(this.read, this.read + count);
+        this.read += count;
+      } else if (count === 0) {
+        rval = "";
+      } else {
+        rval = this.read === 0 ? this.data : this.data.slice(this.read);
+        this.clear();
+      }
+      return rval;
+    };
+    util.DataBuffer.prototype.bytes = function(count) {
+      return typeof count === "undefined" ? this.data.slice(this.read) : this.data.slice(this.read, this.read + count);
+    };
+    util.DataBuffer.prototype.at = function(i) {
+      return this.data.getUint8(this.read + i);
+    };
+    util.DataBuffer.prototype.setAt = function(i, b) {
+      this.data.setUint8(i, b);
+      return this;
+    };
+    util.DataBuffer.prototype.last = function() {
+      return this.data.getUint8(this.write - 1);
+    };
+    util.DataBuffer.prototype.copy = function() {
+      return new util.DataBuffer(this);
+    };
+    util.DataBuffer.prototype.compact = function() {
+      if (this.read > 0) {
+        var src = new Uint8Array(this.data.buffer, this.read);
+        var dst = new Uint8Array(src.byteLength);
+        dst.set(src);
+        this.data = new DataView(dst);
+        this.write -= this.read;
+        this.read = 0;
+      }
+      return this;
+    };
+    util.DataBuffer.prototype.clear = function() {
+      this.data = new DataView(new ArrayBuffer(0));
+      this.read = this.write = 0;
+      return this;
+    };
+    util.DataBuffer.prototype.truncate = function(count) {
+      this.write = Math.max(0, this.length() - count);
+      this.read = Math.min(this.read, this.write);
+      return this;
+    };
+    util.DataBuffer.prototype.toHex = function() {
+      var rval = "";
+      for (var i = this.read; i < this.data.byteLength; ++i) {
+        var b = this.data.getUint8(i);
+        if (b < 16) {
+          rval += "0";
+        }
+        rval += b.toString(16);
+      }
+      return rval;
+    };
+    util.DataBuffer.prototype.toString = function(encoding) {
+      var view = new Uint8Array(this.data, this.read, this.length());
+      encoding = encoding || "utf8";
+      if (encoding === "binary" || encoding === "raw") {
+        return util.binary.raw.encode(view);
+      }
+      if (encoding === "hex") {
+        return util.binary.hex.encode(view);
+      }
+      if (encoding === "base64") {
+        return util.binary.base64.encode(view);
+      }
+      if (encoding === "utf8") {
+        return util.text.utf8.decode(view);
+      }
+      if (encoding === "utf16") {
+        return util.text.utf16.decode(view);
+      }
+      throw new Error("Invalid encoding: " + encoding);
+    };
+    util.createBuffer = function(input, encoding) {
+      encoding = encoding || "raw";
+      if (input !== void 0 && encoding === "utf8") {
+        input = util.encodeUtf8(input);
+      }
+      return new util.ByteBuffer(input);
+    };
+    util.fillString = function(c, n) {
+      var s = "";
+      while (n > 0) {
+        if (n & 1) {
+          s += c;
+        }
+        n >>>= 1;
+        if (n > 0) {
+          c += c;
+        }
+      }
+      return s;
+    };
+    util.xorBytes = function(s1, s2, n) {
+      var s3 = "";
+      var b = "";
+      var t = "";
+      var i = 0;
+      var c = 0;
+      for (; n > 0; --n, ++i) {
+        b = s1.charCodeAt(i) ^ s2.charCodeAt(i);
+        if (c >= 10) {
+          s3 += t;
+          t = "";
+          c = 0;
+        }
+        t += String.fromCharCode(b);
+        ++c;
+      }
+      s3 += t;
+      return s3;
+    };
+    util.hexToBytes = function(hex) {
+      var rval = "";
+      var i = 0;
+      if (hex.length & true) {
+        i = 1;
+        rval += String.fromCharCode(parseInt(hex[0], 16));
+      }
+      for (; i < hex.length; i += 2) {
+        rval += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+      }
+      return rval;
+    };
+    util.bytesToHex = function(bytes) {
+      return util.createBuffer(bytes).toHex();
+    };
+    util.int32ToBytes = function(i) {
+      return String.fromCharCode(i >> 24 & 255) + String.fromCharCode(i >> 16 & 255) + String.fromCharCode(i >> 8 & 255) + String.fromCharCode(i & 255);
+    };
+    var _base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    var _base64Idx = [
+      /*43 -43 = 0*/
+      /*'+',  1,  2,  3,'/' */
+      62,
+      -1,
+      -1,
+      -1,
+      63,
+      /*'0','1','2','3','4','5','6','7','8','9' */
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      /*15, 16, 17,'=', 19, 20, 21 */
+      -1,
+      -1,
+      -1,
+      64,
+      -1,
+      -1,
+      -1,
+      /*65 - 43 = 22*/
+      /*'A','B','C','D','E','F','G','H','I','J','K','L','M', */
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      /*'N','O','P','Q','R','S','T','U','V','W','X','Y','Z' */
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      /*91 - 43 = 48 */
+      /*48, 49, 50, 51, 52, 53 */
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      /*97 - 43 = 54*/
+      /*'a','b','c','d','e','f','g','h','i','j','k','l','m' */
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      /*'n','o','p','q','r','s','t','u','v','w','x','y','z' */
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ];
+    var _base58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+    util.encode64 = function(input, maxline) {
+      var line = "";
+      var output = "";
+      var chr1, chr2, chr3;
+      var i = 0;
+      while (i < input.length) {
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+        line += _base64.charAt(chr1 >> 2);
+        line += _base64.charAt((chr1 & 3) << 4 | chr2 >> 4);
+        if (isNaN(chr2)) {
+          line += "==";
+        } else {
+          line += _base64.charAt((chr2 & 15) << 2 | chr3 >> 6);
+          line += isNaN(chr3) ? "=" : _base64.charAt(chr3 & 63);
+        }
+        if (maxline && line.length > maxline) {
+          output += line.substr(0, maxline) + "\r\n";
+          line = line.substr(maxline);
+        }
+      }
+      output += line;
+      return output;
+    };
+    util.decode64 = function(input) {
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+      var output = "";
+      var enc1, enc2, enc3, enc4;
+      var i = 0;
+      while (i < input.length) {
+        enc1 = _base64Idx[input.charCodeAt(i++) - 43];
+        enc2 = _base64Idx[input.charCodeAt(i++) - 43];
+        enc3 = _base64Idx[input.charCodeAt(i++) - 43];
+        enc4 = _base64Idx[input.charCodeAt(i++) - 43];
+        output += String.fromCharCode(enc1 << 2 | enc2 >> 4);
+        if (enc3 !== 64) {
+          output += String.fromCharCode((enc2 & 15) << 4 | enc3 >> 2);
+          if (enc4 !== 64) {
+            output += String.fromCharCode((enc3 & 3) << 6 | enc4);
+          }
+        }
+      }
+      return output;
+    };
+    util.encodeUtf8 = function(str) {
+      return unescape(encodeURIComponent(str));
+    };
+    util.decodeUtf8 = function(str) {
+      return decodeURIComponent(escape(str));
+    };
+    util.binary = {
+      raw: {},
+      hex: {},
+      base64: {},
+      base58: {},
+      baseN: {
+        encode: baseN.encode,
+        decode: baseN.decode
+      }
+    };
+    util.binary.raw.encode = function(bytes) {
+      return String.fromCharCode.apply(null, bytes);
+    };
+    util.binary.raw.decode = function(str, output, offset) {
+      var out = output;
+      if (!out) {
+        out = new Uint8Array(str.length);
+      }
+      offset = offset || 0;
+      var j = offset;
+      for (var i = 0; i < str.length; ++i) {
+        out[j++] = str.charCodeAt(i);
+      }
+      return output ? j - offset : out;
+    };
+    util.binary.hex.encode = util.bytesToHex;
+    util.binary.hex.decode = function(hex, output, offset) {
+      var out = output;
+      if (!out) {
+        out = new Uint8Array(Math.ceil(hex.length / 2));
+      }
+      offset = offset || 0;
+      var i = 0, j = offset;
+      if (hex.length & 1) {
+        i = 1;
+        out[j++] = parseInt(hex[0], 16);
+      }
+      for (; i < hex.length; i += 2) {
+        out[j++] = parseInt(hex.substr(i, 2), 16);
+      }
+      return output ? j - offset : out;
+    };
+    util.binary.base64.encode = function(input, maxline) {
+      var line = "";
+      var output = "";
+      var chr1, chr2, chr3;
+      var i = 0;
+      while (i < input.byteLength) {
+        chr1 = input[i++];
+        chr2 = input[i++];
+        chr3 = input[i++];
+        line += _base64.charAt(chr1 >> 2);
+        line += _base64.charAt((chr1 & 3) << 4 | chr2 >> 4);
+        if (isNaN(chr2)) {
+          line += "==";
+        } else {
+          line += _base64.charAt((chr2 & 15) << 2 | chr3 >> 6);
+          line += isNaN(chr3) ? "=" : _base64.charAt(chr3 & 63);
+        }
+        if (maxline && line.length > maxline) {
+          output += line.substr(0, maxline) + "\r\n";
+          line = line.substr(maxline);
+        }
+      }
+      output += line;
+      return output;
+    };
+    util.binary.base64.decode = function(input, output, offset) {
+      var out = output;
+      if (!out) {
+        out = new Uint8Array(Math.ceil(input.length / 4) * 3);
+      }
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+      offset = offset || 0;
+      var enc1, enc2, enc3, enc4;
+      var i = 0, j = offset;
+      while (i < input.length) {
+        enc1 = _base64Idx[input.charCodeAt(i++) - 43];
+        enc2 = _base64Idx[input.charCodeAt(i++) - 43];
+        enc3 = _base64Idx[input.charCodeAt(i++) - 43];
+        enc4 = _base64Idx[input.charCodeAt(i++) - 43];
+        out[j++] = enc1 << 2 | enc2 >> 4;
+        if (enc3 !== 64) {
+          out[j++] = (enc2 & 15) << 4 | enc3 >> 2;
+          if (enc4 !== 64) {
+            out[j++] = (enc3 & 3) << 6 | enc4;
+          }
+        }
+      }
+      return output ? j - offset : out.subarray(0, j);
+    };
+    util.binary.base58.encode = function(input, maxline) {
+      return util.binary.baseN.encode(input, _base58, maxline);
+    };
+    util.binary.base58.decode = function(input, maxline) {
+      return util.binary.baseN.decode(input, _base58, maxline);
+    };
+    util.text = {
+      utf8: {},
+      utf16: {}
+    };
+    util.text.utf8.encode = function(str, output, offset) {
+      str = util.encodeUtf8(str);
+      var out = output;
+      if (!out) {
+        out = new Uint8Array(str.length);
+      }
+      offset = offset || 0;
+      var j = offset;
+      for (var i = 0; i < str.length; ++i) {
+        out[j++] = str.charCodeAt(i);
+      }
+      return output ? j - offset : out;
+    };
+    util.text.utf8.decode = function(bytes) {
+      return util.decodeUtf8(String.fromCharCode.apply(null, bytes));
+    };
+    util.text.utf16.encode = function(str, output, offset) {
+      var out = output;
+      if (!out) {
+        out = new Uint8Array(str.length * 2);
+      }
+      var view = new Uint16Array(out.buffer);
+      offset = offset || 0;
+      var j = offset;
+      var k = offset;
+      for (var i = 0; i < str.length; ++i) {
+        view[k++] = str.charCodeAt(i);
+        j += 2;
+      }
+      return output ? j - offset : out;
+    };
+    util.text.utf16.decode = function(bytes) {
+      return String.fromCharCode.apply(null, new Uint16Array(bytes.buffer));
+    };
+    util.deflate = function(api, bytes, raw) {
+      bytes = util.decode64(api.deflate(util.encode64(bytes)).rval);
+      if (raw) {
+        var start = 2;
+        var flg = bytes.charCodeAt(1);
+        if (flg & 32) {
+          start = 6;
+        }
+        bytes = bytes.substring(start, bytes.length - 4);
+      }
+      return bytes;
+    };
+    util.inflate = function(api, bytes, raw) {
+      var rval = api.inflate(util.encode64(bytes)).rval;
+      return rval === null ? null : util.decode64(rval);
+    };
+    var _setStorageObject = function(api, id, obj) {
+      if (!api) {
+        throw new Error("WebStorage not available.");
+      }
+      var rval;
+      if (obj === null) {
+        rval = api.removeItem(id);
+      } else {
+        obj = util.encode64(JSON.stringify(obj));
+        rval = api.setItem(id, obj);
+      }
+      if (typeof rval !== "undefined" && rval.rval !== true) {
+        var error = new Error(rval.error.message);
+        error.id = rval.error.id;
+        error.name = rval.error.name;
+        throw error;
+      }
+    };
+    var _getStorageObject = function(api, id) {
+      if (!api) {
+        throw new Error("WebStorage not available.");
+      }
+      var rval = api.getItem(id);
+      if (api.init) {
+        if (rval.rval === null) {
+          if (rval.error) {
+            var error = new Error(rval.error.message);
+            error.id = rval.error.id;
+            error.name = rval.error.name;
+            throw error;
+          }
+          rval = null;
+        } else {
+          rval = rval.rval;
+        }
+      }
+      if (rval !== null) {
+        rval = JSON.parse(util.decode64(rval));
+      }
+      return rval;
+    };
+    var _setItem = function(api, id, key, data) {
+      var obj = _getStorageObject(api, id);
+      if (obj === null) {
+        obj = {};
+      }
+      obj[key] = data;
+      _setStorageObject(api, id, obj);
+    };
+    var _getItem = function(api, id, key) {
+      var rval = _getStorageObject(api, id);
+      if (rval !== null) {
+        rval = key in rval ? rval[key] : null;
+      }
+      return rval;
+    };
+    var _removeItem = function(api, id, key) {
+      var obj = _getStorageObject(api, id);
+      if (obj !== null && key in obj) {
+        delete obj[key];
+        var empty = true;
+        for (var prop in obj) {
+          empty = false;
+          break;
+        }
+        if (empty) {
+          obj = null;
+        }
+        _setStorageObject(api, id, obj);
+      }
+    };
+    var _clearItems = function(api, id) {
+      _setStorageObject(api, id, null);
+    };
+    var _callStorageFunction = function(func, args, location) {
+      var rval = null;
+      if (typeof location === "undefined") {
+        location = ["web", "flash"];
+      }
+      var type;
+      var done = false;
+      var exception = null;
+      for (var idx in location) {
+        type = location[idx];
+        try {
+          if (type === "flash" || type === "both") {
+            if (args[0] === null) {
+              throw new Error("Flash local storage not available.");
+            }
+            rval = func.apply(this, args);
+            done = type === "flash";
+          }
+          if (type === "web" || type === "both") {
+            args[0] = localStorage;
+            rval = func.apply(this, args);
+            done = true;
+          }
+        } catch (ex) {
+          exception = ex;
+        }
+        if (done) {
+          break;
+        }
+      }
+      if (!done) {
+        throw exception;
+      }
+      return rval;
+    };
+    util.setItem = function(api, id, key, data, location) {
+      _callStorageFunction(_setItem, arguments, location);
+    };
+    util.getItem = function(api, id, key, location) {
+      return _callStorageFunction(_getItem, arguments, location);
+    };
+    util.removeItem = function(api, id, key, location) {
+      _callStorageFunction(_removeItem, arguments, location);
+    };
+    util.clearItems = function(api, id, location) {
+      _callStorageFunction(_clearItems, arguments, location);
+    };
+    util.isEmpty = function(obj) {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+      return true;
+    };
+    util.format = function(format) {
+      var re = /%./g;
+      var match;
+      var part;
+      var argi = 0;
+      var parts = [];
+      var last = 0;
+      while (match = re.exec(format)) {
+        part = format.substring(last, re.lastIndex - 2);
+        if (part.length > 0) {
+          parts.push(part);
+        }
+        last = re.lastIndex;
+        var code = match[0][1];
+        switch (code) {
+          case "s":
+          case "o":
+            if (argi < arguments.length) {
+              parts.push(arguments[argi++ + 1]);
+            } else {
+              parts.push("<?>");
+            }
+            break;
+          case "%":
+            parts.push("%");
+            break;
+          default:
+            parts.push("<%" + code + "?>");
+        }
+      }
+      parts.push(format.substring(last));
+      return parts.join("");
+    };
+    util.formatNumber = function(number, decimals, dec_point, thousands_sep) {
+      var n = number, c = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
+      var d = dec_point === void 0 ? "," : dec_point;
+      var t = thousands_sep === void 0 ? "." : thousands_sep, s = n < 0 ? "-" : "";
+      var i = parseInt(n = Math.abs(+n || 0).toFixed(c), 10) + "";
+      var j = i.length > 3 ? i.length % 3 : 0;
+      return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+    util.formatSize = function(size) {
+      if (size >= 1073741824) {
+        size = util.formatNumber(size / 1073741824, 2, ".", "") + " GiB";
+      } else if (size >= 1048576) {
+        size = util.formatNumber(size / 1048576, 2, ".", "") + " MiB";
+      } else if (size >= 1024) {
+        size = util.formatNumber(size / 1024, 0) + " KiB";
+      } else {
+        size = util.formatNumber(size, 0) + " bytes";
+      }
+      return size;
+    };
+    util.bytesFromIP = function(ip) {
+      if (ip.indexOf(".") !== -1) {
+        return util.bytesFromIPv4(ip);
+      }
+      if (ip.indexOf(":") !== -1) {
+        return util.bytesFromIPv6(ip);
+      }
+      return null;
+    };
+    util.bytesFromIPv4 = function(ip) {
+      ip = ip.split(".");
+      if (ip.length !== 4) {
+        return null;
+      }
+      var b = util.createBuffer();
+      for (var i = 0; i < ip.length; ++i) {
+        var num = parseInt(ip[i], 10);
+        if (isNaN(num)) {
+          return null;
+        }
+        b.putByte(num);
+      }
+      return b.getBytes();
+    };
+    util.bytesFromIPv6 = function(ip) {
+      var blanks = 0;
+      ip = ip.split(":").filter(function(e) {
+        if (e.length === 0) ++blanks;
+        return true;
+      });
+      var zeros = (8 - ip.length + blanks) * 2;
+      var b = util.createBuffer();
+      for (var i = 0; i < 8; ++i) {
+        if (!ip[i] || ip[i].length === 0) {
+          b.fillWithByte(0, zeros);
+          zeros = 0;
+          continue;
+        }
+        var bytes = util.hexToBytes(ip[i]);
+        if (bytes.length < 2) {
+          b.putByte(0);
+        }
+        b.putBytes(bytes);
+      }
+      return b.getBytes();
+    };
+    util.bytesToIP = function(bytes) {
+      if (bytes.length === 4) {
+        return util.bytesToIPv4(bytes);
+      }
+      if (bytes.length === 16) {
+        return util.bytesToIPv6(bytes);
+      }
+      return null;
+    };
+    util.bytesToIPv4 = function(bytes) {
+      if (bytes.length !== 4) {
+        return null;
+      }
+      var ip = [];
+      for (var i = 0; i < bytes.length; ++i) {
+        ip.push(bytes.charCodeAt(i));
+      }
+      return ip.join(".");
+    };
+    util.bytesToIPv6 = function(bytes) {
+      if (bytes.length !== 16) {
+        return null;
+      }
+      var ip = [];
+      var zeroGroups = [];
+      var zeroMaxGroup = 0;
+      for (var i = 0; i < bytes.length; i += 2) {
+        var hex = util.bytesToHex(bytes[i] + bytes[i + 1]);
+        while (hex[0] === "0" && hex !== "0") {
+          hex = hex.substr(1);
+        }
+        if (hex === "0") {
+          var last = zeroGroups[zeroGroups.length - 1];
+          var idx = ip.length;
+          if (!last || idx !== last.end + 1) {
+            zeroGroups.push({ start: idx, end: idx });
+          } else {
+            last.end = idx;
+            if (last.end - last.start > zeroGroups[zeroMaxGroup].end - zeroGroups[zeroMaxGroup].start) {
+              zeroMaxGroup = zeroGroups.length - 1;
+            }
+          }
+        }
+        ip.push(hex);
+      }
+      if (zeroGroups.length > 0) {
+        var group = zeroGroups[zeroMaxGroup];
+        if (group.end - group.start > 0) {
+          ip.splice(group.start, group.end - group.start + 1, "");
+          if (group.start === 0) {
+            ip.unshift("");
+          }
+          if (group.end === 7) {
+            ip.push("");
+          }
+        }
+      }
+      return ip.join(":");
+    };
+    util.estimateCores = function(options, callback) {
+      if (typeof options === "function") {
+        callback = options;
+        options = {};
+      }
+      options = options || {};
+      if ("cores" in util && !options.update) {
+        return callback(null, util.cores);
+      }
+      if (typeof navigator !== "undefined" && "hardwareConcurrency" in navigator && navigator.hardwareConcurrency > 0) {
+        util.cores = navigator.hardwareConcurrency;
+        return callback(null, util.cores);
+      }
+      if (typeof Worker === "undefined") {
+        util.cores = 1;
+        return callback(null, util.cores);
+      }
+      if (typeof Blob === "undefined") {
+        util.cores = 2;
+        return callback(null, util.cores);
+      }
+      var blobUrl = URL.createObjectURL(new Blob([
+        "(",
+        function() {
+          self.addEventListener("message", function(e) {
+            var st = Date.now();
+            var et = st + 4;
+            while (Date.now() < et) ;
+            self.postMessage({ st, et });
+          });
+        }.toString(),
+        ")()"
+      ], { type: "application/javascript" }));
+      sample([], 5, 16);
+      function sample(max, samples, numWorkers) {
+        if (samples === 0) {
+          var avg = Math.floor(max.reduce(function(avg2, x) {
+            return avg2 + x;
+          }, 0) / max.length);
+          util.cores = Math.max(1, avg);
+          URL.revokeObjectURL(blobUrl);
+          return callback(null, util.cores);
+        }
+        map(numWorkers, function(err, results) {
+          max.push(reduce(numWorkers, results));
+          sample(max, samples - 1, numWorkers);
+        });
+      }
+      function map(numWorkers, callback2) {
+        var workers = [];
+        var results = [];
+        for (var i = 0; i < numWorkers; ++i) {
+          var worker = new Worker(blobUrl);
+          worker.addEventListener("message", function(e) {
+            results.push(e.data);
+            if (results.length === numWorkers) {
+              for (var i2 = 0; i2 < numWorkers; ++i2) {
+                workers[i2].terminate();
+              }
+              callback2(null, results);
+            }
+          });
+          workers.push(worker);
+        }
+        for (var i = 0; i < numWorkers; ++i) {
+          workers[i].postMessage(i);
+        }
+      }
+      function reduce(numWorkers, results) {
+        var overlaps = [];
+        for (var n = 0; n < numWorkers; ++n) {
+          var r1 = results[n];
+          var overlap = overlaps[n] = [];
+          for (var i = 0; i < numWorkers; ++i) {
+            if (n === i) {
+              continue;
+            }
+            var r2 = results[i];
+            if (r1.st > r2.st && r1.st < r2.et || r2.st > r1.st && r2.st < r1.et) {
+              overlap.push(i);
+            }
+          }
+        }
+        return overlaps.reduce(function(max, overlap2) {
+          return Math.max(max, overlap2.length);
+        }, 0);
+      }
+    };
+  }
+});
+
+// node_modules/node-forge/lib/cipher.js
+var require_cipher = __commonJS({
+  "node_modules/node-forge/lib/cipher.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    module.exports = forge3.cipher = forge3.cipher || {};
+    forge3.cipher.algorithms = forge3.cipher.algorithms || {};
+    forge3.cipher.createCipher = function(algorithm, key) {
+      var api = algorithm;
+      if (typeof api === "string") {
+        api = forge3.cipher.getAlgorithm(api);
+        if (api) {
+          api = api();
+        }
+      }
+      if (!api) {
+        throw new Error("Unsupported algorithm: " + algorithm);
+      }
+      return new forge3.cipher.BlockCipher({
+        algorithm: api,
+        key,
+        decrypt: false
+      });
+    };
+    forge3.cipher.createDecipher = function(algorithm, key) {
+      var api = algorithm;
+      if (typeof api === "string") {
+        api = forge3.cipher.getAlgorithm(api);
+        if (api) {
+          api = api();
+        }
+      }
+      if (!api) {
+        throw new Error("Unsupported algorithm: " + algorithm);
+      }
+      return new forge3.cipher.BlockCipher({
+        algorithm: api,
+        key,
+        decrypt: true
+      });
+    };
+    forge3.cipher.registerAlgorithm = function(name, algorithm) {
+      name = name.toUpperCase();
+      forge3.cipher.algorithms[name] = algorithm;
+    };
+    forge3.cipher.getAlgorithm = function(name) {
+      name = name.toUpperCase();
+      if (name in forge3.cipher.algorithms) {
+        return forge3.cipher.algorithms[name];
+      }
+      return null;
+    };
+    var BlockCipher = forge3.cipher.BlockCipher = function(options) {
+      this.algorithm = options.algorithm;
+      this.mode = this.algorithm.mode;
+      this.blockSize = this.mode.blockSize;
+      this._finish = false;
+      this._input = null;
+      this.output = null;
+      this._op = options.decrypt ? this.mode.decrypt : this.mode.encrypt;
+      this._decrypt = options.decrypt;
+      this.algorithm.initialize(options);
+    };
+    BlockCipher.prototype.start = function(options) {
+      options = options || {};
+      var opts = {};
+      for (var key in options) {
+        opts[key] = options[key];
+      }
+      opts.decrypt = this._decrypt;
+      this._finish = false;
+      this._input = forge3.util.createBuffer();
+      this.output = options.output || forge3.util.createBuffer();
+      this.mode.start(opts);
+    };
+    BlockCipher.prototype.update = function(input) {
+      if (input) {
+        this._input.putBuffer(input);
+      }
+      while (!this._op.call(this.mode, this._input, this.output, this._finish) && !this._finish) {
+      }
+      this._input.compact();
+    };
+    BlockCipher.prototype.finish = function(pad) {
+      if (pad && (this.mode.name === "ECB" || this.mode.name === "CBC")) {
+        this.mode.pad = function(input) {
+          return pad(this.blockSize, input, false);
+        };
+        this.mode.unpad = function(output) {
+          return pad(this.blockSize, output, true);
+        };
+      }
+      var options = {};
+      options.decrypt = this._decrypt;
+      options.overflow = this._input.length() % this.blockSize;
+      if (!this._decrypt && this.mode.pad) {
+        if (!this.mode.pad(this._input, options)) {
+          return false;
+        }
+      }
+      this._finish = true;
+      this.update();
+      if (this._decrypt && this.mode.unpad) {
+        if (!this.mode.unpad(this.output, options)) {
+          return false;
+        }
+      }
+      if (this.mode.afterFinish) {
+        if (!this.mode.afterFinish(this.output, options)) {
+          return false;
+        }
+      }
+      return true;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/cipherModes.js
+var require_cipherModes = __commonJS({
+  "node_modules/node-forge/lib/cipherModes.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    forge3.cipher = forge3.cipher || {};
+    var modes = module.exports = forge3.cipher.modes = forge3.cipher.modes || {};
+    modes.ecb = function(options) {
+      options = options || {};
+      this.name = "ECB";
+      this.cipher = options.cipher;
+      this.blockSize = options.blockSize || 16;
+      this._ints = this.blockSize / 4;
+      this._inBlock = new Array(this._ints);
+      this._outBlock = new Array(this._ints);
+    };
+    modes.ecb.prototype.start = function(options) {
+    };
+    modes.ecb.prototype.encrypt = function(input, output, finish) {
+      if (input.length() < this.blockSize && !(finish && input.length() > 0)) {
+        return true;
+      }
+      for (var i = 0; i < this._ints; ++i) {
+        this._inBlock[i] = input.getInt32();
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      for (var i = 0; i < this._ints; ++i) {
+        output.putInt32(this._outBlock[i]);
+      }
+    };
+    modes.ecb.prototype.decrypt = function(input, output, finish) {
+      if (input.length() < this.blockSize && !(finish && input.length() > 0)) {
+        return true;
+      }
+      for (var i = 0; i < this._ints; ++i) {
+        this._inBlock[i] = input.getInt32();
+      }
+      this.cipher.decrypt(this._inBlock, this._outBlock);
+      for (var i = 0; i < this._ints; ++i) {
+        output.putInt32(this._outBlock[i]);
+      }
+    };
+    modes.ecb.prototype.pad = function(input, options) {
+      var padding = input.length() === this.blockSize ? this.blockSize : this.blockSize - input.length();
+      input.fillWithByte(padding, padding);
+      return true;
+    };
+    modes.ecb.prototype.unpad = function(output, options) {
+      if (options.overflow > 0) {
+        return false;
+      }
+      var len = output.length();
+      var count = output.at(len - 1);
+      if (count > this.blockSize << 2) {
+        return false;
+      }
+      output.truncate(count);
+      return true;
+    };
+    modes.cbc = function(options) {
+      options = options || {};
+      this.name = "CBC";
+      this.cipher = options.cipher;
+      this.blockSize = options.blockSize || 16;
+      this._ints = this.blockSize / 4;
+      this._inBlock = new Array(this._ints);
+      this._outBlock = new Array(this._ints);
+    };
+    modes.cbc.prototype.start = function(options) {
+      if (options.iv === null) {
+        if (!this._prev) {
+          throw new Error("Invalid IV parameter.");
+        }
+        this._iv = this._prev.slice(0);
+      } else if (!("iv" in options)) {
+        throw new Error("Invalid IV parameter.");
+      } else {
+        this._iv = transformIV(options.iv, this.blockSize);
+        this._prev = this._iv.slice(0);
+      }
+    };
+    modes.cbc.prototype.encrypt = function(input, output, finish) {
+      if (input.length() < this.blockSize && !(finish && input.length() > 0)) {
+        return true;
+      }
+      for (var i = 0; i < this._ints; ++i) {
+        this._inBlock[i] = this._prev[i] ^ input.getInt32();
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      for (var i = 0; i < this._ints; ++i) {
+        output.putInt32(this._outBlock[i]);
+      }
+      this._prev = this._outBlock;
+    };
+    modes.cbc.prototype.decrypt = function(input, output, finish) {
+      if (input.length() < this.blockSize && !(finish && input.length() > 0)) {
+        return true;
+      }
+      for (var i = 0; i < this._ints; ++i) {
+        this._inBlock[i] = input.getInt32();
+      }
+      this.cipher.decrypt(this._inBlock, this._outBlock);
+      for (var i = 0; i < this._ints; ++i) {
+        output.putInt32(this._prev[i] ^ this._outBlock[i]);
+      }
+      this._prev = this._inBlock.slice(0);
+    };
+    modes.cbc.prototype.pad = function(input, options) {
+      var padding = input.length() === this.blockSize ? this.blockSize : this.blockSize - input.length();
+      input.fillWithByte(padding, padding);
+      return true;
+    };
+    modes.cbc.prototype.unpad = function(output, options) {
+      if (options.overflow > 0) {
+        return false;
+      }
+      var len = output.length();
+      var count = output.at(len - 1);
+      if (count > this.blockSize << 2) {
+        return false;
+      }
+      output.truncate(count);
+      return true;
+    };
+    modes.cfb = function(options) {
+      options = options || {};
+      this.name = "CFB";
+      this.cipher = options.cipher;
+      this.blockSize = options.blockSize || 16;
+      this._ints = this.blockSize / 4;
+      this._inBlock = null;
+      this._outBlock = new Array(this._ints);
+      this._partialBlock = new Array(this._ints);
+      this._partialOutput = forge3.util.createBuffer();
+      this._partialBytes = 0;
+    };
+    modes.cfb.prototype.start = function(options) {
+      if (!("iv" in options)) {
+        throw new Error("Invalid IV parameter.");
+      }
+      this._iv = transformIV(options.iv, this.blockSize);
+      this._inBlock = this._iv.slice(0);
+      this._partialBytes = 0;
+    };
+    modes.cfb.prototype.encrypt = function(input, output, finish) {
+      var inputLength = input.length();
+      if (inputLength === 0) {
+        return true;
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      if (this._partialBytes === 0 && inputLength >= this.blockSize) {
+        for (var i = 0; i < this._ints; ++i) {
+          this._inBlock[i] = input.getInt32() ^ this._outBlock[i];
+          output.putInt32(this._inBlock[i]);
+        }
+        return;
+      }
+      var partialBytes = (this.blockSize - inputLength) % this.blockSize;
+      if (partialBytes > 0) {
+        partialBytes = this.blockSize - partialBytes;
+      }
+      this._partialOutput.clear();
+      for (var i = 0; i < this._ints; ++i) {
+        this._partialBlock[i] = input.getInt32() ^ this._outBlock[i];
+        this._partialOutput.putInt32(this._partialBlock[i]);
+      }
+      if (partialBytes > 0) {
+        input.read -= this.blockSize;
+      } else {
+        for (var i = 0; i < this._ints; ++i) {
+          this._inBlock[i] = this._partialBlock[i];
+        }
+      }
+      if (this._partialBytes > 0) {
+        this._partialOutput.getBytes(this._partialBytes);
+      }
+      if (partialBytes > 0 && !finish) {
+        output.putBytes(this._partialOutput.getBytes(
+          partialBytes - this._partialBytes
+        ));
+        this._partialBytes = partialBytes;
+        return true;
+      }
+      output.putBytes(this._partialOutput.getBytes(
+        inputLength - this._partialBytes
+      ));
+      this._partialBytes = 0;
+    };
+    modes.cfb.prototype.decrypt = function(input, output, finish) {
+      var inputLength = input.length();
+      if (inputLength === 0) {
+        return true;
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      if (this._partialBytes === 0 && inputLength >= this.blockSize) {
+        for (var i = 0; i < this._ints; ++i) {
+          this._inBlock[i] = input.getInt32();
+          output.putInt32(this._inBlock[i] ^ this._outBlock[i]);
+        }
+        return;
+      }
+      var partialBytes = (this.blockSize - inputLength) % this.blockSize;
+      if (partialBytes > 0) {
+        partialBytes = this.blockSize - partialBytes;
+      }
+      this._partialOutput.clear();
+      for (var i = 0; i < this._ints; ++i) {
+        this._partialBlock[i] = input.getInt32();
+        this._partialOutput.putInt32(this._partialBlock[i] ^ this._outBlock[i]);
+      }
+      if (partialBytes > 0) {
+        input.read -= this.blockSize;
+      } else {
+        for (var i = 0; i < this._ints; ++i) {
+          this._inBlock[i] = this._partialBlock[i];
+        }
+      }
+      if (this._partialBytes > 0) {
+        this._partialOutput.getBytes(this._partialBytes);
+      }
+      if (partialBytes > 0 && !finish) {
+        output.putBytes(this._partialOutput.getBytes(
+          partialBytes - this._partialBytes
+        ));
+        this._partialBytes = partialBytes;
+        return true;
+      }
+      output.putBytes(this._partialOutput.getBytes(
+        inputLength - this._partialBytes
+      ));
+      this._partialBytes = 0;
+    };
+    modes.ofb = function(options) {
+      options = options || {};
+      this.name = "OFB";
+      this.cipher = options.cipher;
+      this.blockSize = options.blockSize || 16;
+      this._ints = this.blockSize / 4;
+      this._inBlock = null;
+      this._outBlock = new Array(this._ints);
+      this._partialOutput = forge3.util.createBuffer();
+      this._partialBytes = 0;
+    };
+    modes.ofb.prototype.start = function(options) {
+      if (!("iv" in options)) {
+        throw new Error("Invalid IV parameter.");
+      }
+      this._iv = transformIV(options.iv, this.blockSize);
+      this._inBlock = this._iv.slice(0);
+      this._partialBytes = 0;
+    };
+    modes.ofb.prototype.encrypt = function(input, output, finish) {
+      var inputLength = input.length();
+      if (input.length() === 0) {
+        return true;
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      if (this._partialBytes === 0 && inputLength >= this.blockSize) {
+        for (var i = 0; i < this._ints; ++i) {
+          output.putInt32(input.getInt32() ^ this._outBlock[i]);
+          this._inBlock[i] = this._outBlock[i];
+        }
+        return;
+      }
+      var partialBytes = (this.blockSize - inputLength) % this.blockSize;
+      if (partialBytes > 0) {
+        partialBytes = this.blockSize - partialBytes;
+      }
+      this._partialOutput.clear();
+      for (var i = 0; i < this._ints; ++i) {
+        this._partialOutput.putInt32(input.getInt32() ^ this._outBlock[i]);
+      }
+      if (partialBytes > 0) {
+        input.read -= this.blockSize;
+      } else {
+        for (var i = 0; i < this._ints; ++i) {
+          this._inBlock[i] = this._outBlock[i];
+        }
+      }
+      if (this._partialBytes > 0) {
+        this._partialOutput.getBytes(this._partialBytes);
+      }
+      if (partialBytes > 0 && !finish) {
+        output.putBytes(this._partialOutput.getBytes(
+          partialBytes - this._partialBytes
+        ));
+        this._partialBytes = partialBytes;
+        return true;
+      }
+      output.putBytes(this._partialOutput.getBytes(
+        inputLength - this._partialBytes
+      ));
+      this._partialBytes = 0;
+    };
+    modes.ofb.prototype.decrypt = modes.ofb.prototype.encrypt;
+    modes.ctr = function(options) {
+      options = options || {};
+      this.name = "CTR";
+      this.cipher = options.cipher;
+      this.blockSize = options.blockSize || 16;
+      this._ints = this.blockSize / 4;
+      this._inBlock = null;
+      this._outBlock = new Array(this._ints);
+      this._partialOutput = forge3.util.createBuffer();
+      this._partialBytes = 0;
+    };
+    modes.ctr.prototype.start = function(options) {
+      if (!("iv" in options)) {
+        throw new Error("Invalid IV parameter.");
+      }
+      this._iv = transformIV(options.iv, this.blockSize);
+      this._inBlock = this._iv.slice(0);
+      this._partialBytes = 0;
+    };
+    modes.ctr.prototype.encrypt = function(input, output, finish) {
+      var inputLength = input.length();
+      if (inputLength === 0) {
+        return true;
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      if (this._partialBytes === 0 && inputLength >= this.blockSize) {
+        for (var i = 0; i < this._ints; ++i) {
+          output.putInt32(input.getInt32() ^ this._outBlock[i]);
+        }
+      } else {
+        var partialBytes = (this.blockSize - inputLength) % this.blockSize;
+        if (partialBytes > 0) {
+          partialBytes = this.blockSize - partialBytes;
+        }
+        this._partialOutput.clear();
+        for (var i = 0; i < this._ints; ++i) {
+          this._partialOutput.putInt32(input.getInt32() ^ this._outBlock[i]);
+        }
+        if (partialBytes > 0) {
+          input.read -= this.blockSize;
+        }
+        if (this._partialBytes > 0) {
+          this._partialOutput.getBytes(this._partialBytes);
+        }
+        if (partialBytes > 0 && !finish) {
+          output.putBytes(this._partialOutput.getBytes(
+            partialBytes - this._partialBytes
+          ));
+          this._partialBytes = partialBytes;
+          return true;
+        }
+        output.putBytes(this._partialOutput.getBytes(
+          inputLength - this._partialBytes
+        ));
+        this._partialBytes = 0;
+      }
+      inc32(this._inBlock);
+    };
+    modes.ctr.prototype.decrypt = modes.ctr.prototype.encrypt;
+    modes.gcm = function(options) {
+      options = options || {};
+      this.name = "GCM";
+      this.cipher = options.cipher;
+      this.blockSize = options.blockSize || 16;
+      this._ints = this.blockSize / 4;
+      this._inBlock = new Array(this._ints);
+      this._outBlock = new Array(this._ints);
+      this._partialOutput = forge3.util.createBuffer();
+      this._partialBytes = 0;
+      this._R = 3774873600;
+    };
+    modes.gcm.prototype.start = function(options) {
+      if (!("iv" in options)) {
+        throw new Error("Invalid IV parameter.");
+      }
+      var iv = forge3.util.createBuffer(options.iv);
+      this._cipherLength = 0;
+      var additionalData;
+      if ("additionalData" in options) {
+        additionalData = forge3.util.createBuffer(options.additionalData);
+      } else {
+        additionalData = forge3.util.createBuffer();
+      }
+      if ("tagLength" in options) {
+        this._tagLength = options.tagLength;
+      } else {
+        this._tagLength = 128;
+      }
+      this._tag = null;
+      if (options.decrypt) {
+        this._tag = forge3.util.createBuffer(options.tag).getBytes();
+        if (this._tag.length !== this._tagLength / 8) {
+          throw new Error("Authentication tag does not match tag length.");
+        }
+      }
+      this._hashBlock = new Array(this._ints);
+      this.tag = null;
+      this._hashSubkey = new Array(this._ints);
+      this.cipher.encrypt([0, 0, 0, 0], this._hashSubkey);
+      this.componentBits = 4;
+      this._m = this.generateHashTable(this._hashSubkey, this.componentBits);
+      var ivLength = iv.length();
+      if (ivLength === 12) {
+        this._j0 = [iv.getInt32(), iv.getInt32(), iv.getInt32(), 1];
+      } else {
+        this._j0 = [0, 0, 0, 0];
+        while (iv.length() > 0) {
+          this._j0 = this.ghash(
+            this._hashSubkey,
+            this._j0,
+            [iv.getInt32(), iv.getInt32(), iv.getInt32(), iv.getInt32()]
+          );
+        }
+        this._j0 = this.ghash(
+          this._hashSubkey,
+          this._j0,
+          [0, 0].concat(from64To32(ivLength * 8))
+        );
+      }
+      this._inBlock = this._j0.slice(0);
+      inc32(this._inBlock);
+      this._partialBytes = 0;
+      additionalData = forge3.util.createBuffer(additionalData);
+      this._aDataLength = from64To32(additionalData.length() * 8);
+      var overflow = additionalData.length() % this.blockSize;
+      if (overflow) {
+        additionalData.fillWithByte(0, this.blockSize - overflow);
+      }
+      this._s = [0, 0, 0, 0];
+      while (additionalData.length() > 0) {
+        this._s = this.ghash(this._hashSubkey, this._s, [
+          additionalData.getInt32(),
+          additionalData.getInt32(),
+          additionalData.getInt32(),
+          additionalData.getInt32()
+        ]);
+      }
+    };
+    modes.gcm.prototype.encrypt = function(input, output, finish) {
+      var inputLength = input.length();
+      if (inputLength === 0) {
+        return true;
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      if (this._partialBytes === 0 && inputLength >= this.blockSize) {
+        for (var i = 0; i < this._ints; ++i) {
+          output.putInt32(this._outBlock[i] ^= input.getInt32());
+        }
+        this._cipherLength += this.blockSize;
+      } else {
+        var partialBytes = (this.blockSize - inputLength) % this.blockSize;
+        if (partialBytes > 0) {
+          partialBytes = this.blockSize - partialBytes;
+        }
+        this._partialOutput.clear();
+        for (var i = 0; i < this._ints; ++i) {
+          this._partialOutput.putInt32(input.getInt32() ^ this._outBlock[i]);
+        }
+        if (partialBytes <= 0 || finish) {
+          if (finish) {
+            var overflow = inputLength % this.blockSize;
+            this._cipherLength += overflow;
+            this._partialOutput.truncate(this.blockSize - overflow);
+          } else {
+            this._cipherLength += this.blockSize;
+          }
+          for (var i = 0; i < this._ints; ++i) {
+            this._outBlock[i] = this._partialOutput.getInt32();
+          }
+          this._partialOutput.read -= this.blockSize;
+        }
+        if (this._partialBytes > 0) {
+          this._partialOutput.getBytes(this._partialBytes);
+        }
+        if (partialBytes > 0 && !finish) {
+          input.read -= this.blockSize;
+          output.putBytes(this._partialOutput.getBytes(
+            partialBytes - this._partialBytes
+          ));
+          this._partialBytes = partialBytes;
+          return true;
+        }
+        output.putBytes(this._partialOutput.getBytes(
+          inputLength - this._partialBytes
+        ));
+        this._partialBytes = 0;
+      }
+      this._s = this.ghash(this._hashSubkey, this._s, this._outBlock);
+      inc32(this._inBlock);
+    };
+    modes.gcm.prototype.decrypt = function(input, output, finish) {
+      var inputLength = input.length();
+      if (inputLength < this.blockSize && !(finish && inputLength > 0)) {
+        return true;
+      }
+      this.cipher.encrypt(this._inBlock, this._outBlock);
+      inc32(this._inBlock);
+      this._hashBlock[0] = input.getInt32();
+      this._hashBlock[1] = input.getInt32();
+      this._hashBlock[2] = input.getInt32();
+      this._hashBlock[3] = input.getInt32();
+      this._s = this.ghash(this._hashSubkey, this._s, this._hashBlock);
+      for (var i = 0; i < this._ints; ++i) {
+        output.putInt32(this._outBlock[i] ^ this._hashBlock[i]);
+      }
+      if (inputLength < this.blockSize) {
+        this._cipherLength += inputLength % this.blockSize;
+      } else {
+        this._cipherLength += this.blockSize;
+      }
+    };
+    modes.gcm.prototype.afterFinish = function(output, options) {
+      var rval = true;
+      if (options.decrypt && options.overflow) {
+        output.truncate(this.blockSize - options.overflow);
+      }
+      this.tag = forge3.util.createBuffer();
+      var lengths = this._aDataLength.concat(from64To32(this._cipherLength * 8));
+      this._s = this.ghash(this._hashSubkey, this._s, lengths);
+      var tag = [];
+      this.cipher.encrypt(this._j0, tag);
+      for (var i = 0; i < this._ints; ++i) {
+        this.tag.putInt32(this._s[i] ^ tag[i]);
+      }
+      this.tag.truncate(this.tag.length() % (this._tagLength / 8));
+      if (options.decrypt && this.tag.bytes() !== this._tag) {
+        rval = false;
+      }
+      return rval;
+    };
+    modes.gcm.prototype.multiply = function(x, y) {
+      var z_i = [0, 0, 0, 0];
+      var v_i = y.slice(0);
+      for (var i = 0; i < 128; ++i) {
+        var x_i = x[i / 32 | 0] & 1 << 31 - i % 32;
+        if (x_i) {
+          z_i[0] ^= v_i[0];
+          z_i[1] ^= v_i[1];
+          z_i[2] ^= v_i[2];
+          z_i[3] ^= v_i[3];
+        }
+        this.pow(v_i, v_i);
+      }
+      return z_i;
+    };
+    modes.gcm.prototype.pow = function(x, out) {
+      var lsb = x[3] & 1;
+      for (var i = 3; i > 0; --i) {
+        out[i] = x[i] >>> 1 | (x[i - 1] & 1) << 31;
+      }
+      out[0] = x[0] >>> 1;
+      if (lsb) {
+        out[0] ^= this._R;
+      }
+    };
+    modes.gcm.prototype.tableMultiply = function(x) {
+      var z = [0, 0, 0, 0];
+      for (var i = 0; i < 32; ++i) {
+        var idx = i / 8 | 0;
+        var x_i = x[idx] >>> (7 - i % 8) * 4 & 15;
+        var ah = this._m[i][x_i];
+        z[0] ^= ah[0];
+        z[1] ^= ah[1];
+        z[2] ^= ah[2];
+        z[3] ^= ah[3];
+      }
+      return z;
+    };
+    modes.gcm.prototype.ghash = function(h, y, x) {
+      y[0] ^= x[0];
+      y[1] ^= x[1];
+      y[2] ^= x[2];
+      y[3] ^= x[3];
+      return this.tableMultiply(y);
+    };
+    modes.gcm.prototype.generateHashTable = function(h, bits) {
+      var multiplier = 8 / bits;
+      var perInt = 4 * multiplier;
+      var size = 16 * multiplier;
+      var m = new Array(size);
+      for (var i = 0; i < size; ++i) {
+        var tmp = [0, 0, 0, 0];
+        var idx = i / perInt | 0;
+        var shft = (perInt - 1 - i % perInt) * bits;
+        tmp[idx] = 1 << bits - 1 << shft;
+        m[i] = this.generateSubHashTable(this.multiply(tmp, h), bits);
+      }
+      return m;
+    };
+    modes.gcm.prototype.generateSubHashTable = function(mid, bits) {
+      var size = 1 << bits;
+      var half = size >>> 1;
+      var m = new Array(size);
+      m[half] = mid.slice(0);
+      var i = half >>> 1;
+      while (i > 0) {
+        this.pow(m[2 * i], m[i] = []);
+        i >>= 1;
+      }
+      i = 2;
+      while (i < half) {
+        for (var j = 1; j < i; ++j) {
+          var m_i = m[i];
+          var m_j = m[j];
+          m[i + j] = [
+            m_i[0] ^ m_j[0],
+            m_i[1] ^ m_j[1],
+            m_i[2] ^ m_j[2],
+            m_i[3] ^ m_j[3]
+          ];
+        }
+        i *= 2;
+      }
+      m[0] = [0, 0, 0, 0];
+      for (i = half + 1; i < size; ++i) {
+        var c = m[i ^ half];
+        m[i] = [mid[0] ^ c[0], mid[1] ^ c[1], mid[2] ^ c[2], mid[3] ^ c[3]];
+      }
+      return m;
+    };
+    function transformIV(iv, blockSize) {
+      if (typeof iv === "string") {
+        iv = forge3.util.createBuffer(iv);
+      }
+      if (forge3.util.isArray(iv) && iv.length > 4) {
+        var tmp = iv;
+        iv = forge3.util.createBuffer();
+        for (var i = 0; i < tmp.length; ++i) {
+          iv.putByte(tmp[i]);
+        }
+      }
+      if (iv.length() < blockSize) {
+        throw new Error(
+          "Invalid IV length; got " + iv.length() + " bytes and expected " + blockSize + " bytes."
+        );
+      }
+      if (!forge3.util.isArray(iv)) {
+        var ints = [];
+        var blocks = blockSize / 4;
+        for (var i = 0; i < blocks; ++i) {
+          ints.push(iv.getInt32());
+        }
+        iv = ints;
+      }
+      return iv;
+    }
+    function inc32(block) {
+      block[block.length - 1] = block[block.length - 1] + 1 & 4294967295;
+    }
+    function from64To32(num) {
+      return [num / 4294967296 | 0, num & 4294967295];
+    }
+  }
+});
+
+// node_modules/node-forge/lib/aes.js
+var require_aes = __commonJS({
+  "node_modules/node-forge/lib/aes.js"(exports, module) {
+    var forge3 = require_forge();
+    require_cipher();
+    require_cipherModes();
+    require_util();
+    module.exports = forge3.aes = forge3.aes || {};
+    forge3.aes.startEncrypting = function(key, iv, output, mode) {
+      var cipher = _createCipher({
+        key,
+        output,
+        decrypt: false,
+        mode
+      });
+      cipher.start(iv);
+      return cipher;
+    };
+    forge3.aes.createEncryptionCipher = function(key, mode) {
+      return _createCipher({
+        key,
+        output: null,
+        decrypt: false,
+        mode
+      });
+    };
+    forge3.aes.startDecrypting = function(key, iv, output, mode) {
+      var cipher = _createCipher({
+        key,
+        output,
+        decrypt: true,
+        mode
+      });
+      cipher.start(iv);
+      return cipher;
+    };
+    forge3.aes.createDecryptionCipher = function(key, mode) {
+      return _createCipher({
+        key,
+        output: null,
+        decrypt: true,
+        mode
+      });
+    };
+    forge3.aes.Algorithm = function(name, mode) {
+      if (!init) {
+        initialize();
+      }
+      var self2 = this;
+      self2.name = name;
+      self2.mode = new mode({
+        blockSize: 16,
+        cipher: {
+          encrypt: function(inBlock, outBlock) {
+            return _updateBlock(self2._w, inBlock, outBlock, false);
+          },
+          decrypt: function(inBlock, outBlock) {
+            return _updateBlock(self2._w, inBlock, outBlock, true);
+          }
+        }
+      });
+      self2._init = false;
+    };
+    forge3.aes.Algorithm.prototype.initialize = function(options) {
+      if (this._init) {
+        return;
+      }
+      var key = options.key;
+      var tmp;
+      if (typeof key === "string" && (key.length === 16 || key.length === 24 || key.length === 32)) {
+        key = forge3.util.createBuffer(key);
+      } else if (forge3.util.isArray(key) && (key.length === 16 || key.length === 24 || key.length === 32)) {
+        tmp = key;
+        key = forge3.util.createBuffer();
+        for (var i = 0; i < tmp.length; ++i) {
+          key.putByte(tmp[i]);
+        }
+      }
+      if (!forge3.util.isArray(key)) {
+        tmp = key;
+        key = [];
+        var len = tmp.length();
+        if (len === 16 || len === 24 || len === 32) {
+          len = len >>> 2;
+          for (var i = 0; i < len; ++i) {
+            key.push(tmp.getInt32());
+          }
+        }
+      }
+      if (!forge3.util.isArray(key) || !(key.length === 4 || key.length === 6 || key.length === 8)) {
+        throw new Error("Invalid key parameter.");
+      }
+      var mode = this.mode.name;
+      var encryptOp = ["CFB", "OFB", "CTR", "GCM"].indexOf(mode) !== -1;
+      this._w = _expandKey(key, options.decrypt && !encryptOp);
+      this._init = true;
+    };
+    forge3.aes._expandKey = function(key, decrypt) {
+      if (!init) {
+        initialize();
+      }
+      return _expandKey(key, decrypt);
+    };
+    forge3.aes._updateBlock = _updateBlock;
+    registerAlgorithm("AES-ECB", forge3.cipher.modes.ecb);
+    registerAlgorithm("AES-CBC", forge3.cipher.modes.cbc);
+    registerAlgorithm("AES-CFB", forge3.cipher.modes.cfb);
+    registerAlgorithm("AES-OFB", forge3.cipher.modes.ofb);
+    registerAlgorithm("AES-CTR", forge3.cipher.modes.ctr);
+    registerAlgorithm("AES-GCM", forge3.cipher.modes.gcm);
+    function registerAlgorithm(name, mode) {
+      var factory = function() {
+        return new forge3.aes.Algorithm(name, mode);
+      };
+      forge3.cipher.registerAlgorithm(name, factory);
+    }
+    var init = false;
+    var Nb = 4;
+    var sbox;
+    var isbox;
+    var rcon;
+    var mix;
+    var imix;
+    function initialize() {
+      init = true;
+      rcon = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
+      var xtime = new Array(256);
+      for (var i = 0; i < 128; ++i) {
+        xtime[i] = i << 1;
+        xtime[i + 128] = i + 128 << 1 ^ 283;
+      }
+      sbox = new Array(256);
+      isbox = new Array(256);
+      mix = new Array(4);
+      imix = new Array(4);
+      for (var i = 0; i < 4; ++i) {
+        mix[i] = new Array(256);
+        imix[i] = new Array(256);
+      }
+      var e = 0, ei = 0, e2, e4, e8, sx, sx2, me, ime;
+      for (var i = 0; i < 256; ++i) {
+        sx = ei ^ ei << 1 ^ ei << 2 ^ ei << 3 ^ ei << 4;
+        sx = sx >> 8 ^ sx & 255 ^ 99;
+        sbox[e] = sx;
+        isbox[sx] = e;
+        sx2 = xtime[sx];
+        e2 = xtime[e];
+        e4 = xtime[e2];
+        e8 = xtime[e4];
+        me = sx2 << 24 ^ // 2
+        sx << 16 ^ // 1
+        sx << 8 ^ // 1
+        (sx ^ sx2);
+        ime = (e2 ^ e4 ^ e8) << 24 ^ // E (14)
+        (e ^ e8) << 16 ^ // 9
+        (e ^ e4 ^ e8) << 8 ^ // D (13)
+        (e ^ e2 ^ e8);
+        for (var n = 0; n < 4; ++n) {
+          mix[n][e] = me;
+          imix[n][sx] = ime;
+          me = me << 24 | me >>> 8;
+          ime = ime << 24 | ime >>> 8;
+        }
+        if (e === 0) {
+          e = ei = 1;
+        } else {
+          e = e2 ^ xtime[xtime[xtime[e2 ^ e8]]];
+          ei ^= xtime[xtime[ei]];
+        }
+      }
+    }
+    function _expandKey(key, decrypt) {
+      var w = key.slice(0);
+      var temp, iNk = 1;
+      var Nk = w.length;
+      var Nr1 = Nk + 6 + 1;
+      var end = Nb * Nr1;
+      for (var i = Nk; i < end; ++i) {
+        temp = w[i - 1];
+        if (i % Nk === 0) {
+          temp = sbox[temp >>> 16 & 255] << 24 ^ sbox[temp >>> 8 & 255] << 16 ^ sbox[temp & 255] << 8 ^ sbox[temp >>> 24] ^ rcon[iNk] << 24;
+          iNk++;
+        } else if (Nk > 6 && i % Nk === 4) {
+          temp = sbox[temp >>> 24] << 24 ^ sbox[temp >>> 16 & 255] << 16 ^ sbox[temp >>> 8 & 255] << 8 ^ sbox[temp & 255];
+        }
+        w[i] = w[i - Nk] ^ temp;
+      }
+      if (decrypt) {
+        var tmp;
+        var m0 = imix[0];
+        var m1 = imix[1];
+        var m2 = imix[2];
+        var m3 = imix[3];
+        var wnew = w.slice(0);
+        end = w.length;
+        for (var i = 0, wi = end - Nb; i < end; i += Nb, wi -= Nb) {
+          if (i === 0 || i === end - Nb) {
+            wnew[i] = w[wi];
+            wnew[i + 1] = w[wi + 3];
+            wnew[i + 2] = w[wi + 2];
+            wnew[i + 3] = w[wi + 1];
+          } else {
+            for (var n = 0; n < Nb; ++n) {
+              tmp = w[wi + n];
+              wnew[i + (3 & -n)] = m0[sbox[tmp >>> 24]] ^ m1[sbox[tmp >>> 16 & 255]] ^ m2[sbox[tmp >>> 8 & 255]] ^ m3[sbox[tmp & 255]];
+            }
+          }
+        }
+        w = wnew;
+      }
+      return w;
+    }
+    function _updateBlock(w, input, output, decrypt) {
+      var Nr = w.length / 4 - 1;
+      var m0, m1, m2, m3, sub;
+      if (decrypt) {
+        m0 = imix[0];
+        m1 = imix[1];
+        m2 = imix[2];
+        m3 = imix[3];
+        sub = isbox;
+      } else {
+        m0 = mix[0];
+        m1 = mix[1];
+        m2 = mix[2];
+        m3 = mix[3];
+        sub = sbox;
+      }
+      var a, b, c, d, a2, b2, c2;
+      a = input[0] ^ w[0];
+      b = input[decrypt ? 3 : 1] ^ w[1];
+      c = input[2] ^ w[2];
+      d = input[decrypt ? 1 : 3] ^ w[3];
+      var i = 3;
+      for (var round = 1; round < Nr; ++round) {
+        a2 = m0[a >>> 24] ^ m1[b >>> 16 & 255] ^ m2[c >>> 8 & 255] ^ m3[d & 255] ^ w[++i];
+        b2 = m0[b >>> 24] ^ m1[c >>> 16 & 255] ^ m2[d >>> 8 & 255] ^ m3[a & 255] ^ w[++i];
+        c2 = m0[c >>> 24] ^ m1[d >>> 16 & 255] ^ m2[a >>> 8 & 255] ^ m3[b & 255] ^ w[++i];
+        d = m0[d >>> 24] ^ m1[a >>> 16 & 255] ^ m2[b >>> 8 & 255] ^ m3[c & 255] ^ w[++i];
+        a = a2;
+        b = b2;
+        c = c2;
+      }
+      output[0] = sub[a >>> 24] << 24 ^ sub[b >>> 16 & 255] << 16 ^ sub[c >>> 8 & 255] << 8 ^ sub[d & 255] ^ w[++i];
+      output[decrypt ? 3 : 1] = sub[b >>> 24] << 24 ^ sub[c >>> 16 & 255] << 16 ^ sub[d >>> 8 & 255] << 8 ^ sub[a & 255] ^ w[++i];
+      output[2] = sub[c >>> 24] << 24 ^ sub[d >>> 16 & 255] << 16 ^ sub[a >>> 8 & 255] << 8 ^ sub[b & 255] ^ w[++i];
+      output[decrypt ? 1 : 3] = sub[d >>> 24] << 24 ^ sub[a >>> 16 & 255] << 16 ^ sub[b >>> 8 & 255] << 8 ^ sub[c & 255] ^ w[++i];
+    }
+    function _createCipher(options) {
+      options = options || {};
+      var mode = (options.mode || "CBC").toUpperCase();
+      var algorithm = "AES-" + mode;
+      var cipher;
+      if (options.decrypt) {
+        cipher = forge3.cipher.createDecipher(algorithm, options.key);
+      } else {
+        cipher = forge3.cipher.createCipher(algorithm, options.key);
+      }
+      var start = cipher.start;
+      cipher.start = function(iv, options2) {
+        var output = null;
+        if (options2 instanceof forge3.util.ByteBuffer) {
+          output = options2;
+          options2 = {};
+        }
+        options2 = options2 || {};
+        options2.output = output;
+        options2.iv = iv;
+        start.call(cipher, options2);
+      };
+      return cipher;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/oids.js
+var require_oids = __commonJS({
+  "node_modules/node-forge/lib/oids.js"(exports, module) {
+    var forge3 = require_forge();
+    forge3.pki = forge3.pki || {};
+    var oids = module.exports = forge3.pki.oids = forge3.oids = forge3.oids || {};
+    function _IN(id, name) {
+      oids[id] = name;
+      oids[name] = id;
+    }
+    function _I_(id, name) {
+      oids[id] = name;
+    }
+    _IN("1.2.840.113549.1.1.1", "rsaEncryption");
+    _IN("1.2.840.113549.1.1.4", "md5WithRSAEncryption");
+    _IN("1.2.840.113549.1.1.5", "sha1WithRSAEncryption");
+    _IN("1.2.840.113549.1.1.7", "RSAES-OAEP");
+    _IN("1.2.840.113549.1.1.8", "mgf1");
+    _IN("1.2.840.113549.1.1.9", "pSpecified");
+    _IN("1.2.840.113549.1.1.10", "RSASSA-PSS");
+    _IN("1.2.840.113549.1.1.11", "sha256WithRSAEncryption");
+    _IN("1.2.840.113549.1.1.12", "sha384WithRSAEncryption");
+    _IN("1.2.840.113549.1.1.13", "sha512WithRSAEncryption");
+    _IN("1.3.101.112", "EdDSA25519");
+    _IN("1.2.840.10040.4.3", "dsa-with-sha1");
+    _IN("1.3.14.3.2.7", "desCBC");
+    _IN("1.3.14.3.2.26", "sha1");
+    _IN("1.3.14.3.2.29", "sha1WithRSASignature");
+    _IN("2.16.840.1.101.3.4.2.1", "sha256");
+    _IN("2.16.840.1.101.3.4.2.2", "sha384");
+    _IN("2.16.840.1.101.3.4.2.3", "sha512");
+    _IN("2.16.840.1.101.3.4.2.4", "sha224");
+    _IN("2.16.840.1.101.3.4.2.5", "sha512-224");
+    _IN("2.16.840.1.101.3.4.2.6", "sha512-256");
+    _IN("1.2.840.113549.2.2", "md2");
+    _IN("1.2.840.113549.2.5", "md5");
+    _IN("1.2.840.113549.1.7.1", "data");
+    _IN("1.2.840.113549.1.7.2", "signedData");
+    _IN("1.2.840.113549.1.7.3", "envelopedData");
+    _IN("1.2.840.113549.1.7.4", "signedAndEnvelopedData");
+    _IN("1.2.840.113549.1.7.5", "digestedData");
+    _IN("1.2.840.113549.1.7.6", "encryptedData");
+    _IN("1.2.840.113549.1.9.1", "emailAddress");
+    _IN("1.2.840.113549.1.9.2", "unstructuredName");
+    _IN("1.2.840.113549.1.9.3", "contentType");
+    _IN("1.2.840.113549.1.9.4", "messageDigest");
+    _IN("1.2.840.113549.1.9.5", "signingTime");
+    _IN("1.2.840.113549.1.9.6", "counterSignature");
+    _IN("1.2.840.113549.1.9.7", "challengePassword");
+    _IN("1.2.840.113549.1.9.8", "unstructuredAddress");
+    _IN("1.2.840.113549.1.9.14", "extensionRequest");
+    _IN("1.2.840.113549.1.9.20", "friendlyName");
+    _IN("1.2.840.113549.1.9.21", "localKeyId");
+    _IN("1.2.840.113549.1.9.22.1", "x509Certificate");
+    _IN("1.2.840.113549.1.12.10.1.1", "keyBag");
+    _IN("1.2.840.113549.1.12.10.1.2", "pkcs8ShroudedKeyBag");
+    _IN("1.2.840.113549.1.12.10.1.3", "certBag");
+    _IN("1.2.840.113549.1.12.10.1.4", "crlBag");
+    _IN("1.2.840.113549.1.12.10.1.5", "secretBag");
+    _IN("1.2.840.113549.1.12.10.1.6", "safeContentsBag");
+    _IN("1.2.840.113549.1.5.13", "pkcs5PBES2");
+    _IN("1.2.840.113549.1.5.12", "pkcs5PBKDF2");
+    _IN("1.2.840.113549.1.12.1.1", "pbeWithSHAAnd128BitRC4");
+    _IN("1.2.840.113549.1.12.1.2", "pbeWithSHAAnd40BitRC4");
+    _IN("1.2.840.113549.1.12.1.3", "pbeWithSHAAnd3-KeyTripleDES-CBC");
+    _IN("1.2.840.113549.1.12.1.4", "pbeWithSHAAnd2-KeyTripleDES-CBC");
+    _IN("1.2.840.113549.1.12.1.5", "pbeWithSHAAnd128BitRC2-CBC");
+    _IN("1.2.840.113549.1.12.1.6", "pbewithSHAAnd40BitRC2-CBC");
+    _IN("1.2.840.113549.2.7", "hmacWithSHA1");
+    _IN("1.2.840.113549.2.8", "hmacWithSHA224");
+    _IN("1.2.840.113549.2.9", "hmacWithSHA256");
+    _IN("1.2.840.113549.2.10", "hmacWithSHA384");
+    _IN("1.2.840.113549.2.11", "hmacWithSHA512");
+    _IN("1.2.840.113549.3.7", "des-EDE3-CBC");
+    _IN("2.16.840.1.101.3.4.1.2", "aes128-CBC");
+    _IN("2.16.840.1.101.3.4.1.22", "aes192-CBC");
+    _IN("2.16.840.1.101.3.4.1.42", "aes256-CBC");
+    _IN("2.5.4.3", "commonName");
+    _IN("2.5.4.4", "surname");
+    _IN("2.5.4.5", "serialNumber");
+    _IN("2.5.4.6", "countryName");
+    _IN("2.5.4.7", "localityName");
+    _IN("2.5.4.8", "stateOrProvinceName");
+    _IN("2.5.4.9", "streetAddress");
+    _IN("2.5.4.10", "organizationName");
+    _IN("2.5.4.11", "organizationalUnitName");
+    _IN("2.5.4.12", "title");
+    _IN("2.5.4.13", "description");
+    _IN("2.5.4.15", "businessCategory");
+    _IN("2.5.4.17", "postalCode");
+    _IN("2.5.4.42", "givenName");
+    _IN("1.3.6.1.4.1.311.60.2.1.2", "jurisdictionOfIncorporationStateOrProvinceName");
+    _IN("1.3.6.1.4.1.311.60.2.1.3", "jurisdictionOfIncorporationCountryName");
+    _IN("2.16.840.1.113730.1.1", "nsCertType");
+    _IN("2.16.840.1.113730.1.13", "nsComment");
+    _I_("2.5.29.1", "authorityKeyIdentifier");
+    _I_("2.5.29.2", "keyAttributes");
+    _I_("2.5.29.3", "certificatePolicies");
+    _I_("2.5.29.4", "keyUsageRestriction");
+    _I_("2.5.29.5", "policyMapping");
+    _I_("2.5.29.6", "subtreesConstraint");
+    _I_("2.5.29.7", "subjectAltName");
+    _I_("2.5.29.8", "issuerAltName");
+    _I_("2.5.29.9", "subjectDirectoryAttributes");
+    _I_("2.5.29.10", "basicConstraints");
+    _I_("2.5.29.11", "nameConstraints");
+    _I_("2.5.29.12", "policyConstraints");
+    _I_("2.5.29.13", "basicConstraints");
+    _IN("2.5.29.14", "subjectKeyIdentifier");
+    _IN("2.5.29.15", "keyUsage");
+    _I_("2.5.29.16", "privateKeyUsagePeriod");
+    _IN("2.5.29.17", "subjectAltName");
+    _IN("2.5.29.18", "issuerAltName");
+    _IN("2.5.29.19", "basicConstraints");
+    _I_("2.5.29.20", "cRLNumber");
+    _I_("2.5.29.21", "cRLReason");
+    _I_("2.5.29.22", "expirationDate");
+    _I_("2.5.29.23", "instructionCode");
+    _I_("2.5.29.24", "invalidityDate");
+    _I_("2.5.29.25", "cRLDistributionPoints");
+    _I_("2.5.29.26", "issuingDistributionPoint");
+    _I_("2.5.29.27", "deltaCRLIndicator");
+    _I_("2.5.29.28", "issuingDistributionPoint");
+    _I_("2.5.29.29", "certificateIssuer");
+    _I_("2.5.29.30", "nameConstraints");
+    _IN("2.5.29.31", "cRLDistributionPoints");
+    _IN("2.5.29.32", "certificatePolicies");
+    _I_("2.5.29.33", "policyMappings");
+    _I_("2.5.29.34", "policyConstraints");
+    _IN("2.5.29.35", "authorityKeyIdentifier");
+    _I_("2.5.29.36", "policyConstraints");
+    _IN("2.5.29.37", "extKeyUsage");
+    _I_("2.5.29.46", "freshestCRL");
+    _I_("2.5.29.54", "inhibitAnyPolicy");
+    _IN("1.3.6.1.4.1.11129.2.4.2", "timestampList");
+    _IN("1.3.6.1.5.5.7.1.1", "authorityInfoAccess");
+    _IN("1.3.6.1.5.5.7.3.1", "serverAuth");
+    _IN("1.3.6.1.5.5.7.3.2", "clientAuth");
+    _IN("1.3.6.1.5.5.7.3.3", "codeSigning");
+    _IN("1.3.6.1.5.5.7.3.4", "emailProtection");
+    _IN("1.3.6.1.5.5.7.3.8", "timeStamping");
+  }
+});
+
+// node_modules/node-forge/lib/asn1.js
+var require_asn1 = __commonJS({
+  "node_modules/node-forge/lib/asn1.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    require_oids();
+    var asn1 = module.exports = forge3.asn1 = forge3.asn1 || {};
+    asn1.Class = {
+      UNIVERSAL: 0,
+      APPLICATION: 64,
+      CONTEXT_SPECIFIC: 128,
+      PRIVATE: 192
+    };
+    asn1.Type = {
+      NONE: 0,
+      BOOLEAN: 1,
+      INTEGER: 2,
+      BITSTRING: 3,
+      OCTETSTRING: 4,
+      NULL: 5,
+      OID: 6,
+      ODESC: 7,
+      EXTERNAL: 8,
+      REAL: 9,
+      ENUMERATED: 10,
+      EMBEDDED: 11,
+      UTF8: 12,
+      ROID: 13,
+      SEQUENCE: 16,
+      SET: 17,
+      PRINTABLESTRING: 19,
+      IA5STRING: 22,
+      UTCTIME: 23,
+      GENERALIZEDTIME: 24,
+      BMPSTRING: 30
+    };
+    asn1.create = function(tagClass, type, constructed, value, options) {
+      if (forge3.util.isArray(value)) {
+        var tmp = [];
+        for (var i = 0; i < value.length; ++i) {
+          if (value[i] !== void 0) {
+            tmp.push(value[i]);
+          }
+        }
+        value = tmp;
+      }
+      var obj = {
+        tagClass,
+        type,
+        constructed,
+        composed: constructed || forge3.util.isArray(value),
+        value
+      };
+      if (options && "bitStringContents" in options) {
+        obj.bitStringContents = options.bitStringContents;
+        obj.original = asn1.copy(obj);
+      }
+      return obj;
+    };
+    asn1.copy = function(obj, options) {
+      var copy;
+      if (forge3.util.isArray(obj)) {
+        copy = [];
+        for (var i = 0; i < obj.length; ++i) {
+          copy.push(asn1.copy(obj[i], options));
+        }
+        return copy;
+      }
+      if (typeof obj === "string") {
+        return obj;
+      }
+      copy = {
+        tagClass: obj.tagClass,
+        type: obj.type,
+        constructed: obj.constructed,
+        composed: obj.composed,
+        value: asn1.copy(obj.value, options)
+      };
+      if (options && !options.excludeBitStringContents) {
+        copy.bitStringContents = obj.bitStringContents;
+      }
+      return copy;
+    };
+    asn1.equals = function(obj1, obj2, options) {
+      if (forge3.util.isArray(obj1)) {
+        if (!forge3.util.isArray(obj2)) {
+          return false;
+        }
+        if (obj1.length !== obj2.length) {
+          return false;
+        }
+        for (var i = 0; i < obj1.length; ++i) {
+          if (!asn1.equals(obj1[i], obj2[i])) {
+            return false;
+          }
+        }
+        return true;
+      }
+      if (typeof obj1 !== typeof obj2) {
+        return false;
+      }
+      if (typeof obj1 === "string") {
+        return obj1 === obj2;
+      }
+      var equal = obj1.tagClass === obj2.tagClass && obj1.type === obj2.type && obj1.constructed === obj2.constructed && obj1.composed === obj2.composed && asn1.equals(obj1.value, obj2.value);
+      if (options && options.includeBitStringContents) {
+        equal = equal && obj1.bitStringContents === obj2.bitStringContents;
+      }
+      return equal;
+    };
+    asn1.getBerValueLength = function(b) {
+      var b2 = b.getByte();
+      if (b2 === 128) {
+        return void 0;
+      }
+      var length;
+      var longForm = b2 & 128;
+      if (!longForm) {
+        length = b2;
+      } else {
+        length = b.getInt((b2 & 127) << 3);
+      }
+      return length;
+    };
+    function _checkBufferLength(bytes, remaining, n) {
+      if (n > remaining) {
+        var error = new Error("Too few bytes to parse DER.");
+        error.available = bytes.length();
+        error.remaining = remaining;
+        error.requested = n;
+        throw error;
+      }
+    }
+    var _getValueLength = function(bytes, remaining) {
+      var b2 = bytes.getByte();
+      remaining--;
+      if (b2 === 128) {
+        return void 0;
+      }
+      var length;
+      var longForm = b2 & 128;
+      if (!longForm) {
+        length = b2;
+      } else {
+        var longFormBytes = b2 & 127;
+        _checkBufferLength(bytes, remaining, longFormBytes);
+        length = bytes.getInt(longFormBytes << 3);
+      }
+      if (length < 0) {
+        throw new Error("Negative length: " + length);
+      }
+      return length;
+    };
+    asn1.fromDer = function(bytes, options) {
+      if (options === void 0) {
+        options = {
+          strict: true,
+          parseAllBytes: true,
+          decodeBitStrings: true
+        };
+      }
+      if (typeof options === "boolean") {
+        options = {
+          strict: options,
+          parseAllBytes: true,
+          decodeBitStrings: true
+        };
+      }
+      if (!("strict" in options)) {
+        options.strict = true;
+      }
+      if (!("parseAllBytes" in options)) {
+        options.parseAllBytes = true;
+      }
+      if (!("decodeBitStrings" in options)) {
+        options.decodeBitStrings = true;
+      }
+      if (typeof bytes === "string") {
+        bytes = forge3.util.createBuffer(bytes);
+      }
+      var byteCount = bytes.length();
+      var value = _fromDer(bytes, bytes.length(), 0, options);
+      if (options.parseAllBytes && bytes.length() !== 0) {
+        var error = new Error("Unparsed DER bytes remain after ASN.1 parsing.");
+        error.byteCount = byteCount;
+        error.remaining = bytes.length();
+        throw error;
+      }
+      return value;
+    };
+    function _fromDer(bytes, remaining, depth, options) {
+      var start;
+      _checkBufferLength(bytes, remaining, 2);
+      var b1 = bytes.getByte();
+      remaining--;
+      var tagClass = b1 & 192;
+      var type = b1 & 31;
+      start = bytes.length();
+      var length = _getValueLength(bytes, remaining);
+      remaining -= start - bytes.length();
+      if (length !== void 0 && length > remaining) {
+        if (options.strict) {
+          var error = new Error("Too few bytes to read ASN.1 value.");
+          error.available = bytes.length();
+          error.remaining = remaining;
+          error.requested = length;
+          throw error;
+        }
+        length = remaining;
+      }
+      var value;
+      var bitStringContents;
+      var constructed = (b1 & 32) === 32;
+      if (constructed) {
+        value = [];
+        if (length === void 0) {
+          for (; ; ) {
+            _checkBufferLength(bytes, remaining, 2);
+            if (bytes.bytes(2) === String.fromCharCode(0, 0)) {
+              bytes.getBytes(2);
+              remaining -= 2;
+              break;
+            }
+            start = bytes.length();
+            value.push(_fromDer(bytes, remaining, depth + 1, options));
+            remaining -= start - bytes.length();
+          }
+        } else {
+          while (length > 0) {
+            start = bytes.length();
+            value.push(_fromDer(bytes, length, depth + 1, options));
+            remaining -= start - bytes.length();
+            length -= start - bytes.length();
+          }
+        }
+      }
+      if (value === void 0 && tagClass === asn1.Class.UNIVERSAL && type === asn1.Type.BITSTRING) {
+        bitStringContents = bytes.bytes(length);
+      }
+      if (value === void 0 && options.decodeBitStrings && tagClass === asn1.Class.UNIVERSAL && // FIXME: OCTET STRINGs not yet supported here
+      // .. other parts of forge expect to decode OCTET STRINGs manually
+      type === asn1.Type.BITSTRING && length > 1) {
+        var savedRead = bytes.read;
+        var savedRemaining = remaining;
+        var unused = 0;
+        if (type === asn1.Type.BITSTRING) {
+          _checkBufferLength(bytes, remaining, 1);
+          unused = bytes.getByte();
+          remaining--;
+        }
+        if (unused === 0) {
+          try {
+            start = bytes.length();
+            var subOptions = {
+              // enforce strict mode to avoid parsing ASN.1 from plain data
+              strict: true,
+              decodeBitStrings: true
+            };
+            var composed = _fromDer(bytes, remaining, depth + 1, subOptions);
+            var used = start - bytes.length();
+            remaining -= used;
+            if (type == asn1.Type.BITSTRING) {
+              used++;
+            }
+            var tc = composed.tagClass;
+            if (used === length && (tc === asn1.Class.UNIVERSAL || tc === asn1.Class.CONTEXT_SPECIFIC)) {
+              value = [composed];
+            }
+          } catch (ex) {
+          }
+        }
+        if (value === void 0) {
+          bytes.read = savedRead;
+          remaining = savedRemaining;
+        }
+      }
+      if (value === void 0) {
+        if (length === void 0) {
+          if (options.strict) {
+            throw new Error("Non-constructed ASN.1 object of indefinite length.");
+          }
+          length = remaining;
+        }
+        if (type === asn1.Type.BMPSTRING) {
+          value = "";
+          for (; length > 0; length -= 2) {
+            _checkBufferLength(bytes, remaining, 2);
+            value += String.fromCharCode(bytes.getInt16());
+            remaining -= 2;
+          }
+        } else {
+          value = bytes.getBytes(length);
+          remaining -= length;
+        }
+      }
+      var asn1Options = bitStringContents === void 0 ? null : {
+        bitStringContents
+      };
+      return asn1.create(tagClass, type, constructed, value, asn1Options);
+    }
+    asn1.toDer = function(obj) {
+      var bytes = forge3.util.createBuffer();
+      var b1 = obj.tagClass | obj.type;
+      var value = forge3.util.createBuffer();
+      var useBitStringContents = false;
+      if ("bitStringContents" in obj) {
+        useBitStringContents = true;
+        if (obj.original) {
+          useBitStringContents = asn1.equals(obj, obj.original);
+        }
+      }
+      if (useBitStringContents) {
+        value.putBytes(obj.bitStringContents);
+      } else if (obj.composed) {
+        if (obj.constructed) {
+          b1 |= 32;
+        } else {
+          value.putByte(0);
+        }
+        for (var i = 0; i < obj.value.length; ++i) {
+          if (obj.value[i] !== void 0) {
+            value.putBuffer(asn1.toDer(obj.value[i]));
+          }
+        }
+      } else {
+        if (obj.type === asn1.Type.BMPSTRING) {
+          for (var i = 0; i < obj.value.length; ++i) {
+            value.putInt16(obj.value.charCodeAt(i));
+          }
+        } else {
+          if (obj.type === asn1.Type.INTEGER && obj.value.length > 1 && // leading 0x00 for positive integer
+          (obj.value.charCodeAt(0) === 0 && (obj.value.charCodeAt(1) & 128) === 0 || // leading 0xFF for negative integer
+          obj.value.charCodeAt(0) === 255 && (obj.value.charCodeAt(1) & 128) === 128)) {
+            value.putBytes(obj.value.substr(1));
+          } else {
+            value.putBytes(obj.value);
+          }
+        }
+      }
+      bytes.putByte(b1);
+      if (value.length() <= 127) {
+        bytes.putByte(value.length() & 127);
+      } else {
+        var len = value.length();
+        var lenBytes = "";
+        do {
+          lenBytes += String.fromCharCode(len & 255);
+          len = len >>> 8;
+        } while (len > 0);
+        bytes.putByte(lenBytes.length | 128);
+        for (var i = lenBytes.length - 1; i >= 0; --i) {
+          bytes.putByte(lenBytes.charCodeAt(i));
+        }
+      }
+      bytes.putBuffer(value);
+      return bytes;
+    };
+    asn1.oidToDer = function(oid) {
+      var values = oid.split(".");
+      var bytes = forge3.util.createBuffer();
+      bytes.putByte(40 * parseInt(values[0], 10) + parseInt(values[1], 10));
+      var last, valueBytes, value, b;
+      for (var i = 2; i < values.length; ++i) {
+        last = true;
+        valueBytes = [];
+        value = parseInt(values[i], 10);
+        do {
+          b = value & 127;
+          value = value >>> 7;
+          if (!last) {
+            b |= 128;
+          }
+          valueBytes.push(b);
+          last = false;
+        } while (value > 0);
+        for (var n = valueBytes.length - 1; n >= 0; --n) {
+          bytes.putByte(valueBytes[n]);
+        }
+      }
+      return bytes;
+    };
+    asn1.derToOid = function(bytes) {
+      var oid;
+      if (typeof bytes === "string") {
+        bytes = forge3.util.createBuffer(bytes);
+      }
+      var b = bytes.getByte();
+      oid = Math.floor(b / 40) + "." + b % 40;
+      var value = 0;
+      while (bytes.length() > 0) {
+        b = bytes.getByte();
+        value = value << 7;
+        if (b & 128) {
+          value += b & 127;
+        } else {
+          oid += "." + (value + b);
+          value = 0;
+        }
+      }
+      return oid;
+    };
+    asn1.utcTimeToDate = function(utc) {
+      var date = /* @__PURE__ */ new Date();
+      var year = parseInt(utc.substr(0, 2), 10);
+      year = year >= 50 ? 1900 + year : 2e3 + year;
+      var MM = parseInt(utc.substr(2, 2), 10) - 1;
+      var DD = parseInt(utc.substr(4, 2), 10);
+      var hh = parseInt(utc.substr(6, 2), 10);
+      var mm = parseInt(utc.substr(8, 2), 10);
+      var ss = 0;
+      if (utc.length > 11) {
+        var c = utc.charAt(10);
+        var end = 10;
+        if (c !== "+" && c !== "-") {
+          ss = parseInt(utc.substr(10, 2), 10);
+          end += 2;
+        }
+      }
+      date.setUTCFullYear(year, MM, DD);
+      date.setUTCHours(hh, mm, ss, 0);
+      if (end) {
+        c = utc.charAt(end);
+        if (c === "+" || c === "-") {
+          var hhoffset = parseInt(utc.substr(end + 1, 2), 10);
+          var mmoffset = parseInt(utc.substr(end + 4, 2), 10);
+          var offset = hhoffset * 60 + mmoffset;
+          offset *= 6e4;
+          if (c === "+") {
+            date.setTime(+date - offset);
+          } else {
+            date.setTime(+date + offset);
+          }
+        }
+      }
+      return date;
+    };
+    asn1.generalizedTimeToDate = function(gentime) {
+      var date = /* @__PURE__ */ new Date();
+      var YYYY = parseInt(gentime.substr(0, 4), 10);
+      var MM = parseInt(gentime.substr(4, 2), 10) - 1;
+      var DD = parseInt(gentime.substr(6, 2), 10);
+      var hh = parseInt(gentime.substr(8, 2), 10);
+      var mm = parseInt(gentime.substr(10, 2), 10);
+      var ss = parseInt(gentime.substr(12, 2), 10);
+      var fff = 0;
+      var offset = 0;
+      var isUTC = false;
+      if (gentime.charAt(gentime.length - 1) === "Z") {
+        isUTC = true;
+      }
+      var end = gentime.length - 5, c = gentime.charAt(end);
+      if (c === "+" || c === "-") {
+        var hhoffset = parseInt(gentime.substr(end + 1, 2), 10);
+        var mmoffset = parseInt(gentime.substr(end + 4, 2), 10);
+        offset = hhoffset * 60 + mmoffset;
+        offset *= 6e4;
+        if (c === "+") {
+          offset *= -1;
+        }
+        isUTC = true;
+      }
+      if (gentime.charAt(14) === ".") {
+        fff = parseFloat(gentime.substr(14), 10) * 1e3;
+      }
+      if (isUTC) {
+        date.setUTCFullYear(YYYY, MM, DD);
+        date.setUTCHours(hh, mm, ss, fff);
+        date.setTime(+date + offset);
+      } else {
+        date.setFullYear(YYYY, MM, DD);
+        date.setHours(hh, mm, ss, fff);
+      }
+      return date;
+    };
+    asn1.dateToUtcTime = function(date) {
+      if (typeof date === "string") {
+        return date;
+      }
+      var rval = "";
+      var format = [];
+      format.push(("" + date.getUTCFullYear()).substr(2));
+      format.push("" + (date.getUTCMonth() + 1));
+      format.push("" + date.getUTCDate());
+      format.push("" + date.getUTCHours());
+      format.push("" + date.getUTCMinutes());
+      format.push("" + date.getUTCSeconds());
+      for (var i = 0; i < format.length; ++i) {
+        if (format[i].length < 2) {
+          rval += "0";
+        }
+        rval += format[i];
+      }
+      rval += "Z";
+      return rval;
+    };
+    asn1.dateToGeneralizedTime = function(date) {
+      if (typeof date === "string") {
+        return date;
+      }
+      var rval = "";
+      var format = [];
+      format.push("" + date.getUTCFullYear());
+      format.push("" + (date.getUTCMonth() + 1));
+      format.push("" + date.getUTCDate());
+      format.push("" + date.getUTCHours());
+      format.push("" + date.getUTCMinutes());
+      format.push("" + date.getUTCSeconds());
+      for (var i = 0; i < format.length; ++i) {
+        if (format[i].length < 2) {
+          rval += "0";
+        }
+        rval += format[i];
+      }
+      rval += "Z";
+      return rval;
+    };
+    asn1.integerToDer = function(x) {
+      var rval = forge3.util.createBuffer();
+      if (x >= -128 && x < 128) {
+        return rval.putSignedInt(x, 8);
+      }
+      if (x >= -32768 && x < 32768) {
+        return rval.putSignedInt(x, 16);
+      }
+      if (x >= -8388608 && x < 8388608) {
+        return rval.putSignedInt(x, 24);
+      }
+      if (x >= -2147483648 && x < 2147483648) {
+        return rval.putSignedInt(x, 32);
+      }
+      var error = new Error("Integer too large; max is 32-bits.");
+      error.integer = x;
+      throw error;
+    };
+    asn1.derToInteger = function(bytes) {
+      if (typeof bytes === "string") {
+        bytes = forge3.util.createBuffer(bytes);
+      }
+      var n = bytes.length() * 8;
+      if (n > 32) {
+        throw new Error("Integer too large; max is 32-bits.");
+      }
+      return bytes.getSignedInt(n);
+    };
+    asn1.validate = function(obj, v, capture, errors) {
+      var rval = false;
+      if ((obj.tagClass === v.tagClass || typeof v.tagClass === "undefined") && (obj.type === v.type || typeof v.type === "undefined")) {
+        if (obj.constructed === v.constructed || typeof v.constructed === "undefined") {
+          rval = true;
+          if (v.value && forge3.util.isArray(v.value)) {
+            var j = 0;
+            for (var i = 0; rval && i < v.value.length; ++i) {
+              rval = v.value[i].optional || false;
+              if (obj.value[j]) {
+                rval = asn1.validate(obj.value[j], v.value[i], capture, errors);
+                if (rval) {
+                  ++j;
+                } else if (v.value[i].optional) {
+                  rval = true;
+                }
+              }
+              if (!rval && errors) {
+                errors.push(
+                  "[" + v.name + '] Tag class "' + v.tagClass + '", type "' + v.type + '" expected value length "' + v.value.length + '", got "' + obj.value.length + '"'
+                );
+              }
+            }
+          }
+          if (rval && capture) {
+            if (v.capture) {
+              capture[v.capture] = obj.value;
+            }
+            if (v.captureAsn1) {
+              capture[v.captureAsn1] = obj;
+            }
+            if (v.captureBitStringContents && "bitStringContents" in obj) {
+              capture[v.captureBitStringContents] = obj.bitStringContents;
+            }
+            if (v.captureBitStringValue && "bitStringContents" in obj) {
+              var value;
+              if (obj.bitStringContents.length < 2) {
+                capture[v.captureBitStringValue] = "";
+              } else {
+                var unused = obj.bitStringContents.charCodeAt(0);
+                if (unused !== 0) {
+                  throw new Error(
+                    "captureBitStringValue only supported for zero unused bits"
+                  );
+                }
+                capture[v.captureBitStringValue] = obj.bitStringContents.slice(1);
+              }
+            }
+          }
+        } else if (errors) {
+          errors.push(
+            "[" + v.name + '] Expected constructed "' + v.constructed + '", got "' + obj.constructed + '"'
+          );
+        }
+      } else if (errors) {
+        if (obj.tagClass !== v.tagClass) {
+          errors.push(
+            "[" + v.name + '] Expected tag class "' + v.tagClass + '", got "' + obj.tagClass + '"'
+          );
+        }
+        if (obj.type !== v.type) {
+          errors.push(
+            "[" + v.name + '] Expected type "' + v.type + '", got "' + obj.type + '"'
+          );
+        }
+      }
+      return rval;
+    };
+    var _nonLatinRegex = /[^\\u0000-\\u00ff]/;
+    asn1.prettyPrint = function(obj, level, indentation) {
+      var rval = "";
+      level = level || 0;
+      indentation = indentation || 2;
+      if (level > 0) {
+        rval += "\n";
+      }
+      var indent = "";
+      for (var i = 0; i < level * indentation; ++i) {
+        indent += " ";
+      }
+      rval += indent + "Tag: ";
+      switch (obj.tagClass) {
+        case asn1.Class.UNIVERSAL:
+          rval += "Universal:";
+          break;
+        case asn1.Class.APPLICATION:
+          rval += "Application:";
+          break;
+        case asn1.Class.CONTEXT_SPECIFIC:
+          rval += "Context-Specific:";
+          break;
+        case asn1.Class.PRIVATE:
+          rval += "Private:";
+          break;
+      }
+      if (obj.tagClass === asn1.Class.UNIVERSAL) {
+        rval += obj.type;
+        switch (obj.type) {
+          case asn1.Type.NONE:
+            rval += " (None)";
+            break;
+          case asn1.Type.BOOLEAN:
+            rval += " (Boolean)";
+            break;
+          case asn1.Type.INTEGER:
+            rval += " (Integer)";
+            break;
+          case asn1.Type.BITSTRING:
+            rval += " (Bit string)";
+            break;
+          case asn1.Type.OCTETSTRING:
+            rval += " (Octet string)";
+            break;
+          case asn1.Type.NULL:
+            rval += " (Null)";
+            break;
+          case asn1.Type.OID:
+            rval += " (Object Identifier)";
+            break;
+          case asn1.Type.ODESC:
+            rval += " (Object Descriptor)";
+            break;
+          case asn1.Type.EXTERNAL:
+            rval += " (External or Instance of)";
+            break;
+          case asn1.Type.REAL:
+            rval += " (Real)";
+            break;
+          case asn1.Type.ENUMERATED:
+            rval += " (Enumerated)";
+            break;
+          case asn1.Type.EMBEDDED:
+            rval += " (Embedded PDV)";
+            break;
+          case asn1.Type.UTF8:
+            rval += " (UTF8)";
+            break;
+          case asn1.Type.ROID:
+            rval += " (Relative Object Identifier)";
+            break;
+          case asn1.Type.SEQUENCE:
+            rval += " (Sequence)";
+            break;
+          case asn1.Type.SET:
+            rval += " (Set)";
+            break;
+          case asn1.Type.PRINTABLESTRING:
+            rval += " (Printable String)";
+            break;
+          case asn1.Type.IA5String:
+            rval += " (IA5String (ASCII))";
+            break;
+          case asn1.Type.UTCTIME:
+            rval += " (UTC time)";
+            break;
+          case asn1.Type.GENERALIZEDTIME:
+            rval += " (Generalized time)";
+            break;
+          case asn1.Type.BMPSTRING:
+            rval += " (BMP String)";
+            break;
+        }
+      } else {
+        rval += obj.type;
+      }
+      rval += "\n";
+      rval += indent + "Constructed: " + obj.constructed + "\n";
+      if (obj.composed) {
+        var subvalues = 0;
+        var sub = "";
+        for (var i = 0; i < obj.value.length; ++i) {
+          if (obj.value[i] !== void 0) {
+            subvalues += 1;
+            sub += asn1.prettyPrint(obj.value[i], level + 1, indentation);
+            if (i + 1 < obj.value.length) {
+              sub += ",";
+            }
+          }
+        }
+        rval += indent + "Sub values: " + subvalues + sub;
+      } else {
+        rval += indent + "Value: ";
+        if (obj.type === asn1.Type.OID) {
+          var oid = asn1.derToOid(obj.value);
+          rval += oid;
+          if (forge3.pki && forge3.pki.oids) {
+            if (oid in forge3.pki.oids) {
+              rval += " (" + forge3.pki.oids[oid] + ") ";
+            }
+          }
+        }
+        if (obj.type === asn1.Type.INTEGER) {
+          try {
+            rval += asn1.derToInteger(obj.value);
+          } catch (ex) {
+            rval += "0x" + forge3.util.bytesToHex(obj.value);
+          }
+        } else if (obj.type === asn1.Type.BITSTRING) {
+          if (obj.value.length > 1) {
+            rval += "0x" + forge3.util.bytesToHex(obj.value.slice(1));
+          } else {
+            rval += "(none)";
+          }
+          if (obj.value.length > 0) {
+            var unused = obj.value.charCodeAt(0);
+            if (unused == 1) {
+              rval += " (1 unused bit shown)";
+            } else if (unused > 1) {
+              rval += " (" + unused + " unused bits shown)";
+            }
+          }
+        } else if (obj.type === asn1.Type.OCTETSTRING) {
+          if (!_nonLatinRegex.test(obj.value)) {
+            rval += "(" + obj.value + ") ";
+          }
+          rval += "0x" + forge3.util.bytesToHex(obj.value);
+        } else if (obj.type === asn1.Type.UTF8) {
+          try {
+            rval += forge3.util.decodeUtf8(obj.value);
+          } catch (e) {
+            if (e.message === "URI malformed") {
+              rval += "0x" + forge3.util.bytesToHex(obj.value) + " (malformed UTF8)";
+            } else {
+              throw e;
+            }
+          }
+        } else if (obj.type === asn1.Type.PRINTABLESTRING || obj.type === asn1.Type.IA5String) {
+          rval += obj.value;
+        } else if (_nonLatinRegex.test(obj.value)) {
+          rval += "0x" + forge3.util.bytesToHex(obj.value);
+        } else if (obj.value.length === 0) {
+          rval += "[null]";
+        } else {
+          rval += obj.value;
+        }
+      }
+      return rval;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/md.js
+var require_md = __commonJS({
+  "node_modules/node-forge/lib/md.js"(exports, module) {
+    var forge3 = require_forge();
+    module.exports = forge3.md = forge3.md || {};
+    forge3.md.algorithms = forge3.md.algorithms || {};
+  }
+});
+
+// node_modules/node-forge/lib/hmac.js
+var require_hmac = __commonJS({
+  "node_modules/node-forge/lib/hmac.js"(exports, module) {
+    var forge3 = require_forge();
+    require_md();
+    require_util();
+    var hmac = module.exports = forge3.hmac = forge3.hmac || {};
+    hmac.create = function() {
+      var _key = null;
+      var _md = null;
+      var _ipadding = null;
+      var _opadding = null;
+      var ctx = {};
+      ctx.start = function(md, key) {
+        if (md !== null) {
+          if (typeof md === "string") {
+            md = md.toLowerCase();
+            if (md in forge3.md.algorithms) {
+              _md = forge3.md.algorithms[md].create();
+            } else {
+              throw new Error('Unknown hash algorithm "' + md + '"');
+            }
+          } else {
+            _md = md;
+          }
+        }
+        if (key === null) {
+          key = _key;
+        } else {
+          if (typeof key === "string") {
+            key = forge3.util.createBuffer(key);
+          } else if (forge3.util.isArray(key)) {
+            var tmp = key;
+            key = forge3.util.createBuffer();
+            for (var i = 0; i < tmp.length; ++i) {
+              key.putByte(tmp[i]);
+            }
+          }
+          var keylen = key.length();
+          if (keylen > _md.blockLength) {
+            _md.start();
+            _md.update(key.bytes());
+            key = _md.digest();
+          }
+          _ipadding = forge3.util.createBuffer();
+          _opadding = forge3.util.createBuffer();
+          keylen = key.length();
+          for (var i = 0; i < keylen; ++i) {
+            var tmp = key.at(i);
+            _ipadding.putByte(54 ^ tmp);
+            _opadding.putByte(92 ^ tmp);
+          }
+          if (keylen < _md.blockLength) {
+            var tmp = _md.blockLength - keylen;
+            for (var i = 0; i < tmp; ++i) {
+              _ipadding.putByte(54);
+              _opadding.putByte(92);
+            }
+          }
+          _key = key;
+          _ipadding = _ipadding.bytes();
+          _opadding = _opadding.bytes();
+        }
+        _md.start();
+        _md.update(_ipadding);
+      };
+      ctx.update = function(bytes) {
+        _md.update(bytes);
+      };
+      ctx.getMac = function() {
+        var inner = _md.digest().bytes();
+        _md.start();
+        _md.update(_opadding);
+        _md.update(inner);
+        return _md.digest();
+      };
+      ctx.digest = ctx.getMac;
+      return ctx;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/md5.js
+var require_md5 = __commonJS({
+  "node_modules/node-forge/lib/md5.js"(exports, module) {
+    var forge3 = require_forge();
+    require_md();
+    require_util();
+    var md5 = module.exports = forge3.md5 = forge3.md5 || {};
+    forge3.md.md5 = forge3.md.algorithms.md5 = md5;
+    md5.create = function() {
+      if (!_initialized) {
+        _init();
+      }
+      var _state = null;
+      var _input = forge3.util.createBuffer();
+      var _w = new Array(16);
+      var md = {
+        algorithm: "md5",
+        blockLength: 64,
+        digestLength: 16,
+        // 56-bit length of message so far (does not including padding)
+        messageLength: 0,
+        // true message length
+        fullMessageLength: null,
+        // size of message length in bytes
+        messageLengthSize: 8
+      };
+      md.start = function() {
+        md.messageLength = 0;
+        md.fullMessageLength = md.messageLength64 = [];
+        var int32s = md.messageLengthSize / 4;
+        for (var i = 0; i < int32s; ++i) {
+          md.fullMessageLength.push(0);
+        }
+        _input = forge3.util.createBuffer();
+        _state = {
+          h0: 1732584193,
+          h1: 4023233417,
+          h2: 2562383102,
+          h3: 271733878
+        };
+        return md;
+      };
+      md.start();
+      md.update = function(msg, encoding) {
+        if (encoding === "utf8") {
+          msg = forge3.util.encodeUtf8(msg);
+        }
+        var len = msg.length;
+        md.messageLength += len;
+        len = [len / 4294967296 >>> 0, len >>> 0];
+        for (var i = md.fullMessageLength.length - 1; i >= 0; --i) {
+          md.fullMessageLength[i] += len[1];
+          len[1] = len[0] + (md.fullMessageLength[i] / 4294967296 >>> 0);
+          md.fullMessageLength[i] = md.fullMessageLength[i] >>> 0;
+          len[0] = len[1] / 4294967296 >>> 0;
+        }
+        _input.putBytes(msg);
+        _update(_state, _w, _input);
+        if (_input.read > 2048 || _input.length() === 0) {
+          _input.compact();
+        }
+        return md;
+      };
+      md.digest = function() {
+        var finalBlock = forge3.util.createBuffer();
+        finalBlock.putBytes(_input.bytes());
+        var remaining = md.fullMessageLength[md.fullMessageLength.length - 1] + md.messageLengthSize;
+        var overflow = remaining & md.blockLength - 1;
+        finalBlock.putBytes(_padding.substr(0, md.blockLength - overflow));
+        var bits, carry = 0;
+        for (var i = md.fullMessageLength.length - 1; i >= 0; --i) {
+          bits = md.fullMessageLength[i] * 8 + carry;
+          carry = bits / 4294967296 >>> 0;
+          finalBlock.putInt32Le(bits >>> 0);
+        }
+        var s2 = {
+          h0: _state.h0,
+          h1: _state.h1,
+          h2: _state.h2,
+          h3: _state.h3
+        };
+        _update(s2, _w, finalBlock);
+        var rval = forge3.util.createBuffer();
+        rval.putInt32Le(s2.h0);
+        rval.putInt32Le(s2.h1);
+        rval.putInt32Le(s2.h2);
+        rval.putInt32Le(s2.h3);
+        return rval;
+      };
+      return md;
+    };
+    var _padding = null;
+    var _g = null;
+    var _r = null;
+    var _k = null;
+    var _initialized = false;
+    function _init() {
+      _padding = String.fromCharCode(128);
+      _padding += forge3.util.fillString(String.fromCharCode(0), 64);
+      _g = [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        1,
+        6,
+        11,
+        0,
+        5,
+        10,
+        15,
+        4,
+        9,
+        14,
+        3,
+        8,
+        13,
+        2,
+        7,
+        12,
+        5,
+        8,
+        11,
+        14,
+        1,
+        4,
+        7,
+        10,
+        13,
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        2,
+        0,
+        7,
+        14,
+        5,
+        12,
+        3,
+        10,
+        1,
+        8,
+        15,
+        6,
+        13,
+        4,
+        11,
+        2,
+        9
+      ];
+      _r = [
+        7,
+        12,
+        17,
+        22,
+        7,
+        12,
+        17,
+        22,
+        7,
+        12,
+        17,
+        22,
+        7,
+        12,
+        17,
+        22,
+        5,
+        9,
+        14,
+        20,
+        5,
+        9,
+        14,
+        20,
+        5,
+        9,
+        14,
+        20,
+        5,
+        9,
+        14,
+        20,
+        4,
+        11,
+        16,
+        23,
+        4,
+        11,
+        16,
+        23,
+        4,
+        11,
+        16,
+        23,
+        4,
+        11,
+        16,
+        23,
+        6,
+        10,
+        15,
+        21,
+        6,
+        10,
+        15,
+        21,
+        6,
+        10,
+        15,
+        21,
+        6,
+        10,
+        15,
+        21
+      ];
+      _k = new Array(64);
+      for (var i = 0; i < 64; ++i) {
+        _k[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 4294967296);
+      }
+      _initialized = true;
+    }
+    function _update(s, w, bytes) {
+      var t, a, b, c, d, f, r, i;
+      var len = bytes.length();
+      while (len >= 64) {
+        a = s.h0;
+        b = s.h1;
+        c = s.h2;
+        d = s.h3;
+        for (i = 0; i < 16; ++i) {
+          w[i] = bytes.getInt32Le();
+          f = d ^ b & (c ^ d);
+          t = a + f + _k[i] + w[i];
+          r = _r[i];
+          a = d;
+          d = c;
+          c = b;
+          b += t << r | t >>> 32 - r;
+        }
+        for (; i < 32; ++i) {
+          f = c ^ d & (b ^ c);
+          t = a + f + _k[i] + w[_g[i]];
+          r = _r[i];
+          a = d;
+          d = c;
+          c = b;
+          b += t << r | t >>> 32 - r;
+        }
+        for (; i < 48; ++i) {
+          f = b ^ c ^ d;
+          t = a + f + _k[i] + w[_g[i]];
+          r = _r[i];
+          a = d;
+          d = c;
+          c = b;
+          b += t << r | t >>> 32 - r;
+        }
+        for (; i < 64; ++i) {
+          f = c ^ (b | ~d);
+          t = a + f + _k[i] + w[_g[i]];
+          r = _r[i];
+          a = d;
+          d = c;
+          c = b;
+          b += t << r | t >>> 32 - r;
+        }
+        s.h0 = s.h0 + a | 0;
+        s.h1 = s.h1 + b | 0;
+        s.h2 = s.h2 + c | 0;
+        s.h3 = s.h3 + d | 0;
+        len -= 64;
+      }
+    }
+  }
+});
+
+// node_modules/node-forge/lib/pem.js
+var require_pem = __commonJS({
+  "node_modules/node-forge/lib/pem.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    var pem = module.exports = forge3.pem = forge3.pem || {};
+    pem.encode = function(msg, options) {
+      options = options || {};
+      var rval = "-----BEGIN " + msg.type + "-----\r\n";
+      var header;
+      if (msg.procType) {
+        header = {
+          name: "Proc-Type",
+          values: [String(msg.procType.version), msg.procType.type]
+        };
+        rval += foldHeader(header);
+      }
+      if (msg.contentDomain) {
+        header = { name: "Content-Domain", values: [msg.contentDomain] };
+        rval += foldHeader(header);
+      }
+      if (msg.dekInfo) {
+        header = { name: "DEK-Info", values: [msg.dekInfo.algorithm] };
+        if (msg.dekInfo.parameters) {
+          header.values.push(msg.dekInfo.parameters);
+        }
+        rval += foldHeader(header);
+      }
+      if (msg.headers) {
+        for (var i = 0; i < msg.headers.length; ++i) {
+          rval += foldHeader(msg.headers[i]);
+        }
+      }
+      if (msg.procType) {
+        rval += "\r\n";
+      }
+      rval += forge3.util.encode64(msg.body, options.maxline || 64) + "\r\n";
+      rval += "-----END " + msg.type + "-----\r\n";
+      return rval;
+    };
+    pem.decode = function(str) {
+      var rval = [];
+      var rMessage = /\s*-----BEGIN ([A-Z0-9- ]+)-----\r?\n?([\x21-\x7e\s]+?(?:\r?\n\r?\n))?([:A-Za-z0-9+\/=\s]+?)-----END \1-----/g;
+      var rHeader = /([\x21-\x7e]+):\s*([\x21-\x7e\s^:]+)/;
+      var rCRLF = /\r?\n/;
+      var match;
+      while (true) {
+        match = rMessage.exec(str);
+        if (!match) {
+          break;
+        }
+        var type = match[1];
+        if (type === "NEW CERTIFICATE REQUEST") {
+          type = "CERTIFICATE REQUEST";
+        }
+        var msg = {
+          type,
+          procType: null,
+          contentDomain: null,
+          dekInfo: null,
+          headers: [],
+          body: forge3.util.decode64(match[3])
+        };
+        rval.push(msg);
+        if (!match[2]) {
+          continue;
+        }
+        var lines = match[2].split(rCRLF);
+        var li = 0;
+        while (match && li < lines.length) {
+          var line = lines[li].replace(/\s+$/, "");
+          for (var nl = li + 1; nl < lines.length; ++nl) {
+            var next = lines[nl];
+            if (!/\s/.test(next[0])) {
+              break;
+            }
+            line += next;
+            li = nl;
+          }
+          match = line.match(rHeader);
+          if (match) {
+            var header = { name: match[1], values: [] };
+            var values = match[2].split(",");
+            for (var vi = 0; vi < values.length; ++vi) {
+              header.values.push(ltrim(values[vi]));
+            }
+            if (!msg.procType) {
+              if (header.name !== "Proc-Type") {
+                throw new Error('Invalid PEM formatted message. The first encapsulated header must be "Proc-Type".');
+              } else if (header.values.length !== 2) {
+                throw new Error('Invalid PEM formatted message. The "Proc-Type" header must have two subfields.');
+              }
+              msg.procType = { version: values[0], type: values[1] };
+            } else if (!msg.contentDomain && header.name === "Content-Domain") {
+              msg.contentDomain = values[0] || "";
+            } else if (!msg.dekInfo && header.name === "DEK-Info") {
+              if (header.values.length === 0) {
+                throw new Error('Invalid PEM formatted message. The "DEK-Info" header must have at least one subfield.');
+              }
+              msg.dekInfo = { algorithm: values[0], parameters: values[1] || null };
+            } else {
+              msg.headers.push(header);
+            }
+          }
+          ++li;
+        }
+        if (msg.procType === "ENCRYPTED" && !msg.dekInfo) {
+          throw new Error('Invalid PEM formatted message. The "DEK-Info" header must be present if "Proc-Type" is "ENCRYPTED".');
+        }
+      }
+      if (rval.length === 0) {
+        throw new Error("Invalid PEM formatted message.");
+      }
+      return rval;
+    };
+    function foldHeader(header) {
+      var rval = header.name + ": ";
+      var values = [];
+      var insertSpace = function(match, $1) {
+        return " " + $1;
+      };
+      for (var i = 0; i < header.values.length; ++i) {
+        values.push(header.values[i].replace(/^(\S+\r\n)/, insertSpace));
+      }
+      rval += values.join(",") + "\r\n";
+      var length = 0;
+      var candidate = -1;
+      for (var i = 0; i < rval.length; ++i, ++length) {
+        if (length > 65 && candidate !== -1) {
+          var insert = rval[candidate];
+          if (insert === ",") {
+            ++candidate;
+            rval = rval.substr(0, candidate) + "\r\n " + rval.substr(candidate);
+          } else {
+            rval = rval.substr(0, candidate) + "\r\n" + insert + rval.substr(candidate + 1);
+          }
+          length = i - candidate - 1;
+          candidate = -1;
+          ++i;
+        } else if (rval[i] === " " || rval[i] === "	" || rval[i] === ",") {
+          candidate = i;
+        }
+      }
+      return rval;
+    }
+    function ltrim(str) {
+      return str.replace(/^\s+/, "");
+    }
+  }
+});
+
+// node_modules/node-forge/lib/des.js
+var require_des = __commonJS({
+  "node_modules/node-forge/lib/des.js"(exports, module) {
+    var forge3 = require_forge();
+    require_cipher();
+    require_cipherModes();
+    require_util();
+    module.exports = forge3.des = forge3.des || {};
+    forge3.des.startEncrypting = function(key, iv, output, mode) {
+      var cipher = _createCipher({
+        key,
+        output,
+        decrypt: false,
+        mode: mode || (iv === null ? "ECB" : "CBC")
+      });
+      cipher.start(iv);
+      return cipher;
+    };
+    forge3.des.createEncryptionCipher = function(key, mode) {
+      return _createCipher({
+        key,
+        output: null,
+        decrypt: false,
+        mode
+      });
+    };
+    forge3.des.startDecrypting = function(key, iv, output, mode) {
+      var cipher = _createCipher({
+        key,
+        output,
+        decrypt: true,
+        mode: mode || (iv === null ? "ECB" : "CBC")
+      });
+      cipher.start(iv);
+      return cipher;
+    };
+    forge3.des.createDecryptionCipher = function(key, mode) {
+      return _createCipher({
+        key,
+        output: null,
+        decrypt: true,
+        mode
+      });
+    };
+    forge3.des.Algorithm = function(name, mode) {
+      var self2 = this;
+      self2.name = name;
+      self2.mode = new mode({
+        blockSize: 8,
+        cipher: {
+          encrypt: function(inBlock, outBlock) {
+            return _updateBlock(self2._keys, inBlock, outBlock, false);
+          },
+          decrypt: function(inBlock, outBlock) {
+            return _updateBlock(self2._keys, inBlock, outBlock, true);
+          }
+        }
+      });
+      self2._init = false;
+    };
+    forge3.des.Algorithm.prototype.initialize = function(options) {
+      if (this._init) {
+        return;
+      }
+      var key = forge3.util.createBuffer(options.key);
+      if (this.name.indexOf("3DES") === 0) {
+        if (key.length() !== 24) {
+          throw new Error("Invalid Triple-DES key size: " + key.length() * 8);
+        }
+      }
+      this._keys = _createKeys(key);
+      this._init = true;
+    };
+    registerAlgorithm("DES-ECB", forge3.cipher.modes.ecb);
+    registerAlgorithm("DES-CBC", forge3.cipher.modes.cbc);
+    registerAlgorithm("DES-CFB", forge3.cipher.modes.cfb);
+    registerAlgorithm("DES-OFB", forge3.cipher.modes.ofb);
+    registerAlgorithm("DES-CTR", forge3.cipher.modes.ctr);
+    registerAlgorithm("3DES-ECB", forge3.cipher.modes.ecb);
+    registerAlgorithm("3DES-CBC", forge3.cipher.modes.cbc);
+    registerAlgorithm("3DES-CFB", forge3.cipher.modes.cfb);
+    registerAlgorithm("3DES-OFB", forge3.cipher.modes.ofb);
+    registerAlgorithm("3DES-CTR", forge3.cipher.modes.ctr);
+    function registerAlgorithm(name, mode) {
+      var factory = function() {
+        return new forge3.des.Algorithm(name, mode);
+      };
+      forge3.cipher.registerAlgorithm(name, factory);
+    }
+    var spfunction1 = [16843776, 0, 65536, 16843780, 16842756, 66564, 4, 65536, 1024, 16843776, 16843780, 1024, 16778244, 16842756, 16777216, 4, 1028, 16778240, 16778240, 66560, 66560, 16842752, 16842752, 16778244, 65540, 16777220, 16777220, 65540, 0, 1028, 66564, 16777216, 65536, 16843780, 4, 16842752, 16843776, 16777216, 16777216, 1024, 16842756, 65536, 66560, 16777220, 1024, 4, 16778244, 66564, 16843780, 65540, 16842752, 16778244, 16777220, 1028, 66564, 16843776, 1028, 16778240, 16778240, 0, 65540, 66560, 0, 16842756];
+    var spfunction2 = [-2146402272, -2147450880, 32768, 1081376, 1048576, 32, -2146435040, -2147450848, -2147483616, -2146402272, -2146402304, -2147483648, -2147450880, 1048576, 32, -2146435040, 1081344, 1048608, -2147450848, 0, -2147483648, 32768, 1081376, -2146435072, 1048608, -2147483616, 0, 1081344, 32800, -2146402304, -2146435072, 32800, 0, 1081376, -2146435040, 1048576, -2147450848, -2146435072, -2146402304, 32768, -2146435072, -2147450880, 32, -2146402272, 1081376, 32, 32768, -2147483648, 32800, -2146402304, 1048576, -2147483616, 1048608, -2147450848, -2147483616, 1048608, 1081344, 0, -2147450880, 32800, -2147483648, -2146435040, -2146402272, 1081344];
+    var spfunction3 = [520, 134349312, 0, 134348808, 134218240, 0, 131592, 134218240, 131080, 134217736, 134217736, 131072, 134349320, 131080, 134348800, 520, 134217728, 8, 134349312, 512, 131584, 134348800, 134348808, 131592, 134218248, 131584, 131072, 134218248, 8, 134349320, 512, 134217728, 134349312, 134217728, 131080, 520, 131072, 134349312, 134218240, 0, 512, 131080, 134349320, 134218240, 134217736, 512, 0, 134348808, 134218248, 131072, 134217728, 134349320, 8, 131592, 131584, 134217736, 134348800, 134218248, 520, 134348800, 131592, 8, 134348808, 131584];
+    var spfunction4 = [8396801, 8321, 8321, 128, 8396928, 8388737, 8388609, 8193, 0, 8396800, 8396800, 8396929, 129, 0, 8388736, 8388609, 1, 8192, 8388608, 8396801, 128, 8388608, 8193, 8320, 8388737, 1, 8320, 8388736, 8192, 8396928, 8396929, 129, 8388736, 8388609, 8396800, 8396929, 129, 0, 0, 8396800, 8320, 8388736, 8388737, 1, 8396801, 8321, 8321, 128, 8396929, 129, 1, 8192, 8388609, 8193, 8396928, 8388737, 8193, 8320, 8388608, 8396801, 128, 8388608, 8192, 8396928];
+    var spfunction5 = [256, 34078976, 34078720, 1107296512, 524288, 256, 1073741824, 34078720, 1074266368, 524288, 33554688, 1074266368, 1107296512, 1107820544, 524544, 1073741824, 33554432, 1074266112, 1074266112, 0, 1073742080, 1107820800, 1107820800, 33554688, 1107820544, 1073742080, 0, 1107296256, 34078976, 33554432, 1107296256, 524544, 524288, 1107296512, 256, 33554432, 1073741824, 34078720, 1107296512, 1074266368, 33554688, 1073741824, 1107820544, 34078976, 1074266368, 256, 33554432, 1107820544, 1107820800, 524544, 1107296256, 1107820800, 34078720, 0, 1074266112, 1107296256, 524544, 33554688, 1073742080, 524288, 0, 1074266112, 34078976, 1073742080];
+    var spfunction6 = [536870928, 541065216, 16384, 541081616, 541065216, 16, 541081616, 4194304, 536887296, 4210704, 4194304, 536870928, 4194320, 536887296, 536870912, 16400, 0, 4194320, 536887312, 16384, 4210688, 536887312, 16, 541065232, 541065232, 0, 4210704, 541081600, 16400, 4210688, 541081600, 536870912, 536887296, 16, 541065232, 4210688, 541081616, 4194304, 16400, 536870928, 4194304, 536887296, 536870912, 16400, 536870928, 541081616, 4210688, 541065216, 4210704, 541081600, 0, 541065232, 16, 16384, 541065216, 4210704, 16384, 4194320, 536887312, 0, 541081600, 536870912, 4194320, 536887312];
+    var spfunction7 = [2097152, 69206018, 67110914, 0, 2048, 67110914, 2099202, 69208064, 69208066, 2097152, 0, 67108866, 2, 67108864, 69206018, 2050, 67110912, 2099202, 2097154, 67110912, 67108866, 69206016, 69208064, 2097154, 69206016, 2048, 2050, 69208066, 2099200, 2, 67108864, 2099200, 67108864, 2099200, 2097152, 67110914, 67110914, 69206018, 69206018, 2, 2097154, 67108864, 67110912, 2097152, 69208064, 2050, 2099202, 69208064, 2050, 67108866, 69208066, 69206016, 2099200, 0, 2, 69208066, 0, 2099202, 69206016, 2048, 67108866, 67110912, 2048, 2097154];
+    var spfunction8 = [268439616, 4096, 262144, 268701760, 268435456, 268439616, 64, 268435456, 262208, 268697600, 268701760, 266240, 268701696, 266304, 4096, 64, 268697600, 268435520, 268439552, 4160, 266240, 262208, 268697664, 268701696, 4160, 0, 0, 268697664, 268435520, 268439552, 266304, 262144, 266304, 262144, 268701696, 4096, 64, 268697664, 4096, 266304, 268439552, 64, 268435520, 268697600, 268697664, 268435456, 262144, 268439616, 0, 268701760, 262208, 268435520, 268697600, 268439552, 268439616, 0, 268701760, 266240, 266240, 4160, 4160, 262208, 268435456, 268701696];
+    function _createKeys(key) {
+      var pc2bytes0 = [0, 4, 536870912, 536870916, 65536, 65540, 536936448, 536936452, 512, 516, 536871424, 536871428, 66048, 66052, 536936960, 536936964], pc2bytes1 = [0, 1, 1048576, 1048577, 67108864, 67108865, 68157440, 68157441, 256, 257, 1048832, 1048833, 67109120, 67109121, 68157696, 68157697], pc2bytes2 = [0, 8, 2048, 2056, 16777216, 16777224, 16779264, 16779272, 0, 8, 2048, 2056, 16777216, 16777224, 16779264, 16779272], pc2bytes3 = [0, 2097152, 134217728, 136314880, 8192, 2105344, 134225920, 136323072, 131072, 2228224, 134348800, 136445952, 139264, 2236416, 134356992, 136454144], pc2bytes4 = [0, 262144, 16, 262160, 0, 262144, 16, 262160, 4096, 266240, 4112, 266256, 4096, 266240, 4112, 266256], pc2bytes5 = [0, 1024, 32, 1056, 0, 1024, 32, 1056, 33554432, 33555456, 33554464, 33555488, 33554432, 33555456, 33554464, 33555488], pc2bytes6 = [0, 268435456, 524288, 268959744, 2, 268435458, 524290, 268959746, 0, 268435456, 524288, 268959744, 2, 268435458, 524290, 268959746], pc2bytes7 = [0, 65536, 2048, 67584, 536870912, 536936448, 536872960, 536938496, 131072, 196608, 133120, 198656, 537001984, 537067520, 537004032, 537069568], pc2bytes8 = [0, 262144, 0, 262144, 2, 262146, 2, 262146, 33554432, 33816576, 33554432, 33816576, 33554434, 33816578, 33554434, 33816578], pc2bytes9 = [0, 268435456, 8, 268435464, 0, 268435456, 8, 268435464, 1024, 268436480, 1032, 268436488, 1024, 268436480, 1032, 268436488], pc2bytes10 = [0, 32, 0, 32, 1048576, 1048608, 1048576, 1048608, 8192, 8224, 8192, 8224, 1056768, 1056800, 1056768, 1056800], pc2bytes11 = [0, 16777216, 512, 16777728, 2097152, 18874368, 2097664, 18874880, 67108864, 83886080, 67109376, 83886592, 69206016, 85983232, 69206528, 85983744], pc2bytes12 = [0, 4096, 134217728, 134221824, 524288, 528384, 134742016, 134746112, 16, 4112, 134217744, 134221840, 524304, 528400, 134742032, 134746128], pc2bytes13 = [0, 4, 256, 260, 0, 4, 256, 260, 1, 5, 257, 261, 1, 5, 257, 261];
+      var iterations = key.length() > 8 ? 3 : 1;
+      var keys = [];
+      var shifts = [0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0];
+      var n = 0, tmp;
+      for (var j = 0; j < iterations; j++) {
+        var left = key.getInt32();
+        var right = key.getInt32();
+        tmp = (left >>> 4 ^ right) & 252645135;
+        right ^= tmp;
+        left ^= tmp << 4;
+        tmp = (right >>> -16 ^ left) & 65535;
+        left ^= tmp;
+        right ^= tmp << -16;
+        tmp = (left >>> 2 ^ right) & 858993459;
+        right ^= tmp;
+        left ^= tmp << 2;
+        tmp = (right >>> -16 ^ left) & 65535;
+        left ^= tmp;
+        right ^= tmp << -16;
+        tmp = (left >>> 1 ^ right) & 1431655765;
+        right ^= tmp;
+        left ^= tmp << 1;
+        tmp = (right >>> 8 ^ left) & 16711935;
+        left ^= tmp;
+        right ^= tmp << 8;
+        tmp = (left >>> 1 ^ right) & 1431655765;
+        right ^= tmp;
+        left ^= tmp << 1;
+        tmp = left << 8 | right >>> 20 & 240;
+        left = right << 24 | right << 8 & 16711680 | right >>> 8 & 65280 | right >>> 24 & 240;
+        right = tmp;
+        for (var i = 0; i < shifts.length; ++i) {
+          if (shifts[i]) {
+            left = left << 2 | left >>> 26;
+            right = right << 2 | right >>> 26;
+          } else {
+            left = left << 1 | left >>> 27;
+            right = right << 1 | right >>> 27;
+          }
+          left &= -15;
+          right &= -15;
+          var lefttmp = pc2bytes0[left >>> 28] | pc2bytes1[left >>> 24 & 15] | pc2bytes2[left >>> 20 & 15] | pc2bytes3[left >>> 16 & 15] | pc2bytes4[left >>> 12 & 15] | pc2bytes5[left >>> 8 & 15] | pc2bytes6[left >>> 4 & 15];
+          var righttmp = pc2bytes7[right >>> 28] | pc2bytes8[right >>> 24 & 15] | pc2bytes9[right >>> 20 & 15] | pc2bytes10[right >>> 16 & 15] | pc2bytes11[right >>> 12 & 15] | pc2bytes12[right >>> 8 & 15] | pc2bytes13[right >>> 4 & 15];
+          tmp = (righttmp >>> 16 ^ lefttmp) & 65535;
+          keys[n++] = lefttmp ^ tmp;
+          keys[n++] = righttmp ^ tmp << 16;
+        }
+      }
+      return keys;
+    }
+    function _updateBlock(keys, input, output, decrypt) {
+      var iterations = keys.length === 32 ? 3 : 9;
+      var looping;
+      if (iterations === 3) {
+        looping = decrypt ? [30, -2, -2] : [0, 32, 2];
+      } else {
+        looping = decrypt ? [94, 62, -2, 32, 64, 2, 30, -2, -2] : [0, 32, 2, 62, 30, -2, 64, 96, 2];
+      }
+      var tmp;
+      var left = input[0];
+      var right = input[1];
+      tmp = (left >>> 4 ^ right) & 252645135;
+      right ^= tmp;
+      left ^= tmp << 4;
+      tmp = (left >>> 16 ^ right) & 65535;
+      right ^= tmp;
+      left ^= tmp << 16;
+      tmp = (right >>> 2 ^ left) & 858993459;
+      left ^= tmp;
+      right ^= tmp << 2;
+      tmp = (right >>> 8 ^ left) & 16711935;
+      left ^= tmp;
+      right ^= tmp << 8;
+      tmp = (left >>> 1 ^ right) & 1431655765;
+      right ^= tmp;
+      left ^= tmp << 1;
+      left = left << 1 | left >>> 31;
+      right = right << 1 | right >>> 31;
+      for (var j = 0; j < iterations; j += 3) {
+        var endloop = looping[j + 1];
+        var loopinc = looping[j + 2];
+        for (var i = looping[j]; i != endloop; i += loopinc) {
+          var right1 = right ^ keys[i];
+          var right2 = (right >>> 4 | right << 28) ^ keys[i + 1];
+          tmp = left;
+          left = right;
+          right = tmp ^ (spfunction2[right1 >>> 24 & 63] | spfunction4[right1 >>> 16 & 63] | spfunction6[right1 >>> 8 & 63] | spfunction8[right1 & 63] | spfunction1[right2 >>> 24 & 63] | spfunction3[right2 >>> 16 & 63] | spfunction5[right2 >>> 8 & 63] | spfunction7[right2 & 63]);
+        }
+        tmp = left;
+        left = right;
+        right = tmp;
+      }
+      left = left >>> 1 | left << 31;
+      right = right >>> 1 | right << 31;
+      tmp = (left >>> 1 ^ right) & 1431655765;
+      right ^= tmp;
+      left ^= tmp << 1;
+      tmp = (right >>> 8 ^ left) & 16711935;
+      left ^= tmp;
+      right ^= tmp << 8;
+      tmp = (right >>> 2 ^ left) & 858993459;
+      left ^= tmp;
+      right ^= tmp << 2;
+      tmp = (left >>> 16 ^ right) & 65535;
+      right ^= tmp;
+      left ^= tmp << 16;
+      tmp = (left >>> 4 ^ right) & 252645135;
+      right ^= tmp;
+      left ^= tmp << 4;
+      output[0] = left;
+      output[1] = right;
+    }
+    function _createCipher(options) {
+      options = options || {};
+      var mode = (options.mode || "CBC").toUpperCase();
+      var algorithm = "DES-" + mode;
+      var cipher;
+      if (options.decrypt) {
+        cipher = forge3.cipher.createDecipher(algorithm, options.key);
+      } else {
+        cipher = forge3.cipher.createCipher(algorithm, options.key);
+      }
+      var start = cipher.start;
+      cipher.start = function(iv, options2) {
+        var output = null;
+        if (options2 instanceof forge3.util.ByteBuffer) {
+          output = options2;
+          options2 = {};
+        }
+        options2 = options2 || {};
+        options2.output = output;
+        options2.iv = iv;
+        start.call(cipher, options2);
+      };
+      return cipher;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/pbkdf2.js
+var require_pbkdf2 = __commonJS({
+  "node_modules/node-forge/lib/pbkdf2.js"(exports, module) {
+    var forge3 = require_forge();
+    require_hmac();
+    require_md();
+    require_util();
+    var pkcs5 = forge3.pkcs5 = forge3.pkcs5 || {};
+    var crypto;
+    if (forge3.util.isNodejs && !forge3.options.usePureJavaScript) {
+      crypto = __require("crypto");
+    }
+    module.exports = forge3.pbkdf2 = pkcs5.pbkdf2 = function(p, s, c, dkLen, md, callback) {
+      if (typeof md === "function") {
+        callback = md;
+        md = null;
+      }
+      if (forge3.util.isNodejs && !forge3.options.usePureJavaScript && crypto.pbkdf2 && (md === null || typeof md !== "object") && (crypto.pbkdf2Sync.length > 4 || (!md || md === "sha1"))) {
+        if (typeof md !== "string") {
+          md = "sha1";
+        }
+        p = Buffer.from(p, "binary");
+        s = Buffer.from(s, "binary");
+        if (!callback) {
+          if (crypto.pbkdf2Sync.length === 4) {
+            return crypto.pbkdf2Sync(p, s, c, dkLen).toString("binary");
+          }
+          return crypto.pbkdf2Sync(p, s, c, dkLen, md).toString("binary");
+        }
+        if (crypto.pbkdf2Sync.length === 4) {
+          return crypto.pbkdf2(p, s, c, dkLen, function(err2, key) {
+            if (err2) {
+              return callback(err2);
+            }
+            callback(null, key.toString("binary"));
+          });
+        }
+        return crypto.pbkdf2(p, s, c, dkLen, md, function(err2, key) {
+          if (err2) {
+            return callback(err2);
+          }
+          callback(null, key.toString("binary"));
+        });
+      }
+      if (typeof md === "undefined" || md === null) {
+        md = "sha1";
+      }
+      if (typeof md === "string") {
+        if (!(md in forge3.md.algorithms)) {
+          throw new Error("Unknown hash algorithm: " + md);
+        }
+        md = forge3.md[md].create();
+      }
+      var hLen = md.digestLength;
+      if (dkLen > 4294967295 * hLen) {
+        var err = new Error("Derived key is too long.");
+        if (callback) {
+          return callback(err);
+        }
+        throw err;
+      }
+      var len = Math.ceil(dkLen / hLen);
+      var r = dkLen - (len - 1) * hLen;
+      var prf = forge3.hmac.create();
+      prf.start(md, p);
+      var dk = "";
+      var xor, u_c, u_c1;
+      if (!callback) {
+        for (var i = 1; i <= len; ++i) {
+          prf.start(null, null);
+          prf.update(s);
+          prf.update(forge3.util.int32ToBytes(i));
+          xor = u_c1 = prf.digest().getBytes();
+          for (var j = 2; j <= c; ++j) {
+            prf.start(null, null);
+            prf.update(u_c1);
+            u_c = prf.digest().getBytes();
+            xor = forge3.util.xorBytes(xor, u_c, hLen);
+            u_c1 = u_c;
+          }
+          dk += i < len ? xor : xor.substr(0, r);
+        }
+        return dk;
+      }
+      var i = 1, j;
+      function outer() {
+        if (i > len) {
+          return callback(null, dk);
+        }
+        prf.start(null, null);
+        prf.update(s);
+        prf.update(forge3.util.int32ToBytes(i));
+        xor = u_c1 = prf.digest().getBytes();
+        j = 2;
+        inner();
+      }
+      function inner() {
+        if (j <= c) {
+          prf.start(null, null);
+          prf.update(u_c1);
+          u_c = prf.digest().getBytes();
+          xor = forge3.util.xorBytes(xor, u_c, hLen);
+          u_c1 = u_c;
+          ++j;
+          return forge3.util.setImmediate(inner);
+        }
+        dk += i < len ? xor : xor.substr(0, r);
+        ++i;
+        outer();
+      }
+      outer();
+    };
+  }
+});
+
+// node_modules/node-forge/lib/sha256.js
+var require_sha256 = __commonJS({
+  "node_modules/node-forge/lib/sha256.js"(exports, module) {
+    var forge3 = require_forge();
+    require_md();
+    require_util();
+    var sha256 = module.exports = forge3.sha256 = forge3.sha256 || {};
+    forge3.md.sha256 = forge3.md.algorithms.sha256 = sha256;
+    sha256.create = function() {
+      if (!_initialized) {
+        _init();
+      }
+      var _state = null;
+      var _input = forge3.util.createBuffer();
+      var _w = new Array(64);
+      var md = {
+        algorithm: "sha256",
+        blockLength: 64,
+        digestLength: 32,
+        // 56-bit length of message so far (does not including padding)
+        messageLength: 0,
+        // true message length
+        fullMessageLength: null,
+        // size of message length in bytes
+        messageLengthSize: 8
+      };
+      md.start = function() {
+        md.messageLength = 0;
+        md.fullMessageLength = md.messageLength64 = [];
+        var int32s = md.messageLengthSize / 4;
+        for (var i = 0; i < int32s; ++i) {
+          md.fullMessageLength.push(0);
+        }
+        _input = forge3.util.createBuffer();
+        _state = {
+          h0: 1779033703,
+          h1: 3144134277,
+          h2: 1013904242,
+          h3: 2773480762,
+          h4: 1359893119,
+          h5: 2600822924,
+          h6: 528734635,
+          h7: 1541459225
+        };
+        return md;
+      };
+      md.start();
+      md.update = function(msg, encoding) {
+        if (encoding === "utf8") {
+          msg = forge3.util.encodeUtf8(msg);
+        }
+        var len = msg.length;
+        md.messageLength += len;
+        len = [len / 4294967296 >>> 0, len >>> 0];
+        for (var i = md.fullMessageLength.length - 1; i >= 0; --i) {
+          md.fullMessageLength[i] += len[1];
+          len[1] = len[0] + (md.fullMessageLength[i] / 4294967296 >>> 0);
+          md.fullMessageLength[i] = md.fullMessageLength[i] >>> 0;
+          len[0] = len[1] / 4294967296 >>> 0;
+        }
+        _input.putBytes(msg);
+        _update(_state, _w, _input);
+        if (_input.read > 2048 || _input.length() === 0) {
+          _input.compact();
+        }
+        return md;
+      };
+      md.digest = function() {
+        var finalBlock = forge3.util.createBuffer();
+        finalBlock.putBytes(_input.bytes());
+        var remaining = md.fullMessageLength[md.fullMessageLength.length - 1] + md.messageLengthSize;
+        var overflow = remaining & md.blockLength - 1;
+        finalBlock.putBytes(_padding.substr(0, md.blockLength - overflow));
+        var next, carry;
+        var bits = md.fullMessageLength[0] * 8;
+        for (var i = 0; i < md.fullMessageLength.length - 1; ++i) {
+          next = md.fullMessageLength[i + 1] * 8;
+          carry = next / 4294967296 >>> 0;
+          bits += carry;
+          finalBlock.putInt32(bits >>> 0);
+          bits = next >>> 0;
+        }
+        finalBlock.putInt32(bits);
+        var s2 = {
+          h0: _state.h0,
+          h1: _state.h1,
+          h2: _state.h2,
+          h3: _state.h3,
+          h4: _state.h4,
+          h5: _state.h5,
+          h6: _state.h6,
+          h7: _state.h7
+        };
+        _update(s2, _w, finalBlock);
+        var rval = forge3.util.createBuffer();
+        rval.putInt32(s2.h0);
+        rval.putInt32(s2.h1);
+        rval.putInt32(s2.h2);
+        rval.putInt32(s2.h3);
+        rval.putInt32(s2.h4);
+        rval.putInt32(s2.h5);
+        rval.putInt32(s2.h6);
+        rval.putInt32(s2.h7);
+        return rval;
+      };
+      return md;
+    };
+    var _padding = null;
+    var _initialized = false;
+    var _k = null;
+    function _init() {
+      _padding = String.fromCharCode(128);
+      _padding += forge3.util.fillString(String.fromCharCode(0), 64);
+      _k = [
+        1116352408,
+        1899447441,
+        3049323471,
+        3921009573,
+        961987163,
+        1508970993,
+        2453635748,
+        2870763221,
+        3624381080,
+        310598401,
+        607225278,
+        1426881987,
+        1925078388,
+        2162078206,
+        2614888103,
+        3248222580,
+        3835390401,
+        4022224774,
+        264347078,
+        604807628,
+        770255983,
+        1249150122,
+        1555081692,
+        1996064986,
+        2554220882,
+        2821834349,
+        2952996808,
+        3210313671,
+        3336571891,
+        3584528711,
+        113926993,
+        338241895,
+        666307205,
+        773529912,
+        1294757372,
+        1396182291,
+        1695183700,
+        1986661051,
+        2177026350,
+        2456956037,
+        2730485921,
+        2820302411,
+        3259730800,
+        3345764771,
+        3516065817,
+        3600352804,
+        4094571909,
+        275423344,
+        430227734,
+        506948616,
+        659060556,
+        883997877,
+        958139571,
+        1322822218,
+        1537002063,
+        1747873779,
+        1955562222,
+        2024104815,
+        2227730452,
+        2361852424,
+        2428436474,
+        2756734187,
+        3204031479,
+        3329325298
+      ];
+      _initialized = true;
+    }
+    function _update(s, w, bytes) {
+      var t1, t2, s0, s1, ch, maj, i, a, b, c, d, e, f, g, h;
+      var len = bytes.length();
+      while (len >= 64) {
+        for (i = 0; i < 16; ++i) {
+          w[i] = bytes.getInt32();
+        }
+        for (; i < 64; ++i) {
+          t1 = w[i - 2];
+          t1 = (t1 >>> 17 | t1 << 15) ^ (t1 >>> 19 | t1 << 13) ^ t1 >>> 10;
+          t2 = w[i - 15];
+          t2 = (t2 >>> 7 | t2 << 25) ^ (t2 >>> 18 | t2 << 14) ^ t2 >>> 3;
+          w[i] = t1 + w[i - 7] + t2 + w[i - 16] | 0;
+        }
+        a = s.h0;
+        b = s.h1;
+        c = s.h2;
+        d = s.h3;
+        e = s.h4;
+        f = s.h5;
+        g = s.h6;
+        h = s.h7;
+        for (i = 0; i < 64; ++i) {
+          s1 = (e >>> 6 | e << 26) ^ (e >>> 11 | e << 21) ^ (e >>> 25 | e << 7);
+          ch = g ^ e & (f ^ g);
+          s0 = (a >>> 2 | a << 30) ^ (a >>> 13 | a << 19) ^ (a >>> 22 | a << 10);
+          maj = a & b | c & (a ^ b);
+          t1 = h + s1 + ch + _k[i] + w[i];
+          t2 = s0 + maj;
+          h = g;
+          g = f;
+          f = e;
+          e = d + t1 >>> 0;
+          d = c;
+          c = b;
+          b = a;
+          a = t1 + t2 >>> 0;
+        }
+        s.h0 = s.h0 + a | 0;
+        s.h1 = s.h1 + b | 0;
+        s.h2 = s.h2 + c | 0;
+        s.h3 = s.h3 + d | 0;
+        s.h4 = s.h4 + e | 0;
+        s.h5 = s.h5 + f | 0;
+        s.h6 = s.h6 + g | 0;
+        s.h7 = s.h7 + h | 0;
+        len -= 64;
+      }
+    }
+  }
+});
+
+// node_modules/node-forge/lib/prng.js
+var require_prng = __commonJS({
+  "node_modules/node-forge/lib/prng.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    var _crypto = null;
+    if (forge3.util.isNodejs && !forge3.options.usePureJavaScript && !process.versions["node-webkit"]) {
+      _crypto = __require("crypto");
+    }
+    var prng = module.exports = forge3.prng = forge3.prng || {};
+    prng.create = function(plugin) {
+      var ctx = {
+        plugin,
+        key: null,
+        seed: null,
+        time: null,
+        // number of reseeds so far
+        reseeds: 0,
+        // amount of data generated so far
+        generated: 0,
+        // no initial key bytes
+        keyBytes: ""
+      };
+      var md = plugin.md;
+      var pools = new Array(32);
+      for (var i = 0; i < 32; ++i) {
+        pools[i] = md.create();
+      }
+      ctx.pools = pools;
+      ctx.pool = 0;
+      ctx.generate = function(count, callback) {
+        if (!callback) {
+          return ctx.generateSync(count);
+        }
+        var cipher = ctx.plugin.cipher;
+        var increment = ctx.plugin.increment;
+        var formatKey = ctx.plugin.formatKey;
+        var formatSeed = ctx.plugin.formatSeed;
+        var b = forge3.util.createBuffer();
+        ctx.key = null;
+        generate();
+        function generate(err) {
+          if (err) {
+            return callback(err);
+          }
+          if (b.length() >= count) {
+            return callback(null, b.getBytes(count));
+          }
+          if (ctx.generated > 1048575) {
+            ctx.key = null;
+          }
+          if (ctx.key === null) {
+            return forge3.util.nextTick(function() {
+              _reseed(generate);
+            });
+          }
+          var bytes = cipher(ctx.key, ctx.seed);
+          ctx.generated += bytes.length;
+          b.putBytes(bytes);
+          ctx.key = formatKey(cipher(ctx.key, increment(ctx.seed)));
+          ctx.seed = formatSeed(cipher(ctx.key, ctx.seed));
+          forge3.util.setImmediate(generate);
+        }
+      };
+      ctx.generateSync = function(count) {
+        var cipher = ctx.plugin.cipher;
+        var increment = ctx.plugin.increment;
+        var formatKey = ctx.plugin.formatKey;
+        var formatSeed = ctx.plugin.formatSeed;
+        ctx.key = null;
+        var b = forge3.util.createBuffer();
+        while (b.length() < count) {
+          if (ctx.generated > 1048575) {
+            ctx.key = null;
+          }
+          if (ctx.key === null) {
+            _reseedSync();
+          }
+          var bytes = cipher(ctx.key, ctx.seed);
+          ctx.generated += bytes.length;
+          b.putBytes(bytes);
+          ctx.key = formatKey(cipher(ctx.key, increment(ctx.seed)));
+          ctx.seed = formatSeed(cipher(ctx.key, ctx.seed));
+        }
+        return b.getBytes(count);
+      };
+      function _reseed(callback) {
+        if (ctx.pools[0].messageLength >= 32) {
+          _seed();
+          return callback();
+        }
+        var needed = 32 - ctx.pools[0].messageLength << 5;
+        ctx.seedFile(needed, function(err, bytes) {
+          if (err) {
+            return callback(err);
+          }
+          ctx.collect(bytes);
+          _seed();
+          callback();
+        });
+      }
+      function _reseedSync() {
+        if (ctx.pools[0].messageLength >= 32) {
+          return _seed();
+        }
+        var needed = 32 - ctx.pools[0].messageLength << 5;
+        ctx.collect(ctx.seedFileSync(needed));
+        _seed();
+      }
+      function _seed() {
+        ctx.reseeds = ctx.reseeds === 4294967295 ? 0 : ctx.reseeds + 1;
+        var md2 = ctx.plugin.md.create();
+        md2.update(ctx.keyBytes);
+        var _2powK = 1;
+        for (var k = 0; k < 32; ++k) {
+          if (ctx.reseeds % _2powK === 0) {
+            md2.update(ctx.pools[k].digest().getBytes());
+            ctx.pools[k].start();
+          }
+          _2powK = _2powK << 1;
+        }
+        ctx.keyBytes = md2.digest().getBytes();
+        md2.start();
+        md2.update(ctx.keyBytes);
+        var seedBytes = md2.digest().getBytes();
+        ctx.key = ctx.plugin.formatKey(ctx.keyBytes);
+        ctx.seed = ctx.plugin.formatSeed(seedBytes);
+        ctx.generated = 0;
+      }
+      function defaultSeedFile(needed) {
+        var getRandomValues = null;
+        var globalScope = forge3.util.globalScope;
+        var _crypto2 = globalScope.crypto || globalScope.msCrypto;
+        if (_crypto2 && _crypto2.getRandomValues) {
+          getRandomValues = function(arr) {
+            return _crypto2.getRandomValues(arr);
+          };
+        }
+        var b = forge3.util.createBuffer();
+        if (getRandomValues) {
+          while (b.length() < needed) {
+            var count = Math.max(1, Math.min(needed - b.length(), 65536) / 4);
+            var entropy = new Uint32Array(Math.floor(count));
+            try {
+              getRandomValues(entropy);
+              for (var i2 = 0; i2 < entropy.length; ++i2) {
+                b.putInt32(entropy[i2]);
+              }
+            } catch (e) {
+              if (!(typeof QuotaExceededError !== "undefined" && e instanceof QuotaExceededError)) {
+                throw e;
+              }
+            }
+          }
+        }
+        if (b.length() < needed) {
+          var hi, lo, next;
+          var seed = Math.floor(Math.random() * 65536);
+          while (b.length() < needed) {
+            lo = 16807 * (seed & 65535);
+            hi = 16807 * (seed >> 16);
+            lo += (hi & 32767) << 16;
+            lo += hi >> 15;
+            lo = (lo & 2147483647) + (lo >> 31);
+            seed = lo & 4294967295;
+            for (var i2 = 0; i2 < 3; ++i2) {
+              next = seed >>> (i2 << 3);
+              next ^= Math.floor(Math.random() * 256);
+              b.putByte(next & 255);
+            }
+          }
+        }
+        return b.getBytes(needed);
+      }
+      if (_crypto) {
+        ctx.seedFile = function(needed, callback) {
+          _crypto.randomBytes(needed, function(err, bytes) {
+            if (err) {
+              return callback(err);
+            }
+            callback(null, bytes.toString());
+          });
+        };
+        ctx.seedFileSync = function(needed) {
+          return _crypto.randomBytes(needed).toString();
+        };
+      } else {
+        ctx.seedFile = function(needed, callback) {
+          try {
+            callback(null, defaultSeedFile(needed));
+          } catch (e) {
+            callback(e);
+          }
+        };
+        ctx.seedFileSync = defaultSeedFile;
+      }
+      ctx.collect = function(bytes) {
+        var count = bytes.length;
+        for (var i2 = 0; i2 < count; ++i2) {
+          ctx.pools[ctx.pool].update(bytes.substr(i2, 1));
+          ctx.pool = ctx.pool === 31 ? 0 : ctx.pool + 1;
+        }
+      };
+      ctx.collectInt = function(i2, n) {
+        var bytes = "";
+        for (var x = 0; x < n; x += 8) {
+          bytes += String.fromCharCode(i2 >> x & 255);
+        }
+        ctx.collect(bytes);
+      };
+      ctx.registerWorker = function(worker) {
+        if (worker === self) {
+          ctx.seedFile = function(needed, callback) {
+            function listener2(e) {
+              var data = e.data;
+              if (data.forge && data.forge.prng) {
+                self.removeEventListener("message", listener2);
+                callback(data.forge.prng.err, data.forge.prng.bytes);
+              }
+            }
+            self.addEventListener("message", listener2);
+            self.postMessage({ forge: { prng: { needed } } });
+          };
+        } else {
+          var listener = function(e) {
+            var data = e.data;
+            if (data.forge && data.forge.prng) {
+              ctx.seedFile(data.forge.prng.needed, function(err, bytes) {
+                worker.postMessage({ forge: { prng: { err, bytes } } });
+              });
+            }
+          };
+          worker.addEventListener("message", listener);
+        }
+      };
+      return ctx;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/random.js
+var require_random = __commonJS({
+  "node_modules/node-forge/lib/random.js"(exports, module) {
+    var forge3 = require_forge();
+    require_aes();
+    require_sha256();
+    require_prng();
+    require_util();
+    (function() {
+      if (forge3.random && forge3.random.getBytes) {
+        module.exports = forge3.random;
+        return;
+      }
+      (function(jQuery2) {
+        var prng_aes = {};
+        var _prng_aes_output = new Array(4);
+        var _prng_aes_buffer = forge3.util.createBuffer();
+        prng_aes.formatKey = function(key2) {
+          var tmp = forge3.util.createBuffer(key2);
+          key2 = new Array(4);
+          key2[0] = tmp.getInt32();
+          key2[1] = tmp.getInt32();
+          key2[2] = tmp.getInt32();
+          key2[3] = tmp.getInt32();
+          return forge3.aes._expandKey(key2, false);
+        };
+        prng_aes.formatSeed = function(seed) {
+          var tmp = forge3.util.createBuffer(seed);
+          seed = new Array(4);
+          seed[0] = tmp.getInt32();
+          seed[1] = tmp.getInt32();
+          seed[2] = tmp.getInt32();
+          seed[3] = tmp.getInt32();
+          return seed;
+        };
+        prng_aes.cipher = function(key2, seed) {
+          forge3.aes._updateBlock(key2, seed, _prng_aes_output, false);
+          _prng_aes_buffer.putInt32(_prng_aes_output[0]);
+          _prng_aes_buffer.putInt32(_prng_aes_output[1]);
+          _prng_aes_buffer.putInt32(_prng_aes_output[2]);
+          _prng_aes_buffer.putInt32(_prng_aes_output[3]);
+          return _prng_aes_buffer.getBytes();
+        };
+        prng_aes.increment = function(seed) {
+          ++seed[3];
+          return seed;
+        };
+        prng_aes.md = forge3.md.sha256;
+        function spawnPrng() {
+          var ctx = forge3.prng.create(prng_aes);
+          ctx.getBytes = function(count, callback) {
+            return ctx.generate(count, callback);
+          };
+          ctx.getBytesSync = function(count) {
+            return ctx.generate(count);
+          };
+          return ctx;
+        }
+        var _ctx = spawnPrng();
+        var getRandomValues = null;
+        var globalScope = forge3.util.globalScope;
+        var _crypto = globalScope.crypto || globalScope.msCrypto;
+        if (_crypto && _crypto.getRandomValues) {
+          getRandomValues = function(arr) {
+            return _crypto.getRandomValues(arr);
+          };
+        }
+        if (forge3.options.usePureJavaScript || !forge3.util.isNodejs && !getRandomValues) {
+          if (typeof window === "undefined" || window.document === void 0) {
+          }
+          _ctx.collectInt(+/* @__PURE__ */ new Date(), 32);
+          if (typeof navigator !== "undefined") {
+            var _navBytes = "";
+            for (var key in navigator) {
+              try {
+                if (typeof navigator[key] == "string") {
+                  _navBytes += navigator[key];
+                }
+              } catch (e) {
+              }
+            }
+            _ctx.collect(_navBytes);
+            _navBytes = null;
+          }
+          if (jQuery2) {
+            jQuery2().mousemove(function(e) {
+              _ctx.collectInt(e.clientX, 16);
+              _ctx.collectInt(e.clientY, 16);
+            });
+            jQuery2().keypress(function(e) {
+              _ctx.collectInt(e.charCode, 8);
+            });
+          }
+        }
+        if (!forge3.random) {
+          forge3.random = _ctx;
+        } else {
+          for (var key in _ctx) {
+            forge3.random[key] = _ctx[key];
+          }
+        }
+        forge3.random.createInstance = spawnPrng;
+        module.exports = forge3.random;
+      })(typeof jQuery !== "undefined" ? jQuery : null);
+    })();
+  }
+});
+
+// node_modules/node-forge/lib/rc2.js
+var require_rc2 = __commonJS({
+  "node_modules/node-forge/lib/rc2.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    var piTable = [
+      217,
+      120,
+      249,
+      196,
+      25,
+      221,
+      181,
+      237,
+      40,
+      233,
+      253,
+      121,
+      74,
+      160,
+      216,
+      157,
+      198,
+      126,
+      55,
+      131,
+      43,
+      118,
+      83,
+      142,
+      98,
+      76,
+      100,
+      136,
+      68,
+      139,
+      251,
+      162,
+      23,
+      154,
+      89,
+      245,
+      135,
+      179,
+      79,
+      19,
+      97,
+      69,
+      109,
+      141,
+      9,
+      129,
+      125,
+      50,
+      189,
+      143,
+      64,
+      235,
+      134,
+      183,
+      123,
+      11,
+      240,
+      149,
+      33,
+      34,
+      92,
+      107,
+      78,
+      130,
+      84,
+      214,
+      101,
+      147,
+      206,
+      96,
+      178,
+      28,
+      115,
+      86,
+      192,
+      20,
+      167,
+      140,
+      241,
+      220,
+      18,
+      117,
+      202,
+      31,
+      59,
+      190,
+      228,
+      209,
+      66,
+      61,
+      212,
+      48,
+      163,
+      60,
+      182,
+      38,
+      111,
+      191,
+      14,
+      218,
+      70,
+      105,
+      7,
+      87,
+      39,
+      242,
+      29,
+      155,
+      188,
+      148,
+      67,
+      3,
+      248,
+      17,
+      199,
+      246,
+      144,
+      239,
+      62,
+      231,
+      6,
+      195,
+      213,
+      47,
+      200,
+      102,
+      30,
+      215,
+      8,
+      232,
+      234,
+      222,
+      128,
+      82,
+      238,
+      247,
+      132,
+      170,
+      114,
+      172,
+      53,
+      77,
+      106,
+      42,
+      150,
+      26,
+      210,
+      113,
+      90,
+      21,
+      73,
+      116,
+      75,
+      159,
+      208,
+      94,
+      4,
+      24,
+      164,
+      236,
+      194,
+      224,
+      65,
+      110,
+      15,
+      81,
+      203,
+      204,
+      36,
+      145,
+      175,
+      80,
+      161,
+      244,
+      112,
+      57,
+      153,
+      124,
+      58,
+      133,
+      35,
+      184,
+      180,
+      122,
+      252,
+      2,
+      54,
+      91,
+      37,
+      85,
+      151,
+      49,
+      45,
+      93,
+      250,
+      152,
+      227,
+      138,
+      146,
+      174,
+      5,
+      223,
+      41,
+      16,
+      103,
+      108,
+      186,
+      201,
+      211,
+      0,
+      230,
+      207,
+      225,
+      158,
+      168,
+      44,
+      99,
+      22,
+      1,
+      63,
+      88,
+      226,
+      137,
+      169,
+      13,
+      56,
+      52,
+      27,
+      171,
+      51,
+      255,
+      176,
+      187,
+      72,
+      12,
+      95,
+      185,
+      177,
+      205,
+      46,
+      197,
+      243,
+      219,
+      71,
+      229,
+      165,
+      156,
+      119,
+      10,
+      166,
+      32,
+      104,
+      254,
+      127,
+      193,
+      173
+    ];
+    var s = [1, 2, 3, 5];
+    var rol = function(word, bits) {
+      return word << bits & 65535 | (word & 65535) >> 16 - bits;
+    };
+    var ror = function(word, bits) {
+      return (word & 65535) >> bits | word << 16 - bits & 65535;
+    };
+    module.exports = forge3.rc2 = forge3.rc2 || {};
+    forge3.rc2.expandKey = function(key, effKeyBits) {
+      if (typeof key === "string") {
+        key = forge3.util.createBuffer(key);
+      }
+      effKeyBits = effKeyBits || 128;
+      var L = key;
+      var T = key.length();
+      var T1 = effKeyBits;
+      var T8 = Math.ceil(T1 / 8);
+      var TM = 255 >> (T1 & 7);
+      var i;
+      for (i = T; i < 128; i++) {
+        L.putByte(piTable[L.at(i - 1) + L.at(i - T) & 255]);
+      }
+      L.setAt(128 - T8, piTable[L.at(128 - T8) & TM]);
+      for (i = 127 - T8; i >= 0; i--) {
+        L.setAt(i, piTable[L.at(i + 1) ^ L.at(i + T8)]);
+      }
+      return L;
+    };
+    var createCipher = function(key, bits, encrypt) {
+      var _finish = false, _input = null, _output = null, _iv = null;
+      var mixRound, mashRound;
+      var i, j, K = [];
+      key = forge3.rc2.expandKey(key, bits);
+      for (i = 0; i < 64; i++) {
+        K.push(key.getInt16Le());
+      }
+      if (encrypt) {
+        mixRound = function(R) {
+          for (i = 0; i < 4; i++) {
+            R[i] += K[j] + (R[(i + 3) % 4] & R[(i + 2) % 4]) + (~R[(i + 3) % 4] & R[(i + 1) % 4]);
+            R[i] = rol(R[i], s[i]);
+            j++;
+          }
+        };
+        mashRound = function(R) {
+          for (i = 0; i < 4; i++) {
+            R[i] += K[R[(i + 3) % 4] & 63];
+          }
+        };
+      } else {
+        mixRound = function(R) {
+          for (i = 3; i >= 0; i--) {
+            R[i] = ror(R[i], s[i]);
+            R[i] -= K[j] + (R[(i + 3) % 4] & R[(i + 2) % 4]) + (~R[(i + 3) % 4] & R[(i + 1) % 4]);
+            j--;
+          }
+        };
+        mashRound = function(R) {
+          for (i = 3; i >= 0; i--) {
+            R[i] -= K[R[(i + 3) % 4] & 63];
+          }
+        };
+      }
+      var runPlan = function(plan) {
+        var R = [];
+        for (i = 0; i < 4; i++) {
+          var val = _input.getInt16Le();
+          if (_iv !== null) {
+            if (encrypt) {
+              val ^= _iv.getInt16Le();
+            } else {
+              _iv.putInt16Le(val);
+            }
+          }
+          R.push(val & 65535);
+        }
+        j = encrypt ? 0 : 63;
+        for (var ptr = 0; ptr < plan.length; ptr++) {
+          for (var ctr = 0; ctr < plan[ptr][0]; ctr++) {
+            plan[ptr][1](R);
+          }
+        }
+        for (i = 0; i < 4; i++) {
+          if (_iv !== null) {
+            if (encrypt) {
+              _iv.putInt16Le(R[i]);
+            } else {
+              R[i] ^= _iv.getInt16Le();
+            }
+          }
+          _output.putInt16Le(R[i]);
+        }
+      };
+      var cipher = null;
+      cipher = {
+        /**
+         * Starts or restarts the encryption or decryption process, whichever
+         * was previously configured.
+         *
+         * To use the cipher in CBC mode, iv may be given either as a string
+         * of bytes, or as a byte buffer.  For ECB mode, give null as iv.
+         *
+         * @param iv the initialization vector to use, null for ECB mode.
+         * @param output the output the buffer to write to, null to create one.
+         */
+        start: function(iv, output) {
+          if (iv) {
+            if (typeof iv === "string") {
+              iv = forge3.util.createBuffer(iv);
+            }
+          }
+          _finish = false;
+          _input = forge3.util.createBuffer();
+          _output = output || new forge3.util.createBuffer();
+          _iv = iv;
+          cipher.output = _output;
+        },
+        /**
+         * Updates the next block.
+         *
+         * @param input the buffer to read from.
+         */
+        update: function(input) {
+          if (!_finish) {
+            _input.putBuffer(input);
+          }
+          while (_input.length() >= 8) {
+            runPlan([
+              [5, mixRound],
+              [1, mashRound],
+              [6, mixRound],
+              [1, mashRound],
+              [5, mixRound]
+            ]);
+          }
+        },
+        /**
+         * Finishes encrypting or decrypting.
+         *
+         * @param pad a padding function to use, null for PKCS#7 padding,
+         *           signature(blockSize, buffer, decrypt).
+         *
+         * @return true if successful, false on error.
+         */
+        finish: function(pad) {
+          var rval = true;
+          if (encrypt) {
+            if (pad) {
+              rval = pad(8, _input, !encrypt);
+            } else {
+              var padding = _input.length() === 8 ? 8 : 8 - _input.length();
+              _input.fillWithByte(padding, padding);
+            }
+          }
+          if (rval) {
+            _finish = true;
+            cipher.update();
+          }
+          if (!encrypt) {
+            rval = _input.length() === 0;
+            if (rval) {
+              if (pad) {
+                rval = pad(8, _output, !encrypt);
+              } else {
+                var len = _output.length();
+                var count = _output.at(len - 1);
+                if (count > len) {
+                  rval = false;
+                } else {
+                  _output.truncate(count);
+                }
+              }
+            }
+          }
+          return rval;
+        }
+      };
+      return cipher;
+    };
+    forge3.rc2.startEncrypting = function(key, iv, output) {
+      var cipher = forge3.rc2.createEncryptionCipher(key, 128);
+      cipher.start(iv, output);
+      return cipher;
+    };
+    forge3.rc2.createEncryptionCipher = function(key, bits) {
+      return createCipher(key, bits, true);
+    };
+    forge3.rc2.startDecrypting = function(key, iv, output) {
+      var cipher = forge3.rc2.createDecryptionCipher(key, 128);
+      cipher.start(iv, output);
+      return cipher;
+    };
+    forge3.rc2.createDecryptionCipher = function(key, bits) {
+      return createCipher(key, bits, false);
+    };
+  }
+});
+
+// node_modules/node-forge/lib/jsbn.js
+var require_jsbn = __commonJS({
+  "node_modules/node-forge/lib/jsbn.js"(exports, module) {
+    var forge3 = require_forge();
+    module.exports = forge3.jsbn = forge3.jsbn || {};
+    var dbits;
+    var canary = 244837814094590;
+    var j_lm = (canary & 16777215) == 15715070;
+    function BigInteger2(a, b, c) {
+      this.data = [];
+      if (a != null)
+        if ("number" == typeof a) this.fromNumber(a, b, c);
+        else if (b == null && "string" != typeof a) this.fromString(a, 256);
+        else this.fromString(a, b);
+    }
+    forge3.jsbn.BigInteger = BigInteger2;
+    function nbi() {
+      return new BigInteger2(null);
+    }
+    function am1(i, x, w, j, c, n) {
+      while (--n >= 0) {
+        var v = x * this.data[i++] + w.data[j] + c;
+        c = Math.floor(v / 67108864);
+        w.data[j++] = v & 67108863;
+      }
+      return c;
+    }
+    function am2(i, x, w, j, c, n) {
+      var xl = x & 32767, xh = x >> 15;
+      while (--n >= 0) {
+        var l = this.data[i] & 32767;
+        var h = this.data[i++] >> 15;
+        var m = xh * l + h * xl;
+        l = xl * l + ((m & 32767) << 15) + w.data[j] + (c & 1073741823);
+        c = (l >>> 30) + (m >>> 15) + xh * h + (c >>> 30);
+        w.data[j++] = l & 1073741823;
+      }
+      return c;
+    }
+    function am3(i, x, w, j, c, n) {
+      var xl = x & 16383, xh = x >> 14;
+      while (--n >= 0) {
+        var l = this.data[i] & 16383;
+        var h = this.data[i++] >> 14;
+        var m = xh * l + h * xl;
+        l = xl * l + ((m & 16383) << 14) + w.data[j] + c;
+        c = (l >> 28) + (m >> 14) + xh * h;
+        w.data[j++] = l & 268435455;
+      }
+      return c;
+    }
+    if (typeof navigator === "undefined") {
+      BigInteger2.prototype.am = am3;
+      dbits = 28;
+    } else if (j_lm && navigator.appName == "Microsoft Internet Explorer") {
+      BigInteger2.prototype.am = am2;
+      dbits = 30;
+    } else if (j_lm && navigator.appName != "Netscape") {
+      BigInteger2.prototype.am = am1;
+      dbits = 26;
+    } else {
+      BigInteger2.prototype.am = am3;
+      dbits = 28;
+    }
+    BigInteger2.prototype.DB = dbits;
+    BigInteger2.prototype.DM = (1 << dbits) - 1;
+    BigInteger2.prototype.DV = 1 << dbits;
+    var BI_FP = 52;
+    BigInteger2.prototype.FV = Math.pow(2, BI_FP);
+    BigInteger2.prototype.F1 = BI_FP - dbits;
+    BigInteger2.prototype.F2 = 2 * dbits - BI_FP;
+    var BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
+    var BI_RC = new Array();
+    var rr;
+    var vv;
+    rr = "0".charCodeAt(0);
+    for (vv = 0; vv <= 9; ++vv) BI_RC[rr++] = vv;
+    rr = "a".charCodeAt(0);
+    for (vv = 10; vv < 36; ++vv) BI_RC[rr++] = vv;
+    rr = "A".charCodeAt(0);
+    for (vv = 10; vv < 36; ++vv) BI_RC[rr++] = vv;
+    function int2char(n) {
+      return BI_RM.charAt(n);
+    }
+    function intAt(s, i) {
+      var c = BI_RC[s.charCodeAt(i)];
+      return c == null ? -1 : c;
+    }
+    function bnpCopyTo(r) {
+      for (var i = this.t - 1; i >= 0; --i) r.data[i] = this.data[i];
+      r.t = this.t;
+      r.s = this.s;
+    }
+    function bnpFromInt(x) {
+      this.t = 1;
+      this.s = x < 0 ? -1 : 0;
+      if (x > 0) this.data[0] = x;
+      else if (x < -1) this.data[0] = x + this.DV;
+      else this.t = 0;
+    }
+    function nbv(i) {
+      var r = nbi();
+      r.fromInt(i);
+      return r;
+    }
+    function bnpFromString(s, b) {
+      var k;
+      if (b == 16) k = 4;
+      else if (b == 8) k = 3;
+      else if (b == 256) k = 8;
+      else if (b == 2) k = 1;
+      else if (b == 32) k = 5;
+      else if (b == 4) k = 2;
+      else {
+        this.fromRadix(s, b);
+        return;
+      }
+      this.t = 0;
+      this.s = 0;
+      var i = s.length, mi = false, sh = 0;
+      while (--i >= 0) {
+        var x = k == 8 ? s[i] & 255 : intAt(s, i);
+        if (x < 0) {
+          if (s.charAt(i) == "-") mi = true;
+          continue;
+        }
+        mi = false;
+        if (sh == 0)
+          this.data[this.t++] = x;
+        else if (sh + k > this.DB) {
+          this.data[this.t - 1] |= (x & (1 << this.DB - sh) - 1) << sh;
+          this.data[this.t++] = x >> this.DB - sh;
+        } else
+          this.data[this.t - 1] |= x << sh;
+        sh += k;
+        if (sh >= this.DB) sh -= this.DB;
+      }
+      if (k == 8 && (s[0] & 128) != 0) {
+        this.s = -1;
+        if (sh > 0) this.data[this.t - 1] |= (1 << this.DB - sh) - 1 << sh;
+      }
+      this.clamp();
+      if (mi) BigInteger2.ZERO.subTo(this, this);
+    }
+    function bnpClamp() {
+      var c = this.s & this.DM;
+      while (this.t > 0 && this.data[this.t - 1] == c) --this.t;
+    }
+    function bnToString(b) {
+      if (this.s < 0) return "-" + this.negate().toString(b);
+      var k;
+      if (b == 16) k = 4;
+      else if (b == 8) k = 3;
+      else if (b == 2) k = 1;
+      else if (b == 32) k = 5;
+      else if (b == 4) k = 2;
+      else return this.toRadix(b);
+      var km = (1 << k) - 1, d, m = false, r = "", i = this.t;
+      var p = this.DB - i * this.DB % k;
+      if (i-- > 0) {
+        if (p < this.DB && (d = this.data[i] >> p) > 0) {
+          m = true;
+          r = int2char(d);
+        }
+        while (i >= 0) {
+          if (p < k) {
+            d = (this.data[i] & (1 << p) - 1) << k - p;
+            d |= this.data[--i] >> (p += this.DB - k);
+          } else {
+            d = this.data[i] >> (p -= k) & km;
+            if (p <= 0) {
+              p += this.DB;
+              --i;
+            }
+          }
+          if (d > 0) m = true;
+          if (m) r += int2char(d);
+        }
+      }
+      return m ? r : "0";
+    }
+    function bnNegate() {
+      var r = nbi();
+      BigInteger2.ZERO.subTo(this, r);
+      return r;
+    }
+    function bnAbs() {
+      return this.s < 0 ? this.negate() : this;
+    }
+    function bnCompareTo(a) {
+      var r = this.s - a.s;
+      if (r != 0) return r;
+      var i = this.t;
+      r = i - a.t;
+      if (r != 0) return this.s < 0 ? -r : r;
+      while (--i >= 0) if ((r = this.data[i] - a.data[i]) != 0) return r;
+      return 0;
+    }
+    function nbits(x) {
+      var r = 1, t;
+      if ((t = x >>> 16) != 0) {
+        x = t;
+        r += 16;
+      }
+      if ((t = x >> 8) != 0) {
+        x = t;
+        r += 8;
+      }
+      if ((t = x >> 4) != 0) {
+        x = t;
+        r += 4;
+      }
+      if ((t = x >> 2) != 0) {
+        x = t;
+        r += 2;
+      }
+      if ((t = x >> 1) != 0) {
+        x = t;
+        r += 1;
+      }
+      return r;
+    }
+    function bnBitLength() {
+      if (this.t <= 0) return 0;
+      return this.DB * (this.t - 1) + nbits(this.data[this.t - 1] ^ this.s & this.DM);
+    }
+    function bnpDLShiftTo(n, r) {
+      var i;
+      for (i = this.t - 1; i >= 0; --i) r.data[i + n] = this.data[i];
+      for (i = n - 1; i >= 0; --i) r.data[i] = 0;
+      r.t = this.t + n;
+      r.s = this.s;
+    }
+    function bnpDRShiftTo(n, r) {
+      for (var i = n; i < this.t; ++i) r.data[i - n] = this.data[i];
+      r.t = Math.max(this.t - n, 0);
+      r.s = this.s;
+    }
+    function bnpLShiftTo(n, r) {
+      var bs = n % this.DB;
+      var cbs = this.DB - bs;
+      var bm = (1 << cbs) - 1;
+      var ds = Math.floor(n / this.DB), c = this.s << bs & this.DM, i;
+      for (i = this.t - 1; i >= 0; --i) {
+        r.data[i + ds + 1] = this.data[i] >> cbs | c;
+        c = (this.data[i] & bm) << bs;
+      }
+      for (i = ds - 1; i >= 0; --i) r.data[i] = 0;
+      r.data[ds] = c;
+      r.t = this.t + ds + 1;
+      r.s = this.s;
+      r.clamp();
+    }
+    function bnpRShiftTo(n, r) {
+      r.s = this.s;
+      var ds = Math.floor(n / this.DB);
+      if (ds >= this.t) {
+        r.t = 0;
+        return;
+      }
+      var bs = n % this.DB;
+      var cbs = this.DB - bs;
+      var bm = (1 << bs) - 1;
+      r.data[0] = this.data[ds] >> bs;
+      for (var i = ds + 1; i < this.t; ++i) {
+        r.data[i - ds - 1] |= (this.data[i] & bm) << cbs;
+        r.data[i - ds] = this.data[i] >> bs;
+      }
+      if (bs > 0) r.data[this.t - ds - 1] |= (this.s & bm) << cbs;
+      r.t = this.t - ds;
+      r.clamp();
+    }
+    function bnpSubTo(a, r) {
+      var i = 0, c = 0, m = Math.min(a.t, this.t);
+      while (i < m) {
+        c += this.data[i] - a.data[i];
+        r.data[i++] = c & this.DM;
+        c >>= this.DB;
+      }
+      if (a.t < this.t) {
+        c -= a.s;
+        while (i < this.t) {
+          c += this.data[i];
+          r.data[i++] = c & this.DM;
+          c >>= this.DB;
+        }
+        c += this.s;
+      } else {
+        c += this.s;
+        while (i < a.t) {
+          c -= a.data[i];
+          r.data[i++] = c & this.DM;
+          c >>= this.DB;
+        }
+        c -= a.s;
+      }
+      r.s = c < 0 ? -1 : 0;
+      if (c < -1) r.data[i++] = this.DV + c;
+      else if (c > 0) r.data[i++] = c;
+      r.t = i;
+      r.clamp();
+    }
+    function bnpMultiplyTo(a, r) {
+      var x = this.abs(), y = a.abs();
+      var i = x.t;
+      r.t = i + y.t;
+      while (--i >= 0) r.data[i] = 0;
+      for (i = 0; i < y.t; ++i) r.data[i + x.t] = x.am(0, y.data[i], r, i, 0, x.t);
+      r.s = 0;
+      r.clamp();
+      if (this.s != a.s) BigInteger2.ZERO.subTo(r, r);
+    }
+    function bnpSquareTo(r) {
+      var x = this.abs();
+      var i = r.t = 2 * x.t;
+      while (--i >= 0) r.data[i] = 0;
+      for (i = 0; i < x.t - 1; ++i) {
+        var c = x.am(i, x.data[i], r, 2 * i, 0, 1);
+        if ((r.data[i + x.t] += x.am(i + 1, 2 * x.data[i], r, 2 * i + 1, c, x.t - i - 1)) >= x.DV) {
+          r.data[i + x.t] -= x.DV;
+          r.data[i + x.t + 1] = 1;
+        }
+      }
+      if (r.t > 0) r.data[r.t - 1] += x.am(i, x.data[i], r, 2 * i, 0, 1);
+      r.s = 0;
+      r.clamp();
+    }
+    function bnpDivRemTo(m, q, r) {
+      var pm = m.abs();
+      if (pm.t <= 0) return;
+      var pt = this.abs();
+      if (pt.t < pm.t) {
+        if (q != null) q.fromInt(0);
+        if (r != null) this.copyTo(r);
+        return;
+      }
+      if (r == null) r = nbi();
+      var y = nbi(), ts = this.s, ms = m.s;
+      var nsh = this.DB - nbits(pm.data[pm.t - 1]);
+      if (nsh > 0) {
+        pm.lShiftTo(nsh, y);
+        pt.lShiftTo(nsh, r);
+      } else {
+        pm.copyTo(y);
+        pt.copyTo(r);
+      }
+      var ys = y.t;
+      var y0 = y.data[ys - 1];
+      if (y0 == 0) return;
+      var yt = y0 * (1 << this.F1) + (ys > 1 ? y.data[ys - 2] >> this.F2 : 0);
+      var d1 = this.FV / yt, d2 = (1 << this.F1) / yt, e = 1 << this.F2;
+      var i = r.t, j = i - ys, t = q == null ? nbi() : q;
+      y.dlShiftTo(j, t);
+      if (r.compareTo(t) >= 0) {
+        r.data[r.t++] = 1;
+        r.subTo(t, r);
+      }
+      BigInteger2.ONE.dlShiftTo(ys, t);
+      t.subTo(y, y);
+      while (y.t < ys) y.data[y.t++] = 0;
+      while (--j >= 0) {
+        var qd = r.data[--i] == y0 ? this.DM : Math.floor(r.data[i] * d1 + (r.data[i - 1] + e) * d2);
+        if ((r.data[i] += y.am(0, qd, r, j, 0, ys)) < qd) {
+          y.dlShiftTo(j, t);
+          r.subTo(t, r);
+          while (r.data[i] < --qd) r.subTo(t, r);
+        }
+      }
+      if (q != null) {
+        r.drShiftTo(ys, q);
+        if (ts != ms) BigInteger2.ZERO.subTo(q, q);
+      }
+      r.t = ys;
+      r.clamp();
+      if (nsh > 0) r.rShiftTo(nsh, r);
+      if (ts < 0) BigInteger2.ZERO.subTo(r, r);
+    }
+    function bnMod(a) {
+      var r = nbi();
+      this.abs().divRemTo(a, null, r);
+      if (this.s < 0 && r.compareTo(BigInteger2.ZERO) > 0) a.subTo(r, r);
+      return r;
+    }
+    function Classic(m) {
+      this.m = m;
+    }
+    function cConvert(x) {
+      if (x.s < 0 || x.compareTo(this.m) >= 0) return x.mod(this.m);
+      else return x;
+    }
+    function cRevert(x) {
+      return x;
+    }
+    function cReduce(x) {
+      x.divRemTo(this.m, null, x);
+    }
+    function cMulTo(x, y, r) {
+      x.multiplyTo(y, r);
+      this.reduce(r);
+    }
+    function cSqrTo(x, r) {
+      x.squareTo(r);
+      this.reduce(r);
+    }
+    Classic.prototype.convert = cConvert;
+    Classic.prototype.revert = cRevert;
+    Classic.prototype.reduce = cReduce;
+    Classic.prototype.mulTo = cMulTo;
+    Classic.prototype.sqrTo = cSqrTo;
+    function bnpInvDigit() {
+      if (this.t < 1) return 0;
+      var x = this.data[0];
+      if ((x & 1) == 0) return 0;
+      var y = x & 3;
+      y = y * (2 - (x & 15) * y) & 15;
+      y = y * (2 - (x & 255) * y) & 255;
+      y = y * (2 - ((x & 65535) * y & 65535)) & 65535;
+      y = y * (2 - x * y % this.DV) % this.DV;
+      return y > 0 ? this.DV - y : -y;
+    }
+    function Montgomery(m) {
+      this.m = m;
+      this.mp = m.invDigit();
+      this.mpl = this.mp & 32767;
+      this.mph = this.mp >> 15;
+      this.um = (1 << m.DB - 15) - 1;
+      this.mt2 = 2 * m.t;
+    }
+    function montConvert(x) {
+      var r = nbi();
+      x.abs().dlShiftTo(this.m.t, r);
+      r.divRemTo(this.m, null, r);
+      if (x.s < 0 && r.compareTo(BigInteger2.ZERO) > 0) this.m.subTo(r, r);
+      return r;
+    }
+    function montRevert(x) {
+      var r = nbi();
+      x.copyTo(r);
+      this.reduce(r);
+      return r;
+    }
+    function montReduce(x) {
+      while (x.t <= this.mt2)
+        x.data[x.t++] = 0;
+      for (var i = 0; i < this.m.t; ++i) {
+        var j = x.data[i] & 32767;
+        var u0 = j * this.mpl + ((j * this.mph + (x.data[i] >> 15) * this.mpl & this.um) << 15) & x.DM;
+        j = i + this.m.t;
+        x.data[j] += this.m.am(0, u0, x, i, 0, this.m.t);
+        while (x.data[j] >= x.DV) {
+          x.data[j] -= x.DV;
+          x.data[++j]++;
+        }
+      }
+      x.clamp();
+      x.drShiftTo(this.m.t, x);
+      if (x.compareTo(this.m) >= 0) x.subTo(this.m, x);
+    }
+    function montSqrTo(x, r) {
+      x.squareTo(r);
+      this.reduce(r);
+    }
+    function montMulTo(x, y, r) {
+      x.multiplyTo(y, r);
+      this.reduce(r);
+    }
+    Montgomery.prototype.convert = montConvert;
+    Montgomery.prototype.revert = montRevert;
+    Montgomery.prototype.reduce = montReduce;
+    Montgomery.prototype.mulTo = montMulTo;
+    Montgomery.prototype.sqrTo = montSqrTo;
+    function bnpIsEven() {
+      return (this.t > 0 ? this.data[0] & 1 : this.s) == 0;
+    }
+    function bnpExp(e, z) {
+      if (e > 4294967295 || e < 1) return BigInteger2.ONE;
+      var r = nbi(), r2 = nbi(), g = z.convert(this), i = nbits(e) - 1;
+      g.copyTo(r);
+      while (--i >= 0) {
+        z.sqrTo(r, r2);
+        if ((e & 1 << i) > 0) z.mulTo(r2, g, r);
+        else {
+          var t = r;
+          r = r2;
+          r2 = t;
+        }
+      }
+      return z.revert(r);
+    }
+    function bnModPowInt(e, m) {
+      var z;
+      if (e < 256 || m.isEven()) z = new Classic(m);
+      else z = new Montgomery(m);
+      return this.exp(e, z);
+    }
+    BigInteger2.prototype.copyTo = bnpCopyTo;
+    BigInteger2.prototype.fromInt = bnpFromInt;
+    BigInteger2.prototype.fromString = bnpFromString;
+    BigInteger2.prototype.clamp = bnpClamp;
+    BigInteger2.prototype.dlShiftTo = bnpDLShiftTo;
+    BigInteger2.prototype.drShiftTo = bnpDRShiftTo;
+    BigInteger2.prototype.lShiftTo = bnpLShiftTo;
+    BigInteger2.prototype.rShiftTo = bnpRShiftTo;
+    BigInteger2.prototype.subTo = bnpSubTo;
+    BigInteger2.prototype.multiplyTo = bnpMultiplyTo;
+    BigInteger2.prototype.squareTo = bnpSquareTo;
+    BigInteger2.prototype.divRemTo = bnpDivRemTo;
+    BigInteger2.prototype.invDigit = bnpInvDigit;
+    BigInteger2.prototype.isEven = bnpIsEven;
+    BigInteger2.prototype.exp = bnpExp;
+    BigInteger2.prototype.toString = bnToString;
+    BigInteger2.prototype.negate = bnNegate;
+    BigInteger2.prototype.abs = bnAbs;
+    BigInteger2.prototype.compareTo = bnCompareTo;
+    BigInteger2.prototype.bitLength = bnBitLength;
+    BigInteger2.prototype.mod = bnMod;
+    BigInteger2.prototype.modPowInt = bnModPowInt;
+    BigInteger2.ZERO = nbv(0);
+    BigInteger2.ONE = nbv(1);
+    function bnClone() {
+      var r = nbi();
+      this.copyTo(r);
+      return r;
+    }
+    function bnIntValue() {
+      if (this.s < 0) {
+        if (this.t == 1) return this.data[0] - this.DV;
+        else if (this.t == 0) return -1;
+      } else if (this.t == 1) return this.data[0];
+      else if (this.t == 0) return 0;
+      return (this.data[1] & (1 << 32 - this.DB) - 1) << this.DB | this.data[0];
+    }
+    function bnByteValue() {
+      return this.t == 0 ? this.s : this.data[0] << 24 >> 24;
+    }
+    function bnShortValue() {
+      return this.t == 0 ? this.s : this.data[0] << 16 >> 16;
+    }
+    function bnpChunkSize(r) {
+      return Math.floor(Math.LN2 * this.DB / Math.log(r));
+    }
+    function bnSigNum() {
+      if (this.s < 0) return -1;
+      else if (this.t <= 0 || this.t == 1 && this.data[0] <= 0) return 0;
+      else return 1;
+    }
+    function bnpToRadix(b) {
+      if (b == null) b = 10;
+      if (this.signum() == 0 || b < 2 || b > 36) return "0";
+      var cs = this.chunkSize(b);
+      var a = Math.pow(b, cs);
+      var d = nbv(a), y = nbi(), z = nbi(), r = "";
+      this.divRemTo(d, y, z);
+      while (y.signum() > 0) {
+        r = (a + z.intValue()).toString(b).substr(1) + r;
+        y.divRemTo(d, y, z);
+      }
+      return z.intValue().toString(b) + r;
+    }
+    function bnpFromRadix(s, b) {
+      this.fromInt(0);
+      if (b == null) b = 10;
+      var cs = this.chunkSize(b);
+      var d = Math.pow(b, cs), mi = false, j = 0, w = 0;
+      for (var i = 0; i < s.length; ++i) {
+        var x = intAt(s, i);
+        if (x < 0) {
+          if (s.charAt(i) == "-" && this.signum() == 0) mi = true;
+          continue;
+        }
+        w = b * w + x;
+        if (++j >= cs) {
+          this.dMultiply(d);
+          this.dAddOffset(w, 0);
+          j = 0;
+          w = 0;
+        }
+      }
+      if (j > 0) {
+        this.dMultiply(Math.pow(b, j));
+        this.dAddOffset(w, 0);
+      }
+      if (mi) BigInteger2.ZERO.subTo(this, this);
+    }
+    function bnpFromNumber(a, b, c) {
+      if ("number" == typeof b) {
+        if (a < 2) this.fromInt(1);
+        else {
+          this.fromNumber(a, c);
+          if (!this.testBit(a - 1))
+            this.bitwiseTo(BigInteger2.ONE.shiftLeft(a - 1), op_or, this);
+          if (this.isEven()) this.dAddOffset(1, 0);
+          while (!this.isProbablePrime(b)) {
+            this.dAddOffset(2, 0);
+            if (this.bitLength() > a) this.subTo(BigInteger2.ONE.shiftLeft(a - 1), this);
+          }
+        }
+      } else {
+        var x = new Array(), t = a & 7;
+        x.length = (a >> 3) + 1;
+        b.nextBytes(x);
+        if (t > 0) x[0] &= (1 << t) - 1;
+        else x[0] = 0;
+        this.fromString(x, 256);
+      }
+    }
+    function bnToByteArray() {
+      var i = this.t, r = new Array();
+      r[0] = this.s;
+      var p = this.DB - i * this.DB % 8, d, k = 0;
+      if (i-- > 0) {
+        if (p < this.DB && (d = this.data[i] >> p) != (this.s & this.DM) >> p)
+          r[k++] = d | this.s << this.DB - p;
+        while (i >= 0) {
+          if (p < 8) {
+            d = (this.data[i] & (1 << p) - 1) << 8 - p;
+            d |= this.data[--i] >> (p += this.DB - 8);
+          } else {
+            d = this.data[i] >> (p -= 8) & 255;
+            if (p <= 0) {
+              p += this.DB;
+              --i;
+            }
+          }
+          if ((d & 128) != 0) d |= -256;
+          if (k == 0 && (this.s & 128) != (d & 128)) ++k;
+          if (k > 0 || d != this.s) r[k++] = d;
+        }
+      }
+      return r;
+    }
+    function bnEquals(a) {
+      return this.compareTo(a) == 0;
+    }
+    function bnMin(a) {
+      return this.compareTo(a) < 0 ? this : a;
+    }
+    function bnMax(a) {
+      return this.compareTo(a) > 0 ? this : a;
+    }
+    function bnpBitwiseTo(a, op, r) {
+      var i, f, m = Math.min(a.t, this.t);
+      for (i = 0; i < m; ++i) r.data[i] = op(this.data[i], a.data[i]);
+      if (a.t < this.t) {
+        f = a.s & this.DM;
+        for (i = m; i < this.t; ++i) r.data[i] = op(this.data[i], f);
+        r.t = this.t;
+      } else {
+        f = this.s & this.DM;
+        for (i = m; i < a.t; ++i) r.data[i] = op(f, a.data[i]);
+        r.t = a.t;
+      }
+      r.s = op(this.s, a.s);
+      r.clamp();
+    }
+    function op_and(x, y) {
+      return x & y;
+    }
+    function bnAnd(a) {
+      var r = nbi();
+      this.bitwiseTo(a, op_and, r);
+      return r;
+    }
+    function op_or(x, y) {
+      return x | y;
+    }
+    function bnOr(a) {
+      var r = nbi();
+      this.bitwiseTo(a, op_or, r);
+      return r;
+    }
+    function op_xor(x, y) {
+      return x ^ y;
+    }
+    function bnXor(a) {
+      var r = nbi();
+      this.bitwiseTo(a, op_xor, r);
+      return r;
+    }
+    function op_andnot(x, y) {
+      return x & ~y;
+    }
+    function bnAndNot(a) {
+      var r = nbi();
+      this.bitwiseTo(a, op_andnot, r);
+      return r;
+    }
+    function bnNot() {
+      var r = nbi();
+      for (var i = 0; i < this.t; ++i) r.data[i] = this.DM & ~this.data[i];
+      r.t = this.t;
+      r.s = ~this.s;
+      return r;
+    }
+    function bnShiftLeft(n) {
+      var r = nbi();
+      if (n < 0) this.rShiftTo(-n, r);
+      else this.lShiftTo(n, r);
+      return r;
+    }
+    function bnShiftRight(n) {
+      var r = nbi();
+      if (n < 0) this.lShiftTo(-n, r);
+      else this.rShiftTo(n, r);
+      return r;
+    }
+    function lbit(x) {
+      if (x == 0) return -1;
+      var r = 0;
+      if ((x & 65535) == 0) {
+        x >>= 16;
+        r += 16;
+      }
+      if ((x & 255) == 0) {
+        x >>= 8;
+        r += 8;
+      }
+      if ((x & 15) == 0) {
+        x >>= 4;
+        r += 4;
+      }
+      if ((x & 3) == 0) {
+        x >>= 2;
+        r += 2;
+      }
+      if ((x & 1) == 0) ++r;
+      return r;
+    }
+    function bnGetLowestSetBit() {
+      for (var i = 0; i < this.t; ++i)
+        if (this.data[i] != 0) return i * this.DB + lbit(this.data[i]);
+      if (this.s < 0) return this.t * this.DB;
+      return -1;
+    }
+    function cbit(x) {
+      var r = 0;
+      while (x != 0) {
+        x &= x - 1;
+        ++r;
+      }
+      return r;
+    }
+    function bnBitCount() {
+      var r = 0, x = this.s & this.DM;
+      for (var i = 0; i < this.t; ++i) r += cbit(this.data[i] ^ x);
+      return r;
+    }
+    function bnTestBit(n) {
+      var j = Math.floor(n / this.DB);
+      if (j >= this.t) return this.s != 0;
+      return (this.data[j] & 1 << n % this.DB) != 0;
+    }
+    function bnpChangeBit(n, op) {
+      var r = BigInteger2.ONE.shiftLeft(n);
+      this.bitwiseTo(r, op, r);
+      return r;
+    }
+    function bnSetBit(n) {
+      return this.changeBit(n, op_or);
+    }
+    function bnClearBit(n) {
+      return this.changeBit(n, op_andnot);
+    }
+    function bnFlipBit(n) {
+      return this.changeBit(n, op_xor);
+    }
+    function bnpAddTo(a, r) {
+      var i = 0, c = 0, m = Math.min(a.t, this.t);
+      while (i < m) {
+        c += this.data[i] + a.data[i];
+        r.data[i++] = c & this.DM;
+        c >>= this.DB;
+      }
+      if (a.t < this.t) {
+        c += a.s;
+        while (i < this.t) {
+          c += this.data[i];
+          r.data[i++] = c & this.DM;
+          c >>= this.DB;
+        }
+        c += this.s;
+      } else {
+        c += this.s;
+        while (i < a.t) {
+          c += a.data[i];
+          r.data[i++] = c & this.DM;
+          c >>= this.DB;
+        }
+        c += a.s;
+      }
+      r.s = c < 0 ? -1 : 0;
+      if (c > 0) r.data[i++] = c;
+      else if (c < -1) r.data[i++] = this.DV + c;
+      r.t = i;
+      r.clamp();
+    }
+    function bnAdd(a) {
+      var r = nbi();
+      this.addTo(a, r);
+      return r;
+    }
+    function bnSubtract(a) {
+      var r = nbi();
+      this.subTo(a, r);
+      return r;
+    }
+    function bnMultiply(a) {
+      var r = nbi();
+      this.multiplyTo(a, r);
+      return r;
+    }
+    function bnDivide(a) {
+      var r = nbi();
+      this.divRemTo(a, r, null);
+      return r;
+    }
+    function bnRemainder(a) {
+      var r = nbi();
+      this.divRemTo(a, null, r);
+      return r;
+    }
+    function bnDivideAndRemainder(a) {
+      var q = nbi(), r = nbi();
+      this.divRemTo(a, q, r);
+      return new Array(q, r);
+    }
+    function bnpDMultiply(n) {
+      this.data[this.t] = this.am(0, n - 1, this, 0, 0, this.t);
+      ++this.t;
+      this.clamp();
+    }
+    function bnpDAddOffset(n, w) {
+      if (n == 0) return;
+      while (this.t <= w) this.data[this.t++] = 0;
+      this.data[w] += n;
+      while (this.data[w] >= this.DV) {
+        this.data[w] -= this.DV;
+        if (++w >= this.t) this.data[this.t++] = 0;
+        ++this.data[w];
+      }
+    }
+    function NullExp() {
+    }
+    function nNop(x) {
+      return x;
+    }
+    function nMulTo(x, y, r) {
+      x.multiplyTo(y, r);
+    }
+    function nSqrTo(x, r) {
+      x.squareTo(r);
+    }
+    NullExp.prototype.convert = nNop;
+    NullExp.prototype.revert = nNop;
+    NullExp.prototype.mulTo = nMulTo;
+    NullExp.prototype.sqrTo = nSqrTo;
+    function bnPow(e) {
+      return this.exp(e, new NullExp());
+    }
+    function bnpMultiplyLowerTo(a, n, r) {
+      var i = Math.min(this.t + a.t, n);
+      r.s = 0;
+      r.t = i;
+      while (i > 0) r.data[--i] = 0;
+      var j;
+      for (j = r.t - this.t; i < j; ++i) r.data[i + this.t] = this.am(0, a.data[i], r, i, 0, this.t);
+      for (j = Math.min(a.t, n); i < j; ++i) this.am(0, a.data[i], r, i, 0, n - i);
+      r.clamp();
+    }
+    function bnpMultiplyUpperTo(a, n, r) {
+      --n;
+      var i = r.t = this.t + a.t - n;
+      r.s = 0;
+      while (--i >= 0) r.data[i] = 0;
+      for (i = Math.max(n - this.t, 0); i < a.t; ++i)
+        r.data[this.t + i - n] = this.am(n - i, a.data[i], r, 0, 0, this.t + i - n);
+      r.clamp();
+      r.drShiftTo(1, r);
+    }
+    function Barrett(m) {
+      this.r2 = nbi();
+      this.q3 = nbi();
+      BigInteger2.ONE.dlShiftTo(2 * m.t, this.r2);
+      this.mu = this.r2.divide(m);
+      this.m = m;
+    }
+    function barrettConvert(x) {
+      if (x.s < 0 || x.t > 2 * this.m.t) return x.mod(this.m);
+      else if (x.compareTo(this.m) < 0) return x;
+      else {
+        var r = nbi();
+        x.copyTo(r);
+        this.reduce(r);
+        return r;
+      }
+    }
+    function barrettRevert(x) {
+      return x;
+    }
+    function barrettReduce(x) {
+      x.drShiftTo(this.m.t - 1, this.r2);
+      if (x.t > this.m.t + 1) {
+        x.t = this.m.t + 1;
+        x.clamp();
+      }
+      this.mu.multiplyUpperTo(this.r2, this.m.t + 1, this.q3);
+      this.m.multiplyLowerTo(this.q3, this.m.t + 1, this.r2);
+      while (x.compareTo(this.r2) < 0) x.dAddOffset(1, this.m.t + 1);
+      x.subTo(this.r2, x);
+      while (x.compareTo(this.m) >= 0) x.subTo(this.m, x);
+    }
+    function barrettSqrTo(x, r) {
+      x.squareTo(r);
+      this.reduce(r);
+    }
+    function barrettMulTo(x, y, r) {
+      x.multiplyTo(y, r);
+      this.reduce(r);
+    }
+    Barrett.prototype.convert = barrettConvert;
+    Barrett.prototype.revert = barrettRevert;
+    Barrett.prototype.reduce = barrettReduce;
+    Barrett.prototype.mulTo = barrettMulTo;
+    Barrett.prototype.sqrTo = barrettSqrTo;
+    function bnModPow(e, m) {
+      var i = e.bitLength(), k, r = nbv(1), z;
+      if (i <= 0) return r;
+      else if (i < 18) k = 1;
+      else if (i < 48) k = 3;
+      else if (i < 144) k = 4;
+      else if (i < 768) k = 5;
+      else k = 6;
+      if (i < 8)
+        z = new Classic(m);
+      else if (m.isEven())
+        z = new Barrett(m);
+      else
+        z = new Montgomery(m);
+      var g = new Array(), n = 3, k1 = k - 1, km = (1 << k) - 1;
+      g[1] = z.convert(this);
+      if (k > 1) {
+        var g2 = nbi();
+        z.sqrTo(g[1], g2);
+        while (n <= km) {
+          g[n] = nbi();
+          z.mulTo(g2, g[n - 2], g[n]);
+          n += 2;
+        }
+      }
+      var j = e.t - 1, w, is1 = true, r2 = nbi(), t;
+      i = nbits(e.data[j]) - 1;
+      while (j >= 0) {
+        if (i >= k1) w = e.data[j] >> i - k1 & km;
+        else {
+          w = (e.data[j] & (1 << i + 1) - 1) << k1 - i;
+          if (j > 0) w |= e.data[j - 1] >> this.DB + i - k1;
+        }
+        n = k;
+        while ((w & 1) == 0) {
+          w >>= 1;
+          --n;
+        }
+        if ((i -= n) < 0) {
+          i += this.DB;
+          --j;
+        }
+        if (is1) {
+          g[w].copyTo(r);
+          is1 = false;
+        } else {
+          while (n > 1) {
+            z.sqrTo(r, r2);
+            z.sqrTo(r2, r);
+            n -= 2;
+          }
+          if (n > 0) z.sqrTo(r, r2);
+          else {
+            t = r;
+            r = r2;
+            r2 = t;
+          }
+          z.mulTo(r2, g[w], r);
+        }
+        while (j >= 0 && (e.data[j] & 1 << i) == 0) {
+          z.sqrTo(r, r2);
+          t = r;
+          r = r2;
+          r2 = t;
+          if (--i < 0) {
+            i = this.DB - 1;
+            --j;
+          }
+        }
+      }
+      return z.revert(r);
+    }
+    function bnGCD(a) {
+      var x = this.s < 0 ? this.negate() : this.clone();
+      var y = a.s < 0 ? a.negate() : a.clone();
+      if (x.compareTo(y) < 0) {
+        var t = x;
+        x = y;
+        y = t;
+      }
+      var i = x.getLowestSetBit(), g = y.getLowestSetBit();
+      if (g < 0) return x;
+      if (i < g) g = i;
+      if (g > 0) {
+        x.rShiftTo(g, x);
+        y.rShiftTo(g, y);
+      }
+      while (x.signum() > 0) {
+        if ((i = x.getLowestSetBit()) > 0) x.rShiftTo(i, x);
+        if ((i = y.getLowestSetBit()) > 0) y.rShiftTo(i, y);
+        if (x.compareTo(y) >= 0) {
+          x.subTo(y, x);
+          x.rShiftTo(1, x);
+        } else {
+          y.subTo(x, y);
+          y.rShiftTo(1, y);
+        }
+      }
+      if (g > 0) y.lShiftTo(g, y);
+      return y;
+    }
+    function bnpModInt(n) {
+      if (n <= 0) return 0;
+      var d = this.DV % n, r = this.s < 0 ? n - 1 : 0;
+      if (this.t > 0)
+        if (d == 0) r = this.data[0] % n;
+        else for (var i = this.t - 1; i >= 0; --i) r = (d * r + this.data[i]) % n;
+      return r;
+    }
+    function bnModInverse(m) {
+      var ac = m.isEven();
+      if (this.isEven() && ac || m.signum() == 0) return BigInteger2.ZERO;
+      var u = m.clone(), v = this.clone();
+      var a = nbv(1), b = nbv(0), c = nbv(0), d = nbv(1);
+      while (u.signum() != 0) {
+        while (u.isEven()) {
+          u.rShiftTo(1, u);
+          if (ac) {
+            if (!a.isEven() || !b.isEven()) {
+              a.addTo(this, a);
+              b.subTo(m, b);
+            }
+            a.rShiftTo(1, a);
+          } else if (!b.isEven()) b.subTo(m, b);
+          b.rShiftTo(1, b);
+        }
+        while (v.isEven()) {
+          v.rShiftTo(1, v);
+          if (ac) {
+            if (!c.isEven() || !d.isEven()) {
+              c.addTo(this, c);
+              d.subTo(m, d);
+            }
+            c.rShiftTo(1, c);
+          } else if (!d.isEven()) d.subTo(m, d);
+          d.rShiftTo(1, d);
+        }
+        if (u.compareTo(v) >= 0) {
+          u.subTo(v, u);
+          if (ac) a.subTo(c, a);
+          b.subTo(d, b);
+        } else {
+          v.subTo(u, v);
+          if (ac) c.subTo(a, c);
+          d.subTo(b, d);
+        }
+      }
+      if (v.compareTo(BigInteger2.ONE) != 0) return BigInteger2.ZERO;
+      if (d.compareTo(m) >= 0) return d.subtract(m);
+      if (d.signum() < 0) d.addTo(m, d);
+      else return d;
+      if (d.signum() < 0) return d.add(m);
+      else return d;
+    }
+    var lowprimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509];
+    var lplim = (1 << 26) / lowprimes[lowprimes.length - 1];
+    function bnIsProbablePrime(t) {
+      var i, x = this.abs();
+      if (x.t == 1 && x.data[0] <= lowprimes[lowprimes.length - 1]) {
+        for (i = 0; i < lowprimes.length; ++i)
+          if (x.data[0] == lowprimes[i]) return true;
+        return false;
+      }
+      if (x.isEven()) return false;
+      i = 1;
+      while (i < lowprimes.length) {
+        var m = lowprimes[i], j = i + 1;
+        while (j < lowprimes.length && m < lplim) m *= lowprimes[j++];
+        m = x.modInt(m);
+        while (i < j) if (m % lowprimes[i++] == 0) return false;
+      }
+      return x.millerRabin(t);
+    }
+    function bnpMillerRabin(t) {
+      var n1 = this.subtract(BigInteger2.ONE);
+      var k = n1.getLowestSetBit();
+      if (k <= 0) return false;
+      var r = n1.shiftRight(k);
+      var prng = bnGetPrng();
+      var a;
+      for (var i = 0; i < t; ++i) {
+        do {
+          a = new BigInteger2(this.bitLength(), prng);
+        } while (a.compareTo(BigInteger2.ONE) <= 0 || a.compareTo(n1) >= 0);
+        var y = a.modPow(r, this);
+        if (y.compareTo(BigInteger2.ONE) != 0 && y.compareTo(n1) != 0) {
+          var j = 1;
+          while (j++ < k && y.compareTo(n1) != 0) {
+            y = y.modPowInt(2, this);
+            if (y.compareTo(BigInteger2.ONE) == 0) return false;
+          }
+          if (y.compareTo(n1) != 0) return false;
+        }
+      }
+      return true;
+    }
+    function bnGetPrng() {
+      return {
+        // x is an array to fill with bytes
+        nextBytes: function(x) {
+          for (var i = 0; i < x.length; ++i) {
+            x[i] = Math.floor(Math.random() * 256);
+          }
+        }
+      };
+    }
+    BigInteger2.prototype.chunkSize = bnpChunkSize;
+    BigInteger2.prototype.toRadix = bnpToRadix;
+    BigInteger2.prototype.fromRadix = bnpFromRadix;
+    BigInteger2.prototype.fromNumber = bnpFromNumber;
+    BigInteger2.prototype.bitwiseTo = bnpBitwiseTo;
+    BigInteger2.prototype.changeBit = bnpChangeBit;
+    BigInteger2.prototype.addTo = bnpAddTo;
+    BigInteger2.prototype.dMultiply = bnpDMultiply;
+    BigInteger2.prototype.dAddOffset = bnpDAddOffset;
+    BigInteger2.prototype.multiplyLowerTo = bnpMultiplyLowerTo;
+    BigInteger2.prototype.multiplyUpperTo = bnpMultiplyUpperTo;
+    BigInteger2.prototype.modInt = bnpModInt;
+    BigInteger2.prototype.millerRabin = bnpMillerRabin;
+    BigInteger2.prototype.clone = bnClone;
+    BigInteger2.prototype.intValue = bnIntValue;
+    BigInteger2.prototype.byteValue = bnByteValue;
+    BigInteger2.prototype.shortValue = bnShortValue;
+    BigInteger2.prototype.signum = bnSigNum;
+    BigInteger2.prototype.toByteArray = bnToByteArray;
+    BigInteger2.prototype.equals = bnEquals;
+    BigInteger2.prototype.min = bnMin;
+    BigInteger2.prototype.max = bnMax;
+    BigInteger2.prototype.and = bnAnd;
+    BigInteger2.prototype.or = bnOr;
+    BigInteger2.prototype.xor = bnXor;
+    BigInteger2.prototype.andNot = bnAndNot;
+    BigInteger2.prototype.not = bnNot;
+    BigInteger2.prototype.shiftLeft = bnShiftLeft;
+    BigInteger2.prototype.shiftRight = bnShiftRight;
+    BigInteger2.prototype.getLowestSetBit = bnGetLowestSetBit;
+    BigInteger2.prototype.bitCount = bnBitCount;
+    BigInteger2.prototype.testBit = bnTestBit;
+    BigInteger2.prototype.setBit = bnSetBit;
+    BigInteger2.prototype.clearBit = bnClearBit;
+    BigInteger2.prototype.flipBit = bnFlipBit;
+    BigInteger2.prototype.add = bnAdd;
+    BigInteger2.prototype.subtract = bnSubtract;
+    BigInteger2.prototype.multiply = bnMultiply;
+    BigInteger2.prototype.divide = bnDivide;
+    BigInteger2.prototype.remainder = bnRemainder;
+    BigInteger2.prototype.divideAndRemainder = bnDivideAndRemainder;
+    BigInteger2.prototype.modPow = bnModPow;
+    BigInteger2.prototype.modInverse = bnModInverse;
+    BigInteger2.prototype.pow = bnPow;
+    BigInteger2.prototype.gcd = bnGCD;
+    BigInteger2.prototype.isProbablePrime = bnIsProbablePrime;
+  }
+});
+
+// node_modules/node-forge/lib/sha1.js
+var require_sha1 = __commonJS({
+  "node_modules/node-forge/lib/sha1.js"(exports, module) {
+    var forge3 = require_forge();
+    require_md();
+    require_util();
+    var sha1 = module.exports = forge3.sha1 = forge3.sha1 || {};
+    forge3.md.sha1 = forge3.md.algorithms.sha1 = sha1;
+    sha1.create = function() {
+      if (!_initialized) {
+        _init();
+      }
+      var _state = null;
+      var _input = forge3.util.createBuffer();
+      var _w = new Array(80);
+      var md = {
+        algorithm: "sha1",
+        blockLength: 64,
+        digestLength: 20,
+        // 56-bit length of message so far (does not including padding)
+        messageLength: 0,
+        // true message length
+        fullMessageLength: null,
+        // size of message length in bytes
+        messageLengthSize: 8
+      };
+      md.start = function() {
+        md.messageLength = 0;
+        md.fullMessageLength = md.messageLength64 = [];
+        var int32s = md.messageLengthSize / 4;
+        for (var i = 0; i < int32s; ++i) {
+          md.fullMessageLength.push(0);
+        }
+        _input = forge3.util.createBuffer();
+        _state = {
+          h0: 1732584193,
+          h1: 4023233417,
+          h2: 2562383102,
+          h3: 271733878,
+          h4: 3285377520
+        };
+        return md;
+      };
+      md.start();
+      md.update = function(msg, encoding) {
+        if (encoding === "utf8") {
+          msg = forge3.util.encodeUtf8(msg);
+        }
+        var len = msg.length;
+        md.messageLength += len;
+        len = [len / 4294967296 >>> 0, len >>> 0];
+        for (var i = md.fullMessageLength.length - 1; i >= 0; --i) {
+          md.fullMessageLength[i] += len[1];
+          len[1] = len[0] + (md.fullMessageLength[i] / 4294967296 >>> 0);
+          md.fullMessageLength[i] = md.fullMessageLength[i] >>> 0;
+          len[0] = len[1] / 4294967296 >>> 0;
+        }
+        _input.putBytes(msg);
+        _update(_state, _w, _input);
+        if (_input.read > 2048 || _input.length() === 0) {
+          _input.compact();
+        }
+        return md;
+      };
+      md.digest = function() {
+        var finalBlock = forge3.util.createBuffer();
+        finalBlock.putBytes(_input.bytes());
+        var remaining = md.fullMessageLength[md.fullMessageLength.length - 1] + md.messageLengthSize;
+        var overflow = remaining & md.blockLength - 1;
+        finalBlock.putBytes(_padding.substr(0, md.blockLength - overflow));
+        var next, carry;
+        var bits = md.fullMessageLength[0] * 8;
+        for (var i = 0; i < md.fullMessageLength.length - 1; ++i) {
+          next = md.fullMessageLength[i + 1] * 8;
+          carry = next / 4294967296 >>> 0;
+          bits += carry;
+          finalBlock.putInt32(bits >>> 0);
+          bits = next >>> 0;
+        }
+        finalBlock.putInt32(bits);
+        var s2 = {
+          h0: _state.h0,
+          h1: _state.h1,
+          h2: _state.h2,
+          h3: _state.h3,
+          h4: _state.h4
+        };
+        _update(s2, _w, finalBlock);
+        var rval = forge3.util.createBuffer();
+        rval.putInt32(s2.h0);
+        rval.putInt32(s2.h1);
+        rval.putInt32(s2.h2);
+        rval.putInt32(s2.h3);
+        rval.putInt32(s2.h4);
+        return rval;
+      };
+      return md;
+    };
+    var _padding = null;
+    var _initialized = false;
+    function _init() {
+      _padding = String.fromCharCode(128);
+      _padding += forge3.util.fillString(String.fromCharCode(0), 64);
+      _initialized = true;
+    }
+    function _update(s, w, bytes) {
+      var t, a, b, c, d, e, f, i;
+      var len = bytes.length();
+      while (len >= 64) {
+        a = s.h0;
+        b = s.h1;
+        c = s.h2;
+        d = s.h3;
+        e = s.h4;
+        for (i = 0; i < 16; ++i) {
+          t = bytes.getInt32();
+          w[i] = t;
+          f = d ^ b & (c ^ d);
+          t = (a << 5 | a >>> 27) + f + e + 1518500249 + t;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) >>> 0;
+          b = a;
+          a = t;
+        }
+        for (; i < 20; ++i) {
+          t = w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16];
+          t = t << 1 | t >>> 31;
+          w[i] = t;
+          f = d ^ b & (c ^ d);
+          t = (a << 5 | a >>> 27) + f + e + 1518500249 + t;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) >>> 0;
+          b = a;
+          a = t;
+        }
+        for (; i < 32; ++i) {
+          t = w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16];
+          t = t << 1 | t >>> 31;
+          w[i] = t;
+          f = b ^ c ^ d;
+          t = (a << 5 | a >>> 27) + f + e + 1859775393 + t;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) >>> 0;
+          b = a;
+          a = t;
+        }
+        for (; i < 40; ++i) {
+          t = w[i - 6] ^ w[i - 16] ^ w[i - 28] ^ w[i - 32];
+          t = t << 2 | t >>> 30;
+          w[i] = t;
+          f = b ^ c ^ d;
+          t = (a << 5 | a >>> 27) + f + e + 1859775393 + t;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) >>> 0;
+          b = a;
+          a = t;
+        }
+        for (; i < 60; ++i) {
+          t = w[i - 6] ^ w[i - 16] ^ w[i - 28] ^ w[i - 32];
+          t = t << 2 | t >>> 30;
+          w[i] = t;
+          f = b & c | d & (b ^ c);
+          t = (a << 5 | a >>> 27) + f + e + 2400959708 + t;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) >>> 0;
+          b = a;
+          a = t;
+        }
+        for (; i < 80; ++i) {
+          t = w[i - 6] ^ w[i - 16] ^ w[i - 28] ^ w[i - 32];
+          t = t << 2 | t >>> 30;
+          w[i] = t;
+          f = b ^ c ^ d;
+          t = (a << 5 | a >>> 27) + f + e + 3395469782 + t;
+          e = d;
+          d = c;
+          c = (b << 30 | b >>> 2) >>> 0;
+          b = a;
+          a = t;
+        }
+        s.h0 = s.h0 + a | 0;
+        s.h1 = s.h1 + b | 0;
+        s.h2 = s.h2 + c | 0;
+        s.h3 = s.h3 + d | 0;
+        s.h4 = s.h4 + e | 0;
+        len -= 64;
+      }
+    }
+  }
+});
+
+// node_modules/node-forge/lib/pkcs1.js
+var require_pkcs1 = __commonJS({
+  "node_modules/node-forge/lib/pkcs1.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    require_random();
+    require_sha1();
+    var pkcs1 = module.exports = forge3.pkcs1 = forge3.pkcs1 || {};
+    pkcs1.encode_rsa_oaep = function(key, message, options) {
+      var label;
+      var seed;
+      var md;
+      var mgf1Md;
+      if (typeof options === "string") {
+        label = options;
+        seed = arguments[3] || void 0;
+        md = arguments[4] || void 0;
+      } else if (options) {
+        label = options.label || void 0;
+        seed = options.seed || void 0;
+        md = options.md || void 0;
+        if (options.mgf1 && options.mgf1.md) {
+          mgf1Md = options.mgf1.md;
+        }
+      }
+      if (!md) {
+        md = forge3.md.sha1.create();
+      } else {
+        md.start();
+      }
+      if (!mgf1Md) {
+        mgf1Md = md;
+      }
+      var keyLength = Math.ceil(key.n.bitLength() / 8);
+      var maxLength = keyLength - 2 * md.digestLength - 2;
+      if (message.length > maxLength) {
+        var error = new Error("RSAES-OAEP input message length is too long.");
+        error.length = message.length;
+        error.maxLength = maxLength;
+        throw error;
+      }
+      if (!label) {
+        label = "";
+      }
+      md.update(label, "raw");
+      var lHash = md.digest();
+      var PS = "";
+      var PS_length = maxLength - message.length;
+      for (var i = 0; i < PS_length; i++) {
+        PS += "\0";
+      }
+      var DB = lHash.getBytes() + PS + "" + message;
+      if (!seed) {
+        seed = forge3.random.getBytes(md.digestLength);
+      } else if (seed.length !== md.digestLength) {
+        var error = new Error("Invalid RSAES-OAEP seed. The seed length must match the digest length.");
+        error.seedLength = seed.length;
+        error.digestLength = md.digestLength;
+        throw error;
+      }
+      var dbMask = rsa_mgf1(seed, keyLength - md.digestLength - 1, mgf1Md);
+      var maskedDB = forge3.util.xorBytes(DB, dbMask, DB.length);
+      var seedMask = rsa_mgf1(maskedDB, md.digestLength, mgf1Md);
+      var maskedSeed = forge3.util.xorBytes(seed, seedMask, seed.length);
+      return "\0" + maskedSeed + maskedDB;
+    };
+    pkcs1.decode_rsa_oaep = function(key, em, options) {
+      var label;
+      var md;
+      var mgf1Md;
+      if (typeof options === "string") {
+        label = options;
+        md = arguments[3] || void 0;
+      } else if (options) {
+        label = options.label || void 0;
+        md = options.md || void 0;
+        if (options.mgf1 && options.mgf1.md) {
+          mgf1Md = options.mgf1.md;
+        }
+      }
+      var keyLength = Math.ceil(key.n.bitLength() / 8);
+      if (em.length !== keyLength) {
+        var error = new Error("RSAES-OAEP encoded message length is invalid.");
+        error.length = em.length;
+        error.expectedLength = keyLength;
+        throw error;
+      }
+      if (md === void 0) {
+        md = forge3.md.sha1.create();
+      } else {
+        md.start();
+      }
+      if (!mgf1Md) {
+        mgf1Md = md;
+      }
+      if (keyLength < 2 * md.digestLength + 2) {
+        throw new Error("RSAES-OAEP key is too short for the hash function.");
+      }
+      if (!label) {
+        label = "";
+      }
+      md.update(label, "raw");
+      var lHash = md.digest().getBytes();
+      var y = em.charAt(0);
+      var maskedSeed = em.substring(1, md.digestLength + 1);
+      var maskedDB = em.substring(1 + md.digestLength);
+      var seedMask = rsa_mgf1(maskedDB, md.digestLength, mgf1Md);
+      var seed = forge3.util.xorBytes(maskedSeed, seedMask, maskedSeed.length);
+      var dbMask = rsa_mgf1(seed, keyLength - md.digestLength - 1, mgf1Md);
+      var db2 = forge3.util.xorBytes(maskedDB, dbMask, maskedDB.length);
+      var lHashPrime = db2.substring(0, md.digestLength);
+      var error = y !== "\0";
+      for (var i = 0; i < md.digestLength; ++i) {
+        error |= lHash.charAt(i) !== lHashPrime.charAt(i);
+      }
+      var in_ps = 1;
+      var index = md.digestLength;
+      for (var j = md.digestLength; j < db2.length; j++) {
+        var code = db2.charCodeAt(j);
+        var is_0 = code & 1 ^ 1;
+        var error_mask = in_ps ? 65534 : 0;
+        error |= code & error_mask;
+        in_ps = in_ps & is_0;
+        index += in_ps;
+      }
+      if (error || db2.charCodeAt(index) !== 1) {
+        throw new Error("Invalid RSAES-OAEP padding.");
+      }
+      return db2.substring(index + 1);
+    };
+    function rsa_mgf1(seed, maskLength, hash) {
+      if (!hash) {
+        hash = forge3.md.sha1.create();
+      }
+      var t = "";
+      var count = Math.ceil(maskLength / hash.digestLength);
+      for (var i = 0; i < count; ++i) {
+        var c = String.fromCharCode(
+          i >> 24 & 255,
+          i >> 16 & 255,
+          i >> 8 & 255,
+          i & 255
+        );
+        hash.start();
+        hash.update(seed + c);
+        t += hash.digest().getBytes();
+      }
+      return t.substring(0, maskLength);
+    }
+  }
+});
+
+// node_modules/node-forge/lib/prime.js
+var require_prime = __commonJS({
+  "node_modules/node-forge/lib/prime.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    require_jsbn();
+    require_random();
+    (function() {
+      if (forge3.prime) {
+        module.exports = forge3.prime;
+        return;
+      }
+      var prime = module.exports = forge3.prime = forge3.prime || {};
+      var BigInteger2 = forge3.jsbn.BigInteger;
+      var GCD_30_DELTA = [6, 4, 2, 4, 2, 4, 6, 2];
+      var THIRTY = new BigInteger2(null);
+      THIRTY.fromInt(30);
+      var op_or = function(x, y) {
+        return x | y;
+      };
+      prime.generateProbablePrime = function(bits, options, callback) {
+        if (typeof options === "function") {
+          callback = options;
+          options = {};
+        }
+        options = options || {};
+        var algorithm = options.algorithm || "PRIMEINC";
+        if (typeof algorithm === "string") {
+          algorithm = { name: algorithm };
+        }
+        algorithm.options = algorithm.options || {};
+        var prng = options.prng || forge3.random;
+        var rng = {
+          // x is an array to fill with bytes
+          nextBytes: function(x) {
+            var b = prng.getBytesSync(x.length);
+            for (var i = 0; i < x.length; ++i) {
+              x[i] = b.charCodeAt(i);
+            }
+          }
+        };
+        if (algorithm.name === "PRIMEINC") {
+          return primeincFindPrime(bits, rng, algorithm.options, callback);
+        }
+        throw new Error("Invalid prime generation algorithm: " + algorithm.name);
+      };
+      function primeincFindPrime(bits, rng, options, callback) {
+        if ("workers" in options) {
+          return primeincFindPrimeWithWorkers(bits, rng, options, callback);
+        }
+        return primeincFindPrimeWithoutWorkers(bits, rng, options, callback);
+      }
+      function primeincFindPrimeWithoutWorkers(bits, rng, options, callback) {
+        var num = generateRandom(bits, rng);
+        var deltaIdx = 0;
+        var mrTests = getMillerRabinTests(num.bitLength());
+        if ("millerRabinTests" in options) {
+          mrTests = options.millerRabinTests;
+        }
+        var maxBlockTime = 10;
+        if ("maxBlockTime" in options) {
+          maxBlockTime = options.maxBlockTime;
+        }
+        _primeinc(num, bits, rng, deltaIdx, mrTests, maxBlockTime, callback);
+      }
+      function _primeinc(num, bits, rng, deltaIdx, mrTests, maxBlockTime, callback) {
+        var start = +/* @__PURE__ */ new Date();
+        do {
+          if (num.bitLength() > bits) {
+            num = generateRandom(bits, rng);
+          }
+          if (num.isProbablePrime(mrTests)) {
+            return callback(null, num);
+          }
+          num.dAddOffset(GCD_30_DELTA[deltaIdx++ % 8], 0);
+        } while (maxBlockTime < 0 || +/* @__PURE__ */ new Date() - start < maxBlockTime);
+        forge3.util.setImmediate(function() {
+          _primeinc(num, bits, rng, deltaIdx, mrTests, maxBlockTime, callback);
+        });
+      }
+      function primeincFindPrimeWithWorkers(bits, rng, options, callback) {
+        if (typeof Worker === "undefined") {
+          return primeincFindPrimeWithoutWorkers(bits, rng, options, callback);
+        }
+        var num = generateRandom(bits, rng);
+        var numWorkers = options.workers;
+        var workLoad = options.workLoad || 100;
+        var range = workLoad * 30 / 8;
+        var workerScript = options.workerScript || "forge/prime.worker.js";
+        if (numWorkers === -1) {
+          return forge3.util.estimateCores(function(err, cores) {
+            if (err) {
+              cores = 2;
+            }
+            numWorkers = cores - 1;
+            generate();
+          });
+        }
+        generate();
+        function generate() {
+          numWorkers = Math.max(1, numWorkers);
+          var workers = [];
+          for (var i = 0; i < numWorkers; ++i) {
+            workers[i] = new Worker(workerScript);
+          }
+          var running = numWorkers;
+          for (var i = 0; i < numWorkers; ++i) {
+            workers[i].addEventListener("message", workerMessage);
+          }
+          var found = false;
+          function workerMessage(e) {
+            if (found) {
+              return;
+            }
+            --running;
+            var data = e.data;
+            if (data.found) {
+              for (var i2 = 0; i2 < workers.length; ++i2) {
+                workers[i2].terminate();
+              }
+              found = true;
+              return callback(null, new BigInteger2(data.prime, 16));
+            }
+            if (num.bitLength() > bits) {
+              num = generateRandom(bits, rng);
+            }
+            var hex = num.toString(16);
+            e.target.postMessage({
+              hex,
+              workLoad
+            });
+            num.dAddOffset(range, 0);
+          }
+        }
+      }
+      function generateRandom(bits, rng) {
+        var num = new BigInteger2(bits, rng);
+        var bits1 = bits - 1;
+        if (!num.testBit(bits1)) {
+          num.bitwiseTo(BigInteger2.ONE.shiftLeft(bits1), op_or, num);
+        }
+        num.dAddOffset(31 - num.mod(THIRTY).byteValue(), 0);
+        return num;
+      }
+      function getMillerRabinTests(bits) {
+        if (bits <= 100) return 27;
+        if (bits <= 150) return 18;
+        if (bits <= 200) return 15;
+        if (bits <= 250) return 12;
+        if (bits <= 300) return 9;
+        if (bits <= 350) return 8;
+        if (bits <= 400) return 7;
+        if (bits <= 500) return 6;
+        if (bits <= 600) return 5;
+        if (bits <= 800) return 4;
+        if (bits <= 1250) return 3;
+        return 2;
+      }
+    })();
+  }
+});
+
+// node_modules/node-forge/lib/rsa.js
+var require_rsa = __commonJS({
+  "node_modules/node-forge/lib/rsa.js"(exports, module) {
+    var forge3 = require_forge();
+    require_asn1();
+    require_jsbn();
+    require_oids();
+    require_pkcs1();
+    require_prime();
+    require_random();
+    require_util();
+    if (typeof BigInteger2 === "undefined") {
+      BigInteger2 = forge3.jsbn.BigInteger;
+    }
+    var BigInteger2;
+    var _crypto = forge3.util.isNodejs ? __require("crypto") : null;
+    var asn1 = forge3.asn1;
+    var util = forge3.util;
+    forge3.pki = forge3.pki || {};
+    module.exports = forge3.pki.rsa = forge3.rsa = forge3.rsa || {};
+    var pki = forge3.pki;
+    var GCD_30_DELTA = [6, 4, 2, 4, 2, 4, 6, 2];
+    var privateKeyValidator = {
+      // PrivateKeyInfo
+      name: "PrivateKeyInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        // Version (INTEGER)
+        name: "PrivateKeyInfo.version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyVersion"
+      }, {
+        // privateKeyAlgorithm
+        name: "PrivateKeyInfo.privateKeyAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "AlgorithmIdentifier.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "privateKeyOid"
+        }]
+      }, {
+        // PrivateKey
+        name: "PrivateKeyInfo",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "privateKey"
+      }]
+    };
+    var rsaPrivateKeyValidator = {
+      // RSAPrivateKey
+      name: "RSAPrivateKey",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        // Version (INTEGER)
+        name: "RSAPrivateKey.version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyVersion"
+      }, {
+        // modulus (n)
+        name: "RSAPrivateKey.modulus",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyModulus"
+      }, {
+        // publicExponent (e)
+        name: "RSAPrivateKey.publicExponent",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyPublicExponent"
+      }, {
+        // privateExponent (d)
+        name: "RSAPrivateKey.privateExponent",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyPrivateExponent"
+      }, {
+        // prime1 (p)
+        name: "RSAPrivateKey.prime1",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyPrime1"
+      }, {
+        // prime2 (q)
+        name: "RSAPrivateKey.prime2",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyPrime2"
+      }, {
+        // exponent1 (d mod (p-1))
+        name: "RSAPrivateKey.exponent1",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyExponent1"
+      }, {
+        // exponent2 (d mod (q-1))
+        name: "RSAPrivateKey.exponent2",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyExponent2"
+      }, {
+        // coefficient ((inverse of q) mod p)
+        name: "RSAPrivateKey.coefficient",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyCoefficient"
+      }]
+    };
+    var rsaPublicKeyValidator = {
+      // RSAPublicKey
+      name: "RSAPublicKey",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        // modulus (n)
+        name: "RSAPublicKey.modulus",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "publicKeyModulus"
+      }, {
+        // publicExponent (e)
+        name: "RSAPublicKey.exponent",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "publicKeyExponent"
+      }]
+    };
+    var publicKeyValidator = forge3.pki.rsa.publicKeyValidator = {
+      name: "SubjectPublicKeyInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      captureAsn1: "subjectPublicKeyInfo",
+      value: [{
+        name: "SubjectPublicKeyInfo.AlgorithmIdentifier",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "AlgorithmIdentifier.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "publicKeyOid"
+        }]
+      }, {
+        // subjectPublicKey
+        name: "SubjectPublicKeyInfo.subjectPublicKey",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.BITSTRING,
+        constructed: false,
+        value: [{
+          // RSAPublicKey
+          name: "SubjectPublicKeyInfo.subjectPublicKey.RSAPublicKey",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          optional: true,
+          captureAsn1: "rsaPublicKey"
+        }]
+      }]
+    };
+    var digestInfoValidator = {
+      name: "DigestInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "DigestInfo.DigestAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "DigestInfo.DigestAlgorithm.algorithmIdentifier",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "algorithmIdentifier"
+        }, {
+          // NULL paramters
+          name: "DigestInfo.DigestAlgorithm.parameters",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.NULL,
+          // captured only to check existence for md2 and md5
+          capture: "parameters",
+          optional: true,
+          constructed: false
+        }]
+      }, {
+        // digest
+        name: "DigestInfo.digest",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "digest"
+      }]
+    };
+    var emsaPkcs1v15encode = function(md) {
+      var oid;
+      if (md.algorithm in pki.oids) {
+        oid = pki.oids[md.algorithm];
+      } else {
+        var error = new Error("Unknown message digest algorithm.");
+        error.algorithm = md.algorithm;
+        throw error;
+      }
+      var oidBytes = asn1.oidToDer(oid).getBytes();
+      var digestInfo = asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.SEQUENCE,
+        true,
+        []
+      );
+      var digestAlgorithm = asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.SEQUENCE,
+        true,
+        []
+      );
+      digestAlgorithm.value.push(asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.OID,
+        false,
+        oidBytes
+      ));
+      digestAlgorithm.value.push(asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.NULL,
+        false,
+        ""
+      ));
+      var digest = asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.OCTETSTRING,
+        false,
+        md.digest().getBytes()
+      );
+      digestInfo.value.push(digestAlgorithm);
+      digestInfo.value.push(digest);
+      return asn1.toDer(digestInfo).getBytes();
+    };
+    var _modPow = function(x, key, pub) {
+      if (pub) {
+        return x.modPow(key.e, key.n);
+      }
+      if (!key.p || !key.q) {
+        return x.modPow(key.d, key.n);
+      }
+      if (!key.dP) {
+        key.dP = key.d.mod(key.p.subtract(BigInteger2.ONE));
+      }
+      if (!key.dQ) {
+        key.dQ = key.d.mod(key.q.subtract(BigInteger2.ONE));
+      }
+      if (!key.qInv) {
+        key.qInv = key.q.modInverse(key.p);
+      }
+      var r;
+      do {
+        r = new BigInteger2(
+          forge3.util.bytesToHex(forge3.random.getBytes(key.n.bitLength() / 8)),
+          16
+        );
+      } while (r.compareTo(key.n) >= 0 || !r.gcd(key.n).equals(BigInteger2.ONE));
+      x = x.multiply(r.modPow(key.e, key.n)).mod(key.n);
+      var xp = x.mod(key.p).modPow(key.dP, key.p);
+      var xq = x.mod(key.q).modPow(key.dQ, key.q);
+      while (xp.compareTo(xq) < 0) {
+        xp = xp.add(key.p);
+      }
+      var y = xp.subtract(xq).multiply(key.qInv).mod(key.p).multiply(key.q).add(xq);
+      y = y.multiply(r.modInverse(key.n)).mod(key.n);
+      return y;
+    };
+    pki.rsa.encrypt = function(m, key, bt) {
+      var pub = bt;
+      var eb;
+      var k = Math.ceil(key.n.bitLength() / 8);
+      if (bt !== false && bt !== true) {
+        pub = bt === 2;
+        eb = _encodePkcs1_v1_5(m, key, bt);
+      } else {
+        eb = forge3.util.createBuffer();
+        eb.putBytes(m);
+      }
+      var x = new BigInteger2(eb.toHex(), 16);
+      var y = _modPow(x, key, pub);
+      var yhex = y.toString(16);
+      var ed = forge3.util.createBuffer();
+      var zeros = k - Math.ceil(yhex.length / 2);
+      while (zeros > 0) {
+        ed.putByte(0);
+        --zeros;
+      }
+      ed.putBytes(forge3.util.hexToBytes(yhex));
+      return ed.getBytes();
+    };
+    pki.rsa.decrypt = function(ed, key, pub, ml) {
+      var k = Math.ceil(key.n.bitLength() / 8);
+      if (ed.length !== k) {
+        var error = new Error("Encrypted message length is invalid.");
+        error.length = ed.length;
+        error.expected = k;
+        throw error;
+      }
+      var y = new BigInteger2(forge3.util.createBuffer(ed).toHex(), 16);
+      if (y.compareTo(key.n) >= 0) {
+        throw new Error("Encrypted message is invalid.");
+      }
+      var x = _modPow(y, key, pub);
+      var xhex = x.toString(16);
+      var eb = forge3.util.createBuffer();
+      var zeros = k - Math.ceil(xhex.length / 2);
+      while (zeros > 0) {
+        eb.putByte(0);
+        --zeros;
+      }
+      eb.putBytes(forge3.util.hexToBytes(xhex));
+      if (ml !== false) {
+        return _decodePkcs1_v1_5(eb.getBytes(), key, pub);
+      }
+      return eb.getBytes();
+    };
+    pki.rsa.createKeyPairGenerationState = function(bits, e, options) {
+      if (typeof bits === "string") {
+        bits = parseInt(bits, 10);
+      }
+      bits = bits || 2048;
+      options = options || {};
+      var prng = options.prng || forge3.random;
+      var rng = {
+        // x is an array to fill with bytes
+        nextBytes: function(x) {
+          var b = prng.getBytesSync(x.length);
+          for (var i = 0; i < x.length; ++i) {
+            x[i] = b.charCodeAt(i);
+          }
+        }
+      };
+      var algorithm = options.algorithm || "PRIMEINC";
+      var rval;
+      if (algorithm === "PRIMEINC") {
+        rval = {
+          algorithm,
+          state: 0,
+          bits,
+          rng,
+          eInt: e || 65537,
+          e: new BigInteger2(null),
+          p: null,
+          q: null,
+          qBits: bits >> 1,
+          pBits: bits - (bits >> 1),
+          pqState: 0,
+          num: null,
+          keys: null
+        };
+        rval.e.fromInt(rval.eInt);
+      } else {
+        throw new Error("Invalid key generation algorithm: " + algorithm);
+      }
+      return rval;
+    };
+    pki.rsa.stepKeyPairGenerationState = function(state, n) {
+      if (!("algorithm" in state)) {
+        state.algorithm = "PRIMEINC";
+      }
+      var THIRTY = new BigInteger2(null);
+      THIRTY.fromInt(30);
+      var deltaIdx = 0;
+      var op_or = function(x, y) {
+        return x | y;
+      };
+      var t1 = +/* @__PURE__ */ new Date();
+      var t2;
+      var total = 0;
+      while (state.keys === null && (n <= 0 || total < n)) {
+        if (state.state === 0) {
+          var bits = state.p === null ? state.pBits : state.qBits;
+          var bits1 = bits - 1;
+          if (state.pqState === 0) {
+            state.num = new BigInteger2(bits, state.rng);
+            if (!state.num.testBit(bits1)) {
+              state.num.bitwiseTo(
+                BigInteger2.ONE.shiftLeft(bits1),
+                op_or,
+                state.num
+              );
+            }
+            state.num.dAddOffset(31 - state.num.mod(THIRTY).byteValue(), 0);
+            deltaIdx = 0;
+            ++state.pqState;
+          } else if (state.pqState === 1) {
+            if (state.num.bitLength() > bits) {
+              state.pqState = 0;
+            } else if (state.num.isProbablePrime(
+              _getMillerRabinTests(state.num.bitLength())
+            )) {
+              ++state.pqState;
+            } else {
+              state.num.dAddOffset(GCD_30_DELTA[deltaIdx++ % 8], 0);
+            }
+          } else if (state.pqState === 2) {
+            state.pqState = state.num.subtract(BigInteger2.ONE).gcd(state.e).compareTo(BigInteger2.ONE) === 0 ? 3 : 0;
+          } else if (state.pqState === 3) {
+            state.pqState = 0;
+            if (state.p === null) {
+              state.p = state.num;
+            } else {
+              state.q = state.num;
+            }
+            if (state.p !== null && state.q !== null) {
+              ++state.state;
+            }
+            state.num = null;
+          }
+        } else if (state.state === 1) {
+          if (state.p.compareTo(state.q) < 0) {
+            state.num = state.p;
+            state.p = state.q;
+            state.q = state.num;
+          }
+          ++state.state;
+        } else if (state.state === 2) {
+          state.p1 = state.p.subtract(BigInteger2.ONE);
+          state.q1 = state.q.subtract(BigInteger2.ONE);
+          state.phi = state.p1.multiply(state.q1);
+          ++state.state;
+        } else if (state.state === 3) {
+          if (state.phi.gcd(state.e).compareTo(BigInteger2.ONE) === 0) {
+            ++state.state;
+          } else {
+            state.p = null;
+            state.q = null;
+            state.state = 0;
+          }
+        } else if (state.state === 4) {
+          state.n = state.p.multiply(state.q);
+          if (state.n.bitLength() === state.bits) {
+            ++state.state;
+          } else {
+            state.q = null;
+            state.state = 0;
+          }
+        } else if (state.state === 5) {
+          var d = state.e.modInverse(state.phi);
+          state.keys = {
+            privateKey: pki.rsa.setPrivateKey(
+              state.n,
+              state.e,
+              d,
+              state.p,
+              state.q,
+              d.mod(state.p1),
+              d.mod(state.q1),
+              state.q.modInverse(state.p)
+            ),
+            publicKey: pki.rsa.setPublicKey(state.n, state.e)
+          };
+        }
+        t2 = +/* @__PURE__ */ new Date();
+        total += t2 - t1;
+        t1 = t2;
+      }
+      return state.keys !== null;
+    };
+    pki.rsa.generateKeyPair = function(bits, e, options, callback) {
+      if (arguments.length === 1) {
+        if (typeof bits === "object") {
+          options = bits;
+          bits = void 0;
+        } else if (typeof bits === "function") {
+          callback = bits;
+          bits = void 0;
+        }
+      } else if (arguments.length === 2) {
+        if (typeof bits === "number") {
+          if (typeof e === "function") {
+            callback = e;
+            e = void 0;
+          } else if (typeof e !== "number") {
+            options = e;
+            e = void 0;
+          }
+        } else {
+          options = bits;
+          callback = e;
+          bits = void 0;
+          e = void 0;
+        }
+      } else if (arguments.length === 3) {
+        if (typeof e === "number") {
+          if (typeof options === "function") {
+            callback = options;
+            options = void 0;
+          }
+        } else {
+          callback = options;
+          options = e;
+          e = void 0;
+        }
+      }
+      options = options || {};
+      if (bits === void 0) {
+        bits = options.bits || 2048;
+      }
+      if (e === void 0) {
+        e = options.e || 65537;
+      }
+      if (!forge3.options.usePureJavaScript && !options.prng && bits >= 256 && bits <= 16384 && (e === 65537 || e === 3)) {
+        if (callback) {
+          if (_detectNodeCrypto("generateKeyPair")) {
+            return _crypto.generateKeyPair("rsa", {
+              modulusLength: bits,
+              publicExponent: e,
+              publicKeyEncoding: {
+                type: "spki",
+                format: "pem"
+              },
+              privateKeyEncoding: {
+                type: "pkcs8",
+                format: "pem"
+              }
+            }, function(err, pub, priv) {
+              if (err) {
+                return callback(err);
+              }
+              callback(null, {
+                privateKey: pki.privateKeyFromPem(priv),
+                publicKey: pki.publicKeyFromPem(pub)
+              });
+            });
+          }
+          if (_detectSubtleCrypto("generateKey") && _detectSubtleCrypto("exportKey")) {
+            return util.globalScope.crypto.subtle.generateKey({
+              name: "RSASSA-PKCS1-v1_5",
+              modulusLength: bits,
+              publicExponent: _intToUint8Array(e),
+              hash: { name: "SHA-256" }
+            }, true, ["sign", "verify"]).then(function(pair) {
+              return util.globalScope.crypto.subtle.exportKey(
+                "pkcs8",
+                pair.privateKey
+              );
+            }).then(void 0, function(err) {
+              callback(err);
+            }).then(function(pkcs8) {
+              if (pkcs8) {
+                var privateKey = pki.privateKeyFromAsn1(
+                  asn1.fromDer(forge3.util.createBuffer(pkcs8))
+                );
+                callback(null, {
+                  privateKey,
+                  publicKey: pki.setRsaPublicKey(privateKey.n, privateKey.e)
+                });
+              }
+            });
+          }
+          if (_detectSubtleMsCrypto("generateKey") && _detectSubtleMsCrypto("exportKey")) {
+            var genOp = util.globalScope.msCrypto.subtle.generateKey({
+              name: "RSASSA-PKCS1-v1_5",
+              modulusLength: bits,
+              publicExponent: _intToUint8Array(e),
+              hash: { name: "SHA-256" }
+            }, true, ["sign", "verify"]);
+            genOp.oncomplete = function(e2) {
+              var pair = e2.target.result;
+              var exportOp = util.globalScope.msCrypto.subtle.exportKey(
+                "pkcs8",
+                pair.privateKey
+              );
+              exportOp.oncomplete = function(e3) {
+                var pkcs8 = e3.target.result;
+                var privateKey = pki.privateKeyFromAsn1(
+                  asn1.fromDer(forge3.util.createBuffer(pkcs8))
+                );
+                callback(null, {
+                  privateKey,
+                  publicKey: pki.setRsaPublicKey(privateKey.n, privateKey.e)
+                });
+              };
+              exportOp.onerror = function(err) {
+                callback(err);
+              };
+            };
+            genOp.onerror = function(err) {
+              callback(err);
+            };
+            return;
+          }
+        } else {
+          if (_detectNodeCrypto("generateKeyPairSync")) {
+            var keypair = _crypto.generateKeyPairSync("rsa", {
+              modulusLength: bits,
+              publicExponent: e,
+              publicKeyEncoding: {
+                type: "spki",
+                format: "pem"
+              },
+              privateKeyEncoding: {
+                type: "pkcs8",
+                format: "pem"
+              }
+            });
+            return {
+              privateKey: pki.privateKeyFromPem(keypair.privateKey),
+              publicKey: pki.publicKeyFromPem(keypair.publicKey)
+            };
+          }
+        }
+      }
+      var state = pki.rsa.createKeyPairGenerationState(bits, e, options);
+      if (!callback) {
+        pki.rsa.stepKeyPairGenerationState(state, 0);
+        return state.keys;
+      }
+      _generateKeyPair(state, options, callback);
+    };
+    pki.setRsaPublicKey = pki.rsa.setPublicKey = function(n, e) {
+      var key = {
+        n,
+        e
+      };
+      key.encrypt = function(data, scheme, schemeOptions) {
+        if (typeof scheme === "string") {
+          scheme = scheme.toUpperCase();
+        } else if (scheme === void 0) {
+          scheme = "RSAES-PKCS1-V1_5";
+        }
+        if (scheme === "RSAES-PKCS1-V1_5") {
+          scheme = {
+            encode: function(m, key2, pub) {
+              return _encodePkcs1_v1_5(m, key2, 2).getBytes();
+            }
+          };
+        } else if (scheme === "RSA-OAEP" || scheme === "RSAES-OAEP") {
+          scheme = {
+            encode: function(m, key2) {
+              return forge3.pkcs1.encode_rsa_oaep(key2, m, schemeOptions);
+            }
+          };
+        } else if (["RAW", "NONE", "NULL", null].indexOf(scheme) !== -1) {
+          scheme = { encode: function(e3) {
+            return e3;
+          } };
+        } else if (typeof scheme === "string") {
+          throw new Error('Unsupported encryption scheme: "' + scheme + '".');
+        }
+        var e2 = scheme.encode(data, key, true);
+        return pki.rsa.encrypt(e2, key, true);
+      };
+      key.verify = function(digest, signature, scheme, options) {
+        if (typeof scheme === "string") {
+          scheme = scheme.toUpperCase();
+        } else if (scheme === void 0) {
+          scheme = "RSASSA-PKCS1-V1_5";
+        }
+        if (options === void 0) {
+          options = {
+            _parseAllDigestBytes: true
+          };
+        }
+        if (!("_parseAllDigestBytes" in options)) {
+          options._parseAllDigestBytes = true;
+        }
+        if (scheme === "RSASSA-PKCS1-V1_5") {
+          scheme = {
+            verify: function(digest2, d2) {
+              d2 = _decodePkcs1_v1_5(d2, key, true);
+              var obj = asn1.fromDer(d2, {
+                parseAllBytes: options._parseAllDigestBytes
+              });
+              var capture = {};
+              var errors = [];
+              if (!asn1.validate(obj, digestInfoValidator, capture, errors)) {
+                var error = new Error(
+                  "ASN.1 object does not contain a valid RSASSA-PKCS1-v1_5 DigestInfo value."
+                );
+                error.errors = errors;
+                throw error;
+              }
+              var oid = asn1.derToOid(capture.algorithmIdentifier);
+              if (!(oid === forge3.oids.md2 || oid === forge3.oids.md5 || oid === forge3.oids.sha1 || oid === forge3.oids.sha224 || oid === forge3.oids.sha256 || oid === forge3.oids.sha384 || oid === forge3.oids.sha512 || oid === forge3.oids["sha512-224"] || oid === forge3.oids["sha512-256"])) {
+                var error = new Error(
+                  "Unknown RSASSA-PKCS1-v1_5 DigestAlgorithm identifier."
+                );
+                error.oid = oid;
+                throw error;
+              }
+              if (oid === forge3.oids.md2 || oid === forge3.oids.md5) {
+                if (!("parameters" in capture)) {
+                  throw new Error(
+                    "ASN.1 object does not contain a valid RSASSA-PKCS1-v1_5 DigestInfo value. Missing algorithm identifer NULL parameters."
+                  );
+                }
+              }
+              return digest2 === capture.digest;
+            }
+          };
+        } else if (scheme === "NONE" || scheme === "NULL" || scheme === null) {
+          scheme = {
+            verify: function(digest2, d2) {
+              d2 = _decodePkcs1_v1_5(d2, key, true);
+              return digest2 === d2;
+            }
+          };
+        }
+        var d = pki.rsa.decrypt(signature, key, true, false);
+        return scheme.verify(digest, d, key.n.bitLength());
+      };
+      return key;
+    };
+    pki.setRsaPrivateKey = pki.rsa.setPrivateKey = function(n, e, d, p, q, dP, dQ, qInv) {
+      var key = {
+        n,
+        e,
+        d,
+        p,
+        q,
+        dP,
+        dQ,
+        qInv
+      };
+      key.decrypt = function(data, scheme, schemeOptions) {
+        if (typeof scheme === "string") {
+          scheme = scheme.toUpperCase();
+        } else if (scheme === void 0) {
+          scheme = "RSAES-PKCS1-V1_5";
+        }
+        var d2 = pki.rsa.decrypt(data, key, false, false);
+        if (scheme === "RSAES-PKCS1-V1_5") {
+          scheme = { decode: _decodePkcs1_v1_5 };
+        } else if (scheme === "RSA-OAEP" || scheme === "RSAES-OAEP") {
+          scheme = {
+            decode: function(d3, key2) {
+              return forge3.pkcs1.decode_rsa_oaep(key2, d3, schemeOptions);
+            }
+          };
+        } else if (["RAW", "NONE", "NULL", null].indexOf(scheme) !== -1) {
+          scheme = { decode: function(d3) {
+            return d3;
+          } };
+        } else {
+          throw new Error('Unsupported encryption scheme: "' + scheme + '".');
+        }
+        return scheme.decode(d2, key, false);
+      };
+      key.sign = function(md, scheme) {
+        var bt = false;
+        if (typeof scheme === "string") {
+          scheme = scheme.toUpperCase();
+        }
+        if (scheme === void 0 || scheme === "RSASSA-PKCS1-V1_5") {
+          scheme = { encode: emsaPkcs1v15encode };
+          bt = 1;
+        } else if (scheme === "NONE" || scheme === "NULL" || scheme === null) {
+          scheme = { encode: function() {
+            return md;
+          } };
+          bt = 1;
+        }
+        var d2 = scheme.encode(md, key.n.bitLength());
+        return pki.rsa.encrypt(d2, key, bt);
+      };
+      return key;
+    };
+    pki.wrapRsaPrivateKey = function(rsaKey) {
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // version (0)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          asn1.integerToDer(0).getBytes()
+        ),
+        // privateKeyAlgorithm
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(pki.oids.rsaEncryption).getBytes()
+          ),
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+        ]),
+        // PrivateKey
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OCTETSTRING,
+          false,
+          asn1.toDer(rsaKey).getBytes()
+        )
+      ]);
+    };
+    pki.privateKeyFromAsn1 = function(obj) {
+      var capture = {};
+      var errors = [];
+      if (asn1.validate(obj, privateKeyValidator, capture, errors)) {
+        obj = asn1.fromDer(forge3.util.createBuffer(capture.privateKey));
+      }
+      capture = {};
+      errors = [];
+      if (!asn1.validate(obj, rsaPrivateKeyValidator, capture, errors)) {
+        var error = new Error("Cannot read private key. ASN.1 object does not contain an RSAPrivateKey.");
+        error.errors = errors;
+        throw error;
+      }
+      var n, e, d, p, q, dP, dQ, qInv;
+      n = forge3.util.createBuffer(capture.privateKeyModulus).toHex();
+      e = forge3.util.createBuffer(capture.privateKeyPublicExponent).toHex();
+      d = forge3.util.createBuffer(capture.privateKeyPrivateExponent).toHex();
+      p = forge3.util.createBuffer(capture.privateKeyPrime1).toHex();
+      q = forge3.util.createBuffer(capture.privateKeyPrime2).toHex();
+      dP = forge3.util.createBuffer(capture.privateKeyExponent1).toHex();
+      dQ = forge3.util.createBuffer(capture.privateKeyExponent2).toHex();
+      qInv = forge3.util.createBuffer(capture.privateKeyCoefficient).toHex();
+      return pki.setRsaPrivateKey(
+        new BigInteger2(n, 16),
+        new BigInteger2(e, 16),
+        new BigInteger2(d, 16),
+        new BigInteger2(p, 16),
+        new BigInteger2(q, 16),
+        new BigInteger2(dP, 16),
+        new BigInteger2(dQ, 16),
+        new BigInteger2(qInv, 16)
+      );
+    };
+    pki.privateKeyToAsn1 = pki.privateKeyToRSAPrivateKey = function(key) {
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // version (0 = only 2 primes, 1 multiple primes)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          asn1.integerToDer(0).getBytes()
+        ),
+        // modulus (n)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.n)
+        ),
+        // publicExponent (e)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.e)
+        ),
+        // privateExponent (d)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.d)
+        ),
+        // privateKeyPrime1 (p)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.p)
+        ),
+        // privateKeyPrime2 (q)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.q)
+        ),
+        // privateKeyExponent1 (dP)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.dP)
+        ),
+        // privateKeyExponent2 (dQ)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.dQ)
+        ),
+        // coefficient (qInv)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.qInv)
+        )
+      ]);
+    };
+    pki.publicKeyFromAsn1 = function(obj) {
+      var capture = {};
+      var errors = [];
+      if (asn1.validate(obj, publicKeyValidator, capture, errors)) {
+        var oid = asn1.derToOid(capture.publicKeyOid);
+        if (oid !== pki.oids.rsaEncryption) {
+          var error = new Error("Cannot read public key. Unknown OID.");
+          error.oid = oid;
+          throw error;
+        }
+        obj = capture.rsaPublicKey;
+      }
+      errors = [];
+      if (!asn1.validate(obj, rsaPublicKeyValidator, capture, errors)) {
+        var error = new Error("Cannot read public key. ASN.1 object does not contain an RSAPublicKey.");
+        error.errors = errors;
+        throw error;
+      }
+      var n = forge3.util.createBuffer(capture.publicKeyModulus).toHex();
+      var e = forge3.util.createBuffer(capture.publicKeyExponent).toHex();
+      return pki.setRsaPublicKey(
+        new BigInteger2(n, 16),
+        new BigInteger2(e, 16)
+      );
+    };
+    pki.publicKeyToAsn1 = pki.publicKeyToSubjectPublicKeyInfo = function(key) {
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // AlgorithmIdentifier
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(pki.oids.rsaEncryption).getBytes()
+          ),
+          // parameters (null)
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+        ]),
+        // subjectPublicKey
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.BITSTRING, false, [
+          pki.publicKeyToRSAPublicKey(key)
+        ])
+      ]);
+    };
+    pki.publicKeyToRSAPublicKey = function(key) {
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // modulus (n)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.n)
+        ),
+        // publicExponent (e)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          _bnToBytes(key.e)
+        )
+      ]);
+    };
+    function _encodePkcs1_v1_5(m, key, bt) {
+      var eb = forge3.util.createBuffer();
+      var k = Math.ceil(key.n.bitLength() / 8);
+      if (m.length > k - 11) {
+        var error = new Error("Message is too long for PKCS#1 v1.5 padding.");
+        error.length = m.length;
+        error.max = k - 11;
+        throw error;
+      }
+      eb.putByte(0);
+      eb.putByte(bt);
+      var padNum = k - 3 - m.length;
+      var padByte;
+      if (bt === 0 || bt === 1) {
+        padByte = bt === 0 ? 0 : 255;
+        for (var i = 0; i < padNum; ++i) {
+          eb.putByte(padByte);
+        }
+      } else {
+        while (padNum > 0) {
+          var numZeros = 0;
+          var padBytes = forge3.random.getBytes(padNum);
+          for (var i = 0; i < padNum; ++i) {
+            padByte = padBytes.charCodeAt(i);
+            if (padByte === 0) {
+              ++numZeros;
+            } else {
+              eb.putByte(padByte);
+            }
+          }
+          padNum = numZeros;
+        }
+      }
+      eb.putByte(0);
+      eb.putBytes(m);
+      return eb;
+    }
+    function _decodePkcs1_v1_5(em, key, pub, ml) {
+      var k = Math.ceil(key.n.bitLength() / 8);
+      var eb = forge3.util.createBuffer(em);
+      var first = eb.getByte();
+      var bt = eb.getByte();
+      if (first !== 0 || pub && bt !== 0 && bt !== 1 || !pub && bt != 2 || pub && bt === 0 && typeof ml === "undefined") {
+        throw new Error("Encryption block is invalid.");
+      }
+      var padNum = 0;
+      if (bt === 0) {
+        padNum = k - 3 - ml;
+        for (var i = 0; i < padNum; ++i) {
+          if (eb.getByte() !== 0) {
+            throw new Error("Encryption block is invalid.");
+          }
+        }
+      } else if (bt === 1) {
+        padNum = 0;
+        while (eb.length() > 1) {
+          if (eb.getByte() !== 255) {
+            --eb.read;
+            break;
+          }
+          ++padNum;
+        }
+      } else if (bt === 2) {
+        padNum = 0;
+        while (eb.length() > 1) {
+          if (eb.getByte() === 0) {
+            --eb.read;
+            break;
+          }
+          ++padNum;
+        }
+      }
+      var zero = eb.getByte();
+      if (zero !== 0 || padNum !== k - 3 - eb.length()) {
+        throw new Error("Encryption block is invalid.");
+      }
+      return eb.getBytes();
+    }
+    function _generateKeyPair(state, options, callback) {
+      if (typeof options === "function") {
+        callback = options;
+        options = {};
+      }
+      options = options || {};
+      var opts = {
+        algorithm: {
+          name: options.algorithm || "PRIMEINC",
+          options: {
+            workers: options.workers || 2,
+            workLoad: options.workLoad || 100,
+            workerScript: options.workerScript
+          }
+        }
+      };
+      if ("prng" in options) {
+        opts.prng = options.prng;
+      }
+      generate();
+      function generate() {
+        getPrime(state.pBits, function(err, num) {
+          if (err) {
+            return callback(err);
+          }
+          state.p = num;
+          if (state.q !== null) {
+            return finish(err, state.q);
+          }
+          getPrime(state.qBits, finish);
+        });
+      }
+      function getPrime(bits, callback2) {
+        forge3.prime.generateProbablePrime(bits, opts, callback2);
+      }
+      function finish(err, num) {
+        if (err) {
+          return callback(err);
+        }
+        state.q = num;
+        if (state.p.compareTo(state.q) < 0) {
+          var tmp = state.p;
+          state.p = state.q;
+          state.q = tmp;
+        }
+        if (state.p.subtract(BigInteger2.ONE).gcd(state.e).compareTo(BigInteger2.ONE) !== 0) {
+          state.p = null;
+          generate();
+          return;
+        }
+        if (state.q.subtract(BigInteger2.ONE).gcd(state.e).compareTo(BigInteger2.ONE) !== 0) {
+          state.q = null;
+          getPrime(state.qBits, finish);
+          return;
+        }
+        state.p1 = state.p.subtract(BigInteger2.ONE);
+        state.q1 = state.q.subtract(BigInteger2.ONE);
+        state.phi = state.p1.multiply(state.q1);
+        if (state.phi.gcd(state.e).compareTo(BigInteger2.ONE) !== 0) {
+          state.p = state.q = null;
+          generate();
+          return;
+        }
+        state.n = state.p.multiply(state.q);
+        if (state.n.bitLength() !== state.bits) {
+          state.q = null;
+          getPrime(state.qBits, finish);
+          return;
+        }
+        var d = state.e.modInverse(state.phi);
+        state.keys = {
+          privateKey: pki.rsa.setPrivateKey(
+            state.n,
+            state.e,
+            d,
+            state.p,
+            state.q,
+            d.mod(state.p1),
+            d.mod(state.q1),
+            state.q.modInverse(state.p)
+          ),
+          publicKey: pki.rsa.setPublicKey(state.n, state.e)
+        };
+        callback(null, state.keys);
+      }
+    }
+    function _bnToBytes(b) {
+      var hex = b.toString(16);
+      if (hex[0] >= "8") {
+        hex = "00" + hex;
+      }
+      var bytes = forge3.util.hexToBytes(hex);
+      if (bytes.length > 1 && // leading 0x00 for positive integer
+      (bytes.charCodeAt(0) === 0 && (bytes.charCodeAt(1) & 128) === 0 || // leading 0xFF for negative integer
+      bytes.charCodeAt(0) === 255 && (bytes.charCodeAt(1) & 128) === 128)) {
+        return bytes.substr(1);
+      }
+      return bytes;
+    }
+    function _getMillerRabinTests(bits) {
+      if (bits <= 100) return 27;
+      if (bits <= 150) return 18;
+      if (bits <= 200) return 15;
+      if (bits <= 250) return 12;
+      if (bits <= 300) return 9;
+      if (bits <= 350) return 8;
+      if (bits <= 400) return 7;
+      if (bits <= 500) return 6;
+      if (bits <= 600) return 5;
+      if (bits <= 800) return 4;
+      if (bits <= 1250) return 3;
+      return 2;
+    }
+    function _detectNodeCrypto(fn) {
+      return forge3.util.isNodejs && typeof _crypto[fn] === "function";
+    }
+    function _detectSubtleCrypto(fn) {
+      return typeof util.globalScope !== "undefined" && typeof util.globalScope.crypto === "object" && typeof util.globalScope.crypto.subtle === "object" && typeof util.globalScope.crypto.subtle[fn] === "function";
+    }
+    function _detectSubtleMsCrypto(fn) {
+      return typeof util.globalScope !== "undefined" && typeof util.globalScope.msCrypto === "object" && typeof util.globalScope.msCrypto.subtle === "object" && typeof util.globalScope.msCrypto.subtle[fn] === "function";
+    }
+    function _intToUint8Array(x) {
+      var bytes = forge3.util.hexToBytes(x.toString(16));
+      var buffer = new Uint8Array(bytes.length);
+      for (var i = 0; i < bytes.length; ++i) {
+        buffer[i] = bytes.charCodeAt(i);
+      }
+      return buffer;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/pbe.js
+var require_pbe = __commonJS({
+  "node_modules/node-forge/lib/pbe.js"(exports, module) {
+    var forge3 = require_forge();
+    require_aes();
+    require_asn1();
+    require_des();
+    require_md();
+    require_oids();
+    require_pbkdf2();
+    require_pem();
+    require_random();
+    require_rc2();
+    require_rsa();
+    require_util();
+    if (typeof BigInteger2 === "undefined") {
+      BigInteger2 = forge3.jsbn.BigInteger;
+    }
+    var BigInteger2;
+    var asn1 = forge3.asn1;
+    var pki = forge3.pki = forge3.pki || {};
+    module.exports = pki.pbe = forge3.pbe = forge3.pbe || {};
+    var oids = pki.oids;
+    var encryptedPrivateKeyValidator = {
+      name: "EncryptedPrivateKeyInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "EncryptedPrivateKeyInfo.encryptionAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "AlgorithmIdentifier.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "encryptionOid"
+        }, {
+          name: "AlgorithmIdentifier.parameters",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          captureAsn1: "encryptionParams"
+        }]
+      }, {
+        // encryptedData
+        name: "EncryptedPrivateKeyInfo.encryptedData",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "encryptedData"
+      }]
+    };
+    var PBES2AlgorithmsValidator = {
+      name: "PBES2Algorithms",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "PBES2Algorithms.keyDerivationFunc",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "PBES2Algorithms.keyDerivationFunc.oid",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "kdfOid"
+        }, {
+          name: "PBES2Algorithms.params",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          value: [{
+            name: "PBES2Algorithms.params.salt",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.OCTETSTRING,
+            constructed: false,
+            capture: "kdfSalt"
+          }, {
+            name: "PBES2Algorithms.params.iterationCount",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.INTEGER,
+            constructed: false,
+            capture: "kdfIterationCount"
+          }, {
+            name: "PBES2Algorithms.params.keyLength",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.INTEGER,
+            constructed: false,
+            optional: true,
+            capture: "keyLength"
+          }, {
+            // prf
+            name: "PBES2Algorithms.params.prf",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            optional: true,
+            value: [{
+              name: "PBES2Algorithms.params.prf.algorithm",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.OID,
+              constructed: false,
+              capture: "prfOid"
+            }]
+          }]
+        }]
+      }, {
+        name: "PBES2Algorithms.encryptionScheme",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "PBES2Algorithms.encryptionScheme.oid",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "encOid"
+        }, {
+          name: "PBES2Algorithms.encryptionScheme.iv",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OCTETSTRING,
+          constructed: false,
+          capture: "encIv"
+        }]
+      }]
+    };
+    var pkcs12PbeParamsValidator = {
+      name: "pkcs-12PbeParams",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "pkcs-12PbeParams.salt",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "salt"
+      }, {
+        name: "pkcs-12PbeParams.iterations",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "iterations"
+      }]
+    };
+    pki.encryptPrivateKeyInfo = function(obj, password, options) {
+      options = options || {};
+      options.saltSize = options.saltSize || 8;
+      options.count = options.count || 2048;
+      options.algorithm = options.algorithm || "aes128";
+      options.prfAlgorithm = options.prfAlgorithm || "sha1";
+      var salt = forge3.random.getBytesSync(options.saltSize);
+      var count = options.count;
+      var countBytes = asn1.integerToDer(count);
+      var dkLen;
+      var encryptionAlgorithm;
+      var encryptedData;
+      if (options.algorithm.indexOf("aes") === 0 || options.algorithm === "des") {
+        var ivLen, encOid, cipherFn;
+        switch (options.algorithm) {
+          case "aes128":
+            dkLen = 16;
+            ivLen = 16;
+            encOid = oids["aes128-CBC"];
+            cipherFn = forge3.aes.createEncryptionCipher;
+            break;
+          case "aes192":
+            dkLen = 24;
+            ivLen = 16;
+            encOid = oids["aes192-CBC"];
+            cipherFn = forge3.aes.createEncryptionCipher;
+            break;
+          case "aes256":
+            dkLen = 32;
+            ivLen = 16;
+            encOid = oids["aes256-CBC"];
+            cipherFn = forge3.aes.createEncryptionCipher;
+            break;
+          case "des":
+            dkLen = 8;
+            ivLen = 8;
+            encOid = oids["desCBC"];
+            cipherFn = forge3.des.createEncryptionCipher;
+            break;
+          default:
+            var error = new Error("Cannot encrypt private key. Unknown encryption algorithm.");
+            error.algorithm = options.algorithm;
+            throw error;
+        }
+        var prfAlgorithm = "hmacWith" + options.prfAlgorithm.toUpperCase();
+        var md = prfAlgorithmToMessageDigest(prfAlgorithm);
+        var dk = forge3.pkcs5.pbkdf2(password, salt, count, dkLen, md);
+        var iv = forge3.random.getBytesSync(ivLen);
+        var cipher = cipherFn(dk);
+        cipher.start(iv);
+        cipher.update(asn1.toDer(obj));
+        cipher.finish();
+        encryptedData = cipher.output.getBytes();
+        var params = createPbkdf2Params(salt, countBytes, dkLen, prfAlgorithm);
+        encryptionAlgorithm = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.SEQUENCE,
+          true,
+          [
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(oids["pkcs5PBES2"]).getBytes()
+            ),
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+              // keyDerivationFunc
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OID,
+                  false,
+                  asn1.oidToDer(oids["pkcs5PBKDF2"]).getBytes()
+                ),
+                // PBKDF2-params
+                params
+              ]),
+              // encryptionScheme
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OID,
+                  false,
+                  asn1.oidToDer(encOid).getBytes()
+                ),
+                // iv
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OCTETSTRING,
+                  false,
+                  iv
+                )
+              ])
+            ])
+          ]
+        );
+      } else if (options.algorithm === "3des") {
+        dkLen = 24;
+        var saltBytes = new forge3.util.ByteBuffer(salt);
+        var dk = pki.pbe.generatePkcs12Key(password, saltBytes, 1, count, dkLen);
+        var iv = pki.pbe.generatePkcs12Key(password, saltBytes, 2, count, dkLen);
+        var cipher = forge3.des.createEncryptionCipher(dk);
+        cipher.start(iv);
+        cipher.update(asn1.toDer(obj));
+        cipher.finish();
+        encryptedData = cipher.output.getBytes();
+        encryptionAlgorithm = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.SEQUENCE,
+          true,
+          [
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(oids["pbeWithSHAAnd3-KeyTripleDES-CBC"]).getBytes()
+            ),
+            // pkcs-12PbeParams
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+              // salt
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.OCTETSTRING, false, salt),
+              // iteration count
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.INTEGER,
+                false,
+                countBytes.getBytes()
+              )
+            ])
+          ]
+        );
+      } else {
+        var error = new Error("Cannot encrypt private key. Unknown encryption algorithm.");
+        error.algorithm = options.algorithm;
+        throw error;
+      }
+      var rval = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // encryptionAlgorithm
+        encryptionAlgorithm,
+        // encryptedData
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OCTETSTRING,
+          false,
+          encryptedData
+        )
+      ]);
+      return rval;
+    };
+    pki.decryptPrivateKeyInfo = function(obj, password) {
+      var rval = null;
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, encryptedPrivateKeyValidator, capture, errors)) {
+        var error = new Error("Cannot read encrypted private key. ASN.1 object is not a supported EncryptedPrivateKeyInfo.");
+        error.errors = errors;
+        throw error;
+      }
+      var oid = asn1.derToOid(capture.encryptionOid);
+      var cipher = pki.pbe.getCipher(oid, capture.encryptionParams, password);
+      var encrypted = forge3.util.createBuffer(capture.encryptedData);
+      cipher.update(encrypted);
+      if (cipher.finish()) {
+        rval = asn1.fromDer(cipher.output);
+      }
+      return rval;
+    };
+    pki.encryptedPrivateKeyToPem = function(epki, maxline) {
+      var msg = {
+        type: "ENCRYPTED PRIVATE KEY",
+        body: asn1.toDer(epki).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+    pki.encryptedPrivateKeyFromPem = function(pem) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "ENCRYPTED PRIVATE KEY") {
+        var error = new Error('Could not convert encrypted private key from PEM; PEM header type is "ENCRYPTED PRIVATE KEY".');
+        error.headerType = msg.type;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error("Could not convert encrypted private key from PEM; PEM is encrypted.");
+      }
+      return asn1.fromDer(msg.body);
+    };
+    pki.encryptRsaPrivateKey = function(rsaKey, password, options) {
+      options = options || {};
+      if (!options.legacy) {
+        var rval = pki.wrapRsaPrivateKey(pki.privateKeyToAsn1(rsaKey));
+        rval = pki.encryptPrivateKeyInfo(rval, password, options);
+        return pki.encryptedPrivateKeyToPem(rval);
+      }
+      var algorithm;
+      var iv;
+      var dkLen;
+      var cipherFn;
+      switch (options.algorithm) {
+        case "aes128":
+          algorithm = "AES-128-CBC";
+          dkLen = 16;
+          iv = forge3.random.getBytesSync(16);
+          cipherFn = forge3.aes.createEncryptionCipher;
+          break;
+        case "aes192":
+          algorithm = "AES-192-CBC";
+          dkLen = 24;
+          iv = forge3.random.getBytesSync(16);
+          cipherFn = forge3.aes.createEncryptionCipher;
+          break;
+        case "aes256":
+          algorithm = "AES-256-CBC";
+          dkLen = 32;
+          iv = forge3.random.getBytesSync(16);
+          cipherFn = forge3.aes.createEncryptionCipher;
+          break;
+        case "3des":
+          algorithm = "DES-EDE3-CBC";
+          dkLen = 24;
+          iv = forge3.random.getBytesSync(8);
+          cipherFn = forge3.des.createEncryptionCipher;
+          break;
+        case "des":
+          algorithm = "DES-CBC";
+          dkLen = 8;
+          iv = forge3.random.getBytesSync(8);
+          cipherFn = forge3.des.createEncryptionCipher;
+          break;
+        default:
+          var error = new Error('Could not encrypt RSA private key; unsupported encryption algorithm "' + options.algorithm + '".');
+          error.algorithm = options.algorithm;
+          throw error;
+      }
+      var dk = forge3.pbe.opensslDeriveBytes(password, iv.substr(0, 8), dkLen);
+      var cipher = cipherFn(dk);
+      cipher.start(iv);
+      cipher.update(asn1.toDer(pki.privateKeyToAsn1(rsaKey)));
+      cipher.finish();
+      var msg = {
+        type: "RSA PRIVATE KEY",
+        procType: {
+          version: "4",
+          type: "ENCRYPTED"
+        },
+        dekInfo: {
+          algorithm,
+          parameters: forge3.util.bytesToHex(iv).toUpperCase()
+        },
+        body: cipher.output.getBytes()
+      };
+      return forge3.pem.encode(msg);
+    };
+    pki.decryptRsaPrivateKey = function(pem, password) {
+      var rval = null;
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "ENCRYPTED PRIVATE KEY" && msg.type !== "PRIVATE KEY" && msg.type !== "RSA PRIVATE KEY") {
+        var error = new Error('Could not convert private key from PEM; PEM header type is not "ENCRYPTED PRIVATE KEY", "PRIVATE KEY", or "RSA PRIVATE KEY".');
+        error.headerType = error;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        var dkLen;
+        var cipherFn;
+        switch (msg.dekInfo.algorithm) {
+          case "DES-CBC":
+            dkLen = 8;
+            cipherFn = forge3.des.createDecryptionCipher;
+            break;
+          case "DES-EDE3-CBC":
+            dkLen = 24;
+            cipherFn = forge3.des.createDecryptionCipher;
+            break;
+          case "AES-128-CBC":
+            dkLen = 16;
+            cipherFn = forge3.aes.createDecryptionCipher;
+            break;
+          case "AES-192-CBC":
+            dkLen = 24;
+            cipherFn = forge3.aes.createDecryptionCipher;
+            break;
+          case "AES-256-CBC":
+            dkLen = 32;
+            cipherFn = forge3.aes.createDecryptionCipher;
+            break;
+          case "RC2-40-CBC":
+            dkLen = 5;
+            cipherFn = function(key) {
+              return forge3.rc2.createDecryptionCipher(key, 40);
+            };
+            break;
+          case "RC2-64-CBC":
+            dkLen = 8;
+            cipherFn = function(key) {
+              return forge3.rc2.createDecryptionCipher(key, 64);
+            };
+            break;
+          case "RC2-128-CBC":
+            dkLen = 16;
+            cipherFn = function(key) {
+              return forge3.rc2.createDecryptionCipher(key, 128);
+            };
+            break;
+          default:
+            var error = new Error('Could not decrypt private key; unsupported encryption algorithm "' + msg.dekInfo.algorithm + '".');
+            error.algorithm = msg.dekInfo.algorithm;
+            throw error;
+        }
+        var iv = forge3.util.hexToBytes(msg.dekInfo.parameters);
+        var dk = forge3.pbe.opensslDeriveBytes(password, iv.substr(0, 8), dkLen);
+        var cipher = cipherFn(dk);
+        cipher.start(iv);
+        cipher.update(forge3.util.createBuffer(msg.body));
+        if (cipher.finish()) {
+          rval = cipher.output.getBytes();
+        } else {
+          return rval;
+        }
+      } else {
+        rval = msg.body;
+      }
+      if (msg.type === "ENCRYPTED PRIVATE KEY") {
+        rval = pki.decryptPrivateKeyInfo(asn1.fromDer(rval), password);
+      } else {
+        rval = asn1.fromDer(rval);
+      }
+      if (rval !== null) {
+        rval = pki.privateKeyFromAsn1(rval);
+      }
+      return rval;
+    };
+    pki.pbe.generatePkcs12Key = function(password, salt, id, iter, n, md) {
+      var j, l;
+      if (typeof md === "undefined" || md === null) {
+        if (!("sha1" in forge3.md)) {
+          throw new Error('"sha1" hash algorithm unavailable.');
+        }
+        md = forge3.md.sha1.create();
+      }
+      var u = md.digestLength;
+      var v = md.blockLength;
+      var result = new forge3.util.ByteBuffer();
+      var passBuf = new forge3.util.ByteBuffer();
+      if (password !== null && password !== void 0) {
+        for (l = 0; l < password.length; l++) {
+          passBuf.putInt16(password.charCodeAt(l));
+        }
+        passBuf.putInt16(0);
+      }
+      var p = passBuf.length();
+      var s = salt.length();
+      var D = new forge3.util.ByteBuffer();
+      D.fillWithByte(id, v);
+      var Slen = v * Math.ceil(s / v);
+      var S = new forge3.util.ByteBuffer();
+      for (l = 0; l < Slen; l++) {
+        S.putByte(salt.at(l % s));
+      }
+      var Plen = v * Math.ceil(p / v);
+      var P = new forge3.util.ByteBuffer();
+      for (l = 0; l < Plen; l++) {
+        P.putByte(passBuf.at(l % p));
+      }
+      var I = S;
+      I.putBuffer(P);
+      var c = Math.ceil(n / u);
+      for (var i = 1; i <= c; i++) {
+        var buf = new forge3.util.ByteBuffer();
+        buf.putBytes(D.bytes());
+        buf.putBytes(I.bytes());
+        for (var round = 0; round < iter; round++) {
+          md.start();
+          md.update(buf.getBytes());
+          buf = md.digest();
+        }
+        var B = new forge3.util.ByteBuffer();
+        for (l = 0; l < v; l++) {
+          B.putByte(buf.at(l % u));
+        }
+        var k = Math.ceil(s / v) + Math.ceil(p / v);
+        var Inew = new forge3.util.ByteBuffer();
+        for (j = 0; j < k; j++) {
+          var chunk = new forge3.util.ByteBuffer(I.getBytes(v));
+          var x = 511;
+          for (l = B.length() - 1; l >= 0; l--) {
+            x = x >> 8;
+            x += B.at(l) + chunk.at(l);
+            chunk.setAt(l, x & 255);
+          }
+          Inew.putBuffer(chunk);
+        }
+        I = Inew;
+        result.putBuffer(buf);
+      }
+      result.truncate(result.length() - n);
+      return result;
+    };
+    pki.pbe.getCipher = function(oid, params, password) {
+      switch (oid) {
+        case pki.oids["pkcs5PBES2"]:
+          return pki.pbe.getCipherForPBES2(oid, params, password);
+        case pki.oids["pbeWithSHAAnd3-KeyTripleDES-CBC"]:
+        case pki.oids["pbewithSHAAnd40BitRC2-CBC"]:
+          return pki.pbe.getCipherForPKCS12PBE(oid, params, password);
+        default:
+          var error = new Error("Cannot read encrypted PBE data block. Unsupported OID.");
+          error.oid = oid;
+          error.supportedOids = [
+            "pkcs5PBES2",
+            "pbeWithSHAAnd3-KeyTripleDES-CBC",
+            "pbewithSHAAnd40BitRC2-CBC"
+          ];
+          throw error;
+      }
+    };
+    pki.pbe.getCipherForPBES2 = function(oid, params, password) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(params, PBES2AlgorithmsValidator, capture, errors)) {
+        var error = new Error("Cannot read password-based-encryption algorithm parameters. ASN.1 object is not a supported EncryptedPrivateKeyInfo.");
+        error.errors = errors;
+        throw error;
+      }
+      oid = asn1.derToOid(capture.kdfOid);
+      if (oid !== pki.oids["pkcs5PBKDF2"]) {
+        var error = new Error("Cannot read encrypted private key. Unsupported key derivation function OID.");
+        error.oid = oid;
+        error.supportedOids = ["pkcs5PBKDF2"];
+        throw error;
+      }
+      oid = asn1.derToOid(capture.encOid);
+      if (oid !== pki.oids["aes128-CBC"] && oid !== pki.oids["aes192-CBC"] && oid !== pki.oids["aes256-CBC"] && oid !== pki.oids["des-EDE3-CBC"] && oid !== pki.oids["desCBC"]) {
+        var error = new Error("Cannot read encrypted private key. Unsupported encryption scheme OID.");
+        error.oid = oid;
+        error.supportedOids = [
+          "aes128-CBC",
+          "aes192-CBC",
+          "aes256-CBC",
+          "des-EDE3-CBC",
+          "desCBC"
+        ];
+        throw error;
+      }
+      var salt = capture.kdfSalt;
+      var count = forge3.util.createBuffer(capture.kdfIterationCount);
+      count = count.getInt(count.length() << 3);
+      var dkLen;
+      var cipherFn;
+      switch (pki.oids[oid]) {
+        case "aes128-CBC":
+          dkLen = 16;
+          cipherFn = forge3.aes.createDecryptionCipher;
+          break;
+        case "aes192-CBC":
+          dkLen = 24;
+          cipherFn = forge3.aes.createDecryptionCipher;
+          break;
+        case "aes256-CBC":
+          dkLen = 32;
+          cipherFn = forge3.aes.createDecryptionCipher;
+          break;
+        case "des-EDE3-CBC":
+          dkLen = 24;
+          cipherFn = forge3.des.createDecryptionCipher;
+          break;
+        case "desCBC":
+          dkLen = 8;
+          cipherFn = forge3.des.createDecryptionCipher;
+          break;
+      }
+      var md = prfOidToMessageDigest(capture.prfOid);
+      var dk = forge3.pkcs5.pbkdf2(password, salt, count, dkLen, md);
+      var iv = capture.encIv;
+      var cipher = cipherFn(dk);
+      cipher.start(iv);
+      return cipher;
+    };
+    pki.pbe.getCipherForPKCS12PBE = function(oid, params, password) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(params, pkcs12PbeParamsValidator, capture, errors)) {
+        var error = new Error("Cannot read password-based-encryption algorithm parameters. ASN.1 object is not a supported EncryptedPrivateKeyInfo.");
+        error.errors = errors;
+        throw error;
+      }
+      var salt = forge3.util.createBuffer(capture.salt);
+      var count = forge3.util.createBuffer(capture.iterations);
+      count = count.getInt(count.length() << 3);
+      var dkLen, dIvLen, cipherFn;
+      switch (oid) {
+        case pki.oids["pbeWithSHAAnd3-KeyTripleDES-CBC"]:
+          dkLen = 24;
+          dIvLen = 8;
+          cipherFn = forge3.des.startDecrypting;
+          break;
+        case pki.oids["pbewithSHAAnd40BitRC2-CBC"]:
+          dkLen = 5;
+          dIvLen = 8;
+          cipherFn = function(key2, iv2) {
+            var cipher = forge3.rc2.createDecryptionCipher(key2, 40);
+            cipher.start(iv2, null);
+            return cipher;
+          };
+          break;
+        default:
+          var error = new Error("Cannot read PKCS #12 PBE data block. Unsupported OID.");
+          error.oid = oid;
+          throw error;
+      }
+      var md = prfOidToMessageDigest(capture.prfOid);
+      var key = pki.pbe.generatePkcs12Key(password, salt, 1, count, dkLen, md);
+      md.start();
+      var iv = pki.pbe.generatePkcs12Key(password, salt, 2, count, dIvLen, md);
+      return cipherFn(key, iv);
+    };
+    pki.pbe.opensslDeriveBytes = function(password, salt, dkLen, md) {
+      if (typeof md === "undefined" || md === null) {
+        if (!("md5" in forge3.md)) {
+          throw new Error('"md5" hash algorithm unavailable.');
+        }
+        md = forge3.md.md5.create();
+      }
+      if (salt === null) {
+        salt = "";
+      }
+      var digests = [hash(md, password + salt)];
+      for (var length = 16, i = 1; length < dkLen; ++i, length += 16) {
+        digests.push(hash(md, digests[i - 1] + password + salt));
+      }
+      return digests.join("").substr(0, dkLen);
+    };
+    function hash(md, bytes) {
+      return md.start().update(bytes).digest().getBytes();
+    }
+    function prfOidToMessageDigest(prfOid) {
+      var prfAlgorithm;
+      if (!prfOid) {
+        prfAlgorithm = "hmacWithSHA1";
+      } else {
+        prfAlgorithm = pki.oids[asn1.derToOid(prfOid)];
+        if (!prfAlgorithm) {
+          var error = new Error("Unsupported PRF OID.");
+          error.oid = prfOid;
+          error.supported = [
+            "hmacWithSHA1",
+            "hmacWithSHA224",
+            "hmacWithSHA256",
+            "hmacWithSHA384",
+            "hmacWithSHA512"
+          ];
+          throw error;
+        }
+      }
+      return prfAlgorithmToMessageDigest(prfAlgorithm);
+    }
+    function prfAlgorithmToMessageDigest(prfAlgorithm) {
+      var factory = forge3.md;
+      switch (prfAlgorithm) {
+        case "hmacWithSHA224":
+          factory = forge3.md.sha512;
+        case "hmacWithSHA1":
+        case "hmacWithSHA256":
+        case "hmacWithSHA384":
+        case "hmacWithSHA512":
+          prfAlgorithm = prfAlgorithm.substr(8).toLowerCase();
+          break;
+        default:
+          var error = new Error("Unsupported PRF algorithm.");
+          error.algorithm = prfAlgorithm;
+          error.supported = [
+            "hmacWithSHA1",
+            "hmacWithSHA224",
+            "hmacWithSHA256",
+            "hmacWithSHA384",
+            "hmacWithSHA512"
+          ];
+          throw error;
+      }
+      if (!factory || !(prfAlgorithm in factory)) {
+        throw new Error("Unknown hash algorithm: " + prfAlgorithm);
+      }
+      return factory[prfAlgorithm].create();
+    }
+    function createPbkdf2Params(salt, countBytes, dkLen, prfAlgorithm) {
+      var params = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // salt
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OCTETSTRING,
+          false,
+          salt
+        ),
+        // iteration count
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          countBytes.getBytes()
+        )
+      ]);
+      if (prfAlgorithm !== "hmacWithSHA1") {
+        params.value.push(
+          // key length
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.INTEGER,
+            false,
+            forge3.util.hexToBytes(dkLen.toString(16))
+          ),
+          // AlgorithmIdentifier
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // algorithm
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(pki.oids[prfAlgorithm]).getBytes()
+            ),
+            // parameters (null)
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+          ])
+        );
+      }
+      return params;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/pkcs7asn1.js
+var require_pkcs7asn1 = __commonJS({
+  "node_modules/node-forge/lib/pkcs7asn1.js"(exports, module) {
+    var forge3 = require_forge();
+    require_asn1();
+    require_util();
+    var asn1 = forge3.asn1;
+    var p7v = module.exports = forge3.pkcs7asn1 = forge3.pkcs7asn1 || {};
+    forge3.pkcs7 = forge3.pkcs7 || {};
+    forge3.pkcs7.asn1 = p7v;
+    var contentInfoValidator = {
+      name: "ContentInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "ContentInfo.ContentType",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OID,
+        constructed: false,
+        capture: "contentType"
+      }, {
+        name: "ContentInfo.content",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 0,
+        constructed: true,
+        optional: true,
+        captureAsn1: "content"
+      }]
+    };
+    p7v.contentInfoValidator = contentInfoValidator;
+    var encryptedContentInfoValidator = {
+      name: "EncryptedContentInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "EncryptedContentInfo.contentType",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OID,
+        constructed: false,
+        capture: "contentType"
+      }, {
+        name: "EncryptedContentInfo.contentEncryptionAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "EncryptedContentInfo.contentEncryptionAlgorithm.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "encAlgorithm"
+        }, {
+          name: "EncryptedContentInfo.contentEncryptionAlgorithm.parameter",
+          tagClass: asn1.Class.UNIVERSAL,
+          captureAsn1: "encParameter"
+        }]
+      }, {
+        name: "EncryptedContentInfo.encryptedContent",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 0,
+        /* The PKCS#7 structure output by OpenSSL somewhat differs from what
+         * other implementations do generate.
+         *
+         * OpenSSL generates a structure like this:
+         * SEQUENCE {
+         *    ...
+         *    [0]
+         *       26 DA 67 D2 17 9C 45 3C B1 2A A8 59 2F 29 33 38
+         *       C3 C3 DF 86 71 74 7A 19 9F 40 D0 29 BE 85 90 45
+         *       ...
+         * }
+         *
+         * Whereas other implementations (and this PKCS#7 module) generate:
+         * SEQUENCE {
+         *    ...
+         *    [0] {
+         *       OCTET STRING
+         *          26 DA 67 D2 17 9C 45 3C B1 2A A8 59 2F 29 33 38
+         *          C3 C3 DF 86 71 74 7A 19 9F 40 D0 29 BE 85 90 45
+         *          ...
+         *    }
+         * }
+         *
+         * In order to support both, we just capture the context specific
+         * field here.  The OCTET STRING bit is removed below.
+         */
+        capture: "encryptedContent",
+        captureAsn1: "encryptedContentAsn1"
+      }]
+    };
+    p7v.envelopedDataValidator = {
+      name: "EnvelopedData",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "EnvelopedData.Version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "version"
+      }, {
+        name: "EnvelopedData.RecipientInfos",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SET,
+        constructed: true,
+        captureAsn1: "recipientInfos"
+      }].concat(encryptedContentInfoValidator)
+    };
+    p7v.encryptedDataValidator = {
+      name: "EncryptedData",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "EncryptedData.Version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "version"
+      }].concat(encryptedContentInfoValidator)
+    };
+    var signerValidator = {
+      name: "SignerInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "SignerInfo.version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false
+      }, {
+        name: "SignerInfo.issuerAndSerialNumber",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "SignerInfo.issuerAndSerialNumber.issuer",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          captureAsn1: "issuer"
+        }, {
+          name: "SignerInfo.issuerAndSerialNumber.serialNumber",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.INTEGER,
+          constructed: false,
+          capture: "serial"
+        }]
+      }, {
+        name: "SignerInfo.digestAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "SignerInfo.digestAlgorithm.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "digestAlgorithm"
+        }, {
+          name: "SignerInfo.digestAlgorithm.parameter",
+          tagClass: asn1.Class.UNIVERSAL,
+          constructed: false,
+          captureAsn1: "digestParameter",
+          optional: true
+        }]
+      }, {
+        name: "SignerInfo.authenticatedAttributes",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 0,
+        constructed: true,
+        optional: true,
+        capture: "authenticatedAttributes"
+      }, {
+        name: "SignerInfo.digestEncryptionAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        capture: "signatureAlgorithm"
+      }, {
+        name: "SignerInfo.encryptedDigest",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "signature"
+      }, {
+        name: "SignerInfo.unauthenticatedAttributes",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 1,
+        constructed: true,
+        optional: true,
+        capture: "unauthenticatedAttributes"
+      }]
+    };
+    p7v.signedDataValidator = {
+      name: "SignedData",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [
+        {
+          name: "SignedData.Version",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.INTEGER,
+          constructed: false,
+          capture: "version"
+        },
+        {
+          name: "SignedData.DigestAlgorithms",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SET,
+          constructed: true,
+          captureAsn1: "digestAlgorithms"
+        },
+        contentInfoValidator,
+        {
+          name: "SignedData.Certificates",
+          tagClass: asn1.Class.CONTEXT_SPECIFIC,
+          type: 0,
+          optional: true,
+          captureAsn1: "certificates"
+        },
+        {
+          name: "SignedData.CertificateRevocationLists",
+          tagClass: asn1.Class.CONTEXT_SPECIFIC,
+          type: 1,
+          optional: true,
+          captureAsn1: "crls"
+        },
+        {
+          name: "SignedData.SignerInfos",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SET,
+          capture: "signerInfos",
+          optional: true,
+          value: [signerValidator]
+        }
+      ]
+    };
+    p7v.recipientInfoValidator = {
+      name: "RecipientInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "RecipientInfo.version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "version"
+      }, {
+        name: "RecipientInfo.issuerAndSerial",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "RecipientInfo.issuerAndSerial.issuer",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          captureAsn1: "issuer"
+        }, {
+          name: "RecipientInfo.issuerAndSerial.serialNumber",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.INTEGER,
+          constructed: false,
+          capture: "serial"
+        }]
+      }, {
+        name: "RecipientInfo.keyEncryptionAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "RecipientInfo.keyEncryptionAlgorithm.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "encAlgorithm"
+        }, {
+          name: "RecipientInfo.keyEncryptionAlgorithm.parameter",
+          tagClass: asn1.Class.UNIVERSAL,
+          constructed: false,
+          captureAsn1: "encParameter",
+          optional: true
+        }]
+      }, {
+        name: "RecipientInfo.encryptedKey",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "encKey"
+      }]
+    };
+  }
+});
+
+// node_modules/node-forge/lib/mgf1.js
+var require_mgf1 = __commonJS({
+  "node_modules/node-forge/lib/mgf1.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    forge3.mgf = forge3.mgf || {};
+    var mgf1 = module.exports = forge3.mgf.mgf1 = forge3.mgf1 = forge3.mgf1 || {};
+    mgf1.create = function(md) {
+      var mgf = {
+        /**
+         * Generate mask of specified length.
+         *
+         * @param {String} seed The seed for mask generation.
+         * @param maskLen Number of bytes to generate.
+         * @return {String} The generated mask.
+         */
+        generate: function(seed, maskLen) {
+          var t = new forge3.util.ByteBuffer();
+          var len = Math.ceil(maskLen / md.digestLength);
+          for (var i = 0; i < len; i++) {
+            var c = new forge3.util.ByteBuffer();
+            c.putInt32(i);
+            md.start();
+            md.update(seed + c.getBytes());
+            t.putBuffer(md.digest());
+          }
+          t.truncate(t.length() - maskLen);
+          return t.getBytes();
+        }
+      };
+      return mgf;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/mgf.js
+var require_mgf = __commonJS({
+  "node_modules/node-forge/lib/mgf.js"(exports, module) {
+    var forge3 = require_forge();
+    require_mgf1();
+    module.exports = forge3.mgf = forge3.mgf || {};
+    forge3.mgf.mgf1 = forge3.mgf1;
+  }
+});
+
+// node_modules/node-forge/lib/pss.js
+var require_pss = __commonJS({
+  "node_modules/node-forge/lib/pss.js"(exports, module) {
+    var forge3 = require_forge();
+    require_random();
+    require_util();
+    var pss = module.exports = forge3.pss = forge3.pss || {};
+    pss.create = function(options) {
+      if (arguments.length === 3) {
+        options = {
+          md: arguments[0],
+          mgf: arguments[1],
+          saltLength: arguments[2]
+        };
+      }
+      var hash = options.md;
+      var mgf = options.mgf;
+      var hLen = hash.digestLength;
+      var salt_ = options.salt || null;
+      if (typeof salt_ === "string") {
+        salt_ = forge3.util.createBuffer(salt_);
+      }
+      var sLen;
+      if ("saltLength" in options) {
+        sLen = options.saltLength;
+      } else if (salt_ !== null) {
+        sLen = salt_.length();
+      } else {
+        throw new Error("Salt length not specified or specific salt not given.");
+      }
+      if (salt_ !== null && salt_.length() !== sLen) {
+        throw new Error("Given salt length does not match length of given salt.");
+      }
+      var prng = options.prng || forge3.random;
+      var pssobj = {};
+      pssobj.encode = function(md, modBits) {
+        var i;
+        var emBits = modBits - 1;
+        var emLen = Math.ceil(emBits / 8);
+        var mHash = md.digest().getBytes();
+        if (emLen < hLen + sLen + 2) {
+          throw new Error("Message is too long to encrypt.");
+        }
+        var salt;
+        if (salt_ === null) {
+          salt = prng.getBytesSync(sLen);
+        } else {
+          salt = salt_.bytes();
+        }
+        var m_ = new forge3.util.ByteBuffer();
+        m_.fillWithByte(0, 8);
+        m_.putBytes(mHash);
+        m_.putBytes(salt);
+        hash.start();
+        hash.update(m_.getBytes());
+        var h = hash.digest().getBytes();
+        var ps = new forge3.util.ByteBuffer();
+        ps.fillWithByte(0, emLen - sLen - hLen - 2);
+        ps.putByte(1);
+        ps.putBytes(salt);
+        var db2 = ps.getBytes();
+        var maskLen = emLen - hLen - 1;
+        var dbMask = mgf.generate(h, maskLen);
+        var maskedDB = "";
+        for (i = 0; i < maskLen; i++) {
+          maskedDB += String.fromCharCode(db2.charCodeAt(i) ^ dbMask.charCodeAt(i));
+        }
+        var mask = 65280 >> 8 * emLen - emBits & 255;
+        maskedDB = String.fromCharCode(maskedDB.charCodeAt(0) & ~mask) + maskedDB.substr(1);
+        return maskedDB + h + String.fromCharCode(188);
+      };
+      pssobj.verify = function(mHash, em, modBits) {
+        var i;
+        var emBits = modBits - 1;
+        var emLen = Math.ceil(emBits / 8);
+        em = em.substr(-emLen);
+        if (emLen < hLen + sLen + 2) {
+          throw new Error("Inconsistent parameters to PSS signature verification.");
+        }
+        if (em.charCodeAt(emLen - 1) !== 188) {
+          throw new Error("Encoded message does not end in 0xBC.");
+        }
+        var maskLen = emLen - hLen - 1;
+        var maskedDB = em.substr(0, maskLen);
+        var h = em.substr(maskLen, hLen);
+        var mask = 65280 >> 8 * emLen - emBits & 255;
+        if ((maskedDB.charCodeAt(0) & mask) !== 0) {
+          throw new Error("Bits beyond keysize not zero as expected.");
+        }
+        var dbMask = mgf.generate(h, maskLen);
+        var db2 = "";
+        for (i = 0; i < maskLen; i++) {
+          db2 += String.fromCharCode(maskedDB.charCodeAt(i) ^ dbMask.charCodeAt(i));
+        }
+        db2 = String.fromCharCode(db2.charCodeAt(0) & ~mask) + db2.substr(1);
+        var checkLen = emLen - hLen - sLen - 2;
+        for (i = 0; i < checkLen; i++) {
+          if (db2.charCodeAt(i) !== 0) {
+            throw new Error("Leftmost octets not zero as expected");
+          }
+        }
+        if (db2.charCodeAt(checkLen) !== 1) {
+          throw new Error("Inconsistent PSS signature, 0x01 marker not found");
+        }
+        var salt = db2.substr(-sLen);
+        var m_ = new forge3.util.ByteBuffer();
+        m_.fillWithByte(0, 8);
+        m_.putBytes(mHash);
+        m_.putBytes(salt);
+        hash.start();
+        hash.update(m_.getBytes());
+        var h_ = hash.digest().getBytes();
+        return h === h_;
+      };
+      return pssobj;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/x509.js
+var require_x509 = __commonJS({
+  "node_modules/node-forge/lib/x509.js"(exports, module) {
+    var forge3 = require_forge();
+    require_aes();
+    require_asn1();
+    require_des();
+    require_md();
+    require_mgf();
+    require_oids();
+    require_pem();
+    require_pss();
+    require_rsa();
+    require_util();
+    var asn1 = forge3.asn1;
+    var pki = module.exports = forge3.pki = forge3.pki || {};
+    var oids = pki.oids;
+    var _shortNames = {};
+    _shortNames["CN"] = oids["commonName"];
+    _shortNames["commonName"] = "CN";
+    _shortNames["C"] = oids["countryName"];
+    _shortNames["countryName"] = "C";
+    _shortNames["L"] = oids["localityName"];
+    _shortNames["localityName"] = "L";
+    _shortNames["ST"] = oids["stateOrProvinceName"];
+    _shortNames["stateOrProvinceName"] = "ST";
+    _shortNames["O"] = oids["organizationName"];
+    _shortNames["organizationName"] = "O";
+    _shortNames["OU"] = oids["organizationalUnitName"];
+    _shortNames["organizationalUnitName"] = "OU";
+    _shortNames["E"] = oids["emailAddress"];
+    _shortNames["emailAddress"] = "E";
+    var publicKeyValidator = forge3.pki.rsa.publicKeyValidator;
+    var x509CertificateValidator = {
+      name: "Certificate",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "Certificate.TBSCertificate",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        captureAsn1: "tbsCertificate",
+        value: [
+          {
+            name: "Certificate.TBSCertificate.version",
+            tagClass: asn1.Class.CONTEXT_SPECIFIC,
+            type: 0,
+            constructed: true,
+            optional: true,
+            value: [{
+              name: "Certificate.TBSCertificate.version.integer",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.INTEGER,
+              constructed: false,
+              capture: "certVersion"
+            }]
+          },
+          {
+            name: "Certificate.TBSCertificate.serialNumber",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.INTEGER,
+            constructed: false,
+            capture: "certSerialNumber"
+          },
+          {
+            name: "Certificate.TBSCertificate.signature",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            value: [{
+              name: "Certificate.TBSCertificate.signature.algorithm",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.OID,
+              constructed: false,
+              capture: "certinfoSignatureOid"
+            }, {
+              name: "Certificate.TBSCertificate.signature.parameters",
+              tagClass: asn1.Class.UNIVERSAL,
+              optional: true,
+              captureAsn1: "certinfoSignatureParams"
+            }]
+          },
+          {
+            name: "Certificate.TBSCertificate.issuer",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            captureAsn1: "certIssuer"
+          },
+          {
+            name: "Certificate.TBSCertificate.validity",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            // Note: UTC and generalized times may both appear so the capture
+            // names are based on their detected order, the names used below
+            // are only for the common case, which validity time really means
+            // "notBefore" and which means "notAfter" will be determined by order
+            value: [{
+              // notBefore (Time) (UTC time case)
+              name: "Certificate.TBSCertificate.validity.notBefore (utc)",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.UTCTIME,
+              constructed: false,
+              optional: true,
+              capture: "certValidity1UTCTime"
+            }, {
+              // notBefore (Time) (generalized time case)
+              name: "Certificate.TBSCertificate.validity.notBefore (generalized)",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.GENERALIZEDTIME,
+              constructed: false,
+              optional: true,
+              capture: "certValidity2GeneralizedTime"
+            }, {
+              // notAfter (Time) (only UTC time is supported)
+              name: "Certificate.TBSCertificate.validity.notAfter (utc)",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.UTCTIME,
+              constructed: false,
+              optional: true,
+              capture: "certValidity3UTCTime"
+            }, {
+              // notAfter (Time) (only UTC time is supported)
+              name: "Certificate.TBSCertificate.validity.notAfter (generalized)",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.GENERALIZEDTIME,
+              constructed: false,
+              optional: true,
+              capture: "certValidity4GeneralizedTime"
+            }]
+          },
+          {
+            // Name (subject) (RDNSequence)
+            name: "Certificate.TBSCertificate.subject",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            captureAsn1: "certSubject"
+          },
+          // SubjectPublicKeyInfo
+          publicKeyValidator,
+          {
+            // issuerUniqueID (optional)
+            name: "Certificate.TBSCertificate.issuerUniqueID",
+            tagClass: asn1.Class.CONTEXT_SPECIFIC,
+            type: 1,
+            constructed: true,
+            optional: true,
+            value: [{
+              name: "Certificate.TBSCertificate.issuerUniqueID.id",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.BITSTRING,
+              constructed: false,
+              // TODO: support arbitrary bit length ids
+              captureBitStringValue: "certIssuerUniqueId"
+            }]
+          },
+          {
+            // subjectUniqueID (optional)
+            name: "Certificate.TBSCertificate.subjectUniqueID",
+            tagClass: asn1.Class.CONTEXT_SPECIFIC,
+            type: 2,
+            constructed: true,
+            optional: true,
+            value: [{
+              name: "Certificate.TBSCertificate.subjectUniqueID.id",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.BITSTRING,
+              constructed: false,
+              // TODO: support arbitrary bit length ids
+              captureBitStringValue: "certSubjectUniqueId"
+            }]
+          },
+          {
+            // Extensions (optional)
+            name: "Certificate.TBSCertificate.extensions",
+            tagClass: asn1.Class.CONTEXT_SPECIFIC,
+            type: 3,
+            constructed: true,
+            captureAsn1: "certExtensions",
+            optional: true
+          }
+        ]
+      }, {
+        // AlgorithmIdentifier (signature algorithm)
+        name: "Certificate.signatureAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          // algorithm
+          name: "Certificate.signatureAlgorithm.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "certSignatureOid"
+        }, {
+          name: "Certificate.TBSCertificate.signature.parameters",
+          tagClass: asn1.Class.UNIVERSAL,
+          optional: true,
+          captureAsn1: "certSignatureParams"
+        }]
+      }, {
+        // SignatureValue
+        name: "Certificate.signatureValue",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.BITSTRING,
+        constructed: false,
+        captureBitStringValue: "certSignature"
+      }]
+    };
+    var rsassaPssParameterValidator = {
+      name: "rsapss",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "rsapss.hashAlgorithm",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 0,
+        constructed: true,
+        value: [{
+          name: "rsapss.hashAlgorithm.AlgorithmIdentifier",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Class.SEQUENCE,
+          constructed: true,
+          optional: true,
+          value: [{
+            name: "rsapss.hashAlgorithm.AlgorithmIdentifier.algorithm",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.OID,
+            constructed: false,
+            capture: "hashOid"
+            /* parameter block omitted, for SHA1 NULL anyhow. */
+          }]
+        }]
+      }, {
+        name: "rsapss.maskGenAlgorithm",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 1,
+        constructed: true,
+        value: [{
+          name: "rsapss.maskGenAlgorithm.AlgorithmIdentifier",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Class.SEQUENCE,
+          constructed: true,
+          optional: true,
+          value: [{
+            name: "rsapss.maskGenAlgorithm.AlgorithmIdentifier.algorithm",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.OID,
+            constructed: false,
+            capture: "maskGenOid"
+          }, {
+            name: "rsapss.maskGenAlgorithm.AlgorithmIdentifier.params",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            value: [{
+              name: "rsapss.maskGenAlgorithm.AlgorithmIdentifier.params.algorithm",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.OID,
+              constructed: false,
+              capture: "maskGenHashOid"
+              /* parameter block omitted, for SHA1 NULL anyhow. */
+            }]
+          }]
+        }]
+      }, {
+        name: "rsapss.saltLength",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 2,
+        optional: true,
+        value: [{
+          name: "rsapss.saltLength.saltLength",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Class.INTEGER,
+          constructed: false,
+          capture: "saltLength"
+        }]
+      }, {
+        name: "rsapss.trailerField",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        type: 3,
+        optional: true,
+        value: [{
+          name: "rsapss.trailer.trailer",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Class.INTEGER,
+          constructed: false,
+          capture: "trailer"
+        }]
+      }]
+    };
+    var certificationRequestInfoValidator = {
+      name: "CertificationRequestInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      captureAsn1: "certificationRequestInfo",
+      value: [
+        {
+          name: "CertificationRequestInfo.integer",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.INTEGER,
+          constructed: false,
+          capture: "certificationRequestInfoVersion"
+        },
+        {
+          // Name (subject) (RDNSequence)
+          name: "CertificationRequestInfo.subject",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          captureAsn1: "certificationRequestInfoSubject"
+        },
+        // SubjectPublicKeyInfo
+        publicKeyValidator,
+        {
+          name: "CertificationRequestInfo.attributes",
+          tagClass: asn1.Class.CONTEXT_SPECIFIC,
+          type: 0,
+          constructed: true,
+          optional: true,
+          capture: "certificationRequestInfoAttributes",
+          value: [{
+            name: "CertificationRequestInfo.attributes",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            value: [{
+              name: "CertificationRequestInfo.attributes.type",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.OID,
+              constructed: false
+            }, {
+              name: "CertificationRequestInfo.attributes.value",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.SET,
+              constructed: true
+            }]
+          }]
+        }
+      ]
+    };
+    var certificationRequestValidator = {
+      name: "CertificationRequest",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      captureAsn1: "csr",
+      value: [
+        certificationRequestInfoValidator,
+        {
+          // AlgorithmIdentifier (signature algorithm)
+          name: "CertificationRequest.signatureAlgorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          value: [{
+            // algorithm
+            name: "CertificationRequest.signatureAlgorithm.algorithm",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.OID,
+            constructed: false,
+            capture: "csrSignatureOid"
+          }, {
+            name: "CertificationRequest.signatureAlgorithm.parameters",
+            tagClass: asn1.Class.UNIVERSAL,
+            optional: true,
+            captureAsn1: "csrSignatureParams"
+          }]
+        },
+        {
+          // signature
+          name: "CertificationRequest.signature",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.BITSTRING,
+          constructed: false,
+          captureBitStringValue: "csrSignature"
+        }
+      ]
+    };
+    pki.RDNAttributesAsArray = function(rdn, md) {
+      var rval = [];
+      var set, attr, obj;
+      for (var si = 0; si < rdn.value.length; ++si) {
+        set = rdn.value[si];
+        for (var i = 0; i < set.value.length; ++i) {
+          obj = {};
+          attr = set.value[i];
+          obj.type = asn1.derToOid(attr.value[0].value);
+          obj.value = attr.value[1].value;
+          obj.valueTagClass = attr.value[1].type;
+          if (obj.type in oids) {
+            obj.name = oids[obj.type];
+            if (obj.name in _shortNames) {
+              obj.shortName = _shortNames[obj.name];
+            }
+          }
+          if (md) {
+            md.update(obj.type);
+            md.update(obj.value);
+          }
+          rval.push(obj);
+        }
+      }
+      return rval;
+    };
+    pki.CRIAttributesAsArray = function(attributes) {
+      var rval = [];
+      for (var si = 0; si < attributes.length; ++si) {
+        var seq = attributes[si];
+        var type = asn1.derToOid(seq.value[0].value);
+        var values = seq.value[1].value;
+        for (var vi = 0; vi < values.length; ++vi) {
+          var obj = {};
+          obj.type = type;
+          obj.value = values[vi].value;
+          obj.valueTagClass = values[vi].type;
+          if (obj.type in oids) {
+            obj.name = oids[obj.type];
+            if (obj.name in _shortNames) {
+              obj.shortName = _shortNames[obj.name];
+            }
+          }
+          if (obj.type === oids.extensionRequest) {
+            obj.extensions = [];
+            for (var ei = 0; ei < obj.value.length; ++ei) {
+              obj.extensions.push(pki.certificateExtensionFromAsn1(obj.value[ei]));
+            }
+          }
+          rval.push(obj);
+        }
+      }
+      return rval;
+    };
+    function _getAttribute(obj, options) {
+      if (typeof options === "string") {
+        options = { shortName: options };
+      }
+      var rval = null;
+      var attr;
+      for (var i = 0; rval === null && i < obj.attributes.length; ++i) {
+        attr = obj.attributes[i];
+        if (options.type && options.type === attr.type) {
+          rval = attr;
+        } else if (options.name && options.name === attr.name) {
+          rval = attr;
+        } else if (options.shortName && options.shortName === attr.shortName) {
+          rval = attr;
+        }
+      }
+      return rval;
+    }
+    var _readSignatureParameters = function(oid, obj, fillDefaults) {
+      var params = {};
+      if (oid !== oids["RSASSA-PSS"]) {
+        return params;
+      }
+      if (fillDefaults) {
+        params = {
+          hash: {
+            algorithmOid: oids["sha1"]
+          },
+          mgf: {
+            algorithmOid: oids["mgf1"],
+            hash: {
+              algorithmOid: oids["sha1"]
+            }
+          },
+          saltLength: 20
+        };
+      }
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, rsassaPssParameterValidator, capture, errors)) {
+        var error = new Error("Cannot read RSASSA-PSS parameter block.");
+        error.errors = errors;
+        throw error;
+      }
+      if (capture.hashOid !== void 0) {
+        params.hash = params.hash || {};
+        params.hash.algorithmOid = asn1.derToOid(capture.hashOid);
+      }
+      if (capture.maskGenOid !== void 0) {
+        params.mgf = params.mgf || {};
+        params.mgf.algorithmOid = asn1.derToOid(capture.maskGenOid);
+        params.mgf.hash = params.mgf.hash || {};
+        params.mgf.hash.algorithmOid = asn1.derToOid(capture.maskGenHashOid);
+      }
+      if (capture.saltLength !== void 0) {
+        params.saltLength = capture.saltLength.charCodeAt(0);
+      }
+      return params;
+    };
+    var _createSignatureDigest = function(options) {
+      switch (oids[options.signatureOid]) {
+        case "sha1WithRSAEncryption":
+        case "sha1WithRSASignature":
+          return forge3.md.sha1.create();
+        case "md5WithRSAEncryption":
+          return forge3.md.md5.create();
+        case "sha256WithRSAEncryption":
+          return forge3.md.sha256.create();
+        case "sha384WithRSAEncryption":
+          return forge3.md.sha384.create();
+        case "sha512WithRSAEncryption":
+          return forge3.md.sha512.create();
+        case "RSASSA-PSS":
+          return forge3.md.sha256.create();
+        default:
+          var error = new Error(
+            "Could not compute " + options.type + " digest. Unknown signature OID."
+          );
+          error.signatureOid = options.signatureOid;
+          throw error;
+      }
+    };
+    var _verifySignature = function(options) {
+      var cert = options.certificate;
+      var scheme;
+      switch (cert.signatureOid) {
+        case oids.sha1WithRSAEncryption:
+        case oids.sha1WithRSASignature:
+          break;
+        case oids["RSASSA-PSS"]:
+          var hash, mgf;
+          hash = oids[cert.signatureParameters.mgf.hash.algorithmOid];
+          if (hash === void 0 || forge3.md[hash] === void 0) {
+            var error = new Error("Unsupported MGF hash function.");
+            error.oid = cert.signatureParameters.mgf.hash.algorithmOid;
+            error.name = hash;
+            throw error;
+          }
+          mgf = oids[cert.signatureParameters.mgf.algorithmOid];
+          if (mgf === void 0 || forge3.mgf[mgf] === void 0) {
+            var error = new Error("Unsupported MGF function.");
+            error.oid = cert.signatureParameters.mgf.algorithmOid;
+            error.name = mgf;
+            throw error;
+          }
+          mgf = forge3.mgf[mgf].create(forge3.md[hash].create());
+          hash = oids[cert.signatureParameters.hash.algorithmOid];
+          if (hash === void 0 || forge3.md[hash] === void 0) {
+            var error = new Error("Unsupported RSASSA-PSS hash function.");
+            error.oid = cert.signatureParameters.hash.algorithmOid;
+            error.name = hash;
+            throw error;
+          }
+          scheme = forge3.pss.create(
+            forge3.md[hash].create(),
+            mgf,
+            cert.signatureParameters.saltLength
+          );
+          break;
+      }
+      return cert.publicKey.verify(
+        options.md.digest().getBytes(),
+        options.signature,
+        scheme
+      );
+    };
+    pki.certificateFromPem = function(pem, computeHash, strict) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "CERTIFICATE" && msg.type !== "X509 CERTIFICATE" && msg.type !== "TRUSTED CERTIFICATE") {
+        var error = new Error(
+          'Could not convert certificate from PEM; PEM header type is not "CERTIFICATE", "X509 CERTIFICATE", or "TRUSTED CERTIFICATE".'
+        );
+        error.headerType = msg.type;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error(
+          "Could not convert certificate from PEM; PEM is encrypted."
+        );
+      }
+      var obj = asn1.fromDer(msg.body, strict);
+      return pki.certificateFromAsn1(obj, computeHash);
+    };
+    pki.certificateToPem = function(cert, maxline) {
+      var msg = {
+        type: "CERTIFICATE",
+        body: asn1.toDer(pki.certificateToAsn1(cert)).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+    pki.publicKeyFromPem = function(pem) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "PUBLIC KEY" && msg.type !== "RSA PUBLIC KEY") {
+        var error = new Error('Could not convert public key from PEM; PEM header type is not "PUBLIC KEY" or "RSA PUBLIC KEY".');
+        error.headerType = msg.type;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error("Could not convert public key from PEM; PEM is encrypted.");
+      }
+      var obj = asn1.fromDer(msg.body);
+      return pki.publicKeyFromAsn1(obj);
+    };
+    pki.publicKeyToPem = function(key, maxline) {
+      var msg = {
+        type: "PUBLIC KEY",
+        body: asn1.toDer(pki.publicKeyToAsn1(key)).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+    pki.publicKeyToRSAPublicKeyPem = function(key, maxline) {
+      var msg = {
+        type: "RSA PUBLIC KEY",
+        body: asn1.toDer(pki.publicKeyToRSAPublicKey(key)).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+    pki.getPublicKeyFingerprint = function(key, options) {
+      options = options || {};
+      var md = options.md || forge3.md.sha1.create();
+      var type = options.type || "RSAPublicKey";
+      var bytes;
+      switch (type) {
+        case "RSAPublicKey":
+          bytes = asn1.toDer(pki.publicKeyToRSAPublicKey(key)).getBytes();
+          break;
+        case "SubjectPublicKeyInfo":
+          bytes = asn1.toDer(pki.publicKeyToAsn1(key)).getBytes();
+          break;
+        default:
+          throw new Error('Unknown fingerprint type "' + options.type + '".');
+      }
+      md.start();
+      md.update(bytes);
+      var digest = md.digest();
+      if (options.encoding === "hex") {
+        var hex = digest.toHex();
+        if (options.delimiter) {
+          return hex.match(/.{2}/g).join(options.delimiter);
+        }
+        return hex;
+      } else if (options.encoding === "binary") {
+        return digest.getBytes();
+      } else if (options.encoding) {
+        throw new Error('Unknown encoding "' + options.encoding + '".');
+      }
+      return digest;
+    };
+    pki.certificationRequestFromPem = function(pem, computeHash, strict) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "CERTIFICATE REQUEST") {
+        var error = new Error('Could not convert certification request from PEM; PEM header type is not "CERTIFICATE REQUEST".');
+        error.headerType = msg.type;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error("Could not convert certification request from PEM; PEM is encrypted.");
+      }
+      var obj = asn1.fromDer(msg.body, strict);
+      return pki.certificationRequestFromAsn1(obj, computeHash);
+    };
+    pki.certificationRequestToPem = function(csr, maxline) {
+      var msg = {
+        type: "CERTIFICATE REQUEST",
+        body: asn1.toDer(pki.certificationRequestToAsn1(csr)).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+    pki.createCertificate = function() {
+      var cert = {};
+      cert.version = 2;
+      cert.serialNumber = "00";
+      cert.signatureOid = null;
+      cert.signature = null;
+      cert.siginfo = {};
+      cert.siginfo.algorithmOid = null;
+      cert.validity = {};
+      cert.validity.notBefore = /* @__PURE__ */ new Date();
+      cert.validity.notAfter = /* @__PURE__ */ new Date();
+      cert.issuer = {};
+      cert.issuer.getField = function(sn) {
+        return _getAttribute(cert.issuer, sn);
+      };
+      cert.issuer.addField = function(attr) {
+        _fillMissingFields([attr]);
+        cert.issuer.attributes.push(attr);
+      };
+      cert.issuer.attributes = [];
+      cert.issuer.hash = null;
+      cert.subject = {};
+      cert.subject.getField = function(sn) {
+        return _getAttribute(cert.subject, sn);
+      };
+      cert.subject.addField = function(attr) {
+        _fillMissingFields([attr]);
+        cert.subject.attributes.push(attr);
+      };
+      cert.subject.attributes = [];
+      cert.subject.hash = null;
+      cert.extensions = [];
+      cert.publicKey = null;
+      cert.md = null;
+      cert.setSubject = function(attrs, uniqueId) {
+        _fillMissingFields(attrs);
+        cert.subject.attributes = attrs;
+        delete cert.subject.uniqueId;
+        if (uniqueId) {
+          cert.subject.uniqueId = uniqueId;
+        }
+        cert.subject.hash = null;
+      };
+      cert.setIssuer = function(attrs, uniqueId) {
+        _fillMissingFields(attrs);
+        cert.issuer.attributes = attrs;
+        delete cert.issuer.uniqueId;
+        if (uniqueId) {
+          cert.issuer.uniqueId = uniqueId;
+        }
+        cert.issuer.hash = null;
+      };
+      cert.setExtensions = function(exts) {
+        for (var i = 0; i < exts.length; ++i) {
+          _fillMissingExtensionFields(exts[i], { cert });
+        }
+        cert.extensions = exts;
+      };
+      cert.getExtension = function(options) {
+        if (typeof options === "string") {
+          options = { name: options };
+        }
+        var rval = null;
+        var ext;
+        for (var i = 0; rval === null && i < cert.extensions.length; ++i) {
+          ext = cert.extensions[i];
+          if (options.id && ext.id === options.id) {
+            rval = ext;
+          } else if (options.name && ext.name === options.name) {
+            rval = ext;
+          }
+        }
+        return rval;
+      };
+      cert.sign = function(key, md) {
+        cert.md = md || forge3.md.sha1.create();
+        var algorithmOid = oids[cert.md.algorithm + "WithRSAEncryption"];
+        if (!algorithmOid) {
+          var error = new Error("Could not compute certificate digest. Unknown message digest algorithm OID.");
+          error.algorithm = cert.md.algorithm;
+          throw error;
+        }
+        cert.signatureOid = cert.siginfo.algorithmOid = algorithmOid;
+        cert.tbsCertificate = pki.getTBSCertificate(cert);
+        var bytes = asn1.toDer(cert.tbsCertificate);
+        cert.md.update(bytes.getBytes());
+        cert.signature = key.sign(cert.md);
+      };
+      cert.verify = function(child) {
+        var rval = false;
+        if (!cert.issued(child)) {
+          var issuer = child.issuer;
+          var subject = cert.subject;
+          var error = new Error(
+            "The parent certificate did not issue the given child certificate; the child certificate's issuer does not match the parent's subject."
+          );
+          error.expectedIssuer = subject.attributes;
+          error.actualIssuer = issuer.attributes;
+          throw error;
+        }
+        var md = child.md;
+        if (md === null) {
+          md = _createSignatureDigest({
+            signatureOid: child.signatureOid,
+            type: "certificate"
+          });
+          var tbsCertificate = child.tbsCertificate || pki.getTBSCertificate(child);
+          var bytes = asn1.toDer(tbsCertificate);
+          md.update(bytes.getBytes());
+        }
+        if (md !== null) {
+          rval = _verifySignature({
+            certificate: cert,
+            md,
+            signature: child.signature
+          });
+        }
+        return rval;
+      };
+      cert.isIssuer = function(parent) {
+        var rval = false;
+        var i = cert.issuer;
+        var s = parent.subject;
+        if (i.hash && s.hash) {
+          rval = i.hash === s.hash;
+        } else if (i.attributes.length === s.attributes.length) {
+          rval = true;
+          var iattr, sattr;
+          for (var n = 0; rval && n < i.attributes.length; ++n) {
+            iattr = i.attributes[n];
+            sattr = s.attributes[n];
+            if (iattr.type !== sattr.type || iattr.value !== sattr.value) {
+              rval = false;
+            }
+          }
+        }
+        return rval;
+      };
+      cert.issued = function(child) {
+        return child.isIssuer(cert);
+      };
+      cert.generateSubjectKeyIdentifier = function() {
+        return pki.getPublicKeyFingerprint(cert.publicKey, { type: "RSAPublicKey" });
+      };
+      cert.verifySubjectKeyIdentifier = function() {
+        var oid = oids["subjectKeyIdentifier"];
+        for (var i = 0; i < cert.extensions.length; ++i) {
+          var ext = cert.extensions[i];
+          if (ext.id === oid) {
+            var ski = cert.generateSubjectKeyIdentifier().getBytes();
+            return forge3.util.hexToBytes(ext.subjectKeyIdentifier) === ski;
+          }
+        }
+        return false;
+      };
+      return cert;
+    };
+    pki.certificateFromAsn1 = function(obj, computeHash) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, x509CertificateValidator, capture, errors)) {
+        var error = new Error("Cannot read X.509 certificate. ASN.1 object is not an X509v3 Certificate.");
+        error.errors = errors;
+        throw error;
+      }
+      var oid = asn1.derToOid(capture.publicKeyOid);
+      if (oid !== pki.oids.rsaEncryption) {
+        throw new Error("Cannot read public key. OID is not RSA.");
+      }
+      var cert = pki.createCertificate();
+      cert.version = capture.certVersion ? capture.certVersion.charCodeAt(0) : 0;
+      var serial = forge3.util.createBuffer(capture.certSerialNumber);
+      cert.serialNumber = serial.toHex();
+      cert.signatureOid = forge3.asn1.derToOid(capture.certSignatureOid);
+      cert.signatureParameters = _readSignatureParameters(
+        cert.signatureOid,
+        capture.certSignatureParams,
+        true
+      );
+      cert.siginfo.algorithmOid = forge3.asn1.derToOid(capture.certinfoSignatureOid);
+      cert.siginfo.parameters = _readSignatureParameters(
+        cert.siginfo.algorithmOid,
+        capture.certinfoSignatureParams,
+        false
+      );
+      cert.signature = capture.certSignature;
+      var validity = [];
+      if (capture.certValidity1UTCTime !== void 0) {
+        validity.push(asn1.utcTimeToDate(capture.certValidity1UTCTime));
+      }
+      if (capture.certValidity2GeneralizedTime !== void 0) {
+        validity.push(asn1.generalizedTimeToDate(
+          capture.certValidity2GeneralizedTime
+        ));
+      }
+      if (capture.certValidity3UTCTime !== void 0) {
+        validity.push(asn1.utcTimeToDate(capture.certValidity3UTCTime));
+      }
+      if (capture.certValidity4GeneralizedTime !== void 0) {
+        validity.push(asn1.generalizedTimeToDate(
+          capture.certValidity4GeneralizedTime
+        ));
+      }
+      if (validity.length > 2) {
+        throw new Error("Cannot read notBefore/notAfter validity times; more than two times were provided in the certificate.");
+      }
+      if (validity.length < 2) {
+        throw new Error("Cannot read notBefore/notAfter validity times; they were not provided as either UTCTime or GeneralizedTime.");
+      }
+      cert.validity.notBefore = validity[0];
+      cert.validity.notAfter = validity[1];
+      cert.tbsCertificate = capture.tbsCertificate;
+      if (computeHash) {
+        cert.md = _createSignatureDigest({
+          signatureOid: cert.signatureOid,
+          type: "certificate"
+        });
+        var bytes = asn1.toDer(cert.tbsCertificate);
+        cert.md.update(bytes.getBytes());
+      }
+      var imd = forge3.md.sha1.create();
+      var ibytes = asn1.toDer(capture.certIssuer);
+      imd.update(ibytes.getBytes());
+      cert.issuer.getField = function(sn) {
+        return _getAttribute(cert.issuer, sn);
+      };
+      cert.issuer.addField = function(attr) {
+        _fillMissingFields([attr]);
+        cert.issuer.attributes.push(attr);
+      };
+      cert.issuer.attributes = pki.RDNAttributesAsArray(capture.certIssuer);
+      if (capture.certIssuerUniqueId) {
+        cert.issuer.uniqueId = capture.certIssuerUniqueId;
+      }
+      cert.issuer.hash = imd.digest().toHex();
+      var smd = forge3.md.sha1.create();
+      var sbytes = asn1.toDer(capture.certSubject);
+      smd.update(sbytes.getBytes());
+      cert.subject.getField = function(sn) {
+        return _getAttribute(cert.subject, sn);
+      };
+      cert.subject.addField = function(attr) {
+        _fillMissingFields([attr]);
+        cert.subject.attributes.push(attr);
+      };
+      cert.subject.attributes = pki.RDNAttributesAsArray(capture.certSubject);
+      if (capture.certSubjectUniqueId) {
+        cert.subject.uniqueId = capture.certSubjectUniqueId;
+      }
+      cert.subject.hash = smd.digest().toHex();
+      if (capture.certExtensions) {
+        cert.extensions = pki.certificateExtensionsFromAsn1(capture.certExtensions);
+      } else {
+        cert.extensions = [];
+      }
+      cert.publicKey = pki.publicKeyFromAsn1(capture.subjectPublicKeyInfo);
+      return cert;
+    };
+    pki.certificateExtensionsFromAsn1 = function(exts) {
+      var rval = [];
+      for (var i = 0; i < exts.value.length; ++i) {
+        var extseq = exts.value[i];
+        for (var ei = 0; ei < extseq.value.length; ++ei) {
+          rval.push(pki.certificateExtensionFromAsn1(extseq.value[ei]));
+        }
+      }
+      return rval;
+    };
+    pki.certificateExtensionFromAsn1 = function(ext) {
+      var e = {};
+      e.id = asn1.derToOid(ext.value[0].value);
+      e.critical = false;
+      if (ext.value[1].type === asn1.Type.BOOLEAN) {
+        e.critical = ext.value[1].value.charCodeAt(0) !== 0;
+        e.value = ext.value[2].value;
+      } else {
+        e.value = ext.value[1].value;
+      }
+      if (e.id in oids) {
+        e.name = oids[e.id];
+        if (e.name === "keyUsage") {
+          var ev = asn1.fromDer(e.value);
+          var b2 = 0;
+          var b3 = 0;
+          if (ev.value.length > 1) {
+            b2 = ev.value.charCodeAt(1);
+            b3 = ev.value.length > 2 ? ev.value.charCodeAt(2) : 0;
+          }
+          e.digitalSignature = (b2 & 128) === 128;
+          e.nonRepudiation = (b2 & 64) === 64;
+          e.keyEncipherment = (b2 & 32) === 32;
+          e.dataEncipherment = (b2 & 16) === 16;
+          e.keyAgreement = (b2 & 8) === 8;
+          e.keyCertSign = (b2 & 4) === 4;
+          e.cRLSign = (b2 & 2) === 2;
+          e.encipherOnly = (b2 & 1) === 1;
+          e.decipherOnly = (b3 & 128) === 128;
+        } else if (e.name === "basicConstraints") {
+          var ev = asn1.fromDer(e.value);
+          if (ev.value.length > 0 && ev.value[0].type === asn1.Type.BOOLEAN) {
+            e.cA = ev.value[0].value.charCodeAt(0) !== 0;
+          } else {
+            e.cA = false;
+          }
+          var value = null;
+          if (ev.value.length > 0 && ev.value[0].type === asn1.Type.INTEGER) {
+            value = ev.value[0].value;
+          } else if (ev.value.length > 1) {
+            value = ev.value[1].value;
+          }
+          if (value !== null) {
+            e.pathLenConstraint = asn1.derToInteger(value);
+          }
+        } else if (e.name === "extKeyUsage") {
+          var ev = asn1.fromDer(e.value);
+          for (var vi = 0; vi < ev.value.length; ++vi) {
+            var oid = asn1.derToOid(ev.value[vi].value);
+            if (oid in oids) {
+              e[oids[oid]] = true;
+            } else {
+              e[oid] = true;
+            }
+          }
+        } else if (e.name === "nsCertType") {
+          var ev = asn1.fromDer(e.value);
+          var b2 = 0;
+          if (ev.value.length > 1) {
+            b2 = ev.value.charCodeAt(1);
+          }
+          e.client = (b2 & 128) === 128;
+          e.server = (b2 & 64) === 64;
+          e.email = (b2 & 32) === 32;
+          e.objsign = (b2 & 16) === 16;
+          e.reserved = (b2 & 8) === 8;
+          e.sslCA = (b2 & 4) === 4;
+          e.emailCA = (b2 & 2) === 2;
+          e.objCA = (b2 & 1) === 1;
+        } else if (e.name === "subjectAltName" || e.name === "issuerAltName") {
+          e.altNames = [];
+          var gn;
+          var ev = asn1.fromDer(e.value);
+          for (var n = 0; n < ev.value.length; ++n) {
+            gn = ev.value[n];
+            var altName = {
+              type: gn.type,
+              value: gn.value
+            };
+            e.altNames.push(altName);
+            switch (gn.type) {
+              case 1:
+              case 2:
+              case 6:
+                break;
+              case 7:
+                altName.ip = forge3.util.bytesToIP(gn.value);
+                break;
+              case 8:
+                altName.oid = asn1.derToOid(gn.value);
+                break;
+              default:
+            }
+          }
+        } else if (e.name === "subjectKeyIdentifier") {
+          var ev = asn1.fromDer(e.value);
+          e.subjectKeyIdentifier = forge3.util.bytesToHex(ev.value);
+        }
+      }
+      return e;
+    };
+    pki.certificationRequestFromAsn1 = function(obj, computeHash) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, certificationRequestValidator, capture, errors)) {
+        var error = new Error("Cannot read PKCS#10 certificate request. ASN.1 object is not a PKCS#10 CertificationRequest.");
+        error.errors = errors;
+        throw error;
+      }
+      var oid = asn1.derToOid(capture.publicKeyOid);
+      if (oid !== pki.oids.rsaEncryption) {
+        throw new Error("Cannot read public key. OID is not RSA.");
+      }
+      var csr = pki.createCertificationRequest();
+      csr.version = capture.csrVersion ? capture.csrVersion.charCodeAt(0) : 0;
+      csr.signatureOid = forge3.asn1.derToOid(capture.csrSignatureOid);
+      csr.signatureParameters = _readSignatureParameters(
+        csr.signatureOid,
+        capture.csrSignatureParams,
+        true
+      );
+      csr.siginfo.algorithmOid = forge3.asn1.derToOid(capture.csrSignatureOid);
+      csr.siginfo.parameters = _readSignatureParameters(
+        csr.siginfo.algorithmOid,
+        capture.csrSignatureParams,
+        false
+      );
+      csr.signature = capture.csrSignature;
+      csr.certificationRequestInfo = capture.certificationRequestInfo;
+      if (computeHash) {
+        csr.md = _createSignatureDigest({
+          signatureOid: csr.signatureOid,
+          type: "certification request"
+        });
+        var bytes = asn1.toDer(csr.certificationRequestInfo);
+        csr.md.update(bytes.getBytes());
+      }
+      var smd = forge3.md.sha1.create();
+      csr.subject.getField = function(sn) {
+        return _getAttribute(csr.subject, sn);
+      };
+      csr.subject.addField = function(attr) {
+        _fillMissingFields([attr]);
+        csr.subject.attributes.push(attr);
+      };
+      csr.subject.attributes = pki.RDNAttributesAsArray(
+        capture.certificationRequestInfoSubject,
+        smd
+      );
+      csr.subject.hash = smd.digest().toHex();
+      csr.publicKey = pki.publicKeyFromAsn1(capture.subjectPublicKeyInfo);
+      csr.getAttribute = function(sn) {
+        return _getAttribute(csr, sn);
+      };
+      csr.addAttribute = function(attr) {
+        _fillMissingFields([attr]);
+        csr.attributes.push(attr);
+      };
+      csr.attributes = pki.CRIAttributesAsArray(
+        capture.certificationRequestInfoAttributes || []
+      );
+      return csr;
+    };
+    pki.createCertificationRequest = function() {
+      var csr = {};
+      csr.version = 0;
+      csr.signatureOid = null;
+      csr.signature = null;
+      csr.siginfo = {};
+      csr.siginfo.algorithmOid = null;
+      csr.subject = {};
+      csr.subject.getField = function(sn) {
+        return _getAttribute(csr.subject, sn);
+      };
+      csr.subject.addField = function(attr) {
+        _fillMissingFields([attr]);
+        csr.subject.attributes.push(attr);
+      };
+      csr.subject.attributes = [];
+      csr.subject.hash = null;
+      csr.publicKey = null;
+      csr.attributes = [];
+      csr.getAttribute = function(sn) {
+        return _getAttribute(csr, sn);
+      };
+      csr.addAttribute = function(attr) {
+        _fillMissingFields([attr]);
+        csr.attributes.push(attr);
+      };
+      csr.md = null;
+      csr.setSubject = function(attrs) {
+        _fillMissingFields(attrs);
+        csr.subject.attributes = attrs;
+        csr.subject.hash = null;
+      };
+      csr.setAttributes = function(attrs) {
+        _fillMissingFields(attrs);
+        csr.attributes = attrs;
+      };
+      csr.sign = function(key, md) {
+        csr.md = md || forge3.md.sha1.create();
+        var algorithmOid = oids[csr.md.algorithm + "WithRSAEncryption"];
+        if (!algorithmOid) {
+          var error = new Error("Could not compute certification request digest. Unknown message digest algorithm OID.");
+          error.algorithm = csr.md.algorithm;
+          throw error;
+        }
+        csr.signatureOid = csr.siginfo.algorithmOid = algorithmOid;
+        csr.certificationRequestInfo = pki.getCertificationRequestInfo(csr);
+        var bytes = asn1.toDer(csr.certificationRequestInfo);
+        csr.md.update(bytes.getBytes());
+        csr.signature = key.sign(csr.md);
+      };
+      csr.verify = function() {
+        var rval = false;
+        var md = csr.md;
+        if (md === null) {
+          md = _createSignatureDigest({
+            signatureOid: csr.signatureOid,
+            type: "certification request"
+          });
+          var cri = csr.certificationRequestInfo || pki.getCertificationRequestInfo(csr);
+          var bytes = asn1.toDer(cri);
+          md.update(bytes.getBytes());
+        }
+        if (md !== null) {
+          rval = _verifySignature({
+            certificate: csr,
+            md,
+            signature: csr.signature
+          });
+        }
+        return rval;
+      };
+      return csr;
+    };
+    function _dnToAsn1(obj) {
+      var rval = asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.SEQUENCE,
+        true,
+        []
+      );
+      var attr, set;
+      var attrs = obj.attributes;
+      for (var i = 0; i < attrs.length; ++i) {
+        attr = attrs[i];
+        var value = attr.value;
+        var valueTagClass = asn1.Type.PRINTABLESTRING;
+        if ("valueTagClass" in attr) {
+          valueTagClass = attr.valueTagClass;
+          if (valueTagClass === asn1.Type.UTF8) {
+            value = forge3.util.encodeUtf8(value);
+          }
+        }
+        set = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, [
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // AttributeType
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(attr.type).getBytes()
+            ),
+            // AttributeValue
+            asn1.create(asn1.Class.UNIVERSAL, valueTagClass, false, value)
+          ])
+        ]);
+        rval.value.push(set);
+      }
+      return rval;
+    }
+    function _fillMissingFields(attrs) {
+      var attr;
+      for (var i = 0; i < attrs.length; ++i) {
+        attr = attrs[i];
+        if (typeof attr.name === "undefined") {
+          if (attr.type && attr.type in pki.oids) {
+            attr.name = pki.oids[attr.type];
+          } else if (attr.shortName && attr.shortName in _shortNames) {
+            attr.name = pki.oids[_shortNames[attr.shortName]];
+          }
+        }
+        if (typeof attr.type === "undefined") {
+          if (attr.name && attr.name in pki.oids) {
+            attr.type = pki.oids[attr.name];
+          } else {
+            var error = new Error("Attribute type not specified.");
+            error.attribute = attr;
+            throw error;
+          }
+        }
+        if (typeof attr.shortName === "undefined") {
+          if (attr.name && attr.name in _shortNames) {
+            attr.shortName = _shortNames[attr.name];
+          }
+        }
+        if (attr.type === oids.extensionRequest) {
+          attr.valueConstructed = true;
+          attr.valueTagClass = asn1.Type.SEQUENCE;
+          if (!attr.value && attr.extensions) {
+            attr.value = [];
+            for (var ei = 0; ei < attr.extensions.length; ++ei) {
+              attr.value.push(pki.certificateExtensionToAsn1(
+                _fillMissingExtensionFields(attr.extensions[ei])
+              ));
+            }
+          }
+        }
+        if (typeof attr.value === "undefined") {
+          var error = new Error("Attribute value not specified.");
+          error.attribute = attr;
+          throw error;
+        }
+      }
+    }
+    function _fillMissingExtensionFields(e, options) {
+      options = options || {};
+      if (typeof e.name === "undefined") {
+        if (e.id && e.id in pki.oids) {
+          e.name = pki.oids[e.id];
+        }
+      }
+      if (typeof e.id === "undefined") {
+        if (e.name && e.name in pki.oids) {
+          e.id = pki.oids[e.name];
+        } else {
+          var error = new Error("Extension ID not specified.");
+          error.extension = e;
+          throw error;
+        }
+      }
+      if (typeof e.value !== "undefined") {
+        return e;
+      }
+      if (e.name === "keyUsage") {
+        var unused = 0;
+        var b2 = 0;
+        var b3 = 0;
+        if (e.digitalSignature) {
+          b2 |= 128;
+          unused = 7;
+        }
+        if (e.nonRepudiation) {
+          b2 |= 64;
+          unused = 6;
+        }
+        if (e.keyEncipherment) {
+          b2 |= 32;
+          unused = 5;
+        }
+        if (e.dataEncipherment) {
+          b2 |= 16;
+          unused = 4;
+        }
+        if (e.keyAgreement) {
+          b2 |= 8;
+          unused = 3;
+        }
+        if (e.keyCertSign) {
+          b2 |= 4;
+          unused = 2;
+        }
+        if (e.cRLSign) {
+          b2 |= 2;
+          unused = 1;
+        }
+        if (e.encipherOnly) {
+          b2 |= 1;
+          unused = 0;
+        }
+        if (e.decipherOnly) {
+          b3 |= 128;
+          unused = 7;
+        }
+        var value = String.fromCharCode(unused);
+        if (b3 !== 0) {
+          value += String.fromCharCode(b2) + String.fromCharCode(b3);
+        } else if (b2 !== 0) {
+          value += String.fromCharCode(b2);
+        }
+        e.value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.BITSTRING,
+          false,
+          value
+        );
+      } else if (e.name === "basicConstraints") {
+        e.value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.SEQUENCE,
+          true,
+          []
+        );
+        if (e.cA) {
+          e.value.value.push(asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.BOOLEAN,
+            false,
+            String.fromCharCode(255)
+          ));
+        }
+        if ("pathLenConstraint" in e) {
+          e.value.value.push(asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.INTEGER,
+            false,
+            asn1.integerToDer(e.pathLenConstraint).getBytes()
+          ));
+        }
+      } else if (e.name === "extKeyUsage") {
+        e.value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.SEQUENCE,
+          true,
+          []
+        );
+        var seq = e.value.value;
+        for (var key in e) {
+          if (e[key] !== true) {
+            continue;
+          }
+          if (key in oids) {
+            seq.push(asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(oids[key]).getBytes()
+            ));
+          } else if (key.indexOf(".") !== -1) {
+            seq.push(asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(key).getBytes()
+            ));
+          }
+        }
+      } else if (e.name === "nsCertType") {
+        var unused = 0;
+        var b2 = 0;
+        if (e.client) {
+          b2 |= 128;
+          unused = 7;
+        }
+        if (e.server) {
+          b2 |= 64;
+          unused = 6;
+        }
+        if (e.email) {
+          b2 |= 32;
+          unused = 5;
+        }
+        if (e.objsign) {
+          b2 |= 16;
+          unused = 4;
+        }
+        if (e.reserved) {
+          b2 |= 8;
+          unused = 3;
+        }
+        if (e.sslCA) {
+          b2 |= 4;
+          unused = 2;
+        }
+        if (e.emailCA) {
+          b2 |= 2;
+          unused = 1;
+        }
+        if (e.objCA) {
+          b2 |= 1;
+          unused = 0;
+        }
+        var value = String.fromCharCode(unused);
+        if (b2 !== 0) {
+          value += String.fromCharCode(b2);
+        }
+        e.value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.BITSTRING,
+          false,
+          value
+        );
+      } else if (e.name === "subjectAltName" || e.name === "issuerAltName") {
+        e.value = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, []);
+        var altName;
+        for (var n = 0; n < e.altNames.length; ++n) {
+          altName = e.altNames[n];
+          var value = altName.value;
+          if (altName.type === 7 && altName.ip) {
+            value = forge3.util.bytesFromIP(altName.ip);
+            if (value === null) {
+              var error = new Error(
+                'Extension "ip" value is not a valid IPv4 or IPv6 address.'
+              );
+              error.extension = e;
+              throw error;
+            }
+          } else if (altName.type === 8) {
+            if (altName.oid) {
+              value = asn1.oidToDer(asn1.oidToDer(altName.oid));
+            } else {
+              value = asn1.oidToDer(value);
+            }
+          }
+          e.value.value.push(asn1.create(
+            asn1.Class.CONTEXT_SPECIFIC,
+            altName.type,
+            false,
+            value
+          ));
+        }
+      } else if (e.name === "nsComment" && options.cert) {
+        if (!/^[\x00-\x7F]*$/.test(e.comment) || e.comment.length < 1 || e.comment.length > 128) {
+          throw new Error('Invalid "nsComment" content.');
+        }
+        e.value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.IA5STRING,
+          false,
+          e.comment
+        );
+      } else if (e.name === "subjectKeyIdentifier" && options.cert) {
+        var ski = options.cert.generateSubjectKeyIdentifier();
+        e.subjectKeyIdentifier = ski.toHex();
+        e.value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OCTETSTRING,
+          false,
+          ski.getBytes()
+        );
+      } else if (e.name === "authorityKeyIdentifier" && options.cert) {
+        e.value = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, []);
+        var seq = e.value.value;
+        if (e.keyIdentifier) {
+          var keyIdentifier = e.keyIdentifier === true ? options.cert.generateSubjectKeyIdentifier().getBytes() : e.keyIdentifier;
+          seq.push(
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, false, keyIdentifier)
+          );
+        }
+        if (e.authorityCertIssuer) {
+          var authorityCertIssuer = [
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 4, true, [
+              _dnToAsn1(e.authorityCertIssuer === true ? options.cert.issuer : e.authorityCertIssuer)
+            ])
+          ];
+          seq.push(
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 1, true, authorityCertIssuer)
+          );
+        }
+        if (e.serialNumber) {
+          var serialNumber = forge3.util.hexToBytes(e.serialNumber === true ? options.cert.serialNumber : e.serialNumber);
+          seq.push(
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 2, false, serialNumber)
+          );
+        }
+      } else if (e.name === "cRLDistributionPoints") {
+        e.value = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, []);
+        var seq = e.value.value;
+        var subSeq = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.SEQUENCE,
+          true,
+          []
+        );
+        var fullNameGeneralNames = asn1.create(
+          asn1.Class.CONTEXT_SPECIFIC,
+          0,
+          true,
+          []
+        );
+        var altName;
+        for (var n = 0; n < e.altNames.length; ++n) {
+          altName = e.altNames[n];
+          var value = altName.value;
+          if (altName.type === 7 && altName.ip) {
+            value = forge3.util.bytesFromIP(altName.ip);
+            if (value === null) {
+              var error = new Error(
+                'Extension "ip" value is not a valid IPv4 or IPv6 address.'
+              );
+              error.extension = e;
+              throw error;
+            }
+          } else if (altName.type === 8) {
+            if (altName.oid) {
+              value = asn1.oidToDer(asn1.oidToDer(altName.oid));
+            } else {
+              value = asn1.oidToDer(value);
+            }
+          }
+          fullNameGeneralNames.value.push(asn1.create(
+            asn1.Class.CONTEXT_SPECIFIC,
+            altName.type,
+            false,
+            value
+          ));
+        }
+        subSeq.value.push(asn1.create(
+          asn1.Class.CONTEXT_SPECIFIC,
+          0,
+          true,
+          [fullNameGeneralNames]
+        ));
+        seq.push(subSeq);
+      }
+      if (typeof e.value === "undefined") {
+        var error = new Error("Extension value not specified.");
+        error.extension = e;
+        throw error;
+      }
+      return e;
+    }
+    function _signatureParametersToAsn1(oid, params) {
+      switch (oid) {
+        case oids["RSASSA-PSS"]:
+          var parts = [];
+          if (params.hash.algorithmOid !== void 0) {
+            parts.push(asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OID,
+                  false,
+                  asn1.oidToDer(params.hash.algorithmOid).getBytes()
+                ),
+                asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+              ])
+            ]));
+          }
+          if (params.mgf.algorithmOid !== void 0) {
+            parts.push(asn1.create(asn1.Class.CONTEXT_SPECIFIC, 1, true, [
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OID,
+                  false,
+                  asn1.oidToDer(params.mgf.algorithmOid).getBytes()
+                ),
+                asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+                  asn1.create(
+                    asn1.Class.UNIVERSAL,
+                    asn1.Type.OID,
+                    false,
+                    asn1.oidToDer(params.mgf.hash.algorithmOid).getBytes()
+                  ),
+                  asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+                ])
+              ])
+            ]));
+          }
+          if (params.saltLength !== void 0) {
+            parts.push(asn1.create(asn1.Class.CONTEXT_SPECIFIC, 2, true, [
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.INTEGER,
+                false,
+                asn1.integerToDer(params.saltLength).getBytes()
+              )
+            ]));
+          }
+          return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, parts);
+        default:
+          return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "");
+      }
+    }
+    function _CRIAttributesToAsn1(csr) {
+      var rval = asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, []);
+      if (csr.attributes.length === 0) {
+        return rval;
+      }
+      var attrs = csr.attributes;
+      for (var i = 0; i < attrs.length; ++i) {
+        var attr = attrs[i];
+        var value = attr.value;
+        var valueTagClass = asn1.Type.UTF8;
+        if ("valueTagClass" in attr) {
+          valueTagClass = attr.valueTagClass;
+        }
+        if (valueTagClass === asn1.Type.UTF8) {
+          value = forge3.util.encodeUtf8(value);
+        }
+        var valueConstructed = false;
+        if ("valueConstructed" in attr) {
+          valueConstructed = attr.valueConstructed;
+        }
+        var seq = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // AttributeType
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(attr.type).getBytes()
+          ),
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, [
+            // AttributeValue
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              valueTagClass,
+              valueConstructed,
+              value
+            )
+          ])
+        ]);
+        rval.value.push(seq);
+      }
+      return rval;
+    }
+    var jan_1_1950 = /* @__PURE__ */ new Date("1950-01-01T00:00:00Z");
+    var jan_1_2050 = /* @__PURE__ */ new Date("2050-01-01T00:00:00Z");
+    function _dateToAsn1(date) {
+      if (date >= jan_1_1950 && date < jan_1_2050) {
+        return asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.UTCTIME,
+          false,
+          asn1.dateToUtcTime(date)
+        );
+      } else {
+        return asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.GENERALIZEDTIME,
+          false,
+          asn1.dateToGeneralizedTime(date)
+        );
+      }
+    }
+    pki.getTBSCertificate = function(cert) {
+      var notBefore = _dateToAsn1(cert.validity.notBefore);
+      var notAfter = _dateToAsn1(cert.validity.notAfter);
+      var tbs = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // version
+        asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+          // integer
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.INTEGER,
+            false,
+            asn1.integerToDer(cert.version).getBytes()
+          )
+        ]),
+        // serialNumber
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          forge3.util.hexToBytes(cert.serialNumber)
+        ),
+        // signature
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(cert.siginfo.algorithmOid).getBytes()
+          ),
+          // parameters
+          _signatureParametersToAsn1(
+            cert.siginfo.algorithmOid,
+            cert.siginfo.parameters
+          )
+        ]),
+        // issuer
+        _dnToAsn1(cert.issuer),
+        // validity
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          notBefore,
+          notAfter
+        ]),
+        // subject
+        _dnToAsn1(cert.subject),
+        // SubjectPublicKeyInfo
+        pki.publicKeyToAsn1(cert.publicKey)
+      ]);
+      if (cert.issuer.uniqueId) {
+        tbs.value.push(
+          asn1.create(asn1.Class.CONTEXT_SPECIFIC, 1, true, [
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.BITSTRING,
+              false,
+              // TODO: support arbitrary bit length ids
+              String.fromCharCode(0) + cert.issuer.uniqueId
+            )
+          ])
+        );
+      }
+      if (cert.subject.uniqueId) {
+        tbs.value.push(
+          asn1.create(asn1.Class.CONTEXT_SPECIFIC, 2, true, [
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.BITSTRING,
+              false,
+              // TODO: support arbitrary bit length ids
+              String.fromCharCode(0) + cert.subject.uniqueId
+            )
+          ])
+        );
+      }
+      if (cert.extensions.length > 0) {
+        tbs.value.push(pki.certificateExtensionsToAsn1(cert.extensions));
+      }
+      return tbs;
+    };
+    pki.getCertificationRequestInfo = function(csr) {
+      var cri = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // version
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          asn1.integerToDer(csr.version).getBytes()
+        ),
+        // subject
+        _dnToAsn1(csr.subject),
+        // SubjectPublicKeyInfo
+        pki.publicKeyToAsn1(csr.publicKey),
+        // attributes
+        _CRIAttributesToAsn1(csr)
+      ]);
+      return cri;
+    };
+    pki.distinguishedNameToAsn1 = function(dn) {
+      return _dnToAsn1(dn);
+    };
+    pki.certificateToAsn1 = function(cert) {
+      var tbsCertificate = cert.tbsCertificate || pki.getTBSCertificate(cert);
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // TBSCertificate
+        tbsCertificate,
+        // AlgorithmIdentifier (signature algorithm)
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(cert.signatureOid).getBytes()
+          ),
+          // parameters
+          _signatureParametersToAsn1(cert.signatureOid, cert.signatureParameters)
+        ]),
+        // SignatureValue
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.BITSTRING,
+          false,
+          String.fromCharCode(0) + cert.signature
+        )
+      ]);
+    };
+    pki.certificateExtensionsToAsn1 = function(exts) {
+      var rval = asn1.create(asn1.Class.CONTEXT_SPECIFIC, 3, true, []);
+      var seq = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, []);
+      rval.value.push(seq);
+      for (var i = 0; i < exts.length; ++i) {
+        seq.value.push(pki.certificateExtensionToAsn1(exts[i]));
+      }
+      return rval;
+    };
+    pki.certificateExtensionToAsn1 = function(ext) {
+      var extseq = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, []);
+      extseq.value.push(asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.OID,
+        false,
+        asn1.oidToDer(ext.id).getBytes()
+      ));
+      if (ext.critical) {
+        extseq.value.push(asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.BOOLEAN,
+          false,
+          String.fromCharCode(255)
+        ));
+      }
+      var value = ext.value;
+      if (typeof ext.value !== "string") {
+        value = asn1.toDer(value).getBytes();
+      }
+      extseq.value.push(asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.OCTETSTRING,
+        false,
+        value
+      ));
+      return extseq;
+    };
+    pki.certificationRequestToAsn1 = function(csr) {
+      var cri = csr.certificationRequestInfo || pki.getCertificationRequestInfo(csr);
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // CertificationRequestInfo
+        cri,
+        // AlgorithmIdentifier (signature algorithm)
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(csr.signatureOid).getBytes()
+          ),
+          // parameters
+          _signatureParametersToAsn1(csr.signatureOid, csr.signatureParameters)
+        ]),
+        // signature
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.BITSTRING,
+          false,
+          String.fromCharCode(0) + csr.signature
+        )
+      ]);
+    };
+    pki.createCaStore = function(certs) {
+      var caStore = {
+        // stored certificates
+        certs: {}
+      };
+      caStore.getIssuer = function(cert2) {
+        var rval = getBySubject(cert2.issuer);
+        return rval;
+      };
+      caStore.addCertificate = function(cert2) {
+        if (typeof cert2 === "string") {
+          cert2 = forge3.pki.certificateFromPem(cert2);
+        }
+        ensureSubjectHasHash(cert2.subject);
+        if (!caStore.hasCertificate(cert2)) {
+          if (cert2.subject.hash in caStore.certs) {
+            var tmp = caStore.certs[cert2.subject.hash];
+            if (!forge3.util.isArray(tmp)) {
+              tmp = [tmp];
+            }
+            tmp.push(cert2);
+            caStore.certs[cert2.subject.hash] = tmp;
+          } else {
+            caStore.certs[cert2.subject.hash] = cert2;
+          }
+        }
+      };
+      caStore.hasCertificate = function(cert2) {
+        if (typeof cert2 === "string") {
+          cert2 = forge3.pki.certificateFromPem(cert2);
+        }
+        var match = getBySubject(cert2.subject);
+        if (!match) {
+          return false;
+        }
+        if (!forge3.util.isArray(match)) {
+          match = [match];
+        }
+        var der1 = asn1.toDer(pki.certificateToAsn1(cert2)).getBytes();
+        for (var i2 = 0; i2 < match.length; ++i2) {
+          var der2 = asn1.toDer(pki.certificateToAsn1(match[i2])).getBytes();
+          if (der1 === der2) {
+            return true;
+          }
+        }
+        return false;
+      };
+      caStore.listAllCertificates = function() {
+        var certList = [];
+        for (var hash in caStore.certs) {
+          if (caStore.certs.hasOwnProperty(hash)) {
+            var value = caStore.certs[hash];
+            if (!forge3.util.isArray(value)) {
+              certList.push(value);
+            } else {
+              for (var i2 = 0; i2 < value.length; ++i2) {
+                certList.push(value[i2]);
+              }
+            }
+          }
+        }
+        return certList;
+      };
+      caStore.removeCertificate = function(cert2) {
+        var result;
+        if (typeof cert2 === "string") {
+          cert2 = forge3.pki.certificateFromPem(cert2);
+        }
+        ensureSubjectHasHash(cert2.subject);
+        if (!caStore.hasCertificate(cert2)) {
+          return null;
+        }
+        var match = getBySubject(cert2.subject);
+        if (!forge3.util.isArray(match)) {
+          result = caStore.certs[cert2.subject.hash];
+          delete caStore.certs[cert2.subject.hash];
+          return result;
+        }
+        var der1 = asn1.toDer(pki.certificateToAsn1(cert2)).getBytes();
+        for (var i2 = 0; i2 < match.length; ++i2) {
+          var der2 = asn1.toDer(pki.certificateToAsn1(match[i2])).getBytes();
+          if (der1 === der2) {
+            result = match[i2];
+            match.splice(i2, 1);
+          }
+        }
+        if (match.length === 0) {
+          delete caStore.certs[cert2.subject.hash];
+        }
+        return result;
+      };
+      function getBySubject(subject) {
+        ensureSubjectHasHash(subject);
+        return caStore.certs[subject.hash] || null;
+      }
+      function ensureSubjectHasHash(subject) {
+        if (!subject.hash) {
+          var md = forge3.md.sha1.create();
+          subject.attributes = pki.RDNAttributesAsArray(_dnToAsn1(subject), md);
+          subject.hash = md.digest().toHex();
+        }
+      }
+      if (certs) {
+        for (var i = 0; i < certs.length; ++i) {
+          var cert = certs[i];
+          caStore.addCertificate(cert);
+        }
+      }
+      return caStore;
+    };
+    pki.certificateError = {
+      bad_certificate: "forge.pki.BadCertificate",
+      unsupported_certificate: "forge.pki.UnsupportedCertificate",
+      certificate_revoked: "forge.pki.CertificateRevoked",
+      certificate_expired: "forge.pki.CertificateExpired",
+      certificate_unknown: "forge.pki.CertificateUnknown",
+      unknown_ca: "forge.pki.UnknownCertificateAuthority"
+    };
+    pki.verifyCertificateChain = function(caStore, chain, options) {
+      if (typeof options === "function") {
+        options = { verify: options };
+      }
+      options = options || {};
+      chain = chain.slice(0);
+      var certs = chain.slice(0);
+      var validityCheckDate = options.validityCheckDate;
+      if (typeof validityCheckDate === "undefined") {
+        validityCheckDate = /* @__PURE__ */ new Date();
+      }
+      var first = true;
+      var error = null;
+      var depth = 0;
+      do {
+        var cert = chain.shift();
+        var parent = null;
+        var selfSigned = false;
+        if (validityCheckDate) {
+          if (validityCheckDate < cert.validity.notBefore || validityCheckDate > cert.validity.notAfter) {
+            error = {
+              message: "Certificate is not valid yet or has expired.",
+              error: pki.certificateError.certificate_expired,
+              notBefore: cert.validity.notBefore,
+              notAfter: cert.validity.notAfter,
+              // TODO: we might want to reconsider renaming 'now' to
+              // 'validityCheckDate' should this API be changed in the future.
+              now: validityCheckDate
+            };
+          }
+        }
+        if (error === null) {
+          parent = chain[0] || caStore.getIssuer(cert);
+          if (parent === null) {
+            if (cert.isIssuer(cert)) {
+              selfSigned = true;
+              parent = cert;
+            }
+          }
+          if (parent) {
+            var parents = parent;
+            if (!forge3.util.isArray(parents)) {
+              parents = [parents];
+            }
+            var verified = false;
+            while (!verified && parents.length > 0) {
+              parent = parents.shift();
+              try {
+                verified = parent.verify(cert);
+              } catch (ex) {
+              }
+            }
+            if (!verified) {
+              error = {
+                message: "Certificate signature is invalid.",
+                error: pki.certificateError.bad_certificate
+              };
+            }
+          }
+          if (error === null && (!parent || selfSigned) && !caStore.hasCertificate(cert)) {
+            error = {
+              message: "Certificate is not trusted.",
+              error: pki.certificateError.unknown_ca
+            };
+          }
+        }
+        if (error === null && parent && !cert.isIssuer(parent)) {
+          error = {
+            message: "Certificate issuer is invalid.",
+            error: pki.certificateError.bad_certificate
+          };
+        }
+        if (error === null) {
+          var se = {
+            keyUsage: true,
+            basicConstraints: true
+          };
+          for (var i = 0; error === null && i < cert.extensions.length; ++i) {
+            var ext = cert.extensions[i];
+            if (ext.critical && !(ext.name in se)) {
+              error = {
+                message: "Certificate has an unsupported critical extension.",
+                error: pki.certificateError.unsupported_certificate
+              };
+            }
+          }
+        }
+        if (error === null && (!first || chain.length === 0 && (!parent || selfSigned))) {
+          var bcExt = cert.getExtension("basicConstraints");
+          var keyUsageExt = cert.getExtension("keyUsage");
+          if (keyUsageExt !== null) {
+            if (!keyUsageExt.keyCertSign || bcExt === null) {
+              error = {
+                message: "Certificate keyUsage or basicConstraints conflict or indicate that the certificate is not a CA. If the certificate is the only one in the chain or isn't the first then the certificate must be a valid CA.",
+                error: pki.certificateError.bad_certificate
+              };
+            }
+          }
+          if (error === null && bcExt !== null && !bcExt.cA) {
+            error = {
+              message: "Certificate basicConstraints indicates the certificate is not a CA.",
+              error: pki.certificateError.bad_certificate
+            };
+          }
+          if (error === null && keyUsageExt !== null && "pathLenConstraint" in bcExt) {
+            var pathLen = depth - 1;
+            if (pathLen > bcExt.pathLenConstraint) {
+              error = {
+                message: "Certificate basicConstraints pathLenConstraint violated.",
+                error: pki.certificateError.bad_certificate
+              };
+            }
+          }
+        }
+        var vfd = error === null ? true : error.error;
+        var ret = options.verify ? options.verify(vfd, depth, certs) : vfd;
+        if (ret === true) {
+          error = null;
+        } else {
+          if (vfd === true) {
+            error = {
+              message: "The application rejected the certificate.",
+              error: pki.certificateError.bad_certificate
+            };
+          }
+          if (ret || ret === 0) {
+            if (typeof ret === "object" && !forge3.util.isArray(ret)) {
+              if (ret.message) {
+                error.message = ret.message;
+              }
+              if (ret.error) {
+                error.error = ret.error;
+              }
+            } else if (typeof ret === "string") {
+              error.error = ret;
+            }
+          }
+          throw error;
+        }
+        first = false;
+        ++depth;
+      } while (chain.length > 0);
+      return true;
+    };
+  }
+});
+
+// node_modules/node-forge/lib/pkcs12.js
+var require_pkcs12 = __commonJS({
+  "node_modules/node-forge/lib/pkcs12.js"(exports, module) {
+    var forge3 = require_forge();
+    require_asn1();
+    require_hmac();
+    require_oids();
+    require_pkcs7asn1();
+    require_pbe();
+    require_random();
+    require_rsa();
+    require_sha1();
+    require_util();
+    require_x509();
+    var asn1 = forge3.asn1;
+    var pki = forge3.pki;
+    var p12 = module.exports = forge3.pkcs12 = forge3.pkcs12 || {};
+    var contentInfoValidator = {
+      name: "ContentInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      // a ContentInfo
+      constructed: true,
+      value: [{
+        name: "ContentInfo.contentType",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OID,
+        constructed: false,
+        capture: "contentType"
+      }, {
+        name: "ContentInfo.content",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        constructed: true,
+        captureAsn1: "content"
+      }]
+    };
+    var pfxValidator = {
+      name: "PFX",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [
+        {
+          name: "PFX.version",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.INTEGER,
+          constructed: false,
+          capture: "version"
+        },
+        contentInfoValidator,
+        {
+          name: "PFX.macData",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          optional: true,
+          captureAsn1: "mac",
+          value: [{
+            name: "PFX.macData.mac",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            // DigestInfo
+            constructed: true,
+            value: [{
+              name: "PFX.macData.mac.digestAlgorithm",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.SEQUENCE,
+              // DigestAlgorithmIdentifier
+              constructed: true,
+              value: [{
+                name: "PFX.macData.mac.digestAlgorithm.algorithm",
+                tagClass: asn1.Class.UNIVERSAL,
+                type: asn1.Type.OID,
+                constructed: false,
+                capture: "macAlgorithm"
+              }, {
+                name: "PFX.macData.mac.digestAlgorithm.parameters",
+                tagClass: asn1.Class.UNIVERSAL,
+                captureAsn1: "macAlgorithmParameters"
+              }]
+            }, {
+              name: "PFX.macData.mac.digest",
+              tagClass: asn1.Class.UNIVERSAL,
+              type: asn1.Type.OCTETSTRING,
+              constructed: false,
+              capture: "macDigest"
+            }]
+          }, {
+            name: "PFX.macData.macSalt",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.OCTETSTRING,
+            constructed: false,
+            capture: "macSalt"
+          }, {
+            name: "PFX.macData.iterations",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.INTEGER,
+            constructed: false,
+            optional: true,
+            capture: "macIterations"
+          }]
+        }
+      ]
+    };
+    var safeBagValidator = {
+      name: "SafeBag",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "SafeBag.bagId",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OID,
+        constructed: false,
+        capture: "bagId"
+      }, {
+        name: "SafeBag.bagValue",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        constructed: true,
+        captureAsn1: "bagValue"
+      }, {
+        name: "SafeBag.bagAttributes",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SET,
+        constructed: true,
+        optional: true,
+        capture: "bagAttributes"
+      }]
+    };
+    var attributeValidator = {
+      name: "Attribute",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "Attribute.attrId",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OID,
+        constructed: false,
+        capture: "oid"
+      }, {
+        name: "Attribute.attrValues",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SET,
+        constructed: true,
+        capture: "values"
+      }]
+    };
+    var certBagValidator = {
+      name: "CertBag",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        name: "CertBag.certId",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OID,
+        constructed: false,
+        capture: "certId"
+      }, {
+        name: "CertBag.certValue",
+        tagClass: asn1.Class.CONTEXT_SPECIFIC,
+        constructed: true,
+        /* So far we only support X.509 certificates (which are wrapped in
+           an OCTET STRING, hence hard code that here). */
+        value: [{
+          name: "CertBag.certValue[0]",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Class.OCTETSTRING,
+          constructed: false,
+          capture: "cert"
+        }]
+      }]
+    };
+    function _getBagsByAttribute(safeContents, attrName, attrValue, bagType) {
+      var result = [];
+      for (var i = 0; i < safeContents.length; i++) {
+        for (var j = 0; j < safeContents[i].safeBags.length; j++) {
+          var bag = safeContents[i].safeBags[j];
+          if (bagType !== void 0 && bag.type !== bagType) {
+            continue;
+          }
+          if (attrName === null) {
+            result.push(bag);
+            continue;
+          }
+          if (bag.attributes[attrName] !== void 0 && bag.attributes[attrName].indexOf(attrValue) >= 0) {
+            result.push(bag);
+          }
+        }
+      }
+      return result;
+    }
+    p12.pkcs12FromAsn1 = function(obj, strict, password) {
+      if (typeof strict === "string") {
+        password = strict;
+        strict = true;
+      } else if (strict === void 0) {
+        strict = true;
+      }
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, pfxValidator, capture, errors)) {
+        var error = new Error("Cannot read PKCS#12 PFX. ASN.1 object is not an PKCS#12 PFX.");
+        error.errors = error;
+        throw error;
+      }
+      var pfx = {
+        version: capture.version.charCodeAt(0),
+        safeContents: [],
+        /**
+         * Gets bags with matching attributes.
+         *
+         * @param filter the attributes to filter by:
+         *          [localKeyId] the localKeyId to search for.
+         *          [localKeyIdHex] the localKeyId in hex to search for.
+         *          [friendlyName] the friendly name to search for.
+         *          [bagType] bag type to narrow each attribute search by.
+         *
+         * @return a map of attribute type to an array of matching bags or, if no
+         *           attribute was given but a bag type, the map key will be the
+         *           bag type.
+         */
+        getBags: function(filter) {
+          var rval = {};
+          var localKeyId;
+          if ("localKeyId" in filter) {
+            localKeyId = filter.localKeyId;
+          } else if ("localKeyIdHex" in filter) {
+            localKeyId = forge3.util.hexToBytes(filter.localKeyIdHex);
+          }
+          if (localKeyId === void 0 && !("friendlyName" in filter) && "bagType" in filter) {
+            rval[filter.bagType] = _getBagsByAttribute(
+              pfx.safeContents,
+              null,
+              null,
+              filter.bagType
+            );
+          }
+          if (localKeyId !== void 0) {
+            rval.localKeyId = _getBagsByAttribute(
+              pfx.safeContents,
+              "localKeyId",
+              localKeyId,
+              filter.bagType
+            );
+          }
+          if ("friendlyName" in filter) {
+            rval.friendlyName = _getBagsByAttribute(
+              pfx.safeContents,
+              "friendlyName",
+              filter.friendlyName,
+              filter.bagType
+            );
+          }
+          return rval;
+        },
+        /**
+         * DEPRECATED: use getBags() instead.
+         *
+         * Get bags with matching friendlyName attribute.
+         *
+         * @param friendlyName the friendly name to search for.
+         * @param [bagType] bag type to narrow search by.
+         *
+         * @return an array of bags with matching friendlyName attribute.
+         */
+        getBagsByFriendlyName: function(friendlyName, bagType) {
+          return _getBagsByAttribute(
+            pfx.safeContents,
+            "friendlyName",
+            friendlyName,
+            bagType
+          );
+        },
+        /**
+         * DEPRECATED: use getBags() instead.
+         *
+         * Get bags with matching localKeyId attribute.
+         *
+         * @param localKeyId the localKeyId to search for.
+         * @param [bagType] bag type to narrow search by.
+         *
+         * @return an array of bags with matching localKeyId attribute.
+         */
+        getBagsByLocalKeyId: function(localKeyId, bagType) {
+          return _getBagsByAttribute(
+            pfx.safeContents,
+            "localKeyId",
+            localKeyId,
+            bagType
+          );
+        }
+      };
+      if (capture.version.charCodeAt(0) !== 3) {
+        var error = new Error("PKCS#12 PFX of version other than 3 not supported.");
+        error.version = capture.version.charCodeAt(0);
+        throw error;
+      }
+      if (asn1.derToOid(capture.contentType) !== pki.oids.data) {
+        var error = new Error("Only PKCS#12 PFX in password integrity mode supported.");
+        error.oid = asn1.derToOid(capture.contentType);
+        throw error;
+      }
+      var data = capture.content.value[0];
+      if (data.tagClass !== asn1.Class.UNIVERSAL || data.type !== asn1.Type.OCTETSTRING) {
+        throw new Error("PKCS#12 authSafe content data is not an OCTET STRING.");
+      }
+      data = _decodePkcs7Data(data);
+      if (capture.mac) {
+        var md = null;
+        var macKeyBytes = 0;
+        var macAlgorithm = asn1.derToOid(capture.macAlgorithm);
+        switch (macAlgorithm) {
+          case pki.oids.sha1:
+            md = forge3.md.sha1.create();
+            macKeyBytes = 20;
+            break;
+          case pki.oids.sha256:
+            md = forge3.md.sha256.create();
+            macKeyBytes = 32;
+            break;
+          case pki.oids.sha384:
+            md = forge3.md.sha384.create();
+            macKeyBytes = 48;
+            break;
+          case pki.oids.sha512:
+            md = forge3.md.sha512.create();
+            macKeyBytes = 64;
+            break;
+          case pki.oids.md5:
+            md = forge3.md.md5.create();
+            macKeyBytes = 16;
+            break;
+        }
+        if (md === null) {
+          throw new Error("PKCS#12 uses unsupported MAC algorithm: " + macAlgorithm);
+        }
+        var macSalt = new forge3.util.ByteBuffer(capture.macSalt);
+        var macIterations = "macIterations" in capture ? parseInt(forge3.util.bytesToHex(capture.macIterations), 16) : 1;
+        var macKey = p12.generateKey(
+          password,
+          macSalt,
+          3,
+          macIterations,
+          macKeyBytes,
+          md
+        );
+        var mac = forge3.hmac.create();
+        mac.start(md, macKey);
+        mac.update(data.value);
+        var macValue = mac.getMac();
+        if (macValue.getBytes() !== capture.macDigest) {
+          throw new Error("PKCS#12 MAC could not be verified. Invalid password?");
+        }
+      }
+      _decodeAuthenticatedSafe(pfx, data.value, strict, password);
+      return pfx;
+    };
+    function _decodePkcs7Data(data) {
+      if (data.composed || data.constructed) {
+        var value = forge3.util.createBuffer();
+        for (var i = 0; i < data.value.length; ++i) {
+          value.putBytes(data.value[i].value);
+        }
+        data.composed = data.constructed = false;
+        data.value = value.getBytes();
+      }
+      return data;
+    }
+    function _decodeAuthenticatedSafe(pfx, authSafe, strict, password) {
+      authSafe = asn1.fromDer(authSafe, strict);
+      if (authSafe.tagClass !== asn1.Class.UNIVERSAL || authSafe.type !== asn1.Type.SEQUENCE || authSafe.constructed !== true) {
+        throw new Error("PKCS#12 AuthenticatedSafe expected to be a SEQUENCE OF ContentInfo");
+      }
+      for (var i = 0; i < authSafe.value.length; i++) {
+        var contentInfo = authSafe.value[i];
+        var capture = {};
+        var errors = [];
+        if (!asn1.validate(contentInfo, contentInfoValidator, capture, errors)) {
+          var error = new Error("Cannot read ContentInfo.");
+          error.errors = errors;
+          throw error;
+        }
+        var obj = {
+          encrypted: false
+        };
+        var safeContents = null;
+        var data = capture.content.value[0];
+        switch (asn1.derToOid(capture.contentType)) {
+          case pki.oids.data:
+            if (data.tagClass !== asn1.Class.UNIVERSAL || data.type !== asn1.Type.OCTETSTRING) {
+              throw new Error("PKCS#12 SafeContents Data is not an OCTET STRING.");
+            }
+            safeContents = _decodePkcs7Data(data).value;
+            break;
+          case pki.oids.encryptedData:
+            safeContents = _decryptSafeContents(data, password);
+            obj.encrypted = true;
+            break;
+          default:
+            var error = new Error("Unsupported PKCS#12 contentType.");
+            error.contentType = asn1.derToOid(capture.contentType);
+            throw error;
+        }
+        obj.safeBags = _decodeSafeContents(safeContents, strict, password);
+        pfx.safeContents.push(obj);
+      }
+    }
+    function _decryptSafeContents(data, password) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(
+        data,
+        forge3.pkcs7.asn1.encryptedDataValidator,
+        capture,
+        errors
+      )) {
+        var error = new Error("Cannot read EncryptedContentInfo.");
+        error.errors = errors;
+        throw error;
+      }
+      var oid = asn1.derToOid(capture.contentType);
+      if (oid !== pki.oids.data) {
+        var error = new Error(
+          "PKCS#12 EncryptedContentInfo ContentType is not Data."
+        );
+        error.oid = oid;
+        throw error;
+      }
+      oid = asn1.derToOid(capture.encAlgorithm);
+      var cipher = pki.pbe.getCipher(oid, capture.encParameter, password);
+      var encryptedContentAsn1 = _decodePkcs7Data(capture.encryptedContentAsn1);
+      var encrypted = forge3.util.createBuffer(encryptedContentAsn1.value);
+      cipher.update(encrypted);
+      if (!cipher.finish()) {
+        throw new Error("Failed to decrypt PKCS#12 SafeContents.");
+      }
+      return cipher.output.getBytes();
+    }
+    function _decodeSafeContents(safeContents, strict, password) {
+      if (!strict && safeContents.length === 0) {
+        return [];
+      }
+      safeContents = asn1.fromDer(safeContents, strict);
+      if (safeContents.tagClass !== asn1.Class.UNIVERSAL || safeContents.type !== asn1.Type.SEQUENCE || safeContents.constructed !== true) {
+        throw new Error(
+          "PKCS#12 SafeContents expected to be a SEQUENCE OF SafeBag."
+        );
+      }
+      var res = [];
+      for (var i = 0; i < safeContents.value.length; i++) {
+        var safeBag = safeContents.value[i];
+        var capture = {};
+        var errors = [];
+        if (!asn1.validate(safeBag, safeBagValidator, capture, errors)) {
+          var error = new Error("Cannot read SafeBag.");
+          error.errors = errors;
+          throw error;
+        }
+        var bag = {
+          type: asn1.derToOid(capture.bagId),
+          attributes: _decodeBagAttributes(capture.bagAttributes)
+        };
+        res.push(bag);
+        var validator, decoder;
+        var bagAsn1 = capture.bagValue.value[0];
+        switch (bag.type) {
+          case pki.oids.pkcs8ShroudedKeyBag:
+            bagAsn1 = pki.decryptPrivateKeyInfo(bagAsn1, password);
+            if (bagAsn1 === null) {
+              throw new Error(
+                "Unable to decrypt PKCS#8 ShroudedKeyBag, wrong password?"
+              );
+            }
+          case pki.oids.keyBag:
+            try {
+              bag.key = pki.privateKeyFromAsn1(bagAsn1);
+            } catch (e) {
+              bag.key = null;
+              bag.asn1 = bagAsn1;
+            }
+            continue;
+          case pki.oids.certBag:
+            validator = certBagValidator;
+            decoder = function() {
+              if (asn1.derToOid(capture.certId) !== pki.oids.x509Certificate) {
+                var error2 = new Error(
+                  "Unsupported certificate type, only X.509 supported."
+                );
+                error2.oid = asn1.derToOid(capture.certId);
+                throw error2;
+              }
+              var certAsn1 = asn1.fromDer(capture.cert, strict);
+              try {
+                bag.cert = pki.certificateFromAsn1(certAsn1, true);
+              } catch (e) {
+                bag.cert = null;
+                bag.asn1 = certAsn1;
+              }
+            };
+            break;
+          default:
+            var error = new Error("Unsupported PKCS#12 SafeBag type.");
+            error.oid = bag.type;
+            throw error;
+        }
+        if (validator !== void 0 && !asn1.validate(bagAsn1, validator, capture, errors)) {
+          var error = new Error("Cannot read PKCS#12 " + validator.name);
+          error.errors = errors;
+          throw error;
+        }
+        decoder();
+      }
+      return res;
+    }
+    function _decodeBagAttributes(attributes) {
+      var decodedAttrs = {};
+      if (attributes !== void 0) {
+        for (var i = 0; i < attributes.length; ++i) {
+          var capture = {};
+          var errors = [];
+          if (!asn1.validate(attributes[i], attributeValidator, capture, errors)) {
+            var error = new Error("Cannot read PKCS#12 BagAttribute.");
+            error.errors = errors;
+            throw error;
+          }
+          var oid = asn1.derToOid(capture.oid);
+          if (pki.oids[oid] === void 0) {
+            continue;
+          }
+          decodedAttrs[pki.oids[oid]] = [];
+          for (var j = 0; j < capture.values.length; ++j) {
+            decodedAttrs[pki.oids[oid]].push(capture.values[j].value);
+          }
+        }
+      }
+      return decodedAttrs;
+    }
+    p12.toPkcs12Asn1 = function(key, cert, password, options) {
+      options = options || {};
+      options.saltSize = options.saltSize || 8;
+      options.count = options.count || 2048;
+      options.algorithm = options.algorithm || options.encAlgorithm || "aes128";
+      if (!("useMac" in options)) {
+        options.useMac = true;
+      }
+      if (!("localKeyId" in options)) {
+        options.localKeyId = null;
+      }
+      if (!("generateLocalKeyId" in options)) {
+        options.generateLocalKeyId = true;
+      }
+      var localKeyId = options.localKeyId;
+      var bagAttrs;
+      if (localKeyId !== null) {
+        localKeyId = forge3.util.hexToBytes(localKeyId);
+      } else if (options.generateLocalKeyId) {
+        if (cert) {
+          var pairedCert = forge3.util.isArray(cert) ? cert[0] : cert;
+          if (typeof pairedCert === "string") {
+            pairedCert = pki.certificateFromPem(pairedCert);
+          }
+          var sha1 = forge3.md.sha1.create();
+          sha1.update(asn1.toDer(pki.certificateToAsn1(pairedCert)).getBytes());
+          localKeyId = sha1.digest().getBytes();
+        } else {
+          localKeyId = forge3.random.getBytes(20);
+        }
+      }
+      var attrs = [];
+      if (localKeyId !== null) {
+        attrs.push(
+          // localKeyID
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // attrId
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(pki.oids.localKeyId).getBytes()
+            ),
+            // attrValues
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, [
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OCTETSTRING,
+                false,
+                localKeyId
+              )
+            ])
+          ])
+        );
+      }
+      if ("friendlyName" in options) {
+        attrs.push(
+          // friendlyName
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // attrId
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(pki.oids.friendlyName).getBytes()
+            ),
+            // attrValues
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, [
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.BMPSTRING,
+                false,
+                options.friendlyName
+              )
+            ])
+          ])
+        );
+      }
+      if (attrs.length > 0) {
+        bagAttrs = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, attrs);
+      }
+      var contents = [];
+      var chain = [];
+      if (cert !== null) {
+        if (forge3.util.isArray(cert)) {
+          chain = cert;
+        } else {
+          chain = [cert];
+        }
+      }
+      var certSafeBags = [];
+      for (var i = 0; i < chain.length; ++i) {
+        cert = chain[i];
+        if (typeof cert === "string") {
+          cert = pki.certificateFromPem(cert);
+        }
+        var certBagAttrs = i === 0 ? bagAttrs : void 0;
+        var certAsn1 = pki.certificateToAsn1(cert);
+        var certSafeBag = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // bagId
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(pki.oids.certBag).getBytes()
+          ),
+          // bagValue
+          asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+            // CertBag
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+              // certId
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OID,
+                false,
+                asn1.oidToDer(pki.oids.x509Certificate).getBytes()
+              ),
+              // certValue (x509Certificate)
+              asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OCTETSTRING,
+                  false,
+                  asn1.toDer(certAsn1).getBytes()
+                )
+              ])
+            ])
+          ]),
+          // bagAttributes (OPTIONAL)
+          certBagAttrs
+        ]);
+        certSafeBags.push(certSafeBag);
+      }
+      if (certSafeBags.length > 0) {
+        var certSafeContents = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.SEQUENCE,
+          true,
+          certSafeBags
+        );
+        var certCI = (
+          // PKCS#7 ContentInfo
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // contentType
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              // OID for the content type is 'data'
+              asn1.oidToDer(pki.oids.data).getBytes()
+            ),
+            // content
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OCTETSTRING,
+                false,
+                asn1.toDer(certSafeContents).getBytes()
+              )
+            ])
+          ])
+        );
+        contents.push(certCI);
+      }
+      var keyBag = null;
+      if (key !== null) {
+        var pkAsn1 = pki.wrapRsaPrivateKey(pki.privateKeyToAsn1(key));
+        if (password === null) {
+          keyBag = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // bagId
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(pki.oids.keyBag).getBytes()
+            ),
+            // bagValue
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+              // PrivateKeyInfo
+              pkAsn1
+            ]),
+            // bagAttributes (OPTIONAL)
+            bagAttrs
+          ]);
+        } else {
+          keyBag = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // bagId
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(pki.oids.pkcs8ShroudedKeyBag).getBytes()
+            ),
+            // bagValue
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+              // EncryptedPrivateKeyInfo
+              pki.encryptPrivateKeyInfo(pkAsn1, password, options)
+            ]),
+            // bagAttributes (OPTIONAL)
+            bagAttrs
+          ]);
+        }
+        var keySafeContents = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [keyBag]);
+        var keyCI = (
+          // PKCS#7 ContentInfo
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // contentType
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              // OID for the content type is 'data'
+              asn1.oidToDer(pki.oids.data).getBytes()
+            ),
+            // content
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OCTETSTRING,
+                false,
+                asn1.toDer(keySafeContents).getBytes()
+              )
+            ])
+          ])
+        );
+        contents.push(keyCI);
+      }
+      var safe = asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.SEQUENCE,
+        true,
+        contents
+      );
+      var macData;
+      if (options.useMac) {
+        var sha1 = forge3.md.sha1.create();
+        var macSalt = new forge3.util.ByteBuffer(
+          forge3.random.getBytes(options.saltSize)
+        );
+        var count = options.count;
+        var key = p12.generateKey(password, macSalt, 3, count, 20);
+        var mac = forge3.hmac.create();
+        mac.start(sha1, key);
+        mac.update(asn1.toDer(safe).getBytes());
+        var macValue = mac.getMac();
+        macData = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // mac DigestInfo
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // digestAlgorithm
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+              // algorithm = SHA-1
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OID,
+                false,
+                asn1.oidToDer(pki.oids.sha1).getBytes()
+              ),
+              // parameters = Null
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+            ]),
+            // digest
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OCTETSTRING,
+              false,
+              macValue.getBytes()
+            )
+          ]),
+          // macSalt OCTET STRING
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OCTETSTRING,
+            false,
+            macSalt.getBytes()
+          ),
+          // iterations INTEGER (XXX: Only support count < 65536)
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.INTEGER,
+            false,
+            asn1.integerToDer(count).getBytes()
+          )
+        ]);
+      }
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // version (3)
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          asn1.integerToDer(3).getBytes()
+        ),
+        // PKCS#7 ContentInfo
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // contentType
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            // OID for the content type is 'data'
+            asn1.oidToDer(pki.oids.data).getBytes()
+          ),
+          // content
+          asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OCTETSTRING,
+              false,
+              asn1.toDer(safe).getBytes()
+            )
+          ])
+        ]),
+        macData
+      ]);
+    };
+    p12.generateKey = forge3.pbe.generatePkcs12Key;
+  }
+});
+
+// node_modules/node-forge/lib/pki.js
+var require_pki = __commonJS({
+  "node_modules/node-forge/lib/pki.js"(exports, module) {
+    var forge3 = require_forge();
+    require_asn1();
+    require_oids();
+    require_pbe();
+    require_pem();
+    require_pbkdf2();
+    require_pkcs12();
+    require_pss();
+    require_rsa();
+    require_util();
+    require_x509();
+    var asn1 = forge3.asn1;
+    var pki = module.exports = forge3.pki = forge3.pki || {};
+    pki.pemToDer = function(pem) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error("Could not convert PEM to DER; PEM is encrypted.");
+      }
+      return forge3.util.createBuffer(msg.body);
+    };
+    pki.privateKeyFromPem = function(pem) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "PRIVATE KEY" && msg.type !== "RSA PRIVATE KEY") {
+        var error = new Error('Could not convert private key from PEM; PEM header type is not "PRIVATE KEY" or "RSA PRIVATE KEY".');
+        error.headerType = msg.type;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error("Could not convert private key from PEM; PEM is encrypted.");
+      }
+      var obj = asn1.fromDer(msg.body);
+      return pki.privateKeyFromAsn1(obj);
+    };
+    pki.privateKeyToPem = function(key, maxline) {
+      var msg = {
+        type: "RSA PRIVATE KEY",
+        body: asn1.toDer(pki.privateKeyToAsn1(key)).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+    pki.privateKeyInfoToPem = function(pki2, maxline) {
+      var msg = {
+        type: "PRIVATE KEY",
+        body: asn1.toDer(pki2).getBytes()
+      };
+      return forge3.pem.encode(msg, { maxline });
+    };
+  }
+});
+
+// node_modules/node-forge/lib/tls.js
+var require_tls = __commonJS({
+  "node_modules/node-forge/lib/tls.js"(exports, module) {
+    var forge3 = require_forge();
+    require_asn1();
+    require_hmac();
+    require_md5();
+    require_pem();
+    require_pki();
+    require_random();
+    require_sha1();
+    require_util();
+    var prf_TLS1 = function(secret, label, seed, length) {
+      var rval = forge3.util.createBuffer();
+      var idx = secret.length >> 1;
+      var slen = idx + (secret.length & 1);
+      var s1 = secret.substr(0, slen);
+      var s2 = secret.substr(idx, slen);
+      var ai = forge3.util.createBuffer();
+      var hmac = forge3.hmac.create();
+      seed = label + seed;
+      var md5itr = Math.ceil(length / 16);
+      var sha1itr = Math.ceil(length / 20);
+      hmac.start("MD5", s1);
+      var md5bytes = forge3.util.createBuffer();
+      ai.putBytes(seed);
+      for (var i = 0; i < md5itr; ++i) {
+        hmac.start(null, null);
+        hmac.update(ai.getBytes());
+        ai.putBuffer(hmac.digest());
+        hmac.start(null, null);
+        hmac.update(ai.bytes() + seed);
+        md5bytes.putBuffer(hmac.digest());
+      }
+      hmac.start("SHA1", s2);
+      var sha1bytes = forge3.util.createBuffer();
+      ai.clear();
+      ai.putBytes(seed);
+      for (var i = 0; i < sha1itr; ++i) {
+        hmac.start(null, null);
+        hmac.update(ai.getBytes());
+        ai.putBuffer(hmac.digest());
+        hmac.start(null, null);
+        hmac.update(ai.bytes() + seed);
+        sha1bytes.putBuffer(hmac.digest());
+      }
+      rval.putBytes(forge3.util.xorBytes(
+        md5bytes.getBytes(),
+        sha1bytes.getBytes(),
+        length
+      ));
+      return rval;
+    };
+    var hmac_sha1 = function(key2, seqNum, record) {
+      var hmac = forge3.hmac.create();
+      hmac.start("SHA1", key2);
+      var b = forge3.util.createBuffer();
+      b.putInt32(seqNum[0]);
+      b.putInt32(seqNum[1]);
+      b.putByte(record.type);
+      b.putByte(record.version.major);
+      b.putByte(record.version.minor);
+      b.putInt16(record.length);
+      b.putBytes(record.fragment.bytes());
+      hmac.update(b.getBytes());
+      return hmac.digest().getBytes();
+    };
+    var deflate = function(c, record, s) {
+      var rval = false;
+      try {
+        var bytes = c.deflate(record.fragment.getBytes());
+        record.fragment = forge3.util.createBuffer(bytes);
+        record.length = bytes.length;
+        rval = true;
+      } catch (ex) {
+      }
+      return rval;
+    };
+    var inflate = function(c, record, s) {
+      var rval = false;
+      try {
+        var bytes = c.inflate(record.fragment.getBytes());
+        record.fragment = forge3.util.createBuffer(bytes);
+        record.length = bytes.length;
+        rval = true;
+      } catch (ex) {
+      }
+      return rval;
+    };
+    var readVector = function(b, lenBytes) {
+      var len = 0;
+      switch (lenBytes) {
+        case 1:
+          len = b.getByte();
+          break;
+        case 2:
+          len = b.getInt16();
+          break;
+        case 3:
+          len = b.getInt24();
+          break;
+        case 4:
+          len = b.getInt32();
+          break;
+      }
+      return forge3.util.createBuffer(b.getBytes(len));
+    };
+    var writeVector = function(b, lenBytes, v) {
+      b.putInt(v.length(), lenBytes << 3);
+      b.putBuffer(v);
+    };
+    var tls = {};
+    tls.Versions = {
+      TLS_1_0: { major: 3, minor: 1 },
+      TLS_1_1: { major: 3, minor: 2 },
+      TLS_1_2: { major: 3, minor: 3 }
+    };
+    tls.SupportedVersions = [
+      tls.Versions.TLS_1_1,
+      tls.Versions.TLS_1_0
+    ];
+    tls.Version = tls.SupportedVersions[0];
+    tls.MaxFragment = 16384 - 1024;
+    tls.ConnectionEnd = {
+      server: 0,
+      client: 1
+    };
+    tls.PRFAlgorithm = {
+      tls_prf_sha256: 0
+    };
+    tls.BulkCipherAlgorithm = {
+      none: null,
+      rc4: 0,
+      des3: 1,
+      aes: 2
+    };
+    tls.CipherType = {
+      stream: 0,
+      block: 1,
+      aead: 2
+    };
+    tls.MACAlgorithm = {
+      none: null,
+      hmac_md5: 0,
+      hmac_sha1: 1,
+      hmac_sha256: 2,
+      hmac_sha384: 3,
+      hmac_sha512: 4
+    };
+    tls.CompressionMethod = {
+      none: 0,
+      deflate: 1
+    };
+    tls.ContentType = {
+      change_cipher_spec: 20,
+      alert: 21,
+      handshake: 22,
+      application_data: 23,
+      heartbeat: 24
+    };
+    tls.HandshakeType = {
+      hello_request: 0,
+      client_hello: 1,
+      server_hello: 2,
+      certificate: 11,
+      server_key_exchange: 12,
+      certificate_request: 13,
+      server_hello_done: 14,
+      certificate_verify: 15,
+      client_key_exchange: 16,
+      finished: 20
+    };
+    tls.Alert = {};
+    tls.Alert.Level = {
+      warning: 1,
+      fatal: 2
+    };
+    tls.Alert.Description = {
+      close_notify: 0,
+      unexpected_message: 10,
+      bad_record_mac: 20,
+      decryption_failed: 21,
+      record_overflow: 22,
+      decompression_failure: 30,
+      handshake_failure: 40,
+      bad_certificate: 42,
+      unsupported_certificate: 43,
+      certificate_revoked: 44,
+      certificate_expired: 45,
+      certificate_unknown: 46,
+      illegal_parameter: 47,
+      unknown_ca: 48,
+      access_denied: 49,
+      decode_error: 50,
+      decrypt_error: 51,
+      export_restriction: 60,
+      protocol_version: 70,
+      insufficient_security: 71,
+      internal_error: 80,
+      user_canceled: 90,
+      no_renegotiation: 100
+    };
+    tls.HeartbeatMessageType = {
+      heartbeat_request: 1,
+      heartbeat_response: 2
+    };
+    tls.CipherSuites = {};
+    tls.getCipherSuite = function(twoBytes) {
+      var rval = null;
+      for (var key2 in tls.CipherSuites) {
+        var cs = tls.CipherSuites[key2];
+        if (cs.id[0] === twoBytes.charCodeAt(0) && cs.id[1] === twoBytes.charCodeAt(1)) {
+          rval = cs;
+          break;
+        }
+      }
+      return rval;
+    };
+    tls.handleUnexpected = function(c, record) {
+      var ignore = !c.open && c.entity === tls.ConnectionEnd.client;
+      if (!ignore) {
+        c.error(c, {
+          message: "Unexpected message. Received TLS record out of order.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.unexpected_message
+          }
+        });
+      }
+    };
+    tls.handleHelloRequest = function(c, record, length) {
+      if (!c.handshaking && c.handshakes > 0) {
+        tls.queue(c, tls.createAlert(c, {
+          level: tls.Alert.Level.warning,
+          description: tls.Alert.Description.no_renegotiation
+        }));
+        tls.flush(c);
+      }
+      c.process();
+    };
+    tls.parseHelloMessage = function(c, record, length) {
+      var msg = null;
+      var client = c.entity === tls.ConnectionEnd.client;
+      if (length < 38) {
+        c.error(c, {
+          message: client ? "Invalid ServerHello message. Message too short." : "Invalid ClientHello message. Message too short.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.illegal_parameter
+          }
+        });
+      } else {
+        var b = record.fragment;
+        var remaining = b.length();
+        msg = {
+          version: {
+            major: b.getByte(),
+            minor: b.getByte()
+          },
+          random: forge3.util.createBuffer(b.getBytes(32)),
+          session_id: readVector(b, 1),
+          extensions: []
+        };
+        if (client) {
+          msg.cipher_suite = b.getBytes(2);
+          msg.compression_method = b.getByte();
+        } else {
+          msg.cipher_suites = readVector(b, 2);
+          msg.compression_methods = readVector(b, 1);
+        }
+        remaining = length - (remaining - b.length());
+        if (remaining > 0) {
+          var exts = readVector(b, 2);
+          while (exts.length() > 0) {
+            msg.extensions.push({
+              type: [exts.getByte(), exts.getByte()],
+              data: readVector(exts, 2)
+            });
+          }
+          if (!client) {
+            for (var i = 0; i < msg.extensions.length; ++i) {
+              var ext = msg.extensions[i];
+              if (ext.type[0] === 0 && ext.type[1] === 0) {
+                var snl = readVector(ext.data, 2);
+                while (snl.length() > 0) {
+                  var snType = snl.getByte();
+                  if (snType !== 0) {
+                    break;
+                  }
+                  c.session.extensions.server_name.serverNameList.push(
+                    readVector(snl, 2).getBytes()
+                  );
+                }
+              }
+            }
+          }
+        }
+        if (c.session.version) {
+          if (msg.version.major !== c.session.version.major || msg.version.minor !== c.session.version.minor) {
+            return c.error(c, {
+              message: "TLS version change is disallowed during renegotiation.",
+              send: true,
+              alert: {
+                level: tls.Alert.Level.fatal,
+                description: tls.Alert.Description.protocol_version
+              }
+            });
+          }
+        }
+        if (client) {
+          c.session.cipherSuite = tls.getCipherSuite(msg.cipher_suite);
+        } else {
+          var tmp = forge3.util.createBuffer(msg.cipher_suites.bytes());
+          while (tmp.length() > 0) {
+            c.session.cipherSuite = tls.getCipherSuite(tmp.getBytes(2));
+            if (c.session.cipherSuite !== null) {
+              break;
+            }
+          }
+        }
+        if (c.session.cipherSuite === null) {
+          return c.error(c, {
+            message: "No cipher suites in common.",
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.handshake_failure
+            },
+            cipherSuite: forge3.util.bytesToHex(msg.cipher_suite)
+          });
+        }
+        if (client) {
+          c.session.compressionMethod = msg.compression_method;
+        } else {
+          c.session.compressionMethod = tls.CompressionMethod.none;
+        }
+      }
+      return msg;
+    };
+    tls.createSecurityParameters = function(c, msg) {
+      var client = c.entity === tls.ConnectionEnd.client;
+      var msgRandom = msg.random.bytes();
+      var cRandom = client ? c.session.sp.client_random : msgRandom;
+      var sRandom = client ? msgRandom : tls.createRandom().getBytes();
+      c.session.sp = {
+        entity: c.entity,
+        prf_algorithm: tls.PRFAlgorithm.tls_prf_sha256,
+        bulk_cipher_algorithm: null,
+        cipher_type: null,
+        enc_key_length: null,
+        block_length: null,
+        fixed_iv_length: null,
+        record_iv_length: null,
+        mac_algorithm: null,
+        mac_length: null,
+        mac_key_length: null,
+        compression_algorithm: c.session.compressionMethod,
+        pre_master_secret: null,
+        master_secret: null,
+        client_random: cRandom,
+        server_random: sRandom
+      };
+    };
+    tls.handleServerHello = function(c, record, length) {
+      var msg = tls.parseHelloMessage(c, record, length);
+      if (c.fail) {
+        return;
+      }
+      if (msg.version.minor <= c.version.minor) {
+        c.version.minor = msg.version.minor;
+      } else {
+        return c.error(c, {
+          message: "Incompatible TLS version.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.protocol_version
+          }
+        });
+      }
+      c.session.version = c.version;
+      var sessionId = msg.session_id.bytes();
+      if (sessionId.length > 0 && sessionId === c.session.id) {
+        c.expect = SCC;
+        c.session.resuming = true;
+        c.session.sp.server_random = msg.random.bytes();
+      } else {
+        c.expect = SCE;
+        c.session.resuming = false;
+        tls.createSecurityParameters(c, msg);
+      }
+      c.session.id = sessionId;
+      c.process();
+    };
+    tls.handleClientHello = function(c, record, length) {
+      var msg = tls.parseHelloMessage(c, record, length);
+      if (c.fail) {
+        return;
+      }
+      var sessionId = msg.session_id.bytes();
+      var session = null;
+      if (c.sessionCache) {
+        session = c.sessionCache.getSession(sessionId);
+        if (session === null) {
+          sessionId = "";
+        } else if (session.version.major !== msg.version.major || session.version.minor > msg.version.minor) {
+          session = null;
+          sessionId = "";
+        }
+      }
+      if (sessionId.length === 0) {
+        sessionId = forge3.random.getBytes(32);
+      }
+      c.session.id = sessionId;
+      c.session.clientHelloVersion = msg.version;
+      c.session.sp = {};
+      if (session) {
+        c.version = c.session.version = session.version;
+        c.session.sp = session.sp;
+      } else {
+        var version;
+        for (var i = 1; i < tls.SupportedVersions.length; ++i) {
+          version = tls.SupportedVersions[i];
+          if (version.minor <= msg.version.minor) {
+            break;
+          }
+        }
+        c.version = { major: version.major, minor: version.minor };
+        c.session.version = c.version;
+      }
+      if (session !== null) {
+        c.expect = CCC;
+        c.session.resuming = true;
+        c.session.sp.client_random = msg.random.bytes();
+      } else {
+        c.expect = c.verifyClient !== false ? CCE : CKE;
+        c.session.resuming = false;
+        tls.createSecurityParameters(c, msg);
+      }
+      c.open = true;
+      tls.queue(c, tls.createRecord(c, {
+        type: tls.ContentType.handshake,
+        data: tls.createServerHello(c)
+      }));
+      if (c.session.resuming) {
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.change_cipher_spec,
+          data: tls.createChangeCipherSpec()
+        }));
+        c.state.pending = tls.createConnectionState(c);
+        c.state.current.write = c.state.pending.write;
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.handshake,
+          data: tls.createFinished(c)
+        }));
+      } else {
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.handshake,
+          data: tls.createCertificate(c)
+        }));
+        if (!c.fail) {
+          tls.queue(c, tls.createRecord(c, {
+            type: tls.ContentType.handshake,
+            data: tls.createServerKeyExchange(c)
+          }));
+          if (c.verifyClient !== false) {
+            tls.queue(c, tls.createRecord(c, {
+              type: tls.ContentType.handshake,
+              data: tls.createCertificateRequest(c)
+            }));
+          }
+          tls.queue(c, tls.createRecord(c, {
+            type: tls.ContentType.handshake,
+            data: tls.createServerHelloDone(c)
+          }));
+        }
+      }
+      tls.flush(c);
+      c.process();
+    };
+    tls.handleCertificate = function(c, record, length) {
+      if (length < 3) {
+        return c.error(c, {
+          message: "Invalid Certificate message. Message too short.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.illegal_parameter
+          }
+        });
+      }
+      var b = record.fragment;
+      var msg = {
+        certificate_list: readVector(b, 3)
+      };
+      var cert, asn1;
+      var certs = [];
+      try {
+        while (msg.certificate_list.length() > 0) {
+          cert = readVector(msg.certificate_list, 3);
+          asn1 = forge3.asn1.fromDer(cert);
+          cert = forge3.pki.certificateFromAsn1(asn1, true);
+          certs.push(cert);
+        }
+      } catch (ex) {
+        return c.error(c, {
+          message: "Could not parse certificate list.",
+          cause: ex,
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.bad_certificate
+          }
+        });
+      }
+      var client = c.entity === tls.ConnectionEnd.client;
+      if ((client || c.verifyClient === true) && certs.length === 0) {
+        c.error(c, {
+          message: client ? "No server certificate provided." : "No client certificate provided.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.illegal_parameter
+          }
+        });
+      } else if (certs.length === 0) {
+        c.expect = client ? SKE : CKE;
+      } else {
+        if (client) {
+          c.session.serverCertificate = certs[0];
+        } else {
+          c.session.clientCertificate = certs[0];
+        }
+        if (tls.verifyCertificateChain(c, certs)) {
+          c.expect = client ? SKE : CKE;
+        }
+      }
+      c.process();
+    };
+    tls.handleServerKeyExchange = function(c, record, length) {
+      if (length > 0) {
+        return c.error(c, {
+          message: "Invalid key parameters. Only RSA is supported.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.unsupported_certificate
+          }
+        });
+      }
+      c.expect = SCR;
+      c.process();
+    };
+    tls.handleClientKeyExchange = function(c, record, length) {
+      if (length < 48) {
+        return c.error(c, {
+          message: "Invalid key parameters. Only RSA is supported.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.unsupported_certificate
+          }
+        });
+      }
+      var b = record.fragment;
+      var msg = {
+        enc_pre_master_secret: readVector(b, 2).getBytes()
+      };
+      var privateKey = null;
+      if (c.getPrivateKey) {
+        try {
+          privateKey = c.getPrivateKey(c, c.session.serverCertificate);
+          privateKey = forge3.pki.privateKeyFromPem(privateKey);
+        } catch (ex) {
+          c.error(c, {
+            message: "Could not get private key.",
+            cause: ex,
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.internal_error
+            }
+          });
+        }
+      }
+      if (privateKey === null) {
+        return c.error(c, {
+          message: "No private key set.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.internal_error
+          }
+        });
+      }
+      try {
+        var sp = c.session.sp;
+        sp.pre_master_secret = privateKey.decrypt(msg.enc_pre_master_secret);
+        var version = c.session.clientHelloVersion;
+        if (version.major !== sp.pre_master_secret.charCodeAt(0) || version.minor !== sp.pre_master_secret.charCodeAt(1)) {
+          throw new Error("TLS version rollback attack detected.");
+        }
+      } catch (ex) {
+        sp.pre_master_secret = forge3.random.getBytes(48);
+      }
+      c.expect = CCC;
+      if (c.session.clientCertificate !== null) {
+        c.expect = CCV;
+      }
+      c.process();
+    };
+    tls.handleCertificateRequest = function(c, record, length) {
+      if (length < 3) {
+        return c.error(c, {
+          message: "Invalid CertificateRequest. Message too short.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.illegal_parameter
+          }
+        });
+      }
+      var b = record.fragment;
+      var msg = {
+        certificate_types: readVector(b, 1),
+        certificate_authorities: readVector(b, 2)
+      };
+      c.session.certificateRequest = msg;
+      c.expect = SHD;
+      c.process();
+    };
+    tls.handleCertificateVerify = function(c, record, length) {
+      if (length < 2) {
+        return c.error(c, {
+          message: "Invalid CertificateVerify. Message too short.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.illegal_parameter
+          }
+        });
+      }
+      var b = record.fragment;
+      b.read -= 4;
+      var msgBytes = b.bytes();
+      b.read += 4;
+      var msg = {
+        signature: readVector(b, 2).getBytes()
+      };
+      var verify = forge3.util.createBuffer();
+      verify.putBuffer(c.session.md5.digest());
+      verify.putBuffer(c.session.sha1.digest());
+      verify = verify.getBytes();
+      try {
+        var cert = c.session.clientCertificate;
+        if (!cert.publicKey.verify(verify, msg.signature, "NONE")) {
+          throw new Error("CertificateVerify signature does not match.");
+        }
+        c.session.md5.update(msgBytes);
+        c.session.sha1.update(msgBytes);
+      } catch (ex) {
+        return c.error(c, {
+          message: "Bad signature in CertificateVerify.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.handshake_failure
+          }
+        });
+      }
+      c.expect = CCC;
+      c.process();
+    };
+    tls.handleServerHelloDone = function(c, record, length) {
+      if (length > 0) {
+        return c.error(c, {
+          message: "Invalid ServerHelloDone message. Invalid length.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.record_overflow
+          }
+        });
+      }
+      if (c.serverCertificate === null) {
+        var error = {
+          message: "No server certificate provided. Not enough security.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.insufficient_security
+          }
+        };
+        var depth = 0;
+        var ret = c.verify(c, error.alert.description, depth, []);
+        if (ret !== true) {
+          if (ret || ret === 0) {
+            if (typeof ret === "object" && !forge3.util.isArray(ret)) {
+              if (ret.message) {
+                error.message = ret.message;
+              }
+              if (ret.alert) {
+                error.alert.description = ret.alert;
+              }
+            } else if (typeof ret === "number") {
+              error.alert.description = ret;
+            }
+          }
+          return c.error(c, error);
+        }
+      }
+      if (c.session.certificateRequest !== null) {
+        record = tls.createRecord(c, {
+          type: tls.ContentType.handshake,
+          data: tls.createCertificate(c)
+        });
+        tls.queue(c, record);
+      }
+      record = tls.createRecord(c, {
+        type: tls.ContentType.handshake,
+        data: tls.createClientKeyExchange(c)
+      });
+      tls.queue(c, record);
+      c.expect = SER;
+      var callback = function(c2, signature) {
+        if (c2.session.certificateRequest !== null && c2.session.clientCertificate !== null) {
+          tls.queue(c2, tls.createRecord(c2, {
+            type: tls.ContentType.handshake,
+            data: tls.createCertificateVerify(c2, signature)
+          }));
+        }
+        tls.queue(c2, tls.createRecord(c2, {
+          type: tls.ContentType.change_cipher_spec,
+          data: tls.createChangeCipherSpec()
+        }));
+        c2.state.pending = tls.createConnectionState(c2);
+        c2.state.current.write = c2.state.pending.write;
+        tls.queue(c2, tls.createRecord(c2, {
+          type: tls.ContentType.handshake,
+          data: tls.createFinished(c2)
+        }));
+        c2.expect = SCC;
+        tls.flush(c2);
+        c2.process();
+      };
+      if (c.session.certificateRequest === null || c.session.clientCertificate === null) {
+        return callback(c, null);
+      }
+      tls.getClientSignature(c, callback);
+    };
+    tls.handleChangeCipherSpec = function(c, record) {
+      if (record.fragment.getByte() !== 1) {
+        return c.error(c, {
+          message: "Invalid ChangeCipherSpec message received.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.illegal_parameter
+          }
+        });
+      }
+      var client = c.entity === tls.ConnectionEnd.client;
+      if (c.session.resuming && client || !c.session.resuming && !client) {
+        c.state.pending = tls.createConnectionState(c);
+      }
+      c.state.current.read = c.state.pending.read;
+      if (!c.session.resuming && client || c.session.resuming && !client) {
+        c.state.pending = null;
+      }
+      c.expect = client ? SFI : CFI;
+      c.process();
+    };
+    tls.handleFinished = function(c, record, length) {
+      var b = record.fragment;
+      b.read -= 4;
+      var msgBytes = b.bytes();
+      b.read += 4;
+      var vd = record.fragment.getBytes();
+      b = forge3.util.createBuffer();
+      b.putBuffer(c.session.md5.digest());
+      b.putBuffer(c.session.sha1.digest());
+      var client = c.entity === tls.ConnectionEnd.client;
+      var label = client ? "server finished" : "client finished";
+      var sp = c.session.sp;
+      var vdl = 12;
+      var prf = prf_TLS1;
+      b = prf(sp.master_secret, label, b.getBytes(), vdl);
+      if (b.getBytes() !== vd) {
+        return c.error(c, {
+          message: "Invalid verify_data in Finished message.",
+          send: true,
+          alert: {
+            level: tls.Alert.Level.fatal,
+            description: tls.Alert.Description.decrypt_error
+          }
+        });
+      }
+      c.session.md5.update(msgBytes);
+      c.session.sha1.update(msgBytes);
+      if (c.session.resuming && client || !c.session.resuming && !client) {
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.change_cipher_spec,
+          data: tls.createChangeCipherSpec()
+        }));
+        c.state.current.write = c.state.pending.write;
+        c.state.pending = null;
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.handshake,
+          data: tls.createFinished(c)
+        }));
+      }
+      c.expect = client ? SAD : CAD;
+      c.handshaking = false;
+      ++c.handshakes;
+      c.peerCertificate = client ? c.session.serverCertificate : c.session.clientCertificate;
+      tls.flush(c);
+      c.isConnected = true;
+      c.connected(c);
+      c.process();
+    };
+    tls.handleAlert = function(c, record) {
+      var b = record.fragment;
+      var alert = {
+        level: b.getByte(),
+        description: b.getByte()
+      };
+      var msg;
+      switch (alert.description) {
+        case tls.Alert.Description.close_notify:
+          msg = "Connection closed.";
+          break;
+        case tls.Alert.Description.unexpected_message:
+          msg = "Unexpected message.";
+          break;
+        case tls.Alert.Description.bad_record_mac:
+          msg = "Bad record MAC.";
+          break;
+        case tls.Alert.Description.decryption_failed:
+          msg = "Decryption failed.";
+          break;
+        case tls.Alert.Description.record_overflow:
+          msg = "Record overflow.";
+          break;
+        case tls.Alert.Description.decompression_failure:
+          msg = "Decompression failed.";
+          break;
+        case tls.Alert.Description.handshake_failure:
+          msg = "Handshake failure.";
+          break;
+        case tls.Alert.Description.bad_certificate:
+          msg = "Bad certificate.";
+          break;
+        case tls.Alert.Description.unsupported_certificate:
+          msg = "Unsupported certificate.";
+          break;
+        case tls.Alert.Description.certificate_revoked:
+          msg = "Certificate revoked.";
+          break;
+        case tls.Alert.Description.certificate_expired:
+          msg = "Certificate expired.";
+          break;
+        case tls.Alert.Description.certificate_unknown:
+          msg = "Certificate unknown.";
+          break;
+        case tls.Alert.Description.illegal_parameter:
+          msg = "Illegal parameter.";
+          break;
+        case tls.Alert.Description.unknown_ca:
+          msg = "Unknown certificate authority.";
+          break;
+        case tls.Alert.Description.access_denied:
+          msg = "Access denied.";
+          break;
+        case tls.Alert.Description.decode_error:
+          msg = "Decode error.";
+          break;
+        case tls.Alert.Description.decrypt_error:
+          msg = "Decrypt error.";
+          break;
+        case tls.Alert.Description.export_restriction:
+          msg = "Export restriction.";
+          break;
+        case tls.Alert.Description.protocol_version:
+          msg = "Unsupported protocol version.";
+          break;
+        case tls.Alert.Description.insufficient_security:
+          msg = "Insufficient security.";
+          break;
+        case tls.Alert.Description.internal_error:
+          msg = "Internal error.";
+          break;
+        case tls.Alert.Description.user_canceled:
+          msg = "User canceled.";
+          break;
+        case tls.Alert.Description.no_renegotiation:
+          msg = "Renegotiation not supported.";
+          break;
+        default:
+          msg = "Unknown error.";
+          break;
+      }
+      if (alert.description === tls.Alert.Description.close_notify) {
+        return c.close();
+      }
+      c.error(c, {
+        message: msg,
+        send: false,
+        // origin is the opposite end
+        origin: c.entity === tls.ConnectionEnd.client ? "server" : "client",
+        alert
+      });
+      c.process();
+    };
+    tls.handleHandshake = function(c, record) {
+      var b = record.fragment;
+      var type = b.getByte();
+      var length = b.getInt24();
+      if (length > b.length()) {
+        c.fragmented = record;
+        record.fragment = forge3.util.createBuffer();
+        b.read -= 4;
+        return c.process();
+      }
+      c.fragmented = null;
+      b.read -= 4;
+      var bytes = b.bytes(length + 4);
+      b.read += 4;
+      if (type in hsTable[c.entity][c.expect]) {
+        if (c.entity === tls.ConnectionEnd.server && !c.open && !c.fail) {
+          c.handshaking = true;
+          c.session = {
+            version: null,
+            extensions: {
+              server_name: {
+                serverNameList: []
+              }
+            },
+            cipherSuite: null,
+            compressionMethod: null,
+            serverCertificate: null,
+            clientCertificate: null,
+            md5: forge3.md.md5.create(),
+            sha1: forge3.md.sha1.create()
+          };
+        }
+        if (type !== tls.HandshakeType.hello_request && type !== tls.HandshakeType.certificate_verify && type !== tls.HandshakeType.finished) {
+          c.session.md5.update(bytes);
+          c.session.sha1.update(bytes);
+        }
+        hsTable[c.entity][c.expect][type](c, record, length);
+      } else {
+        tls.handleUnexpected(c, record);
+      }
+    };
+    tls.handleApplicationData = function(c, record) {
+      c.data.putBuffer(record.fragment);
+      c.dataReady(c);
+      c.process();
+    };
+    tls.handleHeartbeat = function(c, record) {
+      var b = record.fragment;
+      var type = b.getByte();
+      var length = b.getInt16();
+      var payload = b.getBytes(length);
+      if (type === tls.HeartbeatMessageType.heartbeat_request) {
+        if (c.handshaking || length > payload.length) {
+          return c.process();
+        }
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.heartbeat,
+          data: tls.createHeartbeat(
+            tls.HeartbeatMessageType.heartbeat_response,
+            payload
+          )
+        }));
+        tls.flush(c);
+      } else if (type === tls.HeartbeatMessageType.heartbeat_response) {
+        if (payload !== c.expectedHeartbeatPayload) {
+          return c.process();
+        }
+        if (c.heartbeatReceived) {
+          c.heartbeatReceived(c, forge3.util.createBuffer(payload));
+        }
+      }
+      c.process();
+    };
+    var SHE = 0;
+    var SCE = 1;
+    var SKE = 2;
+    var SCR = 3;
+    var SHD = 4;
+    var SCC = 5;
+    var SFI = 6;
+    var SAD = 7;
+    var SER = 8;
+    var CHE = 0;
+    var CCE = 1;
+    var CKE = 2;
+    var CCV = 3;
+    var CCC = 4;
+    var CFI = 5;
+    var CAD = 6;
+    var __ = tls.handleUnexpected;
+    var R0 = tls.handleChangeCipherSpec;
+    var R1 = tls.handleAlert;
+    var R2 = tls.handleHandshake;
+    var R3 = tls.handleApplicationData;
+    var R4 = tls.handleHeartbeat;
+    var ctTable = [];
+    ctTable[tls.ConnectionEnd.client] = [
+      //      CC,AL,HS,AD,HB
+      /*SHE*/
+      [__, R1, R2, __, R4],
+      /*SCE*/
+      [__, R1, R2, __, R4],
+      /*SKE*/
+      [__, R1, R2, __, R4],
+      /*SCR*/
+      [__, R1, R2, __, R4],
+      /*SHD*/
+      [__, R1, R2, __, R4],
+      /*SCC*/
+      [R0, R1, __, __, R4],
+      /*SFI*/
+      [__, R1, R2, __, R4],
+      /*SAD*/
+      [__, R1, R2, R3, R4],
+      /*SER*/
+      [__, R1, R2, __, R4]
+    ];
+    ctTable[tls.ConnectionEnd.server] = [
+      //      CC,AL,HS,AD
+      /*CHE*/
+      [__, R1, R2, __, R4],
+      /*CCE*/
+      [__, R1, R2, __, R4],
+      /*CKE*/
+      [__, R1, R2, __, R4],
+      /*CCV*/
+      [__, R1, R2, __, R4],
+      /*CCC*/
+      [R0, R1, __, __, R4],
+      /*CFI*/
+      [__, R1, R2, __, R4],
+      /*CAD*/
+      [__, R1, R2, R3, R4],
+      /*CER*/
+      [__, R1, R2, __, R4]
+    ];
+    var H0 = tls.handleHelloRequest;
+    var H1 = tls.handleServerHello;
+    var H2 = tls.handleCertificate;
+    var H3 = tls.handleServerKeyExchange;
+    var H4 = tls.handleCertificateRequest;
+    var H5 = tls.handleServerHelloDone;
+    var H6 = tls.handleFinished;
+    var hsTable = [];
+    hsTable[tls.ConnectionEnd.client] = [
+      //      HR,01,SH,03,04,05,06,07,08,09,10,SC,SK,CR,HD,15,CK,17,18,19,FI
+      /*SHE*/
+      [__, __, H1, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+      /*SCE*/
+      [H0, __, __, __, __, __, __, __, __, __, __, H2, H3, H4, H5, __, __, __, __, __, __],
+      /*SKE*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, H3, H4, H5, __, __, __, __, __, __],
+      /*SCR*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, __, H4, H5, __, __, __, __, __, __],
+      /*SHD*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, __, __, H5, __, __, __, __, __, __],
+      /*SCC*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+      /*SFI*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, H6],
+      /*SAD*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+      /*SER*/
+      [H0, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __]
+    ];
+    var H7 = tls.handleClientHello;
+    var H8 = tls.handleClientKeyExchange;
+    var H9 = tls.handleCertificateVerify;
+    hsTable[tls.ConnectionEnd.server] = [
+      //      01,CH,02,03,04,05,06,07,08,09,10,CC,12,13,14,CV,CK,17,18,19,FI
+      /*CHE*/
+      [__, H7, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+      /*CCE*/
+      [__, __, __, __, __, __, __, __, __, __, __, H2, __, __, __, __, __, __, __, __, __],
+      /*CKE*/
+      [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, H8, __, __, __, __],
+      /*CCV*/
+      [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __, H9, __, __, __, __, __],
+      /*CCC*/
+      [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+      /*CFI*/
+      [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, H6],
+      /*CAD*/
+      [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __],
+      /*CER*/
+      [__, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __]
+    ];
+    tls.generateKeys = function(c, sp) {
+      var prf = prf_TLS1;
+      var random = sp.client_random + sp.server_random;
+      if (!c.session.resuming) {
+        sp.master_secret = prf(
+          sp.pre_master_secret,
+          "master secret",
+          random,
+          48
+        ).bytes();
+        sp.pre_master_secret = null;
+      }
+      random = sp.server_random + sp.client_random;
+      var length = 2 * sp.mac_key_length + 2 * sp.enc_key_length;
+      var tls10 = c.version.major === tls.Versions.TLS_1_0.major && c.version.minor === tls.Versions.TLS_1_0.minor;
+      if (tls10) {
+        length += 2 * sp.fixed_iv_length;
+      }
+      var km = prf(sp.master_secret, "key expansion", random, length);
+      var rval = {
+        client_write_MAC_key: km.getBytes(sp.mac_key_length),
+        server_write_MAC_key: km.getBytes(sp.mac_key_length),
+        client_write_key: km.getBytes(sp.enc_key_length),
+        server_write_key: km.getBytes(sp.enc_key_length)
+      };
+      if (tls10) {
+        rval.client_write_IV = km.getBytes(sp.fixed_iv_length);
+        rval.server_write_IV = km.getBytes(sp.fixed_iv_length);
+      }
+      return rval;
+    };
+    tls.createConnectionState = function(c) {
+      var client = c.entity === tls.ConnectionEnd.client;
+      var createMode = function() {
+        var mode = {
+          // two 32-bit numbers, first is most significant
+          sequenceNumber: [0, 0],
+          macKey: null,
+          macLength: 0,
+          macFunction: null,
+          cipherState: null,
+          cipherFunction: function(record) {
+            return true;
+          },
+          compressionState: null,
+          compressFunction: function(record) {
+            return true;
+          },
+          updateSequenceNumber: function() {
+            if (mode.sequenceNumber[1] === 4294967295) {
+              mode.sequenceNumber[1] = 0;
+              ++mode.sequenceNumber[0];
+            } else {
+              ++mode.sequenceNumber[1];
+            }
+          }
+        };
+        return mode;
+      };
+      var state = {
+        read: createMode(),
+        write: createMode()
+      };
+      state.read.update = function(c2, record) {
+        if (!state.read.cipherFunction(record, state.read)) {
+          c2.error(c2, {
+            message: "Could not decrypt record or bad MAC.",
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              // doesn't matter if decryption failed or MAC was
+              // invalid, return the same error so as not to reveal
+              // which one occurred
+              description: tls.Alert.Description.bad_record_mac
+            }
+          });
+        } else if (!state.read.compressFunction(c2, record, state.read)) {
+          c2.error(c2, {
+            message: "Could not decompress record.",
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.decompression_failure
+            }
+          });
+        }
+        return !c2.fail;
+      };
+      state.write.update = function(c2, record) {
+        if (!state.write.compressFunction(c2, record, state.write)) {
+          c2.error(c2, {
+            message: "Could not compress record.",
+            send: false,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.internal_error
+            }
+          });
+        } else if (!state.write.cipherFunction(record, state.write)) {
+          c2.error(c2, {
+            message: "Could not encrypt record.",
+            send: false,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.internal_error
+            }
+          });
+        }
+        return !c2.fail;
+      };
+      if (c.session) {
+        var sp = c.session.sp;
+        c.session.cipherSuite.initSecurityParameters(sp);
+        sp.keys = tls.generateKeys(c, sp);
+        state.read.macKey = client ? sp.keys.server_write_MAC_key : sp.keys.client_write_MAC_key;
+        state.write.macKey = client ? sp.keys.client_write_MAC_key : sp.keys.server_write_MAC_key;
+        c.session.cipherSuite.initConnectionState(state, c, sp);
+        switch (sp.compression_algorithm) {
+          case tls.CompressionMethod.none:
+            break;
+          case tls.CompressionMethod.deflate:
+            state.read.compressFunction = inflate;
+            state.write.compressFunction = deflate;
+            break;
+          default:
+            throw new Error("Unsupported compression algorithm.");
+        }
+      }
+      return state;
+    };
+    tls.createRandom = function() {
+      var d = /* @__PURE__ */ new Date();
+      var utc = +d + d.getTimezoneOffset() * 6e4;
+      var rval = forge3.util.createBuffer();
+      rval.putInt32(utc);
+      rval.putBytes(forge3.random.getBytes(28));
+      return rval;
+    };
+    tls.createRecord = function(c, options) {
+      if (!options.data) {
+        return null;
+      }
+      var record = {
+        type: options.type,
+        version: {
+          major: c.version.major,
+          minor: c.version.minor
+        },
+        length: options.data.length(),
+        fragment: options.data
+      };
+      return record;
+    };
+    tls.createAlert = function(c, alert) {
+      var b = forge3.util.createBuffer();
+      b.putByte(alert.level);
+      b.putByte(alert.description);
+      return tls.createRecord(c, {
+        type: tls.ContentType.alert,
+        data: b
+      });
+    };
+    tls.createClientHello = function(c) {
+      c.session.clientHelloVersion = {
+        major: c.version.major,
+        minor: c.version.minor
+      };
+      var cipherSuites = forge3.util.createBuffer();
+      for (var i = 0; i < c.cipherSuites.length; ++i) {
+        var cs = c.cipherSuites[i];
+        cipherSuites.putByte(cs.id[0]);
+        cipherSuites.putByte(cs.id[1]);
+      }
+      var cSuites = cipherSuites.length();
+      var compressionMethods = forge3.util.createBuffer();
+      compressionMethods.putByte(tls.CompressionMethod.none);
+      var cMethods = compressionMethods.length();
+      var extensions = forge3.util.createBuffer();
+      if (c.virtualHost) {
+        var ext = forge3.util.createBuffer();
+        ext.putByte(0);
+        ext.putByte(0);
+        var serverName = forge3.util.createBuffer();
+        serverName.putByte(0);
+        writeVector(serverName, 2, forge3.util.createBuffer(c.virtualHost));
+        var snList = forge3.util.createBuffer();
+        writeVector(snList, 2, serverName);
+        writeVector(ext, 2, snList);
+        extensions.putBuffer(ext);
+      }
+      var extLength = extensions.length();
+      if (extLength > 0) {
+        extLength += 2;
+      }
+      var sessionId = c.session.id;
+      var length = sessionId.length + 1 + // session ID vector
+      2 + // version (major + minor)
+      4 + 28 + // random time and random bytes
+      2 + cSuites + // cipher suites vector
+      1 + cMethods + // compression methods vector
+      extLength;
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.client_hello);
+      rval.putInt24(length);
+      rval.putByte(c.version.major);
+      rval.putByte(c.version.minor);
+      rval.putBytes(c.session.sp.client_random);
+      writeVector(rval, 1, forge3.util.createBuffer(sessionId));
+      writeVector(rval, 2, cipherSuites);
+      writeVector(rval, 1, compressionMethods);
+      if (extLength > 0) {
+        writeVector(rval, 2, extensions);
+      }
+      return rval;
+    };
+    tls.createServerHello = function(c) {
+      var sessionId = c.session.id;
+      var length = sessionId.length + 1 + // session ID vector
+      2 + // version (major + minor)
+      4 + 28 + // random time and random bytes
+      2 + // chosen cipher suite
+      1;
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.server_hello);
+      rval.putInt24(length);
+      rval.putByte(c.version.major);
+      rval.putByte(c.version.minor);
+      rval.putBytes(c.session.sp.server_random);
+      writeVector(rval, 1, forge3.util.createBuffer(sessionId));
+      rval.putByte(c.session.cipherSuite.id[0]);
+      rval.putByte(c.session.cipherSuite.id[1]);
+      rval.putByte(c.session.compressionMethod);
+      return rval;
+    };
+    tls.createCertificate = function(c) {
+      var client = c.entity === tls.ConnectionEnd.client;
+      var cert = null;
+      if (c.getCertificate) {
+        var hint;
+        if (client) {
+          hint = c.session.certificateRequest;
+        } else {
+          hint = c.session.extensions.server_name.serverNameList;
+        }
+        cert = c.getCertificate(c, hint);
+      }
+      var certList = forge3.util.createBuffer();
+      if (cert !== null) {
+        try {
+          if (!forge3.util.isArray(cert)) {
+            cert = [cert];
+          }
+          var asn1 = null;
+          for (var i = 0; i < cert.length; ++i) {
+            var msg = forge3.pem.decode(cert[i])[0];
+            if (msg.type !== "CERTIFICATE" && msg.type !== "X509 CERTIFICATE" && msg.type !== "TRUSTED CERTIFICATE") {
+              var error = new Error('Could not convert certificate from PEM; PEM header type is not "CERTIFICATE", "X509 CERTIFICATE", or "TRUSTED CERTIFICATE".');
+              error.headerType = msg.type;
+              throw error;
+            }
+            if (msg.procType && msg.procType.type === "ENCRYPTED") {
+              throw new Error("Could not convert certificate from PEM; PEM is encrypted.");
+            }
+            var der = forge3.util.createBuffer(msg.body);
+            if (asn1 === null) {
+              asn1 = forge3.asn1.fromDer(der.bytes(), false);
+            }
+            var certBuffer = forge3.util.createBuffer();
+            writeVector(certBuffer, 3, der);
+            certList.putBuffer(certBuffer);
+          }
+          cert = forge3.pki.certificateFromAsn1(asn1);
+          if (client) {
+            c.session.clientCertificate = cert;
+          } else {
+            c.session.serverCertificate = cert;
+          }
+        } catch (ex) {
+          return c.error(c, {
+            message: "Could not send certificate list.",
+            cause: ex,
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.bad_certificate
+            }
+          });
+        }
+      }
+      var length = 3 + certList.length();
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.certificate);
+      rval.putInt24(length);
+      writeVector(rval, 3, certList);
+      return rval;
+    };
+    tls.createClientKeyExchange = function(c) {
+      var b = forge3.util.createBuffer();
+      b.putByte(c.session.clientHelloVersion.major);
+      b.putByte(c.session.clientHelloVersion.minor);
+      b.putBytes(forge3.random.getBytes(46));
+      var sp = c.session.sp;
+      sp.pre_master_secret = b.getBytes();
+      var key2 = c.session.serverCertificate.publicKey;
+      b = key2.encrypt(sp.pre_master_secret);
+      var length = b.length + 2;
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.client_key_exchange);
+      rval.putInt24(length);
+      rval.putInt16(b.length);
+      rval.putBytes(b);
+      return rval;
+    };
+    tls.createServerKeyExchange = function(c) {
+      var length = 0;
+      var rval = forge3.util.createBuffer();
+      if (length > 0) {
+        rval.putByte(tls.HandshakeType.server_key_exchange);
+        rval.putInt24(length);
+      }
+      return rval;
+    };
+    tls.getClientSignature = function(c, callback) {
+      var b = forge3.util.createBuffer();
+      b.putBuffer(c.session.md5.digest());
+      b.putBuffer(c.session.sha1.digest());
+      b = b.getBytes();
+      c.getSignature = c.getSignature || function(c2, b2, callback2) {
+        var privateKey = null;
+        if (c2.getPrivateKey) {
+          try {
+            privateKey = c2.getPrivateKey(c2, c2.session.clientCertificate);
+            privateKey = forge3.pki.privateKeyFromPem(privateKey);
+          } catch (ex) {
+            c2.error(c2, {
+              message: "Could not get private key.",
+              cause: ex,
+              send: true,
+              alert: {
+                level: tls.Alert.Level.fatal,
+                description: tls.Alert.Description.internal_error
+              }
+            });
+          }
+        }
+        if (privateKey === null) {
+          c2.error(c2, {
+            message: "No private key set.",
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: tls.Alert.Description.internal_error
+            }
+          });
+        } else {
+          b2 = privateKey.sign(b2, null);
+        }
+        callback2(c2, b2);
+      };
+      c.getSignature(c, b, callback);
+    };
+    tls.createCertificateVerify = function(c, signature) {
+      var length = signature.length + 2;
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.certificate_verify);
+      rval.putInt24(length);
+      rval.putInt16(signature.length);
+      rval.putBytes(signature);
+      return rval;
+    };
+    tls.createCertificateRequest = function(c) {
+      var certTypes = forge3.util.createBuffer();
+      certTypes.putByte(1);
+      var cAs = forge3.util.createBuffer();
+      for (var key2 in c.caStore.certs) {
+        var cert = c.caStore.certs[key2];
+        var dn = forge3.pki.distinguishedNameToAsn1(cert.subject);
+        var byteBuffer = forge3.asn1.toDer(dn);
+        cAs.putInt16(byteBuffer.length());
+        cAs.putBuffer(byteBuffer);
+      }
+      var length = 1 + certTypes.length() + 2 + cAs.length();
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.certificate_request);
+      rval.putInt24(length);
+      writeVector(rval, 1, certTypes);
+      writeVector(rval, 2, cAs);
+      return rval;
+    };
+    tls.createServerHelloDone = function(c) {
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.server_hello_done);
+      rval.putInt24(0);
+      return rval;
+    };
+    tls.createChangeCipherSpec = function() {
+      var rval = forge3.util.createBuffer();
+      rval.putByte(1);
+      return rval;
+    };
+    tls.createFinished = function(c) {
+      var b = forge3.util.createBuffer();
+      b.putBuffer(c.session.md5.digest());
+      b.putBuffer(c.session.sha1.digest());
+      var client = c.entity === tls.ConnectionEnd.client;
+      var sp = c.session.sp;
+      var vdl = 12;
+      var prf = prf_TLS1;
+      var label = client ? "client finished" : "server finished";
+      b = prf(sp.master_secret, label, b.getBytes(), vdl);
+      var rval = forge3.util.createBuffer();
+      rval.putByte(tls.HandshakeType.finished);
+      rval.putInt24(b.length());
+      rval.putBuffer(b);
+      return rval;
+    };
+    tls.createHeartbeat = function(type, payload, payloadLength) {
+      if (typeof payloadLength === "undefined") {
+        payloadLength = payload.length;
+      }
+      var rval = forge3.util.createBuffer();
+      rval.putByte(type);
+      rval.putInt16(payloadLength);
+      rval.putBytes(payload);
+      var plaintextLength = rval.length();
+      var paddingLength = Math.max(16, plaintextLength - payloadLength - 3);
+      rval.putBytes(forge3.random.getBytes(paddingLength));
+      return rval;
+    };
+    tls.queue = function(c, record) {
+      if (!record) {
+        return;
+      }
+      if (record.fragment.length() === 0) {
+        if (record.type === tls.ContentType.handshake || record.type === tls.ContentType.alert || record.type === tls.ContentType.change_cipher_spec) {
+          return;
+        }
+      }
+      if (record.type === tls.ContentType.handshake) {
+        var bytes = record.fragment.bytes();
+        c.session.md5.update(bytes);
+        c.session.sha1.update(bytes);
+        bytes = null;
+      }
+      var records;
+      if (record.fragment.length() <= tls.MaxFragment) {
+        records = [record];
+      } else {
+        records = [];
+        var data = record.fragment.bytes();
+        while (data.length > tls.MaxFragment) {
+          records.push(tls.createRecord(c, {
+            type: record.type,
+            data: forge3.util.createBuffer(data.slice(0, tls.MaxFragment))
+          }));
+          data = data.slice(tls.MaxFragment);
+        }
+        if (data.length > 0) {
+          records.push(tls.createRecord(c, {
+            type: record.type,
+            data: forge3.util.createBuffer(data)
+          }));
+        }
+      }
+      for (var i = 0; i < records.length && !c.fail; ++i) {
+        var rec = records[i];
+        var s = c.state.current.write;
+        if (s.update(c, rec)) {
+          c.records.push(rec);
+        }
+      }
+    };
+    tls.flush = function(c) {
+      for (var i = 0; i < c.records.length; ++i) {
+        var record = c.records[i];
+        c.tlsData.putByte(record.type);
+        c.tlsData.putByte(record.version.major);
+        c.tlsData.putByte(record.version.minor);
+        c.tlsData.putInt16(record.fragment.length());
+        c.tlsData.putBuffer(c.records[i].fragment);
+      }
+      c.records = [];
+      return c.tlsDataReady(c);
+    };
+    var _certErrorToAlertDesc = function(error) {
+      switch (error) {
+        case true:
+          return true;
+        case forge3.pki.certificateError.bad_certificate:
+          return tls.Alert.Description.bad_certificate;
+        case forge3.pki.certificateError.unsupported_certificate:
+          return tls.Alert.Description.unsupported_certificate;
+        case forge3.pki.certificateError.certificate_revoked:
+          return tls.Alert.Description.certificate_revoked;
+        case forge3.pki.certificateError.certificate_expired:
+          return tls.Alert.Description.certificate_expired;
+        case forge3.pki.certificateError.certificate_unknown:
+          return tls.Alert.Description.certificate_unknown;
+        case forge3.pki.certificateError.unknown_ca:
+          return tls.Alert.Description.unknown_ca;
+        default:
+          return tls.Alert.Description.bad_certificate;
+      }
+    };
+    var _alertDescToCertError = function(desc) {
+      switch (desc) {
+        case true:
+          return true;
+        case tls.Alert.Description.bad_certificate:
+          return forge3.pki.certificateError.bad_certificate;
+        case tls.Alert.Description.unsupported_certificate:
+          return forge3.pki.certificateError.unsupported_certificate;
+        case tls.Alert.Description.certificate_revoked:
+          return forge3.pki.certificateError.certificate_revoked;
+        case tls.Alert.Description.certificate_expired:
+          return forge3.pki.certificateError.certificate_expired;
+        case tls.Alert.Description.certificate_unknown:
+          return forge3.pki.certificateError.certificate_unknown;
+        case tls.Alert.Description.unknown_ca:
+          return forge3.pki.certificateError.unknown_ca;
+        default:
+          return forge3.pki.certificateError.bad_certificate;
+      }
+    };
+    tls.verifyCertificateChain = function(c, chain) {
+      try {
+        var options = {};
+        for (var key2 in c.verifyOptions) {
+          options[key2] = c.verifyOptions[key2];
+        }
+        options.verify = function(vfd, depth, chain2) {
+          var desc = _certErrorToAlertDesc(vfd);
+          var ret = c.verify(c, vfd, depth, chain2);
+          if (ret !== true) {
+            if (typeof ret === "object" && !forge3.util.isArray(ret)) {
+              var error = new Error("The application rejected the certificate.");
+              error.send = true;
+              error.alert = {
+                level: tls.Alert.Level.fatal,
+                description: tls.Alert.Description.bad_certificate
+              };
+              if (ret.message) {
+                error.message = ret.message;
+              }
+              if (ret.alert) {
+                error.alert.description = ret.alert;
+              }
+              throw error;
+            }
+            if (ret !== vfd) {
+              ret = _alertDescToCertError(ret);
+            }
+          }
+          return ret;
+        };
+        forge3.pki.verifyCertificateChain(c.caStore, chain, options);
+      } catch (ex) {
+        var err = ex;
+        if (typeof err !== "object" || forge3.util.isArray(err)) {
+          err = {
+            send: true,
+            alert: {
+              level: tls.Alert.Level.fatal,
+              description: _certErrorToAlertDesc(ex)
+            }
+          };
+        }
+        if (!("send" in err)) {
+          err.send = true;
+        }
+        if (!("alert" in err)) {
+          err.alert = {
+            level: tls.Alert.Level.fatal,
+            description: _certErrorToAlertDesc(err.error)
+          };
+        }
+        c.error(c, err);
+      }
+      return !c.fail;
+    };
+    tls.createSessionCache = function(cache, capacity) {
+      var rval = null;
+      if (cache && cache.getSession && cache.setSession && cache.order) {
+        rval = cache;
+      } else {
+        rval = {};
+        rval.cache = cache || {};
+        rval.capacity = Math.max(capacity || 100, 1);
+        rval.order = [];
+        for (var key2 in cache) {
+          if (rval.order.length <= capacity) {
+            rval.order.push(key2);
+          } else {
+            delete cache[key2];
+          }
+        }
+        rval.getSession = function(sessionId) {
+          var session = null;
+          var key3 = null;
+          if (sessionId) {
+            key3 = forge3.util.bytesToHex(sessionId);
+          } else if (rval.order.length > 0) {
+            key3 = rval.order[0];
+          }
+          if (key3 !== null && key3 in rval.cache) {
+            session = rval.cache[key3];
+            delete rval.cache[key3];
+            for (var i in rval.order) {
+              if (rval.order[i] === key3) {
+                rval.order.splice(i, 1);
+                break;
+              }
+            }
+          }
+          return session;
+        };
+        rval.setSession = function(sessionId, session) {
+          if (rval.order.length === rval.capacity) {
+            var key3 = rval.order.shift();
+            delete rval.cache[key3];
+          }
+          var key3 = forge3.util.bytesToHex(sessionId);
+          rval.order.push(key3);
+          rval.cache[key3] = session;
+        };
+      }
+      return rval;
+    };
+    tls.createConnection = function(options) {
+      var caStore = null;
+      if (options.caStore) {
+        if (forge3.util.isArray(options.caStore)) {
+          caStore = forge3.pki.createCaStore(options.caStore);
+        } else {
+          caStore = options.caStore;
+        }
+      } else {
+        caStore = forge3.pki.createCaStore();
+      }
+      var cipherSuites = options.cipherSuites || null;
+      if (cipherSuites === null) {
+        cipherSuites = [];
+        for (var key2 in tls.CipherSuites) {
+          cipherSuites.push(tls.CipherSuites[key2]);
+        }
+      }
+      var entity = options.server || false ? tls.ConnectionEnd.server : tls.ConnectionEnd.client;
+      var sessionCache = options.sessionCache ? tls.createSessionCache(options.sessionCache) : null;
+      var c = {
+        version: { major: tls.Version.major, minor: tls.Version.minor },
+        entity,
+        sessionId: options.sessionId,
+        caStore,
+        sessionCache,
+        cipherSuites,
+        connected: options.connected,
+        virtualHost: options.virtualHost || null,
+        verifyClient: options.verifyClient || false,
+        verify: options.verify || function(cn, vfd, dpth, cts) {
+          return vfd;
+        },
+        verifyOptions: options.verifyOptions || {},
+        getCertificate: options.getCertificate || null,
+        getPrivateKey: options.getPrivateKey || null,
+        getSignature: options.getSignature || null,
+        input: forge3.util.createBuffer(),
+        tlsData: forge3.util.createBuffer(),
+        data: forge3.util.createBuffer(),
+        tlsDataReady: options.tlsDataReady,
+        dataReady: options.dataReady,
+        heartbeatReceived: options.heartbeatReceived,
+        closed: options.closed,
+        error: function(c2, ex) {
+          ex.origin = ex.origin || (c2.entity === tls.ConnectionEnd.client ? "client" : "server");
+          if (ex.send) {
+            tls.queue(c2, tls.createAlert(c2, ex.alert));
+            tls.flush(c2);
+          }
+          var fatal = ex.fatal !== false;
+          if (fatal) {
+            c2.fail = true;
+          }
+          options.error(c2, ex);
+          if (fatal) {
+            c2.close(false);
+          }
+        },
+        deflate: options.deflate || null,
+        inflate: options.inflate || null
+      };
+      c.reset = function(clearFail) {
+        c.version = { major: tls.Version.major, minor: tls.Version.minor };
+        c.record = null;
+        c.session = null;
+        c.peerCertificate = null;
+        c.state = {
+          pending: null,
+          current: null
+        };
+        c.expect = c.entity === tls.ConnectionEnd.client ? SHE : CHE;
+        c.fragmented = null;
+        c.records = [];
+        c.open = false;
+        c.handshakes = 0;
+        c.handshaking = false;
+        c.isConnected = false;
+        c.fail = !(clearFail || typeof clearFail === "undefined");
+        c.input.clear();
+        c.tlsData.clear();
+        c.data.clear();
+        c.state.current = tls.createConnectionState(c);
+      };
+      c.reset();
+      var _update = function(c2, record) {
+        var aligned = record.type - tls.ContentType.change_cipher_spec;
+        var handlers = ctTable[c2.entity][c2.expect];
+        if (aligned in handlers) {
+          handlers[aligned](c2, record);
+        } else {
+          tls.handleUnexpected(c2, record);
+        }
+      };
+      var _readRecordHeader = function(c2) {
+        var rval = 0;
+        var b = c2.input;
+        var len = b.length();
+        if (len < 5) {
+          rval = 5 - len;
+        } else {
+          c2.record = {
+            type: b.getByte(),
+            version: {
+              major: b.getByte(),
+              minor: b.getByte()
+            },
+            length: b.getInt16(),
+            fragment: forge3.util.createBuffer(),
+            ready: false
+          };
+          var compatibleVersion = c2.record.version.major === c2.version.major;
+          if (compatibleVersion && c2.session && c2.session.version) {
+            compatibleVersion = c2.record.version.minor === c2.version.minor;
+          }
+          if (!compatibleVersion) {
+            c2.error(c2, {
+              message: "Incompatible TLS version.",
+              send: true,
+              alert: {
+                level: tls.Alert.Level.fatal,
+                description: tls.Alert.Description.protocol_version
+              }
+            });
+          }
+        }
+        return rval;
+      };
+      var _readRecord = function(c2) {
+        var rval = 0;
+        var b = c2.input;
+        var len = b.length();
+        if (len < c2.record.length) {
+          rval = c2.record.length - len;
+        } else {
+          c2.record.fragment.putBytes(b.getBytes(c2.record.length));
+          b.compact();
+          var s = c2.state.current.read;
+          if (s.update(c2, c2.record)) {
+            if (c2.fragmented !== null) {
+              if (c2.fragmented.type === c2.record.type) {
+                c2.fragmented.fragment.putBuffer(c2.record.fragment);
+                c2.record = c2.fragmented;
+              } else {
+                c2.error(c2, {
+                  message: "Invalid fragmented record.",
+                  send: true,
+                  alert: {
+                    level: tls.Alert.Level.fatal,
+                    description: tls.Alert.Description.unexpected_message
+                  }
+                });
+              }
+            }
+            c2.record.ready = true;
+          }
+        }
+        return rval;
+      };
+      c.handshake = function(sessionId) {
+        if (c.entity !== tls.ConnectionEnd.client) {
+          c.error(c, {
+            message: "Cannot initiate handshake as a server.",
+            fatal: false
+          });
+        } else if (c.handshaking) {
+          c.error(c, {
+            message: "Handshake already in progress.",
+            fatal: false
+          });
+        } else {
+          if (c.fail && !c.open && c.handshakes === 0) {
+            c.fail = false;
+          }
+          c.handshaking = true;
+          sessionId = sessionId || "";
+          var session = null;
+          if (sessionId.length > 0) {
+            if (c.sessionCache) {
+              session = c.sessionCache.getSession(sessionId);
+            }
+            if (session === null) {
+              sessionId = "";
+            }
+          }
+          if (sessionId.length === 0 && c.sessionCache) {
+            session = c.sessionCache.getSession();
+            if (session !== null) {
+              sessionId = session.id;
+            }
+          }
+          c.session = {
+            id: sessionId,
+            version: null,
+            cipherSuite: null,
+            compressionMethod: null,
+            serverCertificate: null,
+            certificateRequest: null,
+            clientCertificate: null,
+            sp: {},
+            md5: forge3.md.md5.create(),
+            sha1: forge3.md.sha1.create()
+          };
+          if (session) {
+            c.version = session.version;
+            c.session.sp = session.sp;
+          }
+          c.session.sp.client_random = tls.createRandom().getBytes();
+          c.open = true;
+          tls.queue(c, tls.createRecord(c, {
+            type: tls.ContentType.handshake,
+            data: tls.createClientHello(c)
+          }));
+          tls.flush(c);
+        }
+      };
+      c.process = function(data) {
+        var rval = 0;
+        if (data) {
+          c.input.putBytes(data);
+        }
+        if (!c.fail) {
+          if (c.record !== null && c.record.ready && c.record.fragment.isEmpty()) {
+            c.record = null;
+          }
+          if (c.record === null) {
+            rval = _readRecordHeader(c);
+          }
+          if (!c.fail && c.record !== null && !c.record.ready) {
+            rval = _readRecord(c);
+          }
+          if (!c.fail && c.record !== null && c.record.ready) {
+            _update(c, c.record);
+          }
+        }
+        return rval;
+      };
+      c.prepare = function(data) {
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.application_data,
+          data: forge3.util.createBuffer(data)
+        }));
+        return tls.flush(c);
+      };
+      c.prepareHeartbeatRequest = function(payload, payloadLength) {
+        if (payload instanceof forge3.util.ByteBuffer) {
+          payload = payload.bytes();
+        }
+        if (typeof payloadLength === "undefined") {
+          payloadLength = payload.length;
+        }
+        c.expectedHeartbeatPayload = payload;
+        tls.queue(c, tls.createRecord(c, {
+          type: tls.ContentType.heartbeat,
+          data: tls.createHeartbeat(
+            tls.HeartbeatMessageType.heartbeat_request,
+            payload,
+            payloadLength
+          )
+        }));
+        return tls.flush(c);
+      };
+      c.close = function(clearFail) {
+        if (!c.fail && c.sessionCache && c.session) {
+          var session = {
+            id: c.session.id,
+            version: c.session.version,
+            sp: c.session.sp
+          };
+          session.sp.keys = null;
+          c.sessionCache.setSession(session.id, session);
+        }
+        if (c.open) {
+          c.open = false;
+          c.input.clear();
+          if (c.isConnected || c.handshaking) {
+            c.isConnected = c.handshaking = false;
+            tls.queue(c, tls.createAlert(c, {
+              level: tls.Alert.Level.warning,
+              description: tls.Alert.Description.close_notify
+            }));
+            tls.flush(c);
+          }
+          c.closed(c);
+        }
+        c.reset(clearFail);
+      };
+      return c;
+    };
+    module.exports = forge3.tls = forge3.tls || {};
+    for (key in tls) {
+      if (typeof tls[key] !== "function") {
+        forge3.tls[key] = tls[key];
+      }
+    }
+    var key;
+    forge3.tls.prf_tls1 = prf_TLS1;
+    forge3.tls.hmac_sha1 = hmac_sha1;
+    forge3.tls.createSessionCache = tls.createSessionCache;
+    forge3.tls.createConnection = tls.createConnection;
+  }
+});
+
+// node_modules/node-forge/lib/aesCipherSuites.js
+var require_aesCipherSuites = __commonJS({
+  "node_modules/node-forge/lib/aesCipherSuites.js"(exports, module) {
+    var forge3 = require_forge();
+    require_aes();
+    require_tls();
+    var tls = module.exports = forge3.tls;
+    tls.CipherSuites["TLS_RSA_WITH_AES_128_CBC_SHA"] = {
+      id: [0, 47],
+      name: "TLS_RSA_WITH_AES_128_CBC_SHA",
+      initSecurityParameters: function(sp) {
+        sp.bulk_cipher_algorithm = tls.BulkCipherAlgorithm.aes;
+        sp.cipher_type = tls.CipherType.block;
+        sp.enc_key_length = 16;
+        sp.block_length = 16;
+        sp.fixed_iv_length = 16;
+        sp.record_iv_length = 16;
+        sp.mac_algorithm = tls.MACAlgorithm.hmac_sha1;
+        sp.mac_length = 20;
+        sp.mac_key_length = 20;
+      },
+      initConnectionState
+    };
+    tls.CipherSuites["TLS_RSA_WITH_AES_256_CBC_SHA"] = {
+      id: [0, 53],
+      name: "TLS_RSA_WITH_AES_256_CBC_SHA",
+      initSecurityParameters: function(sp) {
+        sp.bulk_cipher_algorithm = tls.BulkCipherAlgorithm.aes;
+        sp.cipher_type = tls.CipherType.block;
+        sp.enc_key_length = 32;
+        sp.block_length = 16;
+        sp.fixed_iv_length = 16;
+        sp.record_iv_length = 16;
+        sp.mac_algorithm = tls.MACAlgorithm.hmac_sha1;
+        sp.mac_length = 20;
+        sp.mac_key_length = 20;
+      },
+      initConnectionState
+    };
+    function initConnectionState(state, c, sp) {
+      var client = c.entity === forge3.tls.ConnectionEnd.client;
+      state.read.cipherState = {
+        init: false,
+        cipher: forge3.cipher.createDecipher("AES-CBC", client ? sp.keys.server_write_key : sp.keys.client_write_key),
+        iv: client ? sp.keys.server_write_IV : sp.keys.client_write_IV
+      };
+      state.write.cipherState = {
+        init: false,
+        cipher: forge3.cipher.createCipher("AES-CBC", client ? sp.keys.client_write_key : sp.keys.server_write_key),
+        iv: client ? sp.keys.client_write_IV : sp.keys.server_write_IV
+      };
+      state.read.cipherFunction = decrypt_aes_cbc_sha1;
+      state.write.cipherFunction = encrypt_aes_cbc_sha1;
+      state.read.macLength = state.write.macLength = sp.mac_length;
+      state.read.macFunction = state.write.macFunction = tls.hmac_sha1;
+    }
+    function encrypt_aes_cbc_sha1(record, s) {
+      var rval = false;
+      var mac = s.macFunction(s.macKey, s.sequenceNumber, record);
+      record.fragment.putBytes(mac);
+      s.updateSequenceNumber();
+      var iv;
+      if (record.version.minor === tls.Versions.TLS_1_0.minor) {
+        iv = s.cipherState.init ? null : s.cipherState.iv;
+      } else {
+        iv = forge3.random.getBytesSync(16);
+      }
+      s.cipherState.init = true;
+      var cipher = s.cipherState.cipher;
+      cipher.start({ iv });
+      if (record.version.minor >= tls.Versions.TLS_1_1.minor) {
+        cipher.output.putBytes(iv);
+      }
+      cipher.update(record.fragment);
+      if (cipher.finish(encrypt_aes_cbc_sha1_padding)) {
+        record.fragment = cipher.output;
+        record.length = record.fragment.length();
+        rval = true;
+      }
+      return rval;
+    }
+    function encrypt_aes_cbc_sha1_padding(blockSize, input, decrypt) {
+      if (!decrypt) {
+        var padding = blockSize - input.length() % blockSize;
+        input.fillWithByte(padding - 1, padding);
+      }
+      return true;
+    }
+    function decrypt_aes_cbc_sha1_padding(blockSize, output, decrypt) {
+      var rval = true;
+      if (decrypt) {
+        var len = output.length();
+        var paddingLength = output.last();
+        for (var i = len - 1 - paddingLength; i < len - 1; ++i) {
+          rval = rval && output.at(i) == paddingLength;
+        }
+        if (rval) {
+          output.truncate(paddingLength + 1);
+        }
+      }
+      return rval;
+    }
+    function decrypt_aes_cbc_sha1(record, s) {
+      var rval = false;
+      var iv;
+      if (record.version.minor === tls.Versions.TLS_1_0.minor) {
+        iv = s.cipherState.init ? null : s.cipherState.iv;
+      } else {
+        iv = record.fragment.getBytes(16);
+      }
+      s.cipherState.init = true;
+      var cipher = s.cipherState.cipher;
+      cipher.start({ iv });
+      cipher.update(record.fragment);
+      rval = cipher.finish(decrypt_aes_cbc_sha1_padding);
+      var macLen = s.macLength;
+      var mac = forge3.random.getBytesSync(macLen);
+      var len = cipher.output.length();
+      if (len >= macLen) {
+        record.fragment = cipher.output.getBytes(len - macLen);
+        mac = cipher.output.getBytes(macLen);
+      } else {
+        record.fragment = cipher.output.getBytes();
+      }
+      record.fragment = forge3.util.createBuffer(record.fragment);
+      record.length = record.fragment.length();
+      var mac2 = s.macFunction(s.macKey, s.sequenceNumber, record);
+      s.updateSequenceNumber();
+      rval = compareMacs(s.macKey, mac, mac2) && rval;
+      return rval;
+    }
+    function compareMacs(key, mac1, mac2) {
+      var hmac = forge3.hmac.create();
+      hmac.start("SHA1", key);
+      hmac.update(mac1);
+      mac1 = hmac.digest().getBytes();
+      hmac.start(null, null);
+      hmac.update(mac2);
+      mac2 = hmac.digest().getBytes();
+      return mac1 === mac2;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/sha512.js
+var require_sha512 = __commonJS({
+  "node_modules/node-forge/lib/sha512.js"(exports, module) {
+    var forge3 = require_forge();
+    require_md();
+    require_util();
+    var sha512 = module.exports = forge3.sha512 = forge3.sha512 || {};
+    forge3.md.sha512 = forge3.md.algorithms.sha512 = sha512;
+    var sha384 = forge3.sha384 = forge3.sha512.sha384 = forge3.sha512.sha384 || {};
+    sha384.create = function() {
+      return sha512.create("SHA-384");
+    };
+    forge3.md.sha384 = forge3.md.algorithms.sha384 = sha384;
+    forge3.sha512.sha256 = forge3.sha512.sha256 || {
+      create: function() {
+        return sha512.create("SHA-512/256");
+      }
+    };
+    forge3.md["sha512/256"] = forge3.md.algorithms["sha512/256"] = forge3.sha512.sha256;
+    forge3.sha512.sha224 = forge3.sha512.sha224 || {
+      create: function() {
+        return sha512.create("SHA-512/224");
+      }
+    };
+    forge3.md["sha512/224"] = forge3.md.algorithms["sha512/224"] = forge3.sha512.sha224;
+    sha512.create = function(algorithm) {
+      if (!_initialized) {
+        _init();
+      }
+      if (typeof algorithm === "undefined") {
+        algorithm = "SHA-512";
+      }
+      if (!(algorithm in _states)) {
+        throw new Error("Invalid SHA-512 algorithm: " + algorithm);
+      }
+      var _state = _states[algorithm];
+      var _h = null;
+      var _input = forge3.util.createBuffer();
+      var _w = new Array(80);
+      for (var wi = 0; wi < 80; ++wi) {
+        _w[wi] = new Array(2);
+      }
+      var digestLength = 64;
+      switch (algorithm) {
+        case "SHA-384":
+          digestLength = 48;
+          break;
+        case "SHA-512/256":
+          digestLength = 32;
+          break;
+        case "SHA-512/224":
+          digestLength = 28;
+          break;
+      }
+      var md = {
+        // SHA-512 => sha512
+        algorithm: algorithm.replace("-", "").toLowerCase(),
+        blockLength: 128,
+        digestLength,
+        // 56-bit length of message so far (does not including padding)
+        messageLength: 0,
+        // true message length
+        fullMessageLength: null,
+        // size of message length in bytes
+        messageLengthSize: 16
+      };
+      md.start = function() {
+        md.messageLength = 0;
+        md.fullMessageLength = md.messageLength128 = [];
+        var int32s = md.messageLengthSize / 4;
+        for (var i = 0; i < int32s; ++i) {
+          md.fullMessageLength.push(0);
+        }
+        _input = forge3.util.createBuffer();
+        _h = new Array(_state.length);
+        for (var i = 0; i < _state.length; ++i) {
+          _h[i] = _state[i].slice(0);
+        }
+        return md;
+      };
+      md.start();
+      md.update = function(msg, encoding) {
+        if (encoding === "utf8") {
+          msg = forge3.util.encodeUtf8(msg);
+        }
+        var len = msg.length;
+        md.messageLength += len;
+        len = [len / 4294967296 >>> 0, len >>> 0];
+        for (var i = md.fullMessageLength.length - 1; i >= 0; --i) {
+          md.fullMessageLength[i] += len[1];
+          len[1] = len[0] + (md.fullMessageLength[i] / 4294967296 >>> 0);
+          md.fullMessageLength[i] = md.fullMessageLength[i] >>> 0;
+          len[0] = len[1] / 4294967296 >>> 0;
+        }
+        _input.putBytes(msg);
+        _update(_h, _w, _input);
+        if (_input.read > 2048 || _input.length() === 0) {
+          _input.compact();
+        }
+        return md;
+      };
+      md.digest = function() {
+        var finalBlock = forge3.util.createBuffer();
+        finalBlock.putBytes(_input.bytes());
+        var remaining = md.fullMessageLength[md.fullMessageLength.length - 1] + md.messageLengthSize;
+        var overflow = remaining & md.blockLength - 1;
+        finalBlock.putBytes(_padding.substr(0, md.blockLength - overflow));
+        var next, carry;
+        var bits = md.fullMessageLength[0] * 8;
+        for (var i = 0; i < md.fullMessageLength.length - 1; ++i) {
+          next = md.fullMessageLength[i + 1] * 8;
+          carry = next / 4294967296 >>> 0;
+          bits += carry;
+          finalBlock.putInt32(bits >>> 0);
+          bits = next >>> 0;
+        }
+        finalBlock.putInt32(bits);
+        var h = new Array(_h.length);
+        for (var i = 0; i < _h.length; ++i) {
+          h[i] = _h[i].slice(0);
+        }
+        _update(h, _w, finalBlock);
+        var rval = forge3.util.createBuffer();
+        var hlen;
+        if (algorithm === "SHA-512") {
+          hlen = h.length;
+        } else if (algorithm === "SHA-384") {
+          hlen = h.length - 2;
+        } else {
+          hlen = h.length - 4;
+        }
+        for (var i = 0; i < hlen; ++i) {
+          rval.putInt32(h[i][0]);
+          if (i !== hlen - 1 || algorithm !== "SHA-512/224") {
+            rval.putInt32(h[i][1]);
+          }
+        }
+        return rval;
+      };
+      return md;
+    };
+    var _padding = null;
+    var _initialized = false;
+    var _k = null;
+    var _states = null;
+    function _init() {
+      _padding = String.fromCharCode(128);
+      _padding += forge3.util.fillString(String.fromCharCode(0), 128);
+      _k = [
+        [1116352408, 3609767458],
+        [1899447441, 602891725],
+        [3049323471, 3964484399],
+        [3921009573, 2173295548],
+        [961987163, 4081628472],
+        [1508970993, 3053834265],
+        [2453635748, 2937671579],
+        [2870763221, 3664609560],
+        [3624381080, 2734883394],
+        [310598401, 1164996542],
+        [607225278, 1323610764],
+        [1426881987, 3590304994],
+        [1925078388, 4068182383],
+        [2162078206, 991336113],
+        [2614888103, 633803317],
+        [3248222580, 3479774868],
+        [3835390401, 2666613458],
+        [4022224774, 944711139],
+        [264347078, 2341262773],
+        [604807628, 2007800933],
+        [770255983, 1495990901],
+        [1249150122, 1856431235],
+        [1555081692, 3175218132],
+        [1996064986, 2198950837],
+        [2554220882, 3999719339],
+        [2821834349, 766784016],
+        [2952996808, 2566594879],
+        [3210313671, 3203337956],
+        [3336571891, 1034457026],
+        [3584528711, 2466948901],
+        [113926993, 3758326383],
+        [338241895, 168717936],
+        [666307205, 1188179964],
+        [773529912, 1546045734],
+        [1294757372, 1522805485],
+        [1396182291, 2643833823],
+        [1695183700, 2343527390],
+        [1986661051, 1014477480],
+        [2177026350, 1206759142],
+        [2456956037, 344077627],
+        [2730485921, 1290863460],
+        [2820302411, 3158454273],
+        [3259730800, 3505952657],
+        [3345764771, 106217008],
+        [3516065817, 3606008344],
+        [3600352804, 1432725776],
+        [4094571909, 1467031594],
+        [275423344, 851169720],
+        [430227734, 3100823752],
+        [506948616, 1363258195],
+        [659060556, 3750685593],
+        [883997877, 3785050280],
+        [958139571, 3318307427],
+        [1322822218, 3812723403],
+        [1537002063, 2003034995],
+        [1747873779, 3602036899],
+        [1955562222, 1575990012],
+        [2024104815, 1125592928],
+        [2227730452, 2716904306],
+        [2361852424, 442776044],
+        [2428436474, 593698344],
+        [2756734187, 3733110249],
+        [3204031479, 2999351573],
+        [3329325298, 3815920427],
+        [3391569614, 3928383900],
+        [3515267271, 566280711],
+        [3940187606, 3454069534],
+        [4118630271, 4000239992],
+        [116418474, 1914138554],
+        [174292421, 2731055270],
+        [289380356, 3203993006],
+        [460393269, 320620315],
+        [685471733, 587496836],
+        [852142971, 1086792851],
+        [1017036298, 365543100],
+        [1126000580, 2618297676],
+        [1288033470, 3409855158],
+        [1501505948, 4234509866],
+        [1607167915, 987167468],
+        [1816402316, 1246189591]
+      ];
+      _states = {};
+      _states["SHA-512"] = [
+        [1779033703, 4089235720],
+        [3144134277, 2227873595],
+        [1013904242, 4271175723],
+        [2773480762, 1595750129],
+        [1359893119, 2917565137],
+        [2600822924, 725511199],
+        [528734635, 4215389547],
+        [1541459225, 327033209]
+      ];
+      _states["SHA-384"] = [
+        [3418070365, 3238371032],
+        [1654270250, 914150663],
+        [2438529370, 812702999],
+        [355462360, 4144912697],
+        [1731405415, 4290775857],
+        [2394180231, 1750603025],
+        [3675008525, 1694076839],
+        [1203062813, 3204075428]
+      ];
+      _states["SHA-512/256"] = [
+        [573645204, 4230739756],
+        [2673172387, 3360449730],
+        [596883563, 1867755857],
+        [2520282905, 1497426621],
+        [2519219938, 2827943907],
+        [3193839141, 1401305490],
+        [721525244, 746961066],
+        [246885852, 2177182882]
+      ];
+      _states["SHA-512/224"] = [
+        [2352822216, 424955298],
+        [1944164710, 2312950998],
+        [502970286, 855612546],
+        [1738396948, 1479516111],
+        [258812777, 2077511080],
+        [2011393907, 79989058],
+        [1067287976, 1780299464],
+        [286451373, 2446758561]
+      ];
+      _initialized = true;
+    }
+    function _update(s, w, bytes) {
+      var t1_hi, t1_lo;
+      var t2_hi, t2_lo;
+      var s0_hi, s0_lo;
+      var s1_hi, s1_lo;
+      var ch_hi, ch_lo;
+      var maj_hi, maj_lo;
+      var a_hi, a_lo;
+      var b_hi, b_lo;
+      var c_hi, c_lo;
+      var d_hi, d_lo;
+      var e_hi, e_lo;
+      var f_hi, f_lo;
+      var g_hi, g_lo;
+      var h_hi, h_lo;
+      var i, hi, lo, w2, w7, w15, w16;
+      var len = bytes.length();
+      while (len >= 128) {
+        for (i = 0; i < 16; ++i) {
+          w[i][0] = bytes.getInt32() >>> 0;
+          w[i][1] = bytes.getInt32() >>> 0;
+        }
+        for (; i < 80; ++i) {
+          w2 = w[i - 2];
+          hi = w2[0];
+          lo = w2[1];
+          t1_hi = ((hi >>> 19 | lo << 13) ^ // ROTR 19
+          (lo >>> 29 | hi << 3) ^ // ROTR 61/(swap + ROTR 29)
+          hi >>> 6) >>> 0;
+          t1_lo = ((hi << 13 | lo >>> 19) ^ // ROTR 19
+          (lo << 3 | hi >>> 29) ^ // ROTR 61/(swap + ROTR 29)
+          (hi << 26 | lo >>> 6)) >>> 0;
+          w15 = w[i - 15];
+          hi = w15[0];
+          lo = w15[1];
+          t2_hi = ((hi >>> 1 | lo << 31) ^ // ROTR 1
+          (hi >>> 8 | lo << 24) ^ // ROTR 8
+          hi >>> 7) >>> 0;
+          t2_lo = ((hi << 31 | lo >>> 1) ^ // ROTR 1
+          (hi << 24 | lo >>> 8) ^ // ROTR 8
+          (hi << 25 | lo >>> 7)) >>> 0;
+          w7 = w[i - 7];
+          w16 = w[i - 16];
+          lo = t1_lo + w7[1] + t2_lo + w16[1];
+          w[i][0] = t1_hi + w7[0] + t2_hi + w16[0] + (lo / 4294967296 >>> 0) >>> 0;
+          w[i][1] = lo >>> 0;
+        }
+        a_hi = s[0][0];
+        a_lo = s[0][1];
+        b_hi = s[1][0];
+        b_lo = s[1][1];
+        c_hi = s[2][0];
+        c_lo = s[2][1];
+        d_hi = s[3][0];
+        d_lo = s[3][1];
+        e_hi = s[4][0];
+        e_lo = s[4][1];
+        f_hi = s[5][0];
+        f_lo = s[5][1];
+        g_hi = s[6][0];
+        g_lo = s[6][1];
+        h_hi = s[7][0];
+        h_lo = s[7][1];
+        for (i = 0; i < 80; ++i) {
+          s1_hi = ((e_hi >>> 14 | e_lo << 18) ^ // ROTR 14
+          (e_hi >>> 18 | e_lo << 14) ^ // ROTR 18
+          (e_lo >>> 9 | e_hi << 23)) >>> 0;
+          s1_lo = ((e_hi << 18 | e_lo >>> 14) ^ // ROTR 14
+          (e_hi << 14 | e_lo >>> 18) ^ // ROTR 18
+          (e_lo << 23 | e_hi >>> 9)) >>> 0;
+          ch_hi = (g_hi ^ e_hi & (f_hi ^ g_hi)) >>> 0;
+          ch_lo = (g_lo ^ e_lo & (f_lo ^ g_lo)) >>> 0;
+          s0_hi = ((a_hi >>> 28 | a_lo << 4) ^ // ROTR 28
+          (a_lo >>> 2 | a_hi << 30) ^ // ROTR 34/(swap + ROTR 2)
+          (a_lo >>> 7 | a_hi << 25)) >>> 0;
+          s0_lo = ((a_hi << 4 | a_lo >>> 28) ^ // ROTR 28
+          (a_lo << 30 | a_hi >>> 2) ^ // ROTR 34/(swap + ROTR 2)
+          (a_lo << 25 | a_hi >>> 7)) >>> 0;
+          maj_hi = (a_hi & b_hi | c_hi & (a_hi ^ b_hi)) >>> 0;
+          maj_lo = (a_lo & b_lo | c_lo & (a_lo ^ b_lo)) >>> 0;
+          lo = h_lo + s1_lo + ch_lo + _k[i][1] + w[i][1];
+          t1_hi = h_hi + s1_hi + ch_hi + _k[i][0] + w[i][0] + (lo / 4294967296 >>> 0) >>> 0;
+          t1_lo = lo >>> 0;
+          lo = s0_lo + maj_lo;
+          t2_hi = s0_hi + maj_hi + (lo / 4294967296 >>> 0) >>> 0;
+          t2_lo = lo >>> 0;
+          h_hi = g_hi;
+          h_lo = g_lo;
+          g_hi = f_hi;
+          g_lo = f_lo;
+          f_hi = e_hi;
+          f_lo = e_lo;
+          lo = d_lo + t1_lo;
+          e_hi = d_hi + t1_hi + (lo / 4294967296 >>> 0) >>> 0;
+          e_lo = lo >>> 0;
+          d_hi = c_hi;
+          d_lo = c_lo;
+          c_hi = b_hi;
+          c_lo = b_lo;
+          b_hi = a_hi;
+          b_lo = a_lo;
+          lo = t1_lo + t2_lo;
+          a_hi = t1_hi + t2_hi + (lo / 4294967296 >>> 0) >>> 0;
+          a_lo = lo >>> 0;
+        }
+        lo = s[0][1] + a_lo;
+        s[0][0] = s[0][0] + a_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[0][1] = lo >>> 0;
+        lo = s[1][1] + b_lo;
+        s[1][0] = s[1][0] + b_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[1][1] = lo >>> 0;
+        lo = s[2][1] + c_lo;
+        s[2][0] = s[2][0] + c_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[2][1] = lo >>> 0;
+        lo = s[3][1] + d_lo;
+        s[3][0] = s[3][0] + d_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[3][1] = lo >>> 0;
+        lo = s[4][1] + e_lo;
+        s[4][0] = s[4][0] + e_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[4][1] = lo >>> 0;
+        lo = s[5][1] + f_lo;
+        s[5][0] = s[5][0] + f_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[5][1] = lo >>> 0;
+        lo = s[6][1] + g_lo;
+        s[6][0] = s[6][0] + g_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[6][1] = lo >>> 0;
+        lo = s[7][1] + h_lo;
+        s[7][0] = s[7][0] + h_hi + (lo / 4294967296 >>> 0) >>> 0;
+        s[7][1] = lo >>> 0;
+        len -= 128;
+      }
+    }
+  }
+});
+
+// node_modules/node-forge/lib/asn1-validator.js
+var require_asn1_validator = __commonJS({
+  "node_modules/node-forge/lib/asn1-validator.js"(exports) {
+    var forge3 = require_forge();
+    require_asn1();
+    var asn1 = forge3.asn1;
+    exports.privateKeyValidator = {
+      // PrivateKeyInfo
+      name: "PrivateKeyInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      value: [{
+        // Version (INTEGER)
+        name: "PrivateKeyInfo.version",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.INTEGER,
+        constructed: false,
+        capture: "privateKeyVersion"
+      }, {
+        // privateKeyAlgorithm
+        name: "PrivateKeyInfo.privateKeyAlgorithm",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.SEQUENCE,
+        constructed: true,
+        value: [{
+          name: "AlgorithmIdentifier.algorithm",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.OID,
+          constructed: false,
+          capture: "privateKeyOid"
+        }]
+      }, {
+        // PrivateKey
+        name: "PrivateKeyInfo",
+        tagClass: asn1.Class.UNIVERSAL,
+        type: asn1.Type.OCTETSTRING,
+        constructed: false,
+        capture: "privateKey"
+      }]
+    };
+    exports.publicKeyValidator = {
+      name: "SubjectPublicKeyInfo",
+      tagClass: asn1.Class.UNIVERSAL,
+      type: asn1.Type.SEQUENCE,
+      constructed: true,
+      captureAsn1: "subjectPublicKeyInfo",
+      value: [
+        {
+          name: "SubjectPublicKeyInfo.AlgorithmIdentifier",
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.SEQUENCE,
+          constructed: true,
+          value: [{
+            name: "AlgorithmIdentifier.algorithm",
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.OID,
+            constructed: false,
+            capture: "publicKeyOid"
+          }]
+        },
+        // capture group for ed25519PublicKey
+        {
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.BITSTRING,
+          constructed: false,
+          composed: true,
+          captureBitStringValue: "ed25519PublicKey"
+        }
+        // FIXME: this is capture group for rsaPublicKey, use it in this API or
+        // discard?
+        /* {
+          // subjectPublicKey
+          name: 'SubjectPublicKeyInfo.subjectPublicKey',
+          tagClass: asn1.Class.UNIVERSAL,
+          type: asn1.Type.BITSTRING,
+          constructed: false,
+          value: [{
+            // RSAPublicKey
+            name: 'SubjectPublicKeyInfo.subjectPublicKey.RSAPublicKey',
+            tagClass: asn1.Class.UNIVERSAL,
+            type: asn1.Type.SEQUENCE,
+            constructed: true,
+            optional: true,
+            captureAsn1: 'rsaPublicKey'
+          }]
+        } */
+      ]
+    };
+  }
+});
+
+// node_modules/node-forge/lib/ed25519.js
+var require_ed25519 = __commonJS({
+  "node_modules/node-forge/lib/ed25519.js"(exports, module) {
+    var forge3 = require_forge();
+    require_jsbn();
+    require_random();
+    require_sha512();
+    require_util();
+    var asn1Validator = require_asn1_validator();
+    var publicKeyValidator = asn1Validator.publicKeyValidator;
+    var privateKeyValidator = asn1Validator.privateKeyValidator;
+    if (typeof BigInteger2 === "undefined") {
+      BigInteger2 = forge3.jsbn.BigInteger;
+    }
+    var BigInteger2;
+    var ByteBuffer = forge3.util.ByteBuffer;
+    var NativeBuffer = typeof Buffer === "undefined" ? Uint8Array : Buffer;
+    forge3.pki = forge3.pki || {};
+    module.exports = forge3.pki.ed25519 = forge3.ed25519 = forge3.ed25519 || {};
+    var ed25519 = forge3.ed25519;
+    ed25519.constants = {};
+    ed25519.constants.PUBLIC_KEY_BYTE_LENGTH = 32;
+    ed25519.constants.PRIVATE_KEY_BYTE_LENGTH = 64;
+    ed25519.constants.SEED_BYTE_LENGTH = 32;
+    ed25519.constants.SIGN_BYTE_LENGTH = 64;
+    ed25519.constants.HASH_BYTE_LENGTH = 64;
+    ed25519.generateKeyPair = function(options) {
+      options = options || {};
+      var seed = options.seed;
+      if (seed === void 0) {
+        seed = forge3.random.getBytesSync(ed25519.constants.SEED_BYTE_LENGTH);
+      } else if (typeof seed === "string") {
+        if (seed.length !== ed25519.constants.SEED_BYTE_LENGTH) {
+          throw new TypeError(
+            '"seed" must be ' + ed25519.constants.SEED_BYTE_LENGTH + " bytes in length."
+          );
+        }
+      } else if (!(seed instanceof Uint8Array)) {
+        throw new TypeError(
+          '"seed" must be a node.js Buffer, Uint8Array, or a binary string.'
+        );
+      }
+      seed = messageToNativeBuffer({ message: seed, encoding: "binary" });
+      var pk = new NativeBuffer(ed25519.constants.PUBLIC_KEY_BYTE_LENGTH);
+      var sk = new NativeBuffer(ed25519.constants.PRIVATE_KEY_BYTE_LENGTH);
+      for (var i = 0; i < 32; ++i) {
+        sk[i] = seed[i];
+      }
+      crypto_sign_keypair(pk, sk);
+      return { publicKey: pk, privateKey: sk };
+    };
+    ed25519.privateKeyFromAsn1 = function(obj) {
+      var capture = {};
+      var errors = [];
+      var valid = forge3.asn1.validate(obj, privateKeyValidator, capture, errors);
+      if (!valid) {
+        var error = new Error("Invalid Key.");
+        error.errors = errors;
+        throw error;
+      }
+      var oid = forge3.asn1.derToOid(capture.privateKeyOid);
+      var ed25519Oid = forge3.oids.EdDSA25519;
+      if (oid !== ed25519Oid) {
+        throw new Error('Invalid OID "' + oid + '"; OID must be "' + ed25519Oid + '".');
+      }
+      var privateKey = capture.privateKey;
+      var privateKeyBytes = messageToNativeBuffer({
+        message: forge3.asn1.fromDer(privateKey).value,
+        encoding: "binary"
+      });
+      return { privateKeyBytes };
+    };
+    ed25519.publicKeyFromAsn1 = function(obj) {
+      var capture = {};
+      var errors = [];
+      var valid = forge3.asn1.validate(obj, publicKeyValidator, capture, errors);
+      if (!valid) {
+        var error = new Error("Invalid Key.");
+        error.errors = errors;
+        throw error;
+      }
+      var oid = forge3.asn1.derToOid(capture.publicKeyOid);
+      var ed25519Oid = forge3.oids.EdDSA25519;
+      if (oid !== ed25519Oid) {
+        throw new Error('Invalid OID "' + oid + '"; OID must be "' + ed25519Oid + '".');
+      }
+      var publicKeyBytes = capture.ed25519PublicKey;
+      if (publicKeyBytes.length !== ed25519.constants.PUBLIC_KEY_BYTE_LENGTH) {
+        throw new Error("Key length is invalid.");
+      }
+      return messageToNativeBuffer({
+        message: publicKeyBytes,
+        encoding: "binary"
+      });
+    };
+    ed25519.publicKeyFromPrivateKey = function(options) {
+      options = options || {};
+      var privateKey = messageToNativeBuffer({
+        message: options.privateKey,
+        encoding: "binary"
+      });
+      if (privateKey.length !== ed25519.constants.PRIVATE_KEY_BYTE_LENGTH) {
+        throw new TypeError(
+          '"options.privateKey" must have a byte length of ' + ed25519.constants.PRIVATE_KEY_BYTE_LENGTH
+        );
+      }
+      var pk = new NativeBuffer(ed25519.constants.PUBLIC_KEY_BYTE_LENGTH);
+      for (var i = 0; i < pk.length; ++i) {
+        pk[i] = privateKey[32 + i];
+      }
+      return pk;
+    };
+    ed25519.sign = function(options) {
+      options = options || {};
+      var msg = messageToNativeBuffer(options);
+      var privateKey = messageToNativeBuffer({
+        message: options.privateKey,
+        encoding: "binary"
+      });
+      if (privateKey.length === ed25519.constants.SEED_BYTE_LENGTH) {
+        var keyPair = ed25519.generateKeyPair({ seed: privateKey });
+        privateKey = keyPair.privateKey;
+      } else if (privateKey.length !== ed25519.constants.PRIVATE_KEY_BYTE_LENGTH) {
+        throw new TypeError(
+          '"options.privateKey" must have a byte length of ' + ed25519.constants.SEED_BYTE_LENGTH + " or " + ed25519.constants.PRIVATE_KEY_BYTE_LENGTH
+        );
+      }
+      var signedMsg = new NativeBuffer(
+        ed25519.constants.SIGN_BYTE_LENGTH + msg.length
+      );
+      crypto_sign(signedMsg, msg, msg.length, privateKey);
+      var sig = new NativeBuffer(ed25519.constants.SIGN_BYTE_LENGTH);
+      for (var i = 0; i < sig.length; ++i) {
+        sig[i] = signedMsg[i];
+      }
+      return sig;
+    };
+    ed25519.verify = function(options) {
+      options = options || {};
+      var msg = messageToNativeBuffer(options);
+      if (options.signature === void 0) {
+        throw new TypeError(
+          '"options.signature" must be a node.js Buffer, a Uint8Array, a forge ByteBuffer, or a binary string.'
+        );
+      }
+      var sig = messageToNativeBuffer({
+        message: options.signature,
+        encoding: "binary"
+      });
+      if (sig.length !== ed25519.constants.SIGN_BYTE_LENGTH) {
+        throw new TypeError(
+          '"options.signature" must have a byte length of ' + ed25519.constants.SIGN_BYTE_LENGTH
+        );
+      }
+      var publicKey = messageToNativeBuffer({
+        message: options.publicKey,
+        encoding: "binary"
+      });
+      if (publicKey.length !== ed25519.constants.PUBLIC_KEY_BYTE_LENGTH) {
+        throw new TypeError(
+          '"options.publicKey" must have a byte length of ' + ed25519.constants.PUBLIC_KEY_BYTE_LENGTH
+        );
+      }
+      var sm = new NativeBuffer(ed25519.constants.SIGN_BYTE_LENGTH + msg.length);
+      var m = new NativeBuffer(ed25519.constants.SIGN_BYTE_LENGTH + msg.length);
+      var i;
+      for (i = 0; i < ed25519.constants.SIGN_BYTE_LENGTH; ++i) {
+        sm[i] = sig[i];
+      }
+      for (i = 0; i < msg.length; ++i) {
+        sm[i + ed25519.constants.SIGN_BYTE_LENGTH] = msg[i];
+      }
+      return crypto_sign_open(m, sm, sm.length, publicKey) >= 0;
+    };
+    function messageToNativeBuffer(options) {
+      var message = options.message;
+      if (message instanceof Uint8Array || message instanceof NativeBuffer) {
+        return message;
+      }
+      var encoding = options.encoding;
+      if (message === void 0) {
+        if (options.md) {
+          message = options.md.digest().getBytes();
+          encoding = "binary";
+        } else {
+          throw new TypeError('"options.message" or "options.md" not specified.');
+        }
+      }
+      if (typeof message === "string" && !encoding) {
+        throw new TypeError('"options.encoding" must be "binary" or "utf8".');
+      }
+      if (typeof message === "string") {
+        if (typeof Buffer !== "undefined") {
+          return Buffer.from(message, encoding);
+        }
+        message = new ByteBuffer(message, encoding);
+      } else if (!(message instanceof ByteBuffer)) {
+        throw new TypeError(
+          '"options.message" must be a node.js Buffer, a Uint8Array, a forge ByteBuffer, or a string with "options.encoding" specifying its encoding.'
+        );
+      }
+      var buffer = new NativeBuffer(message.length());
+      for (var i = 0; i < buffer.length; ++i) {
+        buffer[i] = message.at(i);
+      }
+      return buffer;
+    }
+    var gf0 = gf();
+    var gf1 = gf([1]);
+    var D = gf([
+      30883,
+      4953,
+      19914,
+      30187,
+      55467,
+      16705,
+      2637,
+      112,
+      59544,
+      30585,
+      16505,
+      36039,
+      65139,
+      11119,
+      27886,
+      20995
+    ]);
+    var D2 = gf([
+      61785,
+      9906,
+      39828,
+      60374,
+      45398,
+      33411,
+      5274,
+      224,
+      53552,
+      61171,
+      33010,
+      6542,
+      64743,
+      22239,
+      55772,
+      9222
+    ]);
+    var X = gf([
+      54554,
+      36645,
+      11616,
+      51542,
+      42930,
+      38181,
+      51040,
+      26924,
+      56412,
+      64982,
+      57905,
+      49316,
+      21502,
+      52590,
+      14035,
+      8553
+    ]);
+    var Y = gf([
+      26200,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214,
+      26214
+    ]);
+    var L = new Float64Array([
+      237,
+      211,
+      245,
+      92,
+      26,
+      99,
+      18,
+      88,
+      214,
+      156,
+      247,
+      162,
+      222,
+      249,
+      222,
+      20,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      16
+    ]);
+    var I = gf([
+      41136,
+      18958,
+      6951,
+      50414,
+      58488,
+      44335,
+      6150,
+      12099,
+      55207,
+      15867,
+      153,
+      11085,
+      57099,
+      20417,
+      9344,
+      11139
+    ]);
+    function sha512(msg, msgLen) {
+      var md = forge3.md.sha512.create();
+      var buffer = new ByteBuffer(msg);
+      md.update(buffer.getBytes(msgLen), "binary");
+      var hash = md.digest().getBytes();
+      if (typeof Buffer !== "undefined") {
+        return Buffer.from(hash, "binary");
+      }
+      var out = new NativeBuffer(ed25519.constants.HASH_BYTE_LENGTH);
+      for (var i = 0; i < 64; ++i) {
+        out[i] = hash.charCodeAt(i);
+      }
+      return out;
+    }
+    function crypto_sign_keypair(pk, sk) {
+      var p = [gf(), gf(), gf(), gf()];
+      var i;
+      var d = sha512(sk, 32);
+      d[0] &= 248;
+      d[31] &= 127;
+      d[31] |= 64;
+      scalarbase(p, d);
+      pack(pk, p);
+      for (i = 0; i < 32; ++i) {
+        sk[i + 32] = pk[i];
+      }
+      return 0;
+    }
+    function crypto_sign(sm, m, n, sk) {
+      var i, j, x = new Float64Array(64);
+      var p = [gf(), gf(), gf(), gf()];
+      var d = sha512(sk, 32);
+      d[0] &= 248;
+      d[31] &= 127;
+      d[31] |= 64;
+      var smlen = n + 64;
+      for (i = 0; i < n; ++i) {
+        sm[64 + i] = m[i];
+      }
+      for (i = 0; i < 32; ++i) {
+        sm[32 + i] = d[32 + i];
+      }
+      var r = sha512(sm.subarray(32), n + 32);
+      reduce(r);
+      scalarbase(p, r);
+      pack(sm, p);
+      for (i = 32; i < 64; ++i) {
+        sm[i] = sk[i];
+      }
+      var h = sha512(sm, n + 64);
+      reduce(h);
+      for (i = 32; i < 64; ++i) {
+        x[i] = 0;
+      }
+      for (i = 0; i < 32; ++i) {
+        x[i] = r[i];
+      }
+      for (i = 0; i < 32; ++i) {
+        for (j = 0; j < 32; j++) {
+          x[i + j] += h[i] * d[j];
+        }
+      }
+      modL(sm.subarray(32), x);
+      return smlen;
+    }
+    function crypto_sign_open(m, sm, n, pk) {
+      var i, mlen;
+      var t = new NativeBuffer(32);
+      var p = [gf(), gf(), gf(), gf()], q = [gf(), gf(), gf(), gf()];
+      mlen = -1;
+      if (n < 64) {
+        return -1;
+      }
+      if (unpackneg(q, pk)) {
+        return -1;
+      }
+      for (i = 0; i < n; ++i) {
+        m[i] = sm[i];
+      }
+      for (i = 0; i < 32; ++i) {
+        m[i + 32] = pk[i];
+      }
+      var h = sha512(m, n);
+      reduce(h);
+      scalarmult(p, q, h);
+      scalarbase(q, sm.subarray(32));
+      add(p, q);
+      pack(t, p);
+      n -= 64;
+      if (crypto_verify_32(sm, 0, t, 0)) {
+        for (i = 0; i < n; ++i) {
+          m[i] = 0;
+        }
+        return -1;
+      }
+      for (i = 0; i < n; ++i) {
+        m[i] = sm[i + 64];
+      }
+      mlen = n;
+      return mlen;
+    }
+    function modL(r, x) {
+      var carry, i, j, k;
+      for (i = 63; i >= 32; --i) {
+        carry = 0;
+        for (j = i - 32, k = i - 12; j < k; ++j) {
+          x[j] += carry - 16 * x[i] * L[j - (i - 32)];
+          carry = x[j] + 128 >> 8;
+          x[j] -= carry * 256;
+        }
+        x[j] += carry;
+        x[i] = 0;
+      }
+      carry = 0;
+      for (j = 0; j < 32; ++j) {
+        x[j] += carry - (x[31] >> 4) * L[j];
+        carry = x[j] >> 8;
+        x[j] &= 255;
+      }
+      for (j = 0; j < 32; ++j) {
+        x[j] -= carry * L[j];
+      }
+      for (i = 0; i < 32; ++i) {
+        x[i + 1] += x[i] >> 8;
+        r[i] = x[i] & 255;
+      }
+    }
+    function reduce(r) {
+      var x = new Float64Array(64);
+      for (var i = 0; i < 64; ++i) {
+        x[i] = r[i];
+        r[i] = 0;
+      }
+      modL(r, x);
+    }
+    function add(p, q) {
+      var a = gf(), b = gf(), c = gf(), d = gf(), e = gf(), f = gf(), g = gf(), h = gf(), t = gf();
+      Z(a, p[1], p[0]);
+      Z(t, q[1], q[0]);
+      M(a, a, t);
+      A(b, p[0], p[1]);
+      A(t, q[0], q[1]);
+      M(b, b, t);
+      M(c, p[3], q[3]);
+      M(c, c, D2);
+      M(d, p[2], q[2]);
+      A(d, d, d);
+      Z(e, b, a);
+      Z(f, d, c);
+      A(g, d, c);
+      A(h, b, a);
+      M(p[0], e, f);
+      M(p[1], h, g);
+      M(p[2], g, f);
+      M(p[3], e, h);
+    }
+    function cswap(p, q, b) {
+      for (var i = 0; i < 4; ++i) {
+        sel25519(p[i], q[i], b);
+      }
+    }
+    function pack(r, p) {
+      var tx = gf(), ty = gf(), zi = gf();
+      inv25519(zi, p[2]);
+      M(tx, p[0], zi);
+      M(ty, p[1], zi);
+      pack25519(r, ty);
+      r[31] ^= par25519(tx) << 7;
+    }
+    function pack25519(o, n) {
+      var i, j, b;
+      var m = gf(), t = gf();
+      for (i = 0; i < 16; ++i) {
+        t[i] = n[i];
+      }
+      car25519(t);
+      car25519(t);
+      car25519(t);
+      for (j = 0; j < 2; ++j) {
+        m[0] = t[0] - 65517;
+        for (i = 1; i < 15; ++i) {
+          m[i] = t[i] - 65535 - (m[i - 1] >> 16 & 1);
+          m[i - 1] &= 65535;
+        }
+        m[15] = t[15] - 32767 - (m[14] >> 16 & 1);
+        b = m[15] >> 16 & 1;
+        m[14] &= 65535;
+        sel25519(t, m, 1 - b);
+      }
+      for (i = 0; i < 16; i++) {
+        o[2 * i] = t[i] & 255;
+        o[2 * i + 1] = t[i] >> 8;
+      }
+    }
+    function unpackneg(r, p) {
+      var t = gf(), chk = gf(), num = gf(), den = gf(), den2 = gf(), den4 = gf(), den6 = gf();
+      set25519(r[2], gf1);
+      unpack25519(r[1], p);
+      S(num, r[1]);
+      M(den, num, D);
+      Z(num, num, r[2]);
+      A(den, r[2], den);
+      S(den2, den);
+      S(den4, den2);
+      M(den6, den4, den2);
+      M(t, den6, num);
+      M(t, t, den);
+      pow2523(t, t);
+      M(t, t, num);
+      M(t, t, den);
+      M(t, t, den);
+      M(r[0], t, den);
+      S(chk, r[0]);
+      M(chk, chk, den);
+      if (neq25519(chk, num)) {
+        M(r[0], r[0], I);
+      }
+      S(chk, r[0]);
+      M(chk, chk, den);
+      if (neq25519(chk, num)) {
+        return -1;
+      }
+      if (par25519(r[0]) === p[31] >> 7) {
+        Z(r[0], gf0, r[0]);
+      }
+      M(r[3], r[0], r[1]);
+      return 0;
+    }
+    function unpack25519(o, n) {
+      var i;
+      for (i = 0; i < 16; ++i) {
+        o[i] = n[2 * i] + (n[2 * i + 1] << 8);
+      }
+      o[15] &= 32767;
+    }
+    function pow2523(o, i) {
+      var c = gf();
+      var a;
+      for (a = 0; a < 16; ++a) {
+        c[a] = i[a];
+      }
+      for (a = 250; a >= 0; --a) {
+        S(c, c);
+        if (a !== 1) {
+          M(c, c, i);
+        }
+      }
+      for (a = 0; a < 16; ++a) {
+        o[a] = c[a];
+      }
+    }
+    function neq25519(a, b) {
+      var c = new NativeBuffer(32);
+      var d = new NativeBuffer(32);
+      pack25519(c, a);
+      pack25519(d, b);
+      return crypto_verify_32(c, 0, d, 0);
+    }
+    function crypto_verify_32(x, xi, y, yi) {
+      return vn(x, xi, y, yi, 32);
+    }
+    function vn(x, xi, y, yi, n) {
+      var i, d = 0;
+      for (i = 0; i < n; ++i) {
+        d |= x[xi + i] ^ y[yi + i];
+      }
+      return (1 & d - 1 >>> 8) - 1;
+    }
+    function par25519(a) {
+      var d = new NativeBuffer(32);
+      pack25519(d, a);
+      return d[0] & 1;
+    }
+    function scalarmult(p, q, s) {
+      var b, i;
+      set25519(p[0], gf0);
+      set25519(p[1], gf1);
+      set25519(p[2], gf1);
+      set25519(p[3], gf0);
+      for (i = 255; i >= 0; --i) {
+        b = s[i / 8 | 0] >> (i & 7) & 1;
+        cswap(p, q, b);
+        add(q, p);
+        add(p, p);
+        cswap(p, q, b);
+      }
+    }
+    function scalarbase(p, s) {
+      var q = [gf(), gf(), gf(), gf()];
+      set25519(q[0], X);
+      set25519(q[1], Y);
+      set25519(q[2], gf1);
+      M(q[3], X, Y);
+      scalarmult(p, q, s);
+    }
+    function set25519(r, a) {
+      var i;
+      for (i = 0; i < 16; i++) {
+        r[i] = a[i] | 0;
+      }
+    }
+    function inv25519(o, i) {
+      var c = gf();
+      var a;
+      for (a = 0; a < 16; ++a) {
+        c[a] = i[a];
+      }
+      for (a = 253; a >= 0; --a) {
+        S(c, c);
+        if (a !== 2 && a !== 4) {
+          M(c, c, i);
+        }
+      }
+      for (a = 0; a < 16; ++a) {
+        o[a] = c[a];
+      }
+    }
+    function car25519(o) {
+      var i, v, c = 1;
+      for (i = 0; i < 16; ++i) {
+        v = o[i] + c + 65535;
+        c = Math.floor(v / 65536);
+        o[i] = v - c * 65536;
+      }
+      o[0] += c - 1 + 37 * (c - 1);
+    }
+    function sel25519(p, q, b) {
+      var t, c = ~(b - 1);
+      for (var i = 0; i < 16; ++i) {
+        t = c & (p[i] ^ q[i]);
+        p[i] ^= t;
+        q[i] ^= t;
+      }
+    }
+    function gf(init) {
+      var i, r = new Float64Array(16);
+      if (init) {
+        for (i = 0; i < init.length; ++i) {
+          r[i] = init[i];
+        }
+      }
+      return r;
+    }
+    function A(o, a, b) {
+      for (var i = 0; i < 16; ++i) {
+        o[i] = a[i] + b[i];
+      }
+    }
+    function Z(o, a, b) {
+      for (var i = 0; i < 16; ++i) {
+        o[i] = a[i] - b[i];
+      }
+    }
+    function S(o, a) {
+      M(o, a, a);
+    }
+    function M(o, a, b) {
+      var v, c, t0 = 0, t1 = 0, t2 = 0, t3 = 0, t4 = 0, t5 = 0, t6 = 0, t7 = 0, t8 = 0, t9 = 0, t10 = 0, t11 = 0, t12 = 0, t13 = 0, t14 = 0, t15 = 0, t16 = 0, t17 = 0, t18 = 0, t19 = 0, t20 = 0, t21 = 0, t22 = 0, t23 = 0, t24 = 0, t25 = 0, t26 = 0, t27 = 0, t28 = 0, t29 = 0, t30 = 0, b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = b[6], b7 = b[7], b8 = b[8], b9 = b[9], b10 = b[10], b11 = b[11], b12 = b[12], b13 = b[13], b14 = b[14], b15 = b[15];
+      v = a[0];
+      t0 += v * b0;
+      t1 += v * b1;
+      t2 += v * b2;
+      t3 += v * b3;
+      t4 += v * b4;
+      t5 += v * b5;
+      t6 += v * b6;
+      t7 += v * b7;
+      t8 += v * b8;
+      t9 += v * b9;
+      t10 += v * b10;
+      t11 += v * b11;
+      t12 += v * b12;
+      t13 += v * b13;
+      t14 += v * b14;
+      t15 += v * b15;
+      v = a[1];
+      t1 += v * b0;
+      t2 += v * b1;
+      t3 += v * b2;
+      t4 += v * b3;
+      t5 += v * b4;
+      t6 += v * b5;
+      t7 += v * b6;
+      t8 += v * b7;
+      t9 += v * b8;
+      t10 += v * b9;
+      t11 += v * b10;
+      t12 += v * b11;
+      t13 += v * b12;
+      t14 += v * b13;
+      t15 += v * b14;
+      t16 += v * b15;
+      v = a[2];
+      t2 += v * b0;
+      t3 += v * b1;
+      t4 += v * b2;
+      t5 += v * b3;
+      t6 += v * b4;
+      t7 += v * b5;
+      t8 += v * b6;
+      t9 += v * b7;
+      t10 += v * b8;
+      t11 += v * b9;
+      t12 += v * b10;
+      t13 += v * b11;
+      t14 += v * b12;
+      t15 += v * b13;
+      t16 += v * b14;
+      t17 += v * b15;
+      v = a[3];
+      t3 += v * b0;
+      t4 += v * b1;
+      t5 += v * b2;
+      t6 += v * b3;
+      t7 += v * b4;
+      t8 += v * b5;
+      t9 += v * b6;
+      t10 += v * b7;
+      t11 += v * b8;
+      t12 += v * b9;
+      t13 += v * b10;
+      t14 += v * b11;
+      t15 += v * b12;
+      t16 += v * b13;
+      t17 += v * b14;
+      t18 += v * b15;
+      v = a[4];
+      t4 += v * b0;
+      t5 += v * b1;
+      t6 += v * b2;
+      t7 += v * b3;
+      t8 += v * b4;
+      t9 += v * b5;
+      t10 += v * b6;
+      t11 += v * b7;
+      t12 += v * b8;
+      t13 += v * b9;
+      t14 += v * b10;
+      t15 += v * b11;
+      t16 += v * b12;
+      t17 += v * b13;
+      t18 += v * b14;
+      t19 += v * b15;
+      v = a[5];
+      t5 += v * b0;
+      t6 += v * b1;
+      t7 += v * b2;
+      t8 += v * b3;
+      t9 += v * b4;
+      t10 += v * b5;
+      t11 += v * b6;
+      t12 += v * b7;
+      t13 += v * b8;
+      t14 += v * b9;
+      t15 += v * b10;
+      t16 += v * b11;
+      t17 += v * b12;
+      t18 += v * b13;
+      t19 += v * b14;
+      t20 += v * b15;
+      v = a[6];
+      t6 += v * b0;
+      t7 += v * b1;
+      t8 += v * b2;
+      t9 += v * b3;
+      t10 += v * b4;
+      t11 += v * b5;
+      t12 += v * b6;
+      t13 += v * b7;
+      t14 += v * b8;
+      t15 += v * b9;
+      t16 += v * b10;
+      t17 += v * b11;
+      t18 += v * b12;
+      t19 += v * b13;
+      t20 += v * b14;
+      t21 += v * b15;
+      v = a[7];
+      t7 += v * b0;
+      t8 += v * b1;
+      t9 += v * b2;
+      t10 += v * b3;
+      t11 += v * b4;
+      t12 += v * b5;
+      t13 += v * b6;
+      t14 += v * b7;
+      t15 += v * b8;
+      t16 += v * b9;
+      t17 += v * b10;
+      t18 += v * b11;
+      t19 += v * b12;
+      t20 += v * b13;
+      t21 += v * b14;
+      t22 += v * b15;
+      v = a[8];
+      t8 += v * b0;
+      t9 += v * b1;
+      t10 += v * b2;
+      t11 += v * b3;
+      t12 += v * b4;
+      t13 += v * b5;
+      t14 += v * b6;
+      t15 += v * b7;
+      t16 += v * b8;
+      t17 += v * b9;
+      t18 += v * b10;
+      t19 += v * b11;
+      t20 += v * b12;
+      t21 += v * b13;
+      t22 += v * b14;
+      t23 += v * b15;
+      v = a[9];
+      t9 += v * b0;
+      t10 += v * b1;
+      t11 += v * b2;
+      t12 += v * b3;
+      t13 += v * b4;
+      t14 += v * b5;
+      t15 += v * b6;
+      t16 += v * b7;
+      t17 += v * b8;
+      t18 += v * b9;
+      t19 += v * b10;
+      t20 += v * b11;
+      t21 += v * b12;
+      t22 += v * b13;
+      t23 += v * b14;
+      t24 += v * b15;
+      v = a[10];
+      t10 += v * b0;
+      t11 += v * b1;
+      t12 += v * b2;
+      t13 += v * b3;
+      t14 += v * b4;
+      t15 += v * b5;
+      t16 += v * b6;
+      t17 += v * b7;
+      t18 += v * b8;
+      t19 += v * b9;
+      t20 += v * b10;
+      t21 += v * b11;
+      t22 += v * b12;
+      t23 += v * b13;
+      t24 += v * b14;
+      t25 += v * b15;
+      v = a[11];
+      t11 += v * b0;
+      t12 += v * b1;
+      t13 += v * b2;
+      t14 += v * b3;
+      t15 += v * b4;
+      t16 += v * b5;
+      t17 += v * b6;
+      t18 += v * b7;
+      t19 += v * b8;
+      t20 += v * b9;
+      t21 += v * b10;
+      t22 += v * b11;
+      t23 += v * b12;
+      t24 += v * b13;
+      t25 += v * b14;
+      t26 += v * b15;
+      v = a[12];
+      t12 += v * b0;
+      t13 += v * b1;
+      t14 += v * b2;
+      t15 += v * b3;
+      t16 += v * b4;
+      t17 += v * b5;
+      t18 += v * b6;
+      t19 += v * b7;
+      t20 += v * b8;
+      t21 += v * b9;
+      t22 += v * b10;
+      t23 += v * b11;
+      t24 += v * b12;
+      t25 += v * b13;
+      t26 += v * b14;
+      t27 += v * b15;
+      v = a[13];
+      t13 += v * b0;
+      t14 += v * b1;
+      t15 += v * b2;
+      t16 += v * b3;
+      t17 += v * b4;
+      t18 += v * b5;
+      t19 += v * b6;
+      t20 += v * b7;
+      t21 += v * b8;
+      t22 += v * b9;
+      t23 += v * b10;
+      t24 += v * b11;
+      t25 += v * b12;
+      t26 += v * b13;
+      t27 += v * b14;
+      t28 += v * b15;
+      v = a[14];
+      t14 += v * b0;
+      t15 += v * b1;
+      t16 += v * b2;
+      t17 += v * b3;
+      t18 += v * b4;
+      t19 += v * b5;
+      t20 += v * b6;
+      t21 += v * b7;
+      t22 += v * b8;
+      t23 += v * b9;
+      t24 += v * b10;
+      t25 += v * b11;
+      t26 += v * b12;
+      t27 += v * b13;
+      t28 += v * b14;
+      t29 += v * b15;
+      v = a[15];
+      t15 += v * b0;
+      t16 += v * b1;
+      t17 += v * b2;
+      t18 += v * b3;
+      t19 += v * b4;
+      t20 += v * b5;
+      t21 += v * b6;
+      t22 += v * b7;
+      t23 += v * b8;
+      t24 += v * b9;
+      t25 += v * b10;
+      t26 += v * b11;
+      t27 += v * b12;
+      t28 += v * b13;
+      t29 += v * b14;
+      t30 += v * b15;
+      t0 += 38 * t16;
+      t1 += 38 * t17;
+      t2 += 38 * t18;
+      t3 += 38 * t19;
+      t4 += 38 * t20;
+      t5 += 38 * t21;
+      t6 += 38 * t22;
+      t7 += 38 * t23;
+      t8 += 38 * t24;
+      t9 += 38 * t25;
+      t10 += 38 * t26;
+      t11 += 38 * t27;
+      t12 += 38 * t28;
+      t13 += 38 * t29;
+      t14 += 38 * t30;
+      c = 1;
+      v = t0 + c + 65535;
+      c = Math.floor(v / 65536);
+      t0 = v - c * 65536;
+      v = t1 + c + 65535;
+      c = Math.floor(v / 65536);
+      t1 = v - c * 65536;
+      v = t2 + c + 65535;
+      c = Math.floor(v / 65536);
+      t2 = v - c * 65536;
+      v = t3 + c + 65535;
+      c = Math.floor(v / 65536);
+      t3 = v - c * 65536;
+      v = t4 + c + 65535;
+      c = Math.floor(v / 65536);
+      t4 = v - c * 65536;
+      v = t5 + c + 65535;
+      c = Math.floor(v / 65536);
+      t5 = v - c * 65536;
+      v = t6 + c + 65535;
+      c = Math.floor(v / 65536);
+      t6 = v - c * 65536;
+      v = t7 + c + 65535;
+      c = Math.floor(v / 65536);
+      t7 = v - c * 65536;
+      v = t8 + c + 65535;
+      c = Math.floor(v / 65536);
+      t8 = v - c * 65536;
+      v = t9 + c + 65535;
+      c = Math.floor(v / 65536);
+      t9 = v - c * 65536;
+      v = t10 + c + 65535;
+      c = Math.floor(v / 65536);
+      t10 = v - c * 65536;
+      v = t11 + c + 65535;
+      c = Math.floor(v / 65536);
+      t11 = v - c * 65536;
+      v = t12 + c + 65535;
+      c = Math.floor(v / 65536);
+      t12 = v - c * 65536;
+      v = t13 + c + 65535;
+      c = Math.floor(v / 65536);
+      t13 = v - c * 65536;
+      v = t14 + c + 65535;
+      c = Math.floor(v / 65536);
+      t14 = v - c * 65536;
+      v = t15 + c + 65535;
+      c = Math.floor(v / 65536);
+      t15 = v - c * 65536;
+      t0 += c - 1 + 37 * (c - 1);
+      c = 1;
+      v = t0 + c + 65535;
+      c = Math.floor(v / 65536);
+      t0 = v - c * 65536;
+      v = t1 + c + 65535;
+      c = Math.floor(v / 65536);
+      t1 = v - c * 65536;
+      v = t2 + c + 65535;
+      c = Math.floor(v / 65536);
+      t2 = v - c * 65536;
+      v = t3 + c + 65535;
+      c = Math.floor(v / 65536);
+      t3 = v - c * 65536;
+      v = t4 + c + 65535;
+      c = Math.floor(v / 65536);
+      t4 = v - c * 65536;
+      v = t5 + c + 65535;
+      c = Math.floor(v / 65536);
+      t5 = v - c * 65536;
+      v = t6 + c + 65535;
+      c = Math.floor(v / 65536);
+      t6 = v - c * 65536;
+      v = t7 + c + 65535;
+      c = Math.floor(v / 65536);
+      t7 = v - c * 65536;
+      v = t8 + c + 65535;
+      c = Math.floor(v / 65536);
+      t8 = v - c * 65536;
+      v = t9 + c + 65535;
+      c = Math.floor(v / 65536);
+      t9 = v - c * 65536;
+      v = t10 + c + 65535;
+      c = Math.floor(v / 65536);
+      t10 = v - c * 65536;
+      v = t11 + c + 65535;
+      c = Math.floor(v / 65536);
+      t11 = v - c * 65536;
+      v = t12 + c + 65535;
+      c = Math.floor(v / 65536);
+      t12 = v - c * 65536;
+      v = t13 + c + 65535;
+      c = Math.floor(v / 65536);
+      t13 = v - c * 65536;
+      v = t14 + c + 65535;
+      c = Math.floor(v / 65536);
+      t14 = v - c * 65536;
+      v = t15 + c + 65535;
+      c = Math.floor(v / 65536);
+      t15 = v - c * 65536;
+      t0 += c - 1 + 37 * (c - 1);
+      o[0] = t0;
+      o[1] = t1;
+      o[2] = t2;
+      o[3] = t3;
+      o[4] = t4;
+      o[5] = t5;
+      o[6] = t6;
+      o[7] = t7;
+      o[8] = t8;
+      o[9] = t9;
+      o[10] = t10;
+      o[11] = t11;
+      o[12] = t12;
+      o[13] = t13;
+      o[14] = t14;
+      o[15] = t15;
+    }
+  }
+});
+
+// node_modules/node-forge/lib/kem.js
+var require_kem = __commonJS({
+  "node_modules/node-forge/lib/kem.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    require_random();
+    require_jsbn();
+    module.exports = forge3.kem = forge3.kem || {};
+    var BigInteger2 = forge3.jsbn.BigInteger;
+    forge3.kem.rsa = {};
+    forge3.kem.rsa.create = function(kdf, options) {
+      options = options || {};
+      var prng = options.prng || forge3.random;
+      var kem = {};
+      kem.encrypt = function(publicKey, keyLength) {
+        var byteLength = Math.ceil(publicKey.n.bitLength() / 8);
+        var r;
+        do {
+          r = new BigInteger2(
+            forge3.util.bytesToHex(prng.getBytesSync(byteLength)),
+            16
+          ).mod(publicKey.n);
+        } while (r.compareTo(BigInteger2.ONE) <= 0);
+        r = forge3.util.hexToBytes(r.toString(16));
+        var zeros = byteLength - r.length;
+        if (zeros > 0) {
+          r = forge3.util.fillString(String.fromCharCode(0), zeros) + r;
+        }
+        var encapsulation = publicKey.encrypt(r, "NONE");
+        var key = kdf.generate(r, keyLength);
+        return { encapsulation, key };
+      };
+      kem.decrypt = function(privateKey, encapsulation, keyLength) {
+        var r = privateKey.decrypt(encapsulation, "NONE");
+        return kdf.generate(r, keyLength);
+      };
+      return kem;
+    };
+    forge3.kem.kdf1 = function(md, digestLength) {
+      _createKDF(this, md, 0, digestLength || md.digestLength);
+    };
+    forge3.kem.kdf2 = function(md, digestLength) {
+      _createKDF(this, md, 1, digestLength || md.digestLength);
+    };
+    function _createKDF(kdf, md, counterStart, digestLength) {
+      kdf.generate = function(x, length) {
+        var key = new forge3.util.ByteBuffer();
+        var k = Math.ceil(length / digestLength) + counterStart;
+        var c = new forge3.util.ByteBuffer();
+        for (var i = counterStart; i < k; ++i) {
+          c.putInt32(i);
+          md.start();
+          md.update(x + c.getBytes());
+          var hash = md.digest();
+          key.putBytes(hash.getBytes(digestLength));
+        }
+        key.truncate(key.length() - length);
+        return key.getBytes();
+      };
+    }
+  }
+});
+
+// node_modules/node-forge/lib/log.js
+var require_log = __commonJS({
+  "node_modules/node-forge/lib/log.js"(exports, module) {
+    var forge3 = require_forge();
+    require_util();
+    module.exports = forge3.log = forge3.log || {};
+    forge3.log.levels = [
+      "none",
+      "error",
+      "warning",
+      "info",
+      "debug",
+      "verbose",
+      "max"
+    ];
+    var sLevelInfo = {};
+    var sLoggers = [];
+    var sConsoleLogger = null;
+    forge3.log.LEVEL_LOCKED = 1 << 1;
+    forge3.log.NO_LEVEL_CHECK = 1 << 2;
+    forge3.log.INTERPOLATE = 1 << 3;
+    for (i = 0; i < forge3.log.levels.length; ++i) {
+      level = forge3.log.levels[i];
+      sLevelInfo[level] = {
+        index: i,
+        name: level.toUpperCase()
+      };
+    }
+    var level;
+    var i;
+    forge3.log.logMessage = function(message) {
+      var messageLevelIndex = sLevelInfo[message.level].index;
+      for (var i2 = 0; i2 < sLoggers.length; ++i2) {
+        var logger2 = sLoggers[i2];
+        if (logger2.flags & forge3.log.NO_LEVEL_CHECK) {
+          logger2.f(message);
+        } else {
+          var loggerLevelIndex = sLevelInfo[logger2.level].index;
+          if (messageLevelIndex <= loggerLevelIndex) {
+            logger2.f(logger2, message);
+          }
+        }
+      }
+    };
+    forge3.log.prepareStandard = function(message) {
+      if (!("standard" in message)) {
+        message.standard = sLevelInfo[message.level].name + //' ' + +message.timestamp +
+        " [" + message.category + "] " + message.message;
+      }
+    };
+    forge3.log.prepareFull = function(message) {
+      if (!("full" in message)) {
+        var args = [message.message];
+        args = args.concat([]);
+        message.full = forge3.util.format.apply(this, args);
+      }
+    };
+    forge3.log.prepareStandardFull = function(message) {
+      if (!("standardFull" in message)) {
+        forge3.log.prepareStandard(message);
+        message.standardFull = message.standard;
+      }
+    };
+    if (true) {
+      levels = ["error", "warning", "info", "debug", "verbose"];
+      for (i = 0; i < levels.length; ++i) {
+        (function(level2) {
+          forge3.log[level2] = function(category, message) {
+            var args = Array.prototype.slice.call(arguments).slice(2);
+            var msg = {
+              timestamp: /* @__PURE__ */ new Date(),
+              level: level2,
+              category,
+              message,
+              "arguments": args
+              /*standard*/
+              /*full*/
+              /*fullMessage*/
+            };
+            forge3.log.logMessage(msg);
+          };
+        })(levels[i]);
+      }
+    }
+    var levels;
+    var i;
+    forge3.log.makeLogger = function(logFunction) {
+      var logger2 = {
+        flags: 0,
+        f: logFunction
+      };
+      forge3.log.setLevel(logger2, "none");
+      return logger2;
+    };
+    forge3.log.setLevel = function(logger2, level2) {
+      var rval = false;
+      if (logger2 && !(logger2.flags & forge3.log.LEVEL_LOCKED)) {
+        for (var i2 = 0; i2 < forge3.log.levels.length; ++i2) {
+          var aValidLevel = forge3.log.levels[i2];
+          if (level2 == aValidLevel) {
+            logger2.level = level2;
+            rval = true;
+            break;
+          }
+        }
+      }
+      return rval;
+    };
+    forge3.log.lock = function(logger2, lock2) {
+      if (typeof lock2 === "undefined" || lock2) {
+        logger2.flags |= forge3.log.LEVEL_LOCKED;
+      } else {
+        logger2.flags &= ~forge3.log.LEVEL_LOCKED;
+      }
+    };
+    forge3.log.addLogger = function(logger2) {
+      sLoggers.push(logger2);
+    };
+    if (typeof console !== "undefined" && "log" in console) {
+      if (console.error && console.warn && console.info && console.debug) {
+        levelHandlers = {
+          error: console.error,
+          warning: console.warn,
+          info: console.info,
+          debug: console.debug,
+          verbose: console.debug
+        };
+        f = function(logger2, message) {
+          forge3.log.prepareStandard(message);
+          var handler = levelHandlers[message.level];
+          var args = [message.standard];
+          args = args.concat(message["arguments"].slice());
+          handler.apply(console, args);
+        };
+        logger = forge3.log.makeLogger(f);
+      } else {
+        f = function(logger2, message) {
+          forge3.log.prepareStandardFull(message);
+          console.log(message.standardFull);
+        };
+        logger = forge3.log.makeLogger(f);
+      }
+      forge3.log.setLevel(logger, "debug");
+      forge3.log.addLogger(logger);
+      sConsoleLogger = logger;
+    } else {
+      console = {
+        log: function() {
+        }
+      };
+    }
+    var logger;
+    var levelHandlers;
+    var f;
+    if (sConsoleLogger !== null && typeof window !== "undefined" && window.location) {
+      query = new URL(window.location.href).searchParams;
+      if (query.has("console.level")) {
+        forge3.log.setLevel(
+          sConsoleLogger,
+          query.get("console.level").slice(-1)[0]
+        );
+      }
+      if (query.has("console.lock")) {
+        lock = query.get("console.lock").slice(-1)[0];
+        if (lock == "true") {
+          forge3.log.lock(sConsoleLogger);
+        }
+      }
+    }
+    var query;
+    var lock;
+    forge3.log.consoleLogger = sConsoleLogger;
+  }
+});
+
+// node_modules/node-forge/lib/md.all.js
+var require_md_all = __commonJS({
+  "node_modules/node-forge/lib/md.all.js"(exports, module) {
+    module.exports = require_md();
+    require_md5();
+    require_sha1();
+    require_sha256();
+    require_sha512();
+  }
+});
+
+// node_modules/node-forge/lib/pkcs7.js
+var require_pkcs7 = __commonJS({
+  "node_modules/node-forge/lib/pkcs7.js"(exports, module) {
+    var forge3 = require_forge();
+    require_aes();
+    require_asn1();
+    require_des();
+    require_oids();
+    require_pem();
+    require_pkcs7asn1();
+    require_random();
+    require_util();
+    require_x509();
+    var asn1 = forge3.asn1;
+    var p7 = module.exports = forge3.pkcs7 = forge3.pkcs7 || {};
+    p7.messageFromPem = function(pem) {
+      var msg = forge3.pem.decode(pem)[0];
+      if (msg.type !== "PKCS7") {
+        var error = new Error('Could not convert PKCS#7 message from PEM; PEM header type is not "PKCS#7".');
+        error.headerType = msg.type;
+        throw error;
+      }
+      if (msg.procType && msg.procType.type === "ENCRYPTED") {
+        throw new Error("Could not convert PKCS#7 message from PEM; PEM is encrypted.");
+      }
+      var obj = asn1.fromDer(msg.body);
+      return p7.messageFromAsn1(obj);
+    };
+    p7.messageToPem = function(msg, maxline) {
+      var pemObj = {
+        type: "PKCS7",
+        body: asn1.toDer(msg.toAsn1()).getBytes()
+      };
+      return forge3.pem.encode(pemObj, { maxline });
+    };
+    p7.messageFromAsn1 = function(obj) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, p7.asn1.contentInfoValidator, capture, errors)) {
+        var error = new Error("Cannot read PKCS#7 message. ASN.1 object is not an PKCS#7 ContentInfo.");
+        error.errors = errors;
+        throw error;
+      }
+      var contentType = asn1.derToOid(capture.contentType);
+      var msg;
+      switch (contentType) {
+        case forge3.pki.oids.envelopedData:
+          msg = p7.createEnvelopedData();
+          break;
+        case forge3.pki.oids.encryptedData:
+          msg = p7.createEncryptedData();
+          break;
+        case forge3.pki.oids.signedData:
+          msg = p7.createSignedData();
+          break;
+        default:
+          throw new Error("Cannot read PKCS#7 message. ContentType with OID " + contentType + " is not (yet) supported.");
+      }
+      msg.fromAsn1(capture.content.value[0]);
+      return msg;
+    };
+    p7.createSignedData = function() {
+      var msg = null;
+      msg = {
+        type: forge3.pki.oids.signedData,
+        version: 1,
+        certificates: [],
+        crls: [],
+        // TODO: add json-formatted signer stuff here?
+        signers: [],
+        // populated during sign()
+        digestAlgorithmIdentifiers: [],
+        contentInfo: null,
+        signerInfos: [],
+        fromAsn1: function(obj) {
+          _fromAsn1(msg, obj, p7.asn1.signedDataValidator);
+          msg.certificates = [];
+          msg.crls = [];
+          msg.digestAlgorithmIdentifiers = [];
+          msg.contentInfo = null;
+          msg.signerInfos = [];
+          if (msg.rawCapture.certificates) {
+            var certs = msg.rawCapture.certificates.value;
+            for (var i = 0; i < certs.length; ++i) {
+              msg.certificates.push(forge3.pki.certificateFromAsn1(certs[i]));
+            }
+          }
+        },
+        toAsn1: function() {
+          if (!msg.contentInfo) {
+            msg.sign();
+          }
+          var certs = [];
+          for (var i = 0; i < msg.certificates.length; ++i) {
+            certs.push(forge3.pki.certificateToAsn1(msg.certificates[i]));
+          }
+          var crls = [];
+          var signedData = asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+              // Version
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.INTEGER,
+                false,
+                asn1.integerToDer(msg.version).getBytes()
+              ),
+              // DigestAlgorithmIdentifiers
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.SET,
+                true,
+                msg.digestAlgorithmIdentifiers
+              ),
+              // ContentInfo
+              msg.contentInfo
+            ])
+          ]);
+          if (certs.length > 0) {
+            signedData.value[0].value.push(
+              asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, certs)
+            );
+          }
+          if (crls.length > 0) {
+            signedData.value[0].value.push(
+              asn1.create(asn1.Class.CONTEXT_SPECIFIC, 1, true, crls)
+            );
+          }
+          signedData.value[0].value.push(
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.SET,
+              true,
+              msg.signerInfos
+            )
+          );
+          return asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.SEQUENCE,
+            true,
+            [
+              // ContentType
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OID,
+                false,
+                asn1.oidToDer(msg.type).getBytes()
+              ),
+              // [0] SignedData
+              signedData
+            ]
+          );
+        },
+        /**
+         * Add (another) entity to list of signers.
+         *
+         * Note: If authenticatedAttributes are provided, then, per RFC 2315,
+         * they must include at least two attributes: content type and
+         * message digest. The message digest attribute value will be
+         * auto-calculated during signing and will be ignored if provided.
+         *
+         * Here's an example of providing these two attributes:
+         *
+         * forge.pkcs7.createSignedData();
+         * p7.addSigner({
+         *   issuer: cert.issuer.attributes,
+         *   serialNumber: cert.serialNumber,
+         *   key: privateKey,
+         *   digestAlgorithm: forge.pki.oids.sha1,
+         *   authenticatedAttributes: [{
+         *     type: forge.pki.oids.contentType,
+         *     value: forge.pki.oids.data
+         *   }, {
+         *     type: forge.pki.oids.messageDigest
+         *   }]
+         * });
+         *
+         * TODO: Support [subjectKeyIdentifier] as signer's ID.
+         *
+         * @param signer the signer information:
+         *          key the signer's private key.
+         *          [certificate] a certificate containing the public key
+         *            associated with the signer's private key; use this option as
+         *            an alternative to specifying signer.issuer and
+         *            signer.serialNumber.
+         *          [issuer] the issuer attributes (eg: cert.issuer.attributes).
+         *          [serialNumber] the signer's certificate's serial number in
+         *           hexadecimal (eg: cert.serialNumber).
+         *          [digestAlgorithm] the message digest OID, as a string, to use
+         *            (eg: forge.pki.oids.sha1).
+         *          [authenticatedAttributes] an optional array of attributes
+         *            to also sign along with the content.
+         */
+        addSigner: function(signer) {
+          var issuer = signer.issuer;
+          var serialNumber = signer.serialNumber;
+          if (signer.certificate) {
+            var cert = signer.certificate;
+            if (typeof cert === "string") {
+              cert = forge3.pki.certificateFromPem(cert);
+            }
+            issuer = cert.issuer.attributes;
+            serialNumber = cert.serialNumber;
+          }
+          var key = signer.key;
+          if (!key) {
+            throw new Error(
+              "Could not add PKCS#7 signer; no private key specified."
+            );
+          }
+          if (typeof key === "string") {
+            key = forge3.pki.privateKeyFromPem(key);
+          }
+          var digestAlgorithm = signer.digestAlgorithm || forge3.pki.oids.sha1;
+          switch (digestAlgorithm) {
+            case forge3.pki.oids.sha1:
+            case forge3.pki.oids.sha256:
+            case forge3.pki.oids.sha384:
+            case forge3.pki.oids.sha512:
+            case forge3.pki.oids.md5:
+              break;
+            default:
+              throw new Error(
+                "Could not add PKCS#7 signer; unknown message digest algorithm: " + digestAlgorithm
+              );
+          }
+          var authenticatedAttributes = signer.authenticatedAttributes || [];
+          if (authenticatedAttributes.length > 0) {
+            var contentType = false;
+            var messageDigest = false;
+            for (var i = 0; i < authenticatedAttributes.length; ++i) {
+              var attr = authenticatedAttributes[i];
+              if (!contentType && attr.type === forge3.pki.oids.contentType) {
+                contentType = true;
+                if (messageDigest) {
+                  break;
+                }
+                continue;
+              }
+              if (!messageDigest && attr.type === forge3.pki.oids.messageDigest) {
+                messageDigest = true;
+                if (contentType) {
+                  break;
+                }
+                continue;
+              }
+            }
+            if (!contentType || !messageDigest) {
+              throw new Error("Invalid signer.authenticatedAttributes. If signer.authenticatedAttributes is specified, then it must contain at least two attributes, PKCS #9 content-type and PKCS #9 message-digest.");
+            }
+          }
+          msg.signers.push({
+            key,
+            version: 1,
+            issuer,
+            serialNumber,
+            digestAlgorithm,
+            signatureAlgorithm: forge3.pki.oids.rsaEncryption,
+            signature: null,
+            authenticatedAttributes,
+            unauthenticatedAttributes: []
+          });
+        },
+        /**
+         * Signs the content.
+         * @param options Options to apply when signing:
+         *    [detached] boolean. If signing should be done in detached mode. Defaults to false.
+         */
+        sign: function(options) {
+          options = options || {};
+          if (typeof msg.content !== "object" || msg.contentInfo === null) {
+            msg.contentInfo = asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.SEQUENCE,
+              true,
+              [
+                // ContentType
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.OID,
+                  false,
+                  asn1.oidToDer(forge3.pki.oids.data).getBytes()
+                )
+              ]
+            );
+            if ("content" in msg) {
+              var content;
+              if (msg.content instanceof forge3.util.ByteBuffer) {
+                content = msg.content.bytes();
+              } else if (typeof msg.content === "string") {
+                content = forge3.util.encodeUtf8(msg.content);
+              }
+              if (options.detached) {
+                msg.detachedContent = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.OCTETSTRING, false, content);
+              } else {
+                msg.contentInfo.value.push(
+                  // [0] EXPLICIT content
+                  asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+                    asn1.create(
+                      asn1.Class.UNIVERSAL,
+                      asn1.Type.OCTETSTRING,
+                      false,
+                      content
+                    )
+                  ])
+                );
+              }
+            }
+          }
+          if (msg.signers.length === 0) {
+            return;
+          }
+          var mds = addDigestAlgorithmIds();
+          addSignerInfos(mds);
+        },
+        verify: function() {
+          throw new Error("PKCS#7 signature verification not yet implemented.");
+        },
+        /**
+         * Add a certificate.
+         *
+         * @param cert the certificate to add.
+         */
+        addCertificate: function(cert) {
+          if (typeof cert === "string") {
+            cert = forge3.pki.certificateFromPem(cert);
+          }
+          msg.certificates.push(cert);
+        },
+        /**
+         * Add a certificate revokation list.
+         *
+         * @param crl the certificate revokation list to add.
+         */
+        addCertificateRevokationList: function(crl) {
+          throw new Error("PKCS#7 CRL support not yet implemented.");
+        }
+      };
+      return msg;
+      function addDigestAlgorithmIds() {
+        var mds = {};
+        for (var i = 0; i < msg.signers.length; ++i) {
+          var signer = msg.signers[i];
+          var oid = signer.digestAlgorithm;
+          if (!(oid in mds)) {
+            mds[oid] = forge3.md[forge3.pki.oids[oid]].create();
+          }
+          if (signer.authenticatedAttributes.length === 0) {
+            signer.md = mds[oid];
+          } else {
+            signer.md = forge3.md[forge3.pki.oids[oid]].create();
+          }
+        }
+        msg.digestAlgorithmIdentifiers = [];
+        for (var oid in mds) {
+          msg.digestAlgorithmIdentifiers.push(
+            // AlgorithmIdentifier
+            asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+              // algorithm
+              asn1.create(
+                asn1.Class.UNIVERSAL,
+                asn1.Type.OID,
+                false,
+                asn1.oidToDer(oid).getBytes()
+              ),
+              // parameters (null)
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+            ])
+          );
+        }
+        return mds;
+      }
+      function addSignerInfos(mds) {
+        var content;
+        if (msg.detachedContent) {
+          content = msg.detachedContent;
+        } else {
+          content = msg.contentInfo.value[1];
+          content = content.value[0];
+        }
+        if (!content) {
+          throw new Error(
+            "Could not sign PKCS#7 message; there is no content to sign."
+          );
+        }
+        var contentType = asn1.derToOid(msg.contentInfo.value[0].value);
+        var bytes = asn1.toDer(content);
+        bytes.getByte();
+        asn1.getBerValueLength(bytes);
+        bytes = bytes.getBytes();
+        for (var oid in mds) {
+          mds[oid].start().update(bytes);
+        }
+        var signingTime = /* @__PURE__ */ new Date();
+        for (var i = 0; i < msg.signers.length; ++i) {
+          var signer = msg.signers[i];
+          if (signer.authenticatedAttributes.length === 0) {
+            if (contentType !== forge3.pki.oids.data) {
+              throw new Error(
+                "Invalid signer; authenticatedAttributes must be present when the ContentInfo content type is not PKCS#7 Data."
+              );
+            }
+          } else {
+            signer.authenticatedAttributesAsn1 = asn1.create(
+              asn1.Class.CONTEXT_SPECIFIC,
+              0,
+              true,
+              []
+            );
+            var attrsAsn1 = asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.SET,
+              true,
+              []
+            );
+            for (var ai = 0; ai < signer.authenticatedAttributes.length; ++ai) {
+              var attr = signer.authenticatedAttributes[ai];
+              if (attr.type === forge3.pki.oids.messageDigest) {
+                attr.value = mds[signer.digestAlgorithm].digest();
+              } else if (attr.type === forge3.pki.oids.signingTime) {
+                if (!attr.value) {
+                  attr.value = signingTime;
+                }
+              }
+              attrsAsn1.value.push(_attributeToAsn1(attr));
+              signer.authenticatedAttributesAsn1.value.push(_attributeToAsn1(attr));
+            }
+            bytes = asn1.toDer(attrsAsn1).getBytes();
+            signer.md.start().update(bytes);
+          }
+          signer.signature = signer.key.sign(signer.md, "RSASSA-PKCS1-V1_5");
+        }
+        msg.signerInfos = _signersToAsn1(msg.signers);
+      }
+    };
+    p7.createEncryptedData = function() {
+      var msg = null;
+      msg = {
+        type: forge3.pki.oids.encryptedData,
+        version: 0,
+        encryptedContent: {
+          algorithm: forge3.pki.oids["aes256-CBC"]
+        },
+        /**
+         * Reads an EncryptedData content block (in ASN.1 format)
+         *
+         * @param obj The ASN.1 representation of the EncryptedData content block
+         */
+        fromAsn1: function(obj) {
+          _fromAsn1(msg, obj, p7.asn1.encryptedDataValidator);
+        },
+        /**
+         * Decrypt encrypted content
+         *
+         * @param key The (symmetric) key as a byte buffer
+         */
+        decrypt: function(key) {
+          if (key !== void 0) {
+            msg.encryptedContent.key = key;
+          }
+          _decryptContent(msg);
+        }
+      };
+      return msg;
+    };
+    p7.createEnvelopedData = function() {
+      var msg = null;
+      msg = {
+        type: forge3.pki.oids.envelopedData,
+        version: 0,
+        recipients: [],
+        encryptedContent: {
+          algorithm: forge3.pki.oids["aes256-CBC"]
+        },
+        /**
+         * Reads an EnvelopedData content block (in ASN.1 format)
+         *
+         * @param obj the ASN.1 representation of the EnvelopedData content block.
+         */
+        fromAsn1: function(obj) {
+          var capture = _fromAsn1(msg, obj, p7.asn1.envelopedDataValidator);
+          msg.recipients = _recipientsFromAsn1(capture.recipientInfos.value);
+        },
+        toAsn1: function() {
+          return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+            // ContentType
+            asn1.create(
+              asn1.Class.UNIVERSAL,
+              asn1.Type.OID,
+              false,
+              asn1.oidToDer(msg.type).getBytes()
+            ),
+            // [0] EnvelopedData
+            asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+              asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+                // Version
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.INTEGER,
+                  false,
+                  asn1.integerToDer(msg.version).getBytes()
+                ),
+                // RecipientInfos
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.SET,
+                  true,
+                  _recipientsToAsn1(msg.recipients)
+                ),
+                // EncryptedContentInfo
+                asn1.create(
+                  asn1.Class.UNIVERSAL,
+                  asn1.Type.SEQUENCE,
+                  true,
+                  _encryptedContentToAsn1(msg.encryptedContent)
+                )
+              ])
+            ])
+          ]);
+        },
+        /**
+         * Find recipient by X.509 certificate's issuer.
+         *
+         * @param cert the certificate with the issuer to look for.
+         *
+         * @return the recipient object.
+         */
+        findRecipient: function(cert) {
+          var sAttr = cert.issuer.attributes;
+          for (var i = 0; i < msg.recipients.length; ++i) {
+            var r = msg.recipients[i];
+            var rAttr = r.issuer;
+            if (r.serialNumber !== cert.serialNumber) {
+              continue;
+            }
+            if (rAttr.length !== sAttr.length) {
+              continue;
+            }
+            var match = true;
+            for (var j = 0; j < sAttr.length; ++j) {
+              if (rAttr[j].type !== sAttr[j].type || rAttr[j].value !== sAttr[j].value) {
+                match = false;
+                break;
+              }
+            }
+            if (match) {
+              return r;
+            }
+          }
+          return null;
+        },
+        /**
+         * Decrypt enveloped content
+         *
+         * @param recipient The recipient object related to the private key
+         * @param privKey The (RSA) private key object
+         */
+        decrypt: function(recipient, privKey) {
+          if (msg.encryptedContent.key === void 0 && recipient !== void 0 && privKey !== void 0) {
+            switch (recipient.encryptedContent.algorithm) {
+              case forge3.pki.oids.rsaEncryption:
+              case forge3.pki.oids.desCBC:
+                var key = privKey.decrypt(recipient.encryptedContent.content);
+                msg.encryptedContent.key = forge3.util.createBuffer(key);
+                break;
+              default:
+                throw new Error("Unsupported asymmetric cipher, OID " + recipient.encryptedContent.algorithm);
+            }
+          }
+          _decryptContent(msg);
+        },
+        /**
+         * Add (another) entity to list of recipients.
+         *
+         * @param cert The certificate of the entity to add.
+         */
+        addRecipient: function(cert) {
+          msg.recipients.push({
+            version: 0,
+            issuer: cert.issuer.attributes,
+            serialNumber: cert.serialNumber,
+            encryptedContent: {
+              // We simply assume rsaEncryption here, since forge.pki only
+              // supports RSA so far.  If the PKI module supports other
+              // ciphers one day, we need to modify this one as well.
+              algorithm: forge3.pki.oids.rsaEncryption,
+              key: cert.publicKey
+            }
+          });
+        },
+        /**
+         * Encrypt enveloped content.
+         *
+         * This function supports two optional arguments, cipher and key, which
+         * can be used to influence symmetric encryption.  Unless cipher is
+         * provided, the cipher specified in encryptedContent.algorithm is used
+         * (defaults to AES-256-CBC).  If no key is provided, encryptedContent.key
+         * is (re-)used.  If that one's not set, a random key will be generated
+         * automatically.
+         *
+         * @param [key] The key to be used for symmetric encryption.
+         * @param [cipher] The OID of the symmetric cipher to use.
+         */
+        encrypt: function(key, cipher) {
+          if (msg.encryptedContent.content === void 0) {
+            cipher = cipher || msg.encryptedContent.algorithm;
+            key = key || msg.encryptedContent.key;
+            var keyLen, ivLen, ciphFn;
+            switch (cipher) {
+              case forge3.pki.oids["aes128-CBC"]:
+                keyLen = 16;
+                ivLen = 16;
+                ciphFn = forge3.aes.createEncryptionCipher;
+                break;
+              case forge3.pki.oids["aes192-CBC"]:
+                keyLen = 24;
+                ivLen = 16;
+                ciphFn = forge3.aes.createEncryptionCipher;
+                break;
+              case forge3.pki.oids["aes256-CBC"]:
+                keyLen = 32;
+                ivLen = 16;
+                ciphFn = forge3.aes.createEncryptionCipher;
+                break;
+              case forge3.pki.oids["des-EDE3-CBC"]:
+                keyLen = 24;
+                ivLen = 8;
+                ciphFn = forge3.des.createEncryptionCipher;
+                break;
+              default:
+                throw new Error("Unsupported symmetric cipher, OID " + cipher);
+            }
+            if (key === void 0) {
+              key = forge3.util.createBuffer(forge3.random.getBytes(keyLen));
+            } else if (key.length() != keyLen) {
+              throw new Error("Symmetric key has wrong length; got " + key.length() + " bytes, expected " + keyLen + ".");
+            }
+            msg.encryptedContent.algorithm = cipher;
+            msg.encryptedContent.key = key;
+            msg.encryptedContent.parameter = forge3.util.createBuffer(
+              forge3.random.getBytes(ivLen)
+            );
+            var ciph = ciphFn(key);
+            ciph.start(msg.encryptedContent.parameter.copy());
+            ciph.update(msg.content);
+            if (!ciph.finish()) {
+              throw new Error("Symmetric encryption failed.");
+            }
+            msg.encryptedContent.content = ciph.output;
+          }
+          for (var i = 0; i < msg.recipients.length; ++i) {
+            var recipient = msg.recipients[i];
+            if (recipient.encryptedContent.content !== void 0) {
+              continue;
+            }
+            switch (recipient.encryptedContent.algorithm) {
+              case forge3.pki.oids.rsaEncryption:
+                recipient.encryptedContent.content = recipient.encryptedContent.key.encrypt(
+                  msg.encryptedContent.key.data
+                );
+                break;
+              default:
+                throw new Error("Unsupported asymmetric cipher, OID " + recipient.encryptedContent.algorithm);
+            }
+          }
+        }
+      };
+      return msg;
+    };
+    function _recipientFromAsn1(obj) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, p7.asn1.recipientInfoValidator, capture, errors)) {
+        var error = new Error("Cannot read PKCS#7 RecipientInfo. ASN.1 object is not an PKCS#7 RecipientInfo.");
+        error.errors = errors;
+        throw error;
+      }
+      return {
+        version: capture.version.charCodeAt(0),
+        issuer: forge3.pki.RDNAttributesAsArray(capture.issuer),
+        serialNumber: forge3.util.createBuffer(capture.serial).toHex(),
+        encryptedContent: {
+          algorithm: asn1.derToOid(capture.encAlgorithm),
+          parameter: capture.encParameter ? capture.encParameter.value : void 0,
+          content: capture.encKey
+        }
+      };
+    }
+    function _recipientToAsn1(obj) {
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // Version
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          asn1.integerToDer(obj.version).getBytes()
+        ),
+        // IssuerAndSerialNumber
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // Name
+          forge3.pki.distinguishedNameToAsn1({ attributes: obj.issuer }),
+          // Serial
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.INTEGER,
+            false,
+            forge3.util.hexToBytes(obj.serialNumber)
+          )
+        ]),
+        // KeyEncryptionAlgorithmIdentifier
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // Algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(obj.encryptedContent.algorithm).getBytes()
+          ),
+          // Parameter, force NULL, only RSA supported for now.
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+        ]),
+        // EncryptedKey
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OCTETSTRING,
+          false,
+          obj.encryptedContent.content
+        )
+      ]);
+    }
+    function _recipientsFromAsn1(infos) {
+      var ret = [];
+      for (var i = 0; i < infos.length; ++i) {
+        ret.push(_recipientFromAsn1(infos[i]));
+      }
+      return ret;
+    }
+    function _recipientsToAsn1(recipients) {
+      var ret = [];
+      for (var i = 0; i < recipients.length; ++i) {
+        ret.push(_recipientToAsn1(recipients[i]));
+      }
+      return ret;
+    }
+    function _signerToAsn1(obj) {
+      var rval = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // version
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.INTEGER,
+          false,
+          asn1.integerToDer(obj.version).getBytes()
+        ),
+        // issuerAndSerialNumber
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // name
+          forge3.pki.distinguishedNameToAsn1({ attributes: obj.issuer }),
+          // serial
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.INTEGER,
+            false,
+            forge3.util.hexToBytes(obj.serialNumber)
+          )
+        ]),
+        // digestAlgorithm
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(obj.digestAlgorithm).getBytes()
+          ),
+          // parameters (null)
+          asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+        ])
+      ]);
+      if (obj.authenticatedAttributesAsn1) {
+        rval.value.push(obj.authenticatedAttributesAsn1);
+      }
+      rval.value.push(asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // algorithm
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OID,
+          false,
+          asn1.oidToDer(obj.signatureAlgorithm).getBytes()
+        ),
+        // parameters (null)
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.NULL, false, "")
+      ]));
+      rval.value.push(asn1.create(
+        asn1.Class.UNIVERSAL,
+        asn1.Type.OCTETSTRING,
+        false,
+        obj.signature
+      ));
+      if (obj.unauthenticatedAttributes.length > 0) {
+        var attrsAsn1 = asn1.create(asn1.Class.CONTEXT_SPECIFIC, 1, true, []);
+        for (var i = 0; i < obj.unauthenticatedAttributes.length; ++i) {
+          var attr = obj.unauthenticatedAttributes[i];
+          attrsAsn1.values.push(_attributeToAsn1(attr));
+        }
+        rval.value.push(attrsAsn1);
+      }
+      return rval;
+    }
+    function _signersToAsn1(signers) {
+      var ret = [];
+      for (var i = 0; i < signers.length; ++i) {
+        ret.push(_signerToAsn1(signers[i]));
+      }
+      return ret;
+    }
+    function _attributeToAsn1(attr) {
+      var value;
+      if (attr.type === forge3.pki.oids.contentType) {
+        value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OID,
+          false,
+          asn1.oidToDer(attr.value).getBytes()
+        );
+      } else if (attr.type === forge3.pki.oids.messageDigest) {
+        value = asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OCTETSTRING,
+          false,
+          attr.value.bytes()
+        );
+      } else if (attr.type === forge3.pki.oids.signingTime) {
+        var jan_1_1950 = /* @__PURE__ */ new Date("1950-01-01T00:00:00Z");
+        var jan_1_2050 = /* @__PURE__ */ new Date("2050-01-01T00:00:00Z");
+        var date = attr.value;
+        if (typeof date === "string") {
+          var timestamp = Date.parse(date);
+          if (!isNaN(timestamp)) {
+            date = new Date(timestamp);
+          } else if (date.length === 13) {
+            date = asn1.utcTimeToDate(date);
+          } else {
+            date = asn1.generalizedTimeToDate(date);
+          }
+        }
+        if (date >= jan_1_1950 && date < jan_1_2050) {
+          value = asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.UTCTIME,
+            false,
+            asn1.dateToUtcTime(date)
+          );
+        } else {
+          value = asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.GENERALIZEDTIME,
+            false,
+            asn1.dateToGeneralizedTime(date)
+          );
+        }
+      }
+      return asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+        // AttributeType
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OID,
+          false,
+          asn1.oidToDer(attr.type).getBytes()
+        ),
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SET, true, [
+          // AttributeValue
+          value
+        ])
+      ]);
+    }
+    function _encryptedContentToAsn1(ec) {
+      return [
+        // ContentType, always Data for the moment
+        asn1.create(
+          asn1.Class.UNIVERSAL,
+          asn1.Type.OID,
+          false,
+          asn1.oidToDer(forge3.pki.oids.data).getBytes()
+        ),
+        // ContentEncryptionAlgorithmIdentifier
+        asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
+          // Algorithm
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OID,
+            false,
+            asn1.oidToDer(ec.algorithm).getBytes()
+          ),
+          // Parameters (IV)
+          !ec.parameter ? void 0 : asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OCTETSTRING,
+            false,
+            ec.parameter.getBytes()
+          )
+        ]),
+        // [0] EncryptedContent
+        asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
+          asn1.create(
+            asn1.Class.UNIVERSAL,
+            asn1.Type.OCTETSTRING,
+            false,
+            ec.content.getBytes()
+          )
+        ])
+      ];
+    }
+    function _fromAsn1(msg, obj, validator) {
+      var capture = {};
+      var errors = [];
+      if (!asn1.validate(obj, validator, capture, errors)) {
+        var error = new Error("Cannot read PKCS#7 message. ASN.1 object is not a supported PKCS#7 message.");
+        error.errors = error;
+        throw error;
+      }
+      var contentType = asn1.derToOid(capture.contentType);
+      if (contentType !== forge3.pki.oids.data) {
+        throw new Error("Unsupported PKCS#7 message. Only wrapped ContentType Data supported.");
+      }
+      if (capture.encryptedContent) {
+        var content = "";
+        if (forge3.util.isArray(capture.encryptedContent)) {
+          for (var i = 0; i < capture.encryptedContent.length; ++i) {
+            if (capture.encryptedContent[i].type !== asn1.Type.OCTETSTRING) {
+              throw new Error("Malformed PKCS#7 message, expecting encrypted content constructed of only OCTET STRING objects.");
+            }
+            content += capture.encryptedContent[i].value;
+          }
+        } else {
+          content = capture.encryptedContent;
+        }
+        msg.encryptedContent = {
+          algorithm: asn1.derToOid(capture.encAlgorithm),
+          parameter: forge3.util.createBuffer(capture.encParameter.value),
+          content: forge3.util.createBuffer(content)
+        };
+      }
+      if (capture.content) {
+        var content = "";
+        if (forge3.util.isArray(capture.content)) {
+          for (var i = 0; i < capture.content.length; ++i) {
+            if (capture.content[i].type !== asn1.Type.OCTETSTRING) {
+              throw new Error("Malformed PKCS#7 message, expecting content constructed of only OCTET STRING objects.");
+            }
+            content += capture.content[i].value;
+          }
+        } else {
+          content = capture.content;
+        }
+        msg.content = forge3.util.createBuffer(content);
+      }
+      msg.version = capture.version.charCodeAt(0);
+      msg.rawCapture = capture;
+      return capture;
+    }
+    function _decryptContent(msg) {
+      if (msg.encryptedContent.key === void 0) {
+        throw new Error("Symmetric key not available.");
+      }
+      if (msg.content === void 0) {
+        var ciph;
+        switch (msg.encryptedContent.algorithm) {
+          case forge3.pki.oids["aes128-CBC"]:
+          case forge3.pki.oids["aes192-CBC"]:
+          case forge3.pki.oids["aes256-CBC"]:
+            ciph = forge3.aes.createDecryptionCipher(msg.encryptedContent.key);
+            break;
+          case forge3.pki.oids["desCBC"]:
+          case forge3.pki.oids["des-EDE3-CBC"]:
+            ciph = forge3.des.createDecryptionCipher(msg.encryptedContent.key);
+            break;
+          default:
+            throw new Error("Unsupported symmetric cipher, OID " + msg.encryptedContent.algorithm);
+        }
+        ciph.start(msg.encryptedContent.parameter);
+        ciph.update(msg.encryptedContent.content);
+        if (!ciph.finish()) {
+          throw new Error("Symmetric decryption failed.");
+        }
+        msg.content = ciph.output;
+      }
+    }
+  }
+});
+
+// node_modules/node-forge/lib/ssh.js
+var require_ssh = __commonJS({
+  "node_modules/node-forge/lib/ssh.js"(exports, module) {
+    var forge3 = require_forge();
+    require_aes();
+    require_hmac();
+    require_md5();
+    require_sha1();
+    require_util();
+    var ssh = module.exports = forge3.ssh = forge3.ssh || {};
+    ssh.privateKeyToPutty = function(privateKey, passphrase, comment) {
+      comment = comment || "";
+      passphrase = passphrase || "";
+      var algorithm = "ssh-rsa";
+      var encryptionAlgorithm = passphrase === "" ? "none" : "aes256-cbc";
+      var ppk = "PuTTY-User-Key-File-2: " + algorithm + "\r\n";
+      ppk += "Encryption: " + encryptionAlgorithm + "\r\n";
+      ppk += "Comment: " + comment + "\r\n";
+      var pubbuffer = forge3.util.createBuffer();
+      _addStringToBuffer(pubbuffer, algorithm);
+      _addBigIntegerToBuffer(pubbuffer, privateKey.e);
+      _addBigIntegerToBuffer(pubbuffer, privateKey.n);
+      var pub = forge3.util.encode64(pubbuffer.bytes(), 64);
+      var length = Math.floor(pub.length / 66) + 1;
+      ppk += "Public-Lines: " + length + "\r\n";
+      ppk += pub;
+      var privbuffer = forge3.util.createBuffer();
+      _addBigIntegerToBuffer(privbuffer, privateKey.d);
+      _addBigIntegerToBuffer(privbuffer, privateKey.p);
+      _addBigIntegerToBuffer(privbuffer, privateKey.q);
+      _addBigIntegerToBuffer(privbuffer, privateKey.qInv);
+      var priv;
+      if (!passphrase) {
+        priv = forge3.util.encode64(privbuffer.bytes(), 64);
+      } else {
+        var encLen = privbuffer.length() + 16 - 1;
+        encLen -= encLen % 16;
+        var padding = _sha1(privbuffer.bytes());
+        padding.truncate(padding.length() - encLen + privbuffer.length());
+        privbuffer.putBuffer(padding);
+        var aeskey = forge3.util.createBuffer();
+        aeskey.putBuffer(_sha1("\0\0\0\0", passphrase));
+        aeskey.putBuffer(_sha1("\0\0\0", passphrase));
+        var cipher = forge3.aes.createEncryptionCipher(aeskey.truncate(8), "CBC");
+        cipher.start(forge3.util.createBuffer().fillWithByte(0, 16));
+        cipher.update(privbuffer.copy());
+        cipher.finish();
+        var encrypted = cipher.output;
+        encrypted.truncate(16);
+        priv = forge3.util.encode64(encrypted.bytes(), 64);
+      }
+      length = Math.floor(priv.length / 66) + 1;
+      ppk += "\r\nPrivate-Lines: " + length + "\r\n";
+      ppk += priv;
+      var mackey = _sha1("putty-private-key-file-mac-key", passphrase);
+      var macbuffer = forge3.util.createBuffer();
+      _addStringToBuffer(macbuffer, algorithm);
+      _addStringToBuffer(macbuffer, encryptionAlgorithm);
+      _addStringToBuffer(macbuffer, comment);
+      macbuffer.putInt32(pubbuffer.length());
+      macbuffer.putBuffer(pubbuffer);
+      macbuffer.putInt32(privbuffer.length());
+      macbuffer.putBuffer(privbuffer);
+      var hmac = forge3.hmac.create();
+      hmac.start("sha1", mackey);
+      hmac.update(macbuffer.bytes());
+      ppk += "\r\nPrivate-MAC: " + hmac.digest().toHex() + "\r\n";
+      return ppk;
+    };
+    ssh.publicKeyToOpenSSH = function(key, comment) {
+      var type = "ssh-rsa";
+      comment = comment || "";
+      var buffer = forge3.util.createBuffer();
+      _addStringToBuffer(buffer, type);
+      _addBigIntegerToBuffer(buffer, key.e);
+      _addBigIntegerToBuffer(buffer, key.n);
+      return type + " " + forge3.util.encode64(buffer.bytes()) + " " + comment;
+    };
+    ssh.privateKeyToOpenSSH = function(privateKey, passphrase) {
+      if (!passphrase) {
+        return forge3.pki.privateKeyToPem(privateKey);
+      }
+      return forge3.pki.encryptRsaPrivateKey(
+        privateKey,
+        passphrase,
+        { legacy: true, algorithm: "aes128" }
+      );
+    };
+    ssh.getPublicKeyFingerprint = function(key, options) {
+      options = options || {};
+      var md = options.md || forge3.md.md5.create();
+      var type = "ssh-rsa";
+      var buffer = forge3.util.createBuffer();
+      _addStringToBuffer(buffer, type);
+      _addBigIntegerToBuffer(buffer, key.e);
+      _addBigIntegerToBuffer(buffer, key.n);
+      md.start();
+      md.update(buffer.getBytes());
+      var digest = md.digest();
+      if (options.encoding === "hex") {
+        var hex = digest.toHex();
+        if (options.delimiter) {
+          return hex.match(/.{2}/g).join(options.delimiter);
+        }
+        return hex;
+      } else if (options.encoding === "binary") {
+        return digest.getBytes();
+      } else if (options.encoding) {
+        throw new Error('Unknown encoding "' + options.encoding + '".');
+      }
+      return digest;
+    };
+    function _addBigIntegerToBuffer(buffer, val) {
+      var hexVal = val.toString(16);
+      if (hexVal[0] >= "8") {
+        hexVal = "00" + hexVal;
+      }
+      var bytes = forge3.util.hexToBytes(hexVal);
+      buffer.putInt32(bytes.length);
+      buffer.putBytes(bytes);
+    }
+    function _addStringToBuffer(buffer, val) {
+      buffer.putInt32(val.length);
+      buffer.putString(val);
+    }
+    function _sha1() {
+      var sha = forge3.md.sha1.create();
+      var num = arguments.length;
+      for (var i = 0; i < num; ++i) {
+        sha.update(arguments[i]);
+      }
+      return sha.digest();
+    }
+  }
+});
+
+// node_modules/node-forge/lib/index.js
+var require_lib = __commonJS({
+  "node_modules/node-forge/lib/index.js"(exports, module) {
+    module.exports = require_forge();
+    require_aes();
+    require_aesCipherSuites();
+    require_asn1();
+    require_cipher();
+    require_des();
+    require_ed25519();
+    require_hmac();
+    require_kem();
+    require_log();
+    require_md_all();
+    require_mgf1();
+    require_pbkdf2();
+    require_pem();
+    require_pkcs1();
+    require_pkcs12();
+    require_pkcs7();
+    require_pki();
+    require_prime();
+    require_prng();
+    require_pss();
+    require_random();
+    require_rc2();
+    require_ssh();
+    require_tls();
+    require_util();
+  }
+});
+
+// src/lostcity/server/LoginThread.ts
+var import_node_forge2 = __toESM(require_lib(), 1);
+
+// src/jagex2/io/Packet.ts
+var import_node_forge = __toESM(require_lib(), 1);
+
+// src/jagex2/datastruct/Linkable.ts
+var Linkable = class {
+  key;
+  next;
+  prev;
+  constructor() {
+    this.key = 0n;
+    this.next = this;
+    this.prev = this;
+  }
+  unlink() {
+    if (!this.prev || !this.next) {
+      return;
+    }
+    this.prev.next = this.next;
+    this.next.prev = this.prev;
+    this.next = null;
+    this.prev = null;
+  }
+};
+
+// src/jagex2/datastruct/LinkList.ts
+var LinkList = class {
+  sentinel;
+  cursor = null;
+  constructor() {
+    const head = new Linkable();
+    head.next = head;
+    head.prev = head;
+    this.sentinel = head;
+  }
+  addTail(node) {
+    if (node.prev) {
+      node.unlink();
+    }
+    node.prev = this.sentinel.prev;
+    node.next = this.sentinel;
+    if (node.prev) {
+      node.prev.next = node;
+    }
+    node.next.prev = node;
+  }
+  addHead(node) {
+    if (node.prev) {
+      node.unlink();
+    }
+    node.prev = this.sentinel;
+    node.next = this.sentinel.next;
+    node.prev.next = node;
+    if (node.next) {
+      node.next.prev = node;
+    }
+  }
+  removeHead() {
+    const node = this.sentinel.next;
+    if (node === this.sentinel) {
+      return null;
+    }
+    node?.unlink();
+    return node;
+  }
+  head() {
+    const node = this.sentinel.next;
+    if (node === this.sentinel) {
+      this.cursor = null;
+      return null;
+    }
+    this.cursor = node?.next || null;
+    return node;
+  }
+  tail() {
+    const node = this.sentinel.prev;
+    if (node === this.sentinel) {
+      this.cursor = null;
+      return null;
+    }
+    this.cursor = node?.prev || null;
+    return node;
+  }
+  next() {
+    const node = this.cursor;
+    if (node === this.sentinel) {
+      this.cursor = null;
+      return null;
+    }
+    this.cursor = node?.next || null;
+    return node;
+  }
+  prev() {
+    const node = this.cursor;
+    if (node === this.sentinel) {
+      this.cursor = null;
+      return null;
+    }
+    this.cursor = node?.prev || null;
+    return node;
+  }
+  clear() {
+    while (true) {
+      const node = this.sentinel.next;
+      if (node === this.sentinel) {
+        return;
+      }
+      node?.unlink();
+    }
+  }
+};
+
+// src/jagex2/datastruct/Hashable.ts
+var Hashable = class extends Linkable {
+  nextHashable;
+  prevHashable;
+  constructor() {
+    super();
+    this.nextHashable = this;
+    this.prevHashable = this;
+  }
+  uncache() {
+    if (!this.prevHashable || !this.nextHashable) {
+      return;
+    }
+    this.prevHashable.nextHashable = this.nextHashable;
+    this.nextHashable.prevHashable = this.prevHashable;
+    this.nextHashable = null;
+    this.prevHashable = null;
+  }
+};
+
+// src/jagex2/io/Packet.ts
+var BigInteger = import_node_forge.default.jsbn.BigInteger;
+var Packet = class _Packet extends Hashable {
+  static crctable = new Int32Array(256);
+  static bitmask = new Uint32Array(33);
+  /**
+   * Reversed CRC-32 polynomial for Cyclic Redundancy Check (CRC).
+   * This is sometimes referred to as CRC32B.
+   */
+  static crc32b = 3988292384;
+  static {
+    for (let i = 0; i < 32; i++) {
+      this.bitmask[i] = (1 << i) - 1;
+    }
+    this.bitmask[32] = 4294967295;
+    for (let b = 0; b < 256; b++) {
+      let remainder = b;
+      for (let bit = 0; bit < 8; bit++) {
+        if ((remainder & 1) == 1) {
+          remainder = remainder >>> 1 ^ this.crc32b;
+        } else {
+          remainder >>>= 1;
+        }
+      }
+      this.crctable[b] = remainder;
+    }
+  }
+  static getcrc(src, offset, length) {
+    let crc = 4294967295;
+    for (let i = offset; i < length; i++) {
+      crc = crc >>> 8 ^ this.crctable[(crc ^ src[i]) & 255];
+    }
+    return ~crc;
+  }
+  static checkcrc(src, offset, length, expected = 0) {
+    const checksum = _Packet.getcrc(src, offset, length);
+    return checksum == expected;
+  }
+  static alloc(type) {
+    let packet = null;
+    if (type === 0 && this.cacheMinCount > 0) {
+      packet = this.cacheMin.removeHead();
+      this.cacheMinCount--;
+    } else if (type === 1 && this.cacheMidCount > 0) {
+      packet = this.cacheMid.removeHead();
+      this.cacheMidCount--;
+    } else if (type === 2 && this.cacheMaxCount > 0) {
+      packet = this.cacheMax.removeHead();
+      this.cacheMaxCount--;
+    } else if (type === 3 && this.cacheBigCount > 0) {
+      packet = this.cacheBig.removeHead();
+      this.cacheBigCount--;
+    } else if (type === 4 && this.cacheHugeCount > 0) {
+      packet = this.cacheHuge.removeHead();
+      this.cacheHugeCount--;
+    } else if (type === 5 && this.cacheUnimaginableCount > 0) {
+      packet = this.cacheUnimaginable.removeHead();
+      this.cacheUnimaginableCount--;
+    }
+    if (packet !== null) {
+      packet.pos = 0;
+      packet.bitPos = 0;
+      return packet;
+    }
+    if (type === 0) {
+      return new _Packet(new Uint8Array(100));
+    } else if (type === 1) {
+      return new _Packet(new Uint8Array(5e3));
+    } else if (type === 2) {
+      return new _Packet(new Uint8Array(3e4));
+    } else if (type === 3) {
+      return new _Packet(new Uint8Array(1e5));
+    } else if (type === 4) {
+      return new _Packet(new Uint8Array(5e5));
+    } else if (type === 5) {
+      return new _Packet(new Uint8Array(2e6));
+    } else {
+      return new _Packet(new Uint8Array(type));
+    }
+  }
+  static load(path2, seekToEnd = false) {
+    const packet = new _Packet(new Uint8Array(fs.readFileSync(path2)));
+    if (seekToEnd) {
+      packet.pos = packet.data.length;
+    }
+    return packet;
+  }
+  static async loadAsync(path2, seekToEnd = false) {
+    const packet = new _Packet(new Uint8Array(await (await fetch(path2)).arrayBuffer()));
+    if (seekToEnd) {
+      packet.pos = packet.data.length;
+    }
+    return packet;
+  }
+  static cacheMinCount = 0;
+  static cacheMidCount = 0;
+  static cacheMaxCount = 0;
+  static cacheBigCount = 0;
+  static cacheHugeCount = 0;
+  static cacheUnimaginableCount = 0;
+  static cacheMin = new LinkList();
+  static cacheMid = new LinkList();
+  static cacheMax = new LinkList();
+  static cacheBig = new LinkList();
+  static cacheHuge = new LinkList();
+  static cacheUnimaginable = new LinkList();
+  data;
+  #view;
+  pos;
+  bitPos;
+  constructor(src) {
+    super();
+    this.data = src;
+    this.#view = new DataView(this.data.buffer);
+    this.pos = 0;
+    this.bitPos = 0;
+  }
+  get available() {
+    return this.data.length - this.pos;
+  }
+  get length() {
+    return this.data.length;
+  }
+  release() {
+    this.pos = 0;
+    this.bitPos = 0;
+    if (this.data.length === 100 && _Packet.cacheMinCount < 1e3) {
+      _Packet.cacheMin.addTail(this);
+      _Packet.cacheMinCount++;
+    } else if (this.data.length === 5e3 && _Packet.cacheMidCount < 250) {
+      _Packet.cacheMid.addTail(this);
+      _Packet.cacheMidCount++;
+    } else if (this.data.length === 3e4 && _Packet.cacheMaxCount < 50) {
+      _Packet.cacheMax.addTail(this);
+      _Packet.cacheMaxCount++;
+    } else if (this.data.length === 1e5 && _Packet.cacheBigCount < 10) {
+      _Packet.cacheBig.addTail(this);
+      _Packet.cacheBigCount++;
+    } else if (this.data.length === 5e5 && _Packet.cacheHugeCount < 5) {
+      _Packet.cacheHuge.addTail(this);
+      _Packet.cacheHugeCount++;
+    } else if (this.data.length === 2e6 && _Packet.cacheUnimaginableCount < 2) {
+      _Packet.cacheUnimaginable.addTail(this);
+      _Packet.cacheUnimaginableCount++;
+    }
+  }
+  save(filePath, length = this.pos, start = 0) {
+    if (typeof self === "undefined") {
+      const dir = path.dirname(filePath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.writeFileSync(filePath, this.data.subarray(start, start + length));
+    } else {
+      const blob = new Blob([this.data.subarray(start, start + length)], { type: "application/octet-stream" });
+      const url = URL.createObjectURL(blob);
+      self.postMessage({ type: "save", value: url, path: filePath });
+    }
+  }
+  p1(value) {
+    this.#view.setUint8(this.pos++, value);
+  }
+  p2(value) {
+    this.#view.setUint16(this.pos, value);
+    this.pos += 2;
+  }
+  ip2(value) {
+    this.#view.setUint16(this.pos, value, true);
+    this.pos += 2;
+  }
+  p3(value) {
+    this.#view.setUint8(this.pos++, value >> 16);
+    this.#view.setUint16(this.pos, value);
+    this.pos += 2;
+  }
+  p4(value) {
+    this.#view.setInt32(this.pos, value);
+    this.pos += 4;
+  }
+  ip4(value) {
+    this.#view.setInt32(this.pos, value, true);
+    this.pos += 4;
+  }
+  p8(value) {
+    this.#view.setBigInt64(this.pos, value);
+    this.pos += 8;
+  }
+  pbool(value) {
+    this.p1(value ? 1 : 0);
+  }
+  pjstr(str, terminator = 10) {
+    const length = str.length;
+    for (let i = 0; i < length; i++) {
+      this.#view.setUint8(this.pos++, str.charCodeAt(i));
+    }
+    this.#view.setUint8(this.pos++, terminator);
+  }
+  pdata(src, offset, length) {
+    this.data.set(src.subarray(offset, offset + length), this.pos);
+    this.pos += length - offset;
+  }
+  psize4(size) {
+    this.#view.setUint32(this.pos - size - 4, size);
+  }
+  psize2(size) {
+    this.#view.setUint16(this.pos - size - 2, size);
+  }
+  psize1(size) {
+    this.#view.setUint8(this.pos - size - 1, size);
+  }
+  psmarts(value) {
+    if (value < 64 && value >= 64) {
+      this.p1(value + 64);
+    } else if (value < 16384 && value >= -16384) {
+      this.p2(value + 49152);
+    } else {
+      throw new Error("Error psmarts out of range: " + value);
+    }
+  }
+  psmart(value) {
+    if (value >= 0 && value < 128) {
+      this.p1(value);
+    } else if (value >= 0 && value < 32768) {
+      this.p2(value + 32768);
+    } else {
+      throw new Error("Error psmart out of range: " + value);
+    }
+  }
+  // ----
+  g1() {
+    return this.#view.getUint8(this.pos++);
+  }
+  g1b() {
+    return this.#view.getInt8(this.pos++);
+  }
+  g2() {
+    this.pos += 2;
+    return this.#view.getUint16(this.pos - 2);
+  }
+  g2s() {
+    this.pos += 2;
+    return this.#view.getInt16(this.pos - 2);
+  }
+  ig2() {
+    this.pos += 2;
+    return this.#view.getUint16(this.pos - 2, true);
+  }
+  g3() {
+    const result = this.#view.getUint8(this.pos++) << 16 | this.#view.getUint16(this.pos);
+    this.pos += 2;
+    return result;
+  }
+  g4() {
+    this.pos += 4;
+    return this.#view.getInt32(this.pos - 4);
+  }
+  ig4() {
+    this.pos += 4;
+    return this.#view.getInt32(this.pos - 4, true);
+  }
+  g8() {
+    this.pos += 8;
+    return this.#view.getBigInt64(this.pos - 8);
+  }
+  gbool() {
+    return this.g1() === 1;
+  }
+  gjstr(terminator = 10) {
+    const length = this.data.length;
+    let str = "";
+    let b;
+    while ((b = this.#view.getUint8(this.pos++)) !== terminator && this.pos < length) {
+      str += String.fromCharCode(b);
+    }
+    return str;
+  }
+  gdata(dest, offset, length) {
+    dest.set(this.data.subarray(this.pos, this.pos + length), offset);
+    this.pos += length;
+  }
+  gsmarts() {
+    return this.#view.getUint8(this.pos) < 128 ? this.g1() - 64 : this.g2() - 49152;
+  }
+  gsmart() {
+    return this.#view.getUint8(this.pos) < 128 ? this.g1() : this.g2() - 32768;
+  }
+  bits() {
+    this.bitPos = this.pos << 3;
+  }
+  bytes() {
+    this.pos = this.bitPos + 7 >>> 3;
+  }
+  gBit(n) {
+    let bytePos = this.bitPos >>> 3;
+    let remaining = 8 - (this.bitPos & 7);
+    let value = 0;
+    this.bitPos += n;
+    for (; n > remaining; remaining = 8) {
+      value += (this.#view.getUint8(bytePos++) & _Packet.bitmask[remaining]) << n - remaining;
+      n -= remaining;
+    }
+    if (n == remaining) {
+      value += this.#view.getUint8(bytePos) & _Packet.bitmask[remaining];
+    } else {
+      value += this.#view.getUint8(bytePos) >>> remaining - n & _Packet.bitmask[n];
+    }
+    return value;
+  }
+  pBit(n, value) {
+    const pos = this.bitPos;
+    this.bitPos += n;
+    let bytePos = pos >>> 3;
+    let remaining = 8 - (pos & 7);
+    const view = this.#view;
+    for (; n > remaining; remaining = 8) {
+      const shift2 = (1 << remaining) - 1;
+      const byte2 = view.getUint8(bytePos);
+      view.setUint8(bytePos++, byte2 & ~shift2 | value >>> n - remaining & shift2);
+      n -= remaining;
+    }
+    const r = remaining - n;
+    const shift = (1 << n) - 1;
+    const byte = view.getUint8(bytePos);
+    view.setUint8(bytePos, byte & ~shift << r | (value & shift) << r);
+  }
+  rsaenc(pem) {
+    const length = this.pos;
+    this.pos = 0;
+    const dec = new Uint8Array(length);
+    this.gdata(dec, 0, dec.length);
+    const bigRaw = new BigInteger(Array.from(dec));
+    const rawEnc = Uint8Array.from(bigRaw.modPow(pem.e, pem.n).toByteArray());
+    this.pos = 0;
+    this.p1(rawEnc.length);
+    this.pdata(rawEnc, 0, rawEnc.length);
+  }
+  rsadec(pem) {
+    const p = pem.p;
+    const q = pem.q;
+    const dP = pem.dP;
+    const dQ = pem.dQ;
+    const qInv = pem.qInv;
+    const enc = new Uint8Array(this.g1());
+    this.gdata(enc, 0, enc.length);
+    const bigRaw = new BigInteger(Array.from(enc));
+    const m1 = bigRaw.mod(p).modPow(dP, p);
+    const m2 = bigRaw.mod(q).modPow(dQ, q);
+    const h = qInv.multiply(m1.subtract(m2)).mod(p);
+    const rawDec = new Uint8Array(m2.add(h.multiply(q)).toByteArray());
+    this.pos = 0;
+    this.pdata(rawDec, 0, rawDec.length);
+    this.pos = 0;
+  }
+  // later revs have tinyenc/tinydec methods
+  // later revs have alt methods for packet obfuscation
+};
+
+// src/jagex2/jstring/JString.ts
+function toBase37(string) {
+  string = string.trim();
+  let l = 0n;
+  for (let i = 0; i < string.length && i < 12; i++) {
+    const c = string.charCodeAt(i);
+    l *= 37n;
+    if (c >= 65 && c <= 90) {
+      l += BigInt(c + 1 - 65);
+    } else if (c >= 97 && c <= 122) {
+      l += BigInt(c + 1 - 97);
+    } else if (c >= 48 && c <= 57) {
+      l += BigInt(c + 27 - 48);
+    }
+  }
+  return l;
+}
+var BASE37_LOOKUP = [
+  "_",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9"
+];
+function fromBase37(value) {
+  if (value < 0n || value >= 6582952005840035281n) {
+    return "invalid_name";
+  }
+  if (value % 37n === 0n) {
+    return "invalid_name";
+  }
+  let len = 0;
+  const chars = Array(12);
+  while (value !== 0n) {
+    const l1 = value;
+    value /= 37n;
+    chars[11 - len++] = BASE37_LOOKUP[Number(l1 - value * 37n)];
+  }
+  return chars.slice(12 - len).join("");
+}
+function toSafeName(name) {
+  return fromBase37(toBase37(name));
+}
+
+// src/lostcity/server/LoginServer.ts
+
+// src/lostcity/server/NetworkStream.ts
+var NetworkStream = class {
+  queue = [];
+  // queue of data events
+  available = 0;
+  // remaining bytes to read
+  buffer = null;
+  // current data event
+  offset = 0;
+  waiting = 0;
+  // number of bytes waiting to be read
+  received(buf) {
+    this.queue.push(buf);
+    this.available += buf.length;
+  }
+  clear() {
+    this.queue = [];
+    this.available = 0;
+    this.buffer = null;
+    this.offset = 0;
+  }
+  async readByte(socket) {
+    if (socket === null || socket.closed) {
+      return 0;
+    }
+    if (this.available < 1) {
+      await new Promise((res) => setTimeout(res, 10));
+      return this.readByte(socket);
+    }
+    if (this.buffer === null) {
+      this.buffer = this.queue.shift() ?? null;
+      this.offset = 0;
+    }
+    const value = this.buffer?.[this.offset] ?? 0;
+    this.offset++;
+    this.available--;
+    if (this.buffer && this.offset === this.buffer.length) {
+      this.buffer = null;
+    }
+    return value;
+  }
+  async readBytes(socket, destination, offset, length, full = true) {
+    if (socket === null || socket.closed) {
+      return 0;
+    }
+    if (this.available < length) {
+      if (full) {
+        await new Promise((res) => setTimeout(res, 10));
+        return this.readBytes(socket, destination, offset, length);
+      } else {
+        length = this.available;
+      }
+    }
+    destination.pos = offset;
+    for (let i = 0; i < length; i++) {
+      if (this.buffer === null) {
+        this.buffer = this.queue.shift() ?? null;
+        this.offset = 0;
+      }
+      destination.data[offset + i] = this.buffer?.[this.offset] ?? 0;
+      this.offset++;
+      this.available--;
+      if (this.buffer && this.offset === this.buffer.length) {
+        this.buffer = null;
+      }
+    }
+    return length;
+  }
+};
+
+// src/lostcity/util/Environment.ts
+
+// src/lostcity/util/TryParse.ts
+function tryParseBoolean(value, defaultValue) {
+  if (value === "true" || value === true) {
+    return true;
+  } else if (value === "false" || value === false) {
+    return false;
+  } else {
+    return defaultValue;
+  }
+}
+function tryParseInt(value, defaultValue) {
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value !== "string" && typeof value !== "number") {
+    return defaultValue;
+  }
+  const intValue = parseInt(value);
+  if (!isNaN(intValue)) {
+    return intValue;
+  }
+  return defaultValue;
+}
+function tryParseString(value, defaultValue) {
+  if (typeof value !== "string") {
+    return defaultValue;
+  }
+  return value;
+}
+function tryParseArray(value, defaultValue) {
+  if (!Array.isArray(value)) {
+    return defaultValue;
+  }
+  return value;
+}
+
+// src/lostcity/util/Environment.ts
+var Environment_default = {
+  /// web server
+  WEB_PORT: tryParseInt(void 0, false ? 80 : 8888),
+  WEB_CORS: tryParseBoolean(void 0, true),
+  /// game server
+  // world id - offset by 9, so 1 = 10, 2 = 11, etc
+  NODE_ID: tryParseInt(void 0, 10),
+  NODE_PORT: tryParseInt(void 0, 43594),
+  // members content
+  NODE_MEMBERS: tryParseBoolean(void 0, true),
+  // addxp multiplier
+  NODE_XPRATE: tryParseInt(void 0, 1),
+  // production mode!
+  NODE_PRODUCTION: tryParseBoolean(void 0, false),
+  // automatic shutdown time for production mode on sigint
+  NODE_KILLTIMER: tryParseInt(void 0, 50),
+  NODE_ALLOW_CHEATS: tryParseBoolean(void 0, true),
+  // development mode!
+  NODE_DEBUG: tryParseBoolean(void 0, true),
+  // measuring script execution
+  NODE_DEBUG_PROFILE: tryParseBoolean(void 0, false),
+  // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
+  NODE_STAFF: tryParseArray(void 0, ["pazaz"]),
+  // todo: add staffmodlevel to database
+  // no server routefinding until 2009
+  NODE_CLIENT_ROUTEFINDER: tryParseBoolean(void 0, true),
+  // controllable for bot testing
+  NODE_SOCKET_TIMEOUT: tryParseBoolean(void 0, true),
+  /// login server
+  LOGIN_HOST: tryParseString(void 0, "localhost"),
+  LOGIN_PORT: tryParseInt(void 0, 43500),
+  LOGIN_KEY: tryParseString(void 0, ""),
+  /// database
+  DB_HOST: tryParseString(void 0, "localhost"),
+  DB_USER: tryParseString(void 0, "root"),
+  DB_PASS: tryParseString(void 0, "password"),
+  DB_NAME: tryParseString(void 0, "lostcity"),
+  /// development
+  // some users may not be able to change their system PATH for this project
+  BUILD_JAVA_PATH: tryParseString(void 0, "java"),
+  // auto-build on startup
+  BUILD_STARTUP: tryParseBoolean(void 0, true),
+  // auto-update compiler on startup
+  BUILD_STARTUP_UPDATE: tryParseBoolean(void 0, true),
+  // used to check if we're producing the original cache without edits
+  BUILD_VERIFY: tryParseBoolean(void 0, true),
+  // used to keep some semblance of sanity in our folder structure
+  BUILD_VERIFY_FOLDER: tryParseBoolean(void 0, true),
+  // used for unpacking/custom development
+  BUILD_VERIFY_PACK: tryParseBoolean(void 0, true),
+  // used for unpacking/custom development
+  BUILD_SRC_DIR: tryParseString(void 0, "data/src")
+};
+
+// src/lostcity/server/LoginServer.ts
+var LoginResponse = class {
+  static SUCCESSFUL = Uint8Array.from([2]);
+  static INVALID_USER_OR_PASS = Uint8Array.from([3]);
+  // Invalid username or password.
+  static ACCOUNT_DISABLED = Uint8Array.from([4]);
+  // Your account has been disabled.
+  static LOGGED_IN = Uint8Array.from([5]);
+  // Your account is already logged in.
+  static SERVER_UPDATED = Uint8Array.from([6]);
+  // RuneScape has been updated!
+  static WORLD_FULL = Uint8Array.from([7]);
+  // This world is full.
+  static LOGIN_SERVER_OFFLINE = Uint8Array.from([8]);
+  // Unable to connect.
+  static LOGIN_LIMIT_EXCEEDED = Uint8Array.from([9]);
+  // Login limit exceeded.
+  static UNABLE_TO_CONNECT = Uint8Array.from([10]);
+  // Unable to connect.
+  static LOGIN_REJECTED = Uint8Array.from([11]);
+  // Login server rejected session.
+  static NEED_MEMBERS_ACCOUNT = Uint8Array.from([12]);
+  // You need a members account to login to this world.
+  static COULD_NOT_COMPLETE = Uint8Array.from([13]);
+  // Could not complete login.
+  static SERVER_UPDATING = Uint8Array.from([14]);
+  // The server is being updated.
+  static RECONNECTING = Uint8Array.from([15]);
+  static LOGIN_ATTEMPTS_EXCEEDED = Uint8Array.from([16]);
+  // Login attempts exceeded.
+  static STANDING_IN_MEMBERS = Uint8Array.from([17]);
+  // You are standing in a members-only area.
+  static STAFF_MOD_LEVEL = Uint8Array.from([18]);
+};
+var LoginClient = class {
+  socket = null;
+  stream = new NetworkStream();
+  async connect() {
+    if (this.socket) {
+      return;
+    }
+    return new Promise((res) => {
+      this.socket = net.createConnection({
+        port: Environment_default.LOGIN_PORT,
+        host: Environment_default.LOGIN_HOST
+      });
+      this.socket.setNoDelay(true);
+      this.socket.setTimeout(1e3);
+      this.socket.on("data", async (buf) => {
+        this.stream.received(buf);
+      });
+      this.socket.once("close", () => {
+        this.disconnect();
+        res();
+      });
+      this.socket.once("error", () => {
+        this.disconnect();
+        res();
+      });
+      this.socket.once("connect", () => {
+        res();
+      });
+    });
+  }
+  disconnect() {
+    if (this.socket === null) {
+      return;
+    }
+    this.socket.destroy();
+    this.socket = null;
+    this.stream.clear();
+  }
+  async write(socket, opcode, data = null, full = true) {
+    if (socket === null) {
+      return;
+    }
+    const packet = new Packet(new Uint8Array(1 + 2 + (data !== null ? data?.length : 0)));
+    packet.p1(opcode);
+    if (data !== null) {
+      packet.p2(data.length);
+      packet.pdata(data, 0, data.length);
+    } else {
+      packet.p2(0);
+    }
+    const done = socket.write(packet.data);
+    if (!done && full) {
+      await new Promise((res) => {
+        const interval = setInterval(() => {
+          if (socket === null || socket.closed) {
+            clearInterval(interval);
+            res();
+          }
+        }, 100);
+        socket.once("drain", () => {
+          clearInterval(interval);
+          res();
+        });
+      });
+    }
+  }
+  async load(username37, password, uid) {
+    await this.connect();
+    if (this.socket === null) {
+      return { reply: -1, data: null };
+    }
+    const request = new Packet(new Uint8Array(2 + 8 + password.length + 1 + 4));
+    request.p2(Environment_default.NODE_ID);
+    request.p8(username37);
+    request.pjstr(password);
+    request.p4(uid);
+    await this.write(this.socket, 1, request.data);
+    const reply = await this.stream.readByte(this.socket);
+    if (reply !== 1) {
+      this.disconnect();
+      return { reply, data: null };
+    }
+    const data = new Packet(new Uint8Array(2));
+    await this.stream.readBytes(this.socket, data, 0, 2);
+    const length = data.g2();
+    const data2 = new Packet(new Uint8Array(length));
+    await this.stream.readBytes(this.socket, data2, 0, length);
+    this.disconnect();
+    return { reply, data: data2 };
+  }
+  async save(username37, save) {
+    await this.connect();
+    if (this.socket === null) {
+      return -1;
+    }
+    const request = new Packet(new Uint8Array(2 + 8 + 2 + save.length));
+    request.p2(Environment_default.NODE_ID);
+    request.p8(username37);
+    request.p2(save.length);
+    request.pdata(save, 0, save.length);
+    await this.write(this.socket, 2, request.data);
+    const reply = await this.stream.readByte(this.socket);
+    this.disconnect();
+    return reply;
+  }
+  async reset() {
+    await this.connect();
+    if (this.socket === null) {
+      return -1;
+    }
+    const request = new Packet(new Uint8Array(2));
+    request.p2(Environment_default.NODE_ID);
+    await this.write(this.socket, 3, request.data);
+    this.disconnect();
+  }
+  async count(world) {
+    await this.connect();
+    if (this.socket === null) {
+      return -1;
+    }
+    const request = new Packet(new Uint8Array(2));
+    request.p2(world);
+    await this.write(this.socket, 4, request.data);
+    const reply = new Packet(new Uint8Array(2));
+    await this.stream.readBytes(this.socket, reply, 0, 2);
+    const count = reply.g2();
+    this.disconnect();
+    return count;
+  }
+  async heartbeat(players) {
+    await this.connect();
+    if (this.socket === null) {
+      return -1;
+    }
+    const request = new Packet(new Uint8Array(2 + 2 + players.length * 8));
+    request.p2(Environment_default.NODE_ID);
+    request.p2(players.length);
+    for (const player of players) {
+      request.p8(player);
+    }
+    await this.write(this.socket, 5, request.data);
+    this.disconnect();
+  }
+};
+
+// src/lostcity/server/LoginThread.ts
+if (typeof self === "undefined") {
+  if (!parentPort) throw new Error("This file must be run as a worker thread.");
+  const priv = import_node_forge2.default.pki.privateKeyFromPem(fs3.readFileSync("data/config/private.pem", "ascii"));
+  parentPort.on("message", async (msg) => {
+    try {
+      if (!parentPort) throw new Error("This file must be run as a worker thread.");
+      await handleRequests(parentPort, msg, priv);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+} else {
+  const priv = import_node_forge2.default.pki.privateKeyFromPem(await (await fetch("data/config/private.pem")).text());
+  self.onmessage = async (msg) => {
+    try {
+      await handleRequests(self, msg.data, priv);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+}
+async function handleRequests(parentPort2, msg, priv) {
+  switch (msg.type) {
+    case "reset": {
+      if (!Environment_default.LOGIN_KEY) {
+        return;
+      }
+      const login = new LoginClient();
+      await login.reset();
+      break;
+    }
+    case "heartbeat": {
+      if (!Environment_default.LOGIN_KEY) {
+        return;
+      }
+      const login = new LoginClient();
+      await login.heartbeat(msg.players);
+      break;
+    }
+    case "loginreq": {
+      const { opcode, data, socket } = msg;
+      const stream = new Packet(data);
+      const revision = stream.g1();
+      if (revision !== 225) {
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.SERVER_UPDATED,
+          socket
+        });
+        return;
+      }
+      const info = stream.g1();
+      const crcs = new Uint8Array(9 * 4);
+      stream.gdata(crcs, 0, crcs.length);
+      stream.rsadec(priv);
+      if (stream.g1() !== 10) {
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.LOGIN_REJECTED,
+          socket
+        });
+        return;
+      }
+      const seed = [];
+      for (let i = 0; i < 4; i++) {
+        seed[i] = stream.g4();
+      }
+      const uid = stream.g4();
+      const username = stream.gjstr();
+      const password = stream.gjstr();
+      if (username.length < 1 || username.length > 12) {
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.INVALID_USER_OR_PASS,
+          socket
+        });
+        return;
+      }
+      if (Environment_default.LOGIN_KEY) {
+        if (password.length < 5 || password.length > 20) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.INVALID_USER_OR_PASS,
+            socket
+          });
+          return;
+        }
+        const login = new LoginClient();
+        const request = await login.load(toBase37(toSafeName(username)), password, uid);
+        if (request.reply === 1 && request.data) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.SUCCESSFUL,
+            socket,
+            info,
+            seed,
+            username: toSafeName(username),
+            save: request.data.data
+          });
+        } else if ((request.reply === 2 || request.reply === 3) && opcode === 16) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGGED_IN,
+            socket
+          });
+          return;
+        } else if (request.reply === 3 && opcode === 18) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGGED_IN,
+            socket
+          });
+          return;
+        } else if (request.reply === 4) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.SUCCESSFUL,
+            socket,
+            info,
+            seed,
+            username: toSafeName(username),
+            save: new Uint8Array()
+          });
+        } else if (request.reply === 5) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.INVALID_USER_OR_PASS,
+            socket
+          });
+          return;
+        } else if (request.reply === -1) {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGIN_SERVER_OFFLINE,
+            socket
+          });
+          return;
+        } else {
+          parentPort2.postMessage({
+            type: "loginreply",
+            status: LoginResponse.LOGIN_REJECTED,
+            socket
+          });
+          return;
+        }
+      } else {
+        let save = new Uint8Array();
+        const safeName = toSafeName(username);
+        if (typeof self === "undefined") {
+          if (fs3.existsSync(`data/players/${safeName}.sav`)) {
+            save = await fsp2.readFile(`data/players/${safeName}.sav`);
+          }
+        } else {
+          const saveFile = await fetch(`data/players/${safeName}.sav`);
+          if (saveFile.ok) {
+            save = new Uint8Array(await saveFile.arrayBuffer());
+          }
+        }
+        parentPort2.postMessage({
+          type: "loginreply",
+          status: LoginResponse.SUCCESSFUL,
+          socket,
+          info,
+          seed,
+          username: safeName,
+          save
+        });
+      }
+      break;
+    }
+    case "logout": {
+      const { username, save } = msg;
+      if (Environment_default.LOGIN_KEY) {
+        const login = new LoginClient();
+        const reply = await login.save(toBase37(username), save);
+        if (reply === 0) {
+          parentPort2.postMessage({
+            type: "logoutreply",
+            username
+          });
+        }
+      } else {
+        parentPort2.postMessage({
+          type: "logoutreply",
+          username
+        });
+      }
+      break;
+    }
+    default:
+      console.error("Unknown message type: " + msg.type);
+      break;
+  }
+}
