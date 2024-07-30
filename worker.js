@@ -38422,6 +38422,7 @@ var GameMap = class _GameMap {
       this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
       this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
     });
+    await Promise.all(maps2);
     console.timeEnd("Loading game map");
   }
   /**
@@ -40294,3 +40295,4 @@ var WorkerServer = class {
 await World_default.start();
 var workerServer = new WorkerServer();
 workerServer.start();
+self.postMessage({ type: "ready" });
