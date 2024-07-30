@@ -40273,7 +40273,6 @@ var WorkerServer = class {
             if (socket.player) {
               socket.player.client = null;
             }
-            socket.close();
             this.sockets.delete(e.data.id);
           }
           break;
