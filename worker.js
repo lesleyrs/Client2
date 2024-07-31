@@ -24139,6 +24139,7 @@ var ScriptOpcode = /* @__PURE__ */ ((ScriptOpcode2) => {
   ScriptOpcode2[ScriptOpcode2["ZONECOUNT"] = 1032] = "ZONECOUNT";
   ScriptOpcode2[ScriptOpcode2["LOCCOUNT"] = 1033] = "LOCCOUNT";
   ScriptOpcode2[ScriptOpcode2["OBJCOUNT"] = 1034] = "OBJCOUNT";
+  ScriptOpcode2[ScriptOpcode2["MAP_MULTI"] = 1035] = "MAP_MULTI";
   ScriptOpcode2[ScriptOpcode2["ALLOWDESIGN"] = 2e3] = "ALLOWDESIGN";
   ScriptOpcode2[ScriptOpcode2["ANIM"] = 2001] = "ANIM";
   ScriptOpcode2[ScriptOpcode2["BAS_READYANIM"] = 2002] = "BAS_READYANIM";
@@ -36014,6 +36015,11 @@ var NetworkPlayer = class extends Player {
     }
     const zone = Position.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
     if (this.lastZone !== zone) {
+      const lastWasMulti = World_default.gameMap.multimap.has(this.lastZone);
+      const nowIsMulti = World_default.gameMap.multimap.has(zone);
+      if (lastWasMulti != nowIsMulti) {
+        this.write(new SetMultiway(nowIsMulti));
+      }
       if (this.lastZone !== -1) {
         const { level, x, z } = Position.unpackCoord(this.lastZone);
         this.triggerZoneExit(level, x, z);
@@ -36971,7 +36977,7 @@ var PlayerOps = {
     state.pushInt(state.activePlayer.runweight);
   }),
   [ScriptOpcode_default.LAST_COORD]: checkedHandler(ActivePlayer, (state) => {
-    state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastX, state.activePlayer.lastZ));
+    state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastStepX, state.activePlayer.lastStepZ));
   })
 };
 function popScriptArgs(state) {
@@ -37325,6 +37331,10 @@ var ServerOps = {
       }
     }
     state.pushInt(coord);
+  },
+  [ScriptOpcode_default.MAP_MULTI]: (state) => {
+    const coord = state.popInt();
+    state.pushInt(World_default.gameMap.multimap.has(coord) ? 1 : 0);
   }
 };
 var ServerOps_default = ServerOps;
@@ -38386,6 +38396,7 @@ var GameMap = class _GameMap {
   static X = 64;
   static Z = 64;
   static MAPSQUARE = _GameMap.X * _GameMap.Y * _GameMap.Z;
+  multimap = /* @__PURE__ */ new Set();
   init(zoneMap) {
     console.time("Loading game map");
     const path4 = "data/pack/server/maps/";
@@ -38394,11 +38405,38 @@ var GameMap = class _GameMap {
       const [mx, mz] = maps2[index].substring(1).split("_").map(Number);
       const mapsquareX = mx << 6;
       const mapsquareZ = mz << 6;
-      this.decodeNpcs(Packet.load(`${path4}n${mx}_${mz}`), mapsquareX, mapsquareZ);
-      this.decodeObjs(Packet.load(`${path4}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+      this.loadNpcs(Packet.load(`${path4}n${mx}_${mz}`), mapsquareX, mapsquareZ);
+      this.loadObjs(Packet.load(`${path4}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
       const lands = new Int8Array(_GameMap.MAPSQUARE);
-      this.decodeLands(lands, Packet.load(`${path4}m${mx}_${mz}`), mapsquareX, mapsquareZ);
-      this.decodeLocs(lands, Packet.load(`${path4}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+      this.loadGround(lands, Packet.load(`${path4}m${mx}_${mz}`), mapsquareX, mapsquareZ);
+      this.loadLocations(lands, Packet.load(`${path4}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+    }
+    const multiway = fs26.readFileSync("data/src/maps/multiway.csv", "ascii").replace(/\r/g, "").split("\n");
+    for (let i = 0; i < multiway.length; i++) {
+      if (multiway[i].startsWith("//") || !multiway[i].indexOf(",")) {
+        continue;
+      }
+      const parts = multiway[i].split(",");
+      if (parts.length !== 2) {
+        continue;
+      }
+      const [from, to] = parts;
+      const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split("_").map((x) => parseInt(x));
+      const [toLevel, toMx, toMz, toLx, toLz] = to.split("_").map((x) => parseInt(x));
+      if (fromLx % 8 !== 0 || fromLz % 8 !== 0) {
+        console.warn("Multiway map not aligned to a zone", multiway[i]);
+      }
+      for (let level = fromLevel; level <= toLevel; level++) {
+        for (let mx = fromMx; mx <= toMx; mx++) {
+          for (let mz = fromMz; mz <= toMz; mz++) {
+            for (let lx = fromLx; lx <= toLx; lx++) {
+              for (let lz = fromLz; lz <= toLz; lz++) {
+                this.multimap.add(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
+              }
+            }
+          }
+        }
+      }
     }
     console.timeEnd("Loading game map");
   }
@@ -38416,11 +38454,11 @@ var GameMap = class _GameMap {
         await Packet.loadAsync(`${path4}m${mx}_${mz}`),
         await Packet.loadAsync(`${path4}l${mx}_${mz}`)
       ]);
-      this.decodeNpcs(npcData, mapsquareX, mapsquareZ);
-      this.decodeObjs(objData, mapsquareX, mapsquareZ, zoneMap);
+      this.loadNpcs(npcData, mapsquareX, mapsquareZ);
+      this.loadObjs(objData, mapsquareX, mapsquareZ, zoneMap);
       const lands = new Int8Array(_GameMap.MAPSQUARE);
-      this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
-      this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
+      this.loadGround(lands, landData, mapsquareX, mapsquareZ);
+      this.loadLocations(lands, locData, mapsquareX, mapsquareZ, zoneMap);
     });
     await Promise.all(maps2);
     console.timeEnd("Loading game map");
@@ -38496,7 +38534,7 @@ var GameMap = class _GameMap {
   changeRoofCollision(x, z, level, add) {
     changeRoof(x, z, level, add);
   }
-  decodeNpcs(packet, mapsquareX, mapsquareZ) {
+  loadNpcs(packet, mapsquareX, mapsquareZ) {
     while (packet.available > 0) {
       const { x, z, level } = this.unpackCoord(packet.g2());
       const absoluteX = mapsquareX + x;
@@ -38512,7 +38550,7 @@ var GameMap = class _GameMap {
       }
     }
   }
-  decodeObjs(packet, mapsquareX, mapsquareZ, zoneMap) {
+  loadObjs(packet, mapsquareX, mapsquareZ, zoneMap) {
     while (packet.available > 0) {
       const { x, z, level } = this.unpackCoord(packet.g2());
       const absoluteX = mapsquareX + x;
@@ -38527,7 +38565,7 @@ var GameMap = class _GameMap {
       }
     }
   }
-  decodeLands(lands, packet, mapsquareX, mapsquareZ) {
+  loadGround(lands, packet, mapsquareX, mapsquareZ) {
     for (let level = 0; level < _GameMap.Y; level++) {
       for (let x = 0; x < _GameMap.X; x++) {
         for (let z = 0; z < _GameMap.Z; z++) {
@@ -38573,7 +38611,7 @@ var GameMap = class _GameMap {
       }
     }
   }
-  decodeLocs(lands, packet, mapsquareX, mapsquareZ, zoneMap) {
+  loadLocations(lands, packet, mapsquareX, mapsquareZ, zoneMap) {
     let locId = -1;
     let locIdOffset = packet.gsmart();
     while (locIdOffset !== 0) {
