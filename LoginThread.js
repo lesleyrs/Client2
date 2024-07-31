@@ -18830,8 +18830,6 @@ async function handleRequests(parentPort2, msg, priv) {
             save = await fsp2.readFile(`data/players/${safeName}.sav`);
           }
         } else {
-          console.log(await fetch(`data/players/${safeName}.sav`)).url;
-
           const saveFile = await fetch(`data/players/${safeName}.sav`);
           if (saveFile.ok) {
             save = new Uint8Array(await saveFile.arrayBuffer());
