@@ -101,6 +101,9 @@ class Mesanim extends Client {
             // this.packfiles[2] = await this.loadPack(`${Viewer.REPO}/data/src/pack/mesanim.pack`);
             // this.packfiles[3] = await this.loadPack(`${Viewer.REPO}/data/src/pack/seq.pack`);
 
+            if (+Client.getParameter('world') >= 998) {
+                Client.httpAddress = `${Client.httpAddress}/..`;
+            }
             const mesanim: Packet = new Packet(new Uint8Array(await downloadUrl(`${Client.httpAddress}/server/mesanim.dat`)));
 
             await this.showProgress(75, 'Unpacking media');

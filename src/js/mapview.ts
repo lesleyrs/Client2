@@ -569,6 +569,9 @@ class MapView extends GameShell {
 
             try {
                 console.log(`${Client.httpAddress}/worldmap.jag`);
+                if (+Client.getParameter('world') >= 998) {
+                    Client.httpAddress = 'data/pack/mapview';
+                }
                 data = await downloadUrl(`${Client.httpAddress}/worldmap.jag`);
             } catch (e) {
                 data = undefined;
