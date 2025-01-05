@@ -8,9 +8,8 @@
     }
   ],
   "id": "/",
-  "start_url": "/",
+  "start_url": ".",
   "background_color": "#212121",
   "display": "minimal-ui",
-  "scope": "/",
   "theme_color": "#212121"
 }
